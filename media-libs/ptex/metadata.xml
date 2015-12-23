@@ -2,7 +2,7 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 <maintainer>
-	<email>@gentoo.org</email>
+	<email>waebbl@gmail.com</email>
 </maintainer>
 <longdescription>Per-Face Texture Mapping library</longdescription>
 </pkgmetadata>

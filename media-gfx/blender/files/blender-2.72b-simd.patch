@@ -1,0 +1,21 @@
+diff -rupN blender-2.72b.orig/intern/cycles/util/util_simd.h blender-2.72b/intern/cycles/util/util_simd.h
+--- blender-2.72b.orig/intern/cycles/util/util_simd.h	2014-10-20 09:58:22.000000000 +0200
++++ blender-2.72b/intern/cycles/util/util_simd.h	2015-07-26 18:05:16.915607037 +0200
+@@ -56,7 +56,7 @@ __forceinline operator          int
+ } inf ccl_maybe_unused, pos_inf ccl_maybe_unused;
+ 
+ /* Intrinsics Functions */
+-
++/*
+ #if defined(__BMI__) && defined(__GNUC__)
+ #define _tzcnt_u32 __tzcnt_u32
+ #define _tzcnt_u64 __tzcnt_u64
+@@ -66,7 +66,7 @@ __forceinline operator          int
+ #define _lzcnt_u32 __lzcnt32
+ #define _lzcnt_u64 __lzcnt64
+ #endif
+-
++*/
+ #if defined(_WIN32) && !defined(__MINGW32__)
+ 
+ __forceinline int __popcnt(int in) {

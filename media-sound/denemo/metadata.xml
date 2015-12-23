@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<herd>sound</herd>
+<use>
+	<flag name="alsa">Enable alsa support</flag>
+	<flag name="jack">Enable jack support through media-sound/jack-audio-connection-kit</flag>
+	<flag name="fluidsynth">Enable Fluidsynth MIDI software synthesis</flag>
+	<flag name="portaudio">Enable support for portaudio</flag>
+	<flag name="portmidi">Enable support for the portmidi backend</flag>
+	<flag name="rubberband">Enable support for media-libs/rubberband</flag>
+</use>
+</pkgmetadata>

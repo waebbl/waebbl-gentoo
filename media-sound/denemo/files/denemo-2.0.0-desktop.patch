@@ -1,0 +1,11 @@
+--- pixmaps/denemo.desktop.orig	2015-12-08 20:21:51.291162673 +0100
++++ pixmaps/denemo.desktop	2015-12-08 20:22:06.834004291 +0100
+@@ -4,7 +4,7 @@
+ StartupNotify=true
+ Terminal=false
+ Type=Application
+-Categories=GNOME;Audio;AudioVideo;Music;Education
++Categories=GNOME;Audio;AudioVideo;Music;Education;
+ 
+ Name=GNU Denemo
+ Name[de]=GNU Denemo

@@ -1,0 +1,13 @@
+# This file is deprecated as per GLEP 56 in favor of metadata.xml. Please add
+# your descriptions to your package's metadata.xml ONLY.
+# * generated automatically using egencache *
+
+media-gfx/nvidia-texture-tools:cg - Enable NVIDIA C graphics compiler toolkit plug-in
+media-gfx/nvidia-texture-tools:cuda - Enable NVIDIA CUDA toolkit support
+media-gfx/nvidia-texture-tools:glew - Enable support for The OpenGL Extension Wrangler Library (media-libs/glew)
+media-sound/denemo:alsa - Enable alsa support
+media-sound/denemo:fluidsynth - Enable Fluidsynth MIDI software synthesis
+media-sound/denemo:jack - Enable jack support through media-sound/jack-audio-connection-kit
+media-sound/denemo:portaudio - Enable support for portaudio
+media-sound/denemo:portmidi - Enable support for the portmidi backend
+media-sound/denemo:rubberband - Enable support for media-libs/rubberband

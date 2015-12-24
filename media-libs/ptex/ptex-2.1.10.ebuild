@@ -25,6 +25,7 @@ DEPEND="${RDEPEND}"
 
 src_prepare() {
 	epatch "${FILESDIR}"/ptex-2.1.10_utils-CMakeLists.txt.patch
+	epatch "${FILESDIR}"/ptex-2.1.10_include-files-install.patch
 	sed -i -e 's|CMAKE_CXX_FLAGS "-std=c++98 -Wall -Wextra -pedantic"|CMAKE_CXX_FLAGS "-std=c++98 -Wall -Wextra -pedantic ${CMAKE_C_FLAGS}"|' "${S}"/CMakeLists.txt
 }
 

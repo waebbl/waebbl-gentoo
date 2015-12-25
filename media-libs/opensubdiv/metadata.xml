@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<maintainer>
+	<email>waebbl@gmail.com</email>
+</maintainer>
+<longdescription>Open Source Subdivision Surface library</longdescription>
+<use>
+	<flag name="cuda">add Cuda support through <pkg>dev-util/nvidia-cuda-toolkit</pkg></flag>
+	<flag name="doc">build and install the documentation</flag>
+	<flag name="examples">build and install the examples</flag>
+	<flag name="glew">use <pkg>media-libs/glew</pkg></flag>
+	<flag name="glfw">use the portable OpenGL framework <pkg>media-libs/glfw</pkg></flag>
+	<flag name="opencl">add OpenCL support</flag>
+	<flag name="opengl">add OpenGL support</flag>
+	<flag name="openmp">use OpenMP with <pkg>sys-devel/gcc</pkg></flag>
+	<flag name="ptex">support per-face texture mapping through <pkg>media-libs/ptex</pkg></flag>
+	<flag name="tbb">use <pkg>dev-cpp/tbb</pkg> for threading support</flag>
+</use>
+</pkgmetadata>

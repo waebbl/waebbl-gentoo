@@ -8,15 +8,16 @@ EAPI=5
 # inherit eutils, as a large amount of important functionality has been
 # moved there. For example, the epatch call mentioned below wont work
 # without the following line:
-inherit eutils cmake-utils
+inherit eutils versionator cmake-utils
 
-MY_PV=${PV/./_}
+MY_PV="$(replace_all_version_separators _)"
+MY_P="${PN}-${MY_PV}"
 
 DESCRIPTION="Open Subdivision Surface library"
 
 HOMEPAGE="https://github.com/PixarAnimationStudios/OpenSubdiv/"
 
-SRC_URI="https://github.com/PixarAnimationStudios/OpenSubdiv/archive/v${MY_PV}.tar.gz -> ${PN}-${PV}.tar.gz"
+SRC_URI="https://github.com/PixarAnimationStudios/OpenSubdiv/archive/v${MY_PV}.tar.gz -> ${MY_P}.tar.gz"
 
 LICENSE="OpenSubDiv"
 

@@ -1,4 +1,4 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
@@ -31,7 +31,7 @@ src_unpack() {
 }
 
 src_install() {
-	"${S}/${MY_SCRIPT}" --target "${S}/${P}" --nox11 -- -auto -verbose -createdir=y \
+	"${S}/${MY_SCRIPT}" --target "${S}/${P}" --nox11 --keep -- -auto -verbose \
 		-targetdir="${ED}/opt/wolfram" -execdir="${ED}/usr/bin" || die
 	find "${ED}" -name '*.desktop' -exec \
 		sed -i "s%${ED}%/%g" {} \; || die

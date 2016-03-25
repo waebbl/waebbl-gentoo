@@ -1,4 +1,4 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
@@ -7,7 +7,7 @@ EAPI=5
 inherit eutils java-utils-2 versionator
 
 MY_PV="$(replace_all_version_separators _)"
-MY_P="${PN}-generic-${MY_PV}"
+MY_P="${PN}-linux-${MY_PV}"
 
 DESCRIPTION="Git client with support for GitHub Pull Requests+Comments, SVN and Mercurial"
 HOMEPAGE="http://www.syntevo.com/smartgit"
@@ -20,7 +20,7 @@ IUSE=""
 
 RESTRICT="fetch"
 
-DEPEND=">=virtual/jre-1.7:1.7"
+DEPEND=">=virtual/jre-1.8:1.8"
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}"/${PN}

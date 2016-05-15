@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-<herd>sound</herd>
+<maintainer type="project">
+    <email>sound@gentoo.org</email>
+    <name>Gentoo sound project</name>
+</maintainer>
 <use>
-	<flag name="alsa">Enable alsa support</flag>
-	<flag name="jack">Enable jack support through media-sound/jack-audio-connection-kit</flag>
-	<flag name="fluidsynth">Enable Fluidsynth MIDI software synthesis</flag>
-	<flag name="portaudio">Enable support for portaudio</flag>
-	<flag name="portmidi">Enable support for the portmidi backend</flag>
-	<flag name="rubberband">Enable support for media-libs/rubberband</flag>
+  <flag name="alsa">Enable alsa support</flag>
+  <flag name="aubio">Enable media-libs/aubio support</flag>
+  <flag name="guile">Enable support for the dev-scheme/guile language</flag>
+  <flag name="jack">Enable jack support through media-sound/jack-audio-connection-kit</flag>
+  <flag name="fluidsynth">Enable Fluidsynth MIDI software synthesis</flag>
+  <flag name="portaudio">Enable support for portaudio</flag>
+  <flag name="portmidi">Enable support for the portmidi backend</flag>
+  <flag name="rubberband">Enable support for media-libs/rubberband</flag>
 </use>
 </pkgmetadata>

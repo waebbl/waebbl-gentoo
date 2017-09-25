@@ -1,9 +1,0 @@
-# ChangeLog for media-libs/ptex
-# Copyright 1999-2015 Gentoo Foundation; Distributed under the GPL v2
-# $Id$
-
-* ptex-2.1.10 (23 Dec 2015)
-
-  23 Dec 2015; Bernd Waibel <waebbl@gmail.com>
-  +ChangeLog, +metadata.xml, +ptex-2.1.10.ebuild, +../../licenses/Ptex,
-  +files/ptex-2.1.10_utils-CMakeLists.txt.patch : Initial import.

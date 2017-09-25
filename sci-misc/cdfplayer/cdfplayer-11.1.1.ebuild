@@ -40,7 +40,7 @@ RDEPEND="
 	dev-libs/icu
 	x11-libs/libxcb
 	dev-libs/libxml2
-	|| ( sys-libs/ncurses:5/5 sys-libs/ncurses:0/5 )
+	|| ( sys-libs/ncurses:5/5 sys-libs/ncurses:0/6 )
 "
 
 # we need this a few times

@@ -1,4 +1,4 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
@@ -16,18 +16,17 @@ KEYWORDS="alpha amd64 ia64 ppc x86"
 IUSE="doc"
 
 RDEPEND="virtual/latex-base
+	dev-texlive/texlive-fontsrecommended
 	>=dev-lisp/clisp-2.44.1-r1
 	dev-texlive/texlive-langcyrillic"
 DEPEND="${RDEPEND}
 	dev-lang/perl
-	sys-devel/flex
-	doc? (
-		dev-texlive/texlive-langgreek
-	)"
+	sys-devel/flex"
 
 src_prepare() {
 	epatch "${FILESDIR}"/${P}-configure.patch
 	epatch "${FILESDIR}"/${P}-locale.patch
+	epatch "${FILESDIR}"/${P}-grep.patch
 	eautoreconf
 }
 

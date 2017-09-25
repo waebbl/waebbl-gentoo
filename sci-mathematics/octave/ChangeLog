@@ -1,0 +1,200 @@
+# ChangeLog for sci-mathematics/octave
+# Copyright 1999-2016 Gentoo Foundation; Distributed under the GPL v2
+# (auto-generated from git log)
+
+*octave-4.0.0 (09 Aug 2015)
+*octave-3.8.2 (09 Aug 2015)
+*octave-3.8.1-r1 (09 Aug 2015)
+*octave-3.8.1 (09 Aug 2015)
+*octave-3.6.4-r1 (09 Aug 2015)
+*octave-3.6.4 (09 Aug 2015)
+
+  09 Aug 2015; Robin H. Johnson <robbat2@gentoo.org>
+  +files/octave-3.4.3-pkgbuilddir.patch, +files/octave-3.4.3-texi.patch,
+  +files/octave-3.6.3-legendtext.patch, +files/octave-3.6.4-gcc-4.8.patch,
+  +files/octave-3.6.4-texinfo.patch,
+  +files/octave-3.8.0-disable-getcwd-path-max-test-as-it-is-too-slow.patch,
+  +files/octave-3.8.0-fix-compile.patch,
+  +files/octave-3.8.0-imagemagick-configure.patch,
+  +files/octave-3.8.0-llvm-3.4.patch,
+  +files/octave-3.8.0-llvm-configure.patch,
+  +files/octave-3.8.0-pkgbuilddir.patch,
+  +files/octave-3.8.1-imagemagick.patch,
+  +files/octave-3.8.1-pkgbuilddir.patch,
+  +files/octave-4.0.0-imagemagick-configure.patch,
+  +files/octave-4.0.0-imagemagick.patch,
+  +files/octave-4.0.0-llvm-3.5-gnulib-hg.patch,
+  +files/octave-4.0.0-llvm-3.5.patch, +metadata.xml, +octave-3.6.4.ebuild,
+  +octave-3.6.4-r1.ebuild, +octave-3.8.1.ebuild, +octave-3.8.1-r1.ebuild,
+  +octave-3.8.2.ebuild, +octave-4.0.0.ebuild:
+  proj/gentoo: Initial commit
+
+  This commit represents a new era for Gentoo:
+  Storing the gentoo-x86 tree in Git, as converted from CVS.
+
+  This commit is the start of the NEW history.
+  Any historical data is intended to be grafted onto this point.
+
+  Creation process:
+  1. Take final CVS checkout snapshot
+  2. Remove ALL ChangeLog* files
+  3. Transform all Manifests to thin
+  4. Remove empty Manifests
+  5. Convert all stale $Header$/$Id$ CVS keywords to non-expanded Git $Id$
+  5.1. Do not touch files with -kb/-ko keyword flags.
+
+  Signed-off-by: Robin H. Johnson <robbat2@gentoo.org>
+  X-Thanks: Alec Warner <antarus@gentoo.org> - did the GSoC 2006 migration
+  tests
+  X-Thanks: Robin H. Johnson <robbat2@gentoo.org> - infra guy, herding this
+  project
+  X-Thanks: Nguyen Thai Ngoc Duy <pclouds@gentoo.org> - Former Gentoo
+  developer, wrote Git features for the migration
+  X-Thanks: Brian Harring <ferringb@gentoo.org> - wrote much python to improve
+  cvs2svn
+  X-Thanks: Rich Freeman <rich0@gentoo.org> - validation scripts
+  X-Thanks: Patrick Lauer <patrick@gentoo.org> - Gentoo dev, running new 2014
+  work in migration
+  X-Thanks: Michał Górny <mgorny@gentoo.org> - scripts, QA, nagging
+  X-Thanks: All of other Gentoo developers - many ideas and lots of paint on
+  the bikeshed
+
+  24 Aug 2015; Justin Lecher <jlec@gentoo.org> metadata.xml:
+  Use https by default
+
+  Convert all URLs for sites supporting encrypted connections from http to
+  https
+
+  Signed-off-by: Justin Lecher <jlec@gentoo.org>
+
+  24 Aug 2015; Mike Gilbert <floppym@gentoo.org> metadata.xml:
+  Revert DOCTYPE SYSTEM https changes in metadata.xml
+
+  repoman does not yet accept the https version.
+  This partially reverts eaaface92ee81f30a6ac66fe7acbcc42c00dc450.
+
+  Bug: https://bugs.gentoo.org/552720
+
+  26 Aug 2015; Mike Frysinger <vapier@gentoo.org> octave-3.8.1-r1.ebuild,
+  octave-3.8.2.ebuild, octave-4.0.0.ebuild:
+  sys-libs/ncurses: move to SLOT=0 #557472
+
+  Use SLOT=0 for installing of main development files like other packages
+  so we can use other SLOTs for installing SONAME libs for binary packages.
+
+  24 Jan 2016; Michał Górny <mgorny@gentoo.org> metadata.xml:
+  Replace all herds with appropriate projects (GLEP 67)
+
+  Replace all uses of herd with appropriate project maintainers, or no
+  maintainers in case of herds requested to be disbanded.
+
+  24 Jan 2016; Michał Górny <mgorny@gentoo.org> metadata.xml:
+  Set appropriate maintainer types in metadata.xml (GLEP 67)
+
+*octave-4.0.1 (27 Mar 2016)
+
+  27 Mar 2016; Manuel Rüger <mrueg@gentoo.org> +octave-4.0.1.ebuild:
+  Version bump
+
+  Package-Manager: portage-2.2.28
+
+  19 Apr 2016; Ian Stakenvicius <axs@gentoo.org> metadata.xml:
+  fix <pkg/> reference in metadata.xml
+
+  Package-Manager: portage-2.2.26
+
+  19 Apr 2016; Ian Stakenvicius <axs@gentoo.org> metadata.xml:
+  fix another <pkg/> reference in metadata.xml
+
+  Package-Manager: portage-2.2.26
+
+*octave-4.0.2 (30 Apr 2016)
+
+  30 Apr 2016; Manuel Rüger <mrueg@gentoo.org> +octave-4.0.2.ebuild:
+  Version bump to 4.0.2
+
+  Package-Manager: portage-2.2.28
+
+*octave-4.0.1-r1 (02 May 2016)
+*octave-4.0.0-r1 (02 May 2016)
+
+  02 May 2016; Mark Wright <gienah@gentoo.org> +octave-4.0.0-r1.ebuild,
+  +octave-4.0.1-r1.ebuild, octave-4.0.2.ebuild:
+  Fix bug 566134, thanks to Francisco Vazquez for reporting.
+
+  Gentoo-bug: 566134
+
+  Package-Manager: portage-2.2.28
+
+*octave-4.0.2-r1 (02 May 2016)
+
+  02 May 2016; Mark Wright <gienah@gentoo.org> -octave-4.0.2.ebuild,
+  +octave-4.0.2-r1.ebuild:
+  revbump 4.0.2 for bug 566134 fix.
+
+  Gentoo-bug: 566134
+
+  Package-Manager: portage-2.2.28
+
+  02 May 2016; Mark Wright <gienah@gentoo.org>
+  +files/octave-4.0.0-texinfo.patch, octave-4.0.0-r1.ebuild:
+  Fix bug 554226, thanks to Helmut Jarausch for reporting.
+
+  Thanks to Patric Schmitz for helping. The patch from upstream is in versions
+  after 4.0.
+
+  Gentoo-bug: 554226
+
+  Package-Manager: portage-2.2.28
+
+  14 May 2016; David Seifert <soap@gentoo.org> octave-3.6.4.ebuild:
+  Fix QA MissingSlotDep
+
+  Package-Manager: portage-2.2.28
+
+  14 May 2016; David Seifert <soap@gentoo.org> octave-3.6.4-r1.ebuild:
+  Fix QA MissingSlotDep
+
+  Package-Manager: portage-2.2.28
+
+  14 May 2016; David Seifert <soap@gentoo.org> octave-3.8.1.ebuild:
+  Fix QA MissingSlotDep
+
+  Package-Manager: portage-2.2.28
+
+  04 Jun 2016; Mike Frysinger <vapier@gentoo.org> octave-4.0.0.ebuild,
+  octave-4.0.0-r1.ebuild, octave-4.0.1.ebuild, octave-4.0.1-r1.ebuild,
+  octave-4.0.2-r1.ebuild:
+  savannah: switch to https URLs
+
+  05 Jun 2016; Michał Górny <mgorny@gentoo.org> -octave-3.8.1.ebuild,
+  -octave-3.8.1-r1.ebuild:
+  Nuke 3.8.1
+
+  05 Jun 2016; Michał Górny <mgorny@gentoo.org>
+  -files/octave-3.8.0-llvm-3.4.patch,
+  -files/octave-3.8.0-llvm-configure.patch, octave-3.8.2.ebuild:
+  Remove jit from 3* as it requires llvm < 3.5
+
+  31 Jul 2016; David Seifert <soap@gentoo.org> metadata.xml,
+  octave-3.6.4.ebuild, octave-3.6.4-r1.ebuild, octave-3.8.2.ebuild,
+  octave-4.0.0.ebuild, octave-4.0.0-r1.ebuild, octave-4.0.1.ebuild,
+  octave-4.0.1-r1.ebuild, octave-4.0.2-r1.ebuild:
+  Add subslot operator for media-gfx/imagemagick
+
+  Gentoo-bug: 584104
+  * Also add USE="graphicsmagick" and add subslot
+    operator for media-gfx/graphicsmagick
+
+  Package-Manager: portage-2.3.0
+
+  05 Aug 2016; David Seifert <soap@gentoo.org> octave-3.6.4.ebuild,
+  octave-3.6.4-r1.ebuild, octave-3.8.2.ebuild, octave-4.0.0.ebuild,
+  octave-4.0.0-r1.ebuild, octave-4.0.1.ebuild, octave-4.0.1-r1.ebuild,
+  octave-4.0.2-r1.ebuild:
+  Switch to media-gfx/imagemagick by default
+
+  Gentoo-bug: 590280
+
+  Package-Manager: portage-2.3.0
+

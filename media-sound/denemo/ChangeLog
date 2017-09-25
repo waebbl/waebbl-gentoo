@@ -59,3 +59,8 @@
 
   Bug: https://bugs.gentoo.org/552720
 
+*denemo-2.0.8 (15 May 2016)
+
+	15 May 2016; Bernd Waibel <waebbl@gmail.com> +denemo-2.0.8.ebuild,
+	-denemo-2.0.0.ebuild, -files/denemo-2.0.0-desktop.patch:
+	Bump to 2.0.8 from 2.0.0

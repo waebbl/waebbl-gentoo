@@ -2,6 +2,18 @@
 # Copyright 1999-2015 Gentoo Foundation; Distributed under the GPL v2
 # $Id$
 
+*cdfplayer-10.3.1 (05 Jan 2016)
+
+  05 Jan 2016; Bernd Waibel <waebbl@gmail.com>
+  +cdfplayer-10.3.1.ebuild: sci-mathematics/cdfplayer: Version
+  bump
+
+*cdfplayer-10.3.0 (16 Dez 2015)
+
+  16 Dec 2015; Bernd Waibel <waebbl@gmail.com>
+  +cdfplayer-10.3.0.ebuild: sci-mathematics/cdfplayer: Version
+  bump
+
 *cdfplayer-10.0.2 (08 Mar 2015)
 
   08 Mar 2015; zcj <ustcscgy@163.com> +cdfplayer-10.0.2.ebuild,

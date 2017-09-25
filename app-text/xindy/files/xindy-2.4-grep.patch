@@ -1,0 +1,13 @@
+diff --git a/make-rules/inputenc/Makefile.am b/make-rules/inputenc/Makefile.am
+index 6d4af0a..ee31eb8 100644
+--- a/make-rules/inputenc/Makefile.am
++++ b/make-rules/inputenc/Makefile.am
+@@ -43,7 +43,7 @@ INPUTENCS = \
+ latin.xdy : latin1.xdy latin2.xdy latin3.xdy
+ 	echo ';; Generated from latin?.xdy' >latin.xdy
+ 	echo >>latin.xdy
+-	sort -u latin?.xdy | grep -v '^;' >>latin.xdy
++	sort -u latin?.xdy | grep -va '^;' >>latin.xdy
+ 
+ %.xdy %.idx :
+ 	$(PERL) $(srcdir)/make-testidx.pl TS1,T2A,T1 $* >$*.tex

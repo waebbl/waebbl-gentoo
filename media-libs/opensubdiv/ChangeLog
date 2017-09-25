@@ -1,7 +1,0 @@
-# ChangeLog for <CATEGORY>/<PACKAGE_NAME>
-# Copyright 1999-2015 Gentoo Foundation; Distributed under the GPL v2
-# $Id$
-
-* opensubdiv-3.0.3 (23 Dec 2015)
-  23 Dec 2015; Bernd Waibel <waebbl@gmail.com> +ChangeLog, +metadata.xml,
-  +opensubdiv-3.0.3.ebuild: Initial import

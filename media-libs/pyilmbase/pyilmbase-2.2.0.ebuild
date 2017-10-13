@@ -45,3 +45,8 @@ src_prepare() {
 multilib_src_configure() {
 	ECONF_SOURCE=${S} econf  "$(use_with numpy numpy)"
 }
+
+# fails to install successfully if MAKEOPTS is set to use more than one core.
+multilib_src_install() {
+	EMAKE_SOURCE=${S} MAKEOPTS="-j1" emake DESTDIR="${D}" install
+}

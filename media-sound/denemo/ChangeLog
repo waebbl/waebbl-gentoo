@@ -64,3 +64,9 @@
 	15 May 2016; Bernd Waibel <waebbl@gmail.com> +denemo-2.0.8.ebuild,
 	-denemo-2.0.0.ebuild, -files/denemo-2.0.0-desktop.patch:
 	Bump to 2.0.8 from 2.0.0
+
+*denemo-2.2.0 (15 Oct 2017)
+
+	15 Oct 2017; Bernd Waibel <waebbl@gmail.com> +denemo-2.2.0.ebuild
+	-denemo-2.0.8.ebuild
+	Bump to 2.2.0 from 2.0.8

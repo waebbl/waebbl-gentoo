@@ -48,5 +48,5 @@ multilib_src_configure() {
 
 # fails to install successfully if MAKEOPTS is set to use more than one core.
 multilib_src_install() {
-	EMAKE_SOURCE=${S} MAKEOPTS="-j1" emake DESTDIR="${D}" install
+	EMAKE_SOURCE=${S} emake DESTDIR="${D}" -j1 install
 }

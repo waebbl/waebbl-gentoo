@@ -44,14 +44,14 @@ RDEPEND="guile2? ( >=dev-scheme/guile-2:12
 		>=media-libs/portaudio-19_pre20140130
 		sci-libs/fftw:3.0
 	)
-	portmidi? ( >=media-libs/portmidi-217-r1 )
-	doc? ( >=dev-util/gtk-doc-1.25-r1 )"
+	portmidi? ( >=media-libs/portmidi-217-r1 )"
 
 DEPEND="${RDEPEND}
 	>=sys-devel/flex-2.6.1
 	>=dev-util/intltool-0.51.0-r1
 	virtual/pkgconfig
 	virtual/yacc
+	doc? ( >=dev-util/gtk-doc-1.25-r1 )
 	nls? ( >=sys-devel/gettext-0.19.8.1 )"
 
 DOCS=( AUTHORS ChangeLog docs/{DESIGN{,.lilypond},GOALS,TODO} NEWS )

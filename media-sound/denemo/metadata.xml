@@ -10,6 +10,7 @@
   <flag name="aubio">Enable <pkg>media-libs/aubio</pkg> support</flag>
   <flag name="evince">Use <pkg>app-text/evince</pkg> document viewer</flag>
   <flag name="guile2">Enable support for the <pkg>dev-scheme/guile</pkg> language. If enabled uses guile-2*, if disabled uses guile-1.8*</flag>
+  <flag name="doc">Use <pkg>dev-util/gtk-doc</pkg> to build documentation in html format</flag>
   <flag name="gtk3">Enable support for the Gimp Toolkit. If enabled uses slot 3 of <pkg>x11-libs/gtk+</pkg>, if disabled it uses slot 2</flag>
   <flag name="jack">Enable jack support through <pkg>virtual/jack</pkg></flag>
   <flag name="fluidsynth">Enable Fluidsynth MIDI software synthesis using <pkg>media-sound/fluidsynth</pkg></flag>

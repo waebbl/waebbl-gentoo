@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-inherit eutils xdg-utils
+inherit xdg-utils
 
 DESCRIPTION="A music notation editor"
 HOMEPAGE="http://www.denemo.org/"
@@ -15,18 +15,16 @@ KEYWORDS="~amd64 ~x86"
 # Features currently not used:
 # --enable-debug(no) debug support
 # --enable-mem(no) memory debugging
-# --enable-doc(no) build documentation
-# --enable-gtk-doc(no) use gtk-doc to build documentation
-# --enable-gtk-doc-html(yes) build documentation in html format
-# --enable-gtk-doc-pdf(no) build documentation in pdf format
-# --enable-installed-tests(no) install some test cases
-# --enable-alway-build-tests(no) run test suite
 # --enable-gcov(no) coverage testing
-IUSE="alsa +aubio +evince jack +fluidsynth gtk3 guile2 nls +portaudio +portmidi +rubberband"
+# --enable-gtk-doc-pdf(no) doesn't work
+IUSE="alsa +aubio +evince doc jack +fluidsynth gtk3 guile2 nls +portaudio \
+	+portmidi +rubberband test"
 
-COMMON_DEPEND="
-	guile2? ( >=dev-scheme/guile-2:12 )
-	!guile2? ( >=dev-scheme/guile-1.8:12 )
+RDEPEND="guile2? ( >=dev-scheme/guile-2:12
+		>=media-sound/lilypond-2.19.54[guile2=] )
+	!guile2? ( >=dev-scheme/guile-1.8:12
+		<dev-scheme/guile-2:12
+		>=media-sound/lilypond-2.18.2-r3[-guile2] )
 	dev-libs/libxml2:2
 	gnome-base/librsvg:2
 	media-libs/fontconfig:1.0
@@ -47,11 +45,9 @@ COMMON_DEPEND="
 		sci-libs/fftw:3.0
 	)
 	portmidi? ( >=media-libs/portmidi-217-r1 )
-	"
-RDEPEND="${COMMON_DEPEND}
-	guile2? ( >=media-sound/lilypond-2.19.54[guile2=] )
-	!guile2? ( >=media-sound/lilypond-2.18.2-r3 )"
-DEPEND="${COMMON_DEPEND}
+	doc? ( >=dev-util/gtk-doc-1.25-r1 )"
+
+DEPEND="${RDEPEND}
 	>=sys-devel/flex-2.6.1
 	>=dev-util/intltool-0.51.0-r1
 	virtual/pkgconfig
@@ -59,13 +55,23 @@ DEPEND="${COMMON_DEPEND}
 	nls? ( >=sys-devel/gettext-0.19.8.1 )"
 
 DOCS=( AUTHORS ChangeLog docs/{DESIGN{,.lilypond},GOALS,TODO} NEWS )
+HTML_DOCS=( docs/denemo-manual.html docs/denemo.css )
 
-src_prepare() {
-	default_src_prepare
-	sed -i 's/^\(Categories.*[^;]\)$/\1;/g' pixmaps/denemo.desktop
-}
-
+# --enable-doc does nothing for itself
 src_configure() {
+	if use doc; then
+		EXTRA_ECONF="\
+			--enable-doc \
+			--enable-gtk-doc \
+			--enable-gtk-doc-html \
+			--disable-gtk-doc-pdf"
+	else
+		EXTRA_ECONF="\
+			--disable-doc \
+			--disable-gtk-doc \
+			--disable-gtk-doc-html \
+			--disable-gtk-doc-pdf"
+	fi
 	econf \
 		--disable-static \
 		$(usex gtk3 --enable-gtk3 --enable-gtk2) \
@@ -81,12 +87,8 @@ src_configure() {
 		$(use_enable rubberband) \
 		--enable-x11 \
 		--disable-mem \
-		--disable-doc \
-		--disable-gtk-doc \
-		--disable-gtk-doc-html \
-		--disable-gtk-doc-pdf \
+		$(use_enable test always-build-tests) \
 		--disable-installed-tests \
-		--disable-always-build-tests \
 		--disable-gcov
 }
 

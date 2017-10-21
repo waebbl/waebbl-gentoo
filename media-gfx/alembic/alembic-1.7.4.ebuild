@@ -4,7 +4,7 @@
 EAPI=6
 PYTHON_COMPAT=( python2_7 )
 
-inherit eutils cmake-utils python-single-r1
+inherit eutils python-single-r1 cmake-utils
 
 DESCRIPTION="Alembic is an open framework for storing and sharing scene data"
 HOMEPAGE="http://alembic.io/"
@@ -67,7 +67,7 @@ src_configure() {
 		-DALEMBIC_ILMBASE_LINK_STATIC=OFF # I don't want to link statically against ilmbase
 		-DALEMBIC_SHARED_LIBS=ON # For now let's ignore building static libraries
 		-DALEMBIC_LIB_USES_BOOST=$(usex boost)
-		-DALEMBIC_LIB_USES_TR1=OFF # I prefer using boost
+		-DALEMBIC_LIB_USES_TR1=$(usex !boost)
 	)
 	cmake-utils_src_configure
 }
@@ -91,4 +91,7 @@ src_install() {
 	if use doc; then
 		dodoc -r "doc/html"
 	fi
+
+	# move the cmake files from lib->lib64
+	mv "${D}/usr/lib/cmake" "${D}/usr/lib64/cmake" && rmdir "${D}/usr/lib"
 }

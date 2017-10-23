@@ -2,11 +2,44 @@
 # your descriptions to your package's metadata.xml ONLY.
 # * generated automatically using egencache *
 
-media-sound/denemo:alsa - Enable alsa support
+media-gfx/alembic:boost - Use dev-libs/boost library
+media-gfx/alembic:hdf5 - Add support sci-libs/hdf5
+media-gfx/alembic:pyalembic - Build pyalembic python bindings (needs media-libs/pyilmbase)
+media-gfx/alembic:test - Build and run the test-suite
+media-gfx/alembic:zlib - Use sys-libs/zlib for compressions
+media-gfx/blender:alembic - Add support for media-gfx/alembic to store scene data
+media-gfx/blender:boost - Enable features depending on boost.
+media-gfx/blender:bullet - Enable Bullet (Physics Engine).
+media-gfx/blender:collada - Add support for Collada interchange format through media-libs/opencollada.
+media-gfx/blender:colorio - Enable OpenColorIO color management through media-libs/opencolorio.
+media-gfx/blender:cuda - Build cycles renderer with nVidia CUDA support.
+media-gfx/blender:cycles - Build cycles renderer (requires media-libs/openimageio and dev-libs/boost).
+media-gfx/blender:dds - Adds DDS textures support to Blender.
+media-gfx/blender:dna - Builds the Blender file format reference.
+media-gfx/blender:doc - Build C and Python API documentation directly from the source code.
+media-gfx/blender:elbeem - Adds surface fluid simulation to Blender using El'Beem library.
+media-gfx/blender:game-engine - Adds Game Engine support to Blender.
+media-gfx/blender:headless - Build without graphical support (renderfarm, server mode only).
+media-gfx/blender:jemalloc - Use dev-libs/jemalloc for memory allocation.
+media-gfx/blender:llvm - Enable features depending on llvm.
+media-gfx/blender:man - Build and install man pages.
+media-gfx/blender:ndof - Enable NDOF input devices (SpaceNavigator and friends).
+media-gfx/blender:openimageio - Enable OpenImageIO Support
+media-gfx/blender:opensubdiv - Add rendering support form OpenSubdiv from Dreamworks Animation through media-libs/opensubdiv.
+media-gfx/blender:openvdb - Add GPU preview rendering. Only works with nVidia cards.
+media-gfx/blender:osl - Add support for OpenShadingLanguage scripting.
+media-gfx/blender:player - Build the Blender Player. THis requires the Game engine.
+media-gfx/blender:test - Build the provided unit tests.
+media-gfx/blender:valgrind - Add support for memory debugging using dev-util/valgrind
+media-libs/pyilmbase:numpy - Add bindings for dev-python/numpy use.
+media-sound/denemo:alsa - Enable alsa support through media-libs/alsa-lib
 media-sound/denemo:aubio - Enable media-libs/aubio support
-media-sound/denemo:fluidsynth - Enable Fluidsynth MIDI software synthesis
-media-sound/denemo:guile - Enable support for the dev-scheme/guile language
-media-sound/denemo:jack - Enable jack support through media-sound/jack-audio-connection-kit
-media-sound/denemo:portaudio - Enable support for portaudio
-media-sound/denemo:portmidi - Enable support for the portmidi backend
+media-sound/denemo:doc - Use dev-util/gtk-doc to build documentation in html format
+media-sound/denemo:evince - Use app-text/evince document viewer
+media-sound/denemo:fluidsynth - Enable Fluidsynth MIDI software synthesis using media-sound/fluidsynth
+media-sound/denemo:gtk3 - Enable support for the Gimp Toolkit. If enabled uses slot 3 of x11-libs/gtk+, if disabled it uses slot 2
+media-sound/denemo:guile2 - Enable support for the dev-scheme/guile language. If enabled uses guile-2*, if disabled uses guile-1.8*
+media-sound/denemo:jack - Enable jack support through virtual/jack
+media-sound/denemo:portaudio - Enable support for media-libs/portaudio
+media-sound/denemo:portmidi - Enable support for the media-libs/portmidi backend
 media-sound/denemo:rubberband - Enable support for media-libs/rubberband

@@ -1,2 +1,3 @@
 # ignore all files in distfiles directory
-distfiles/*
+distfiles/
+metadata/md5-cache/

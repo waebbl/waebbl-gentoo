@@ -63,14 +63,15 @@ src_compile() {
 
 src_install() {
 	# elkhound Makefile has no install target
-	mkdir -p "${ED}"/usr/bin
-	install -c -m 0755 "${S}"/src/elkhound/elkhound "${ED}"/usr/bin
-	install -c -m 0755 "${S}"/src/ast/astgen "${ED}"/usr/bin
-	mkdir -p "${ED}"/usr/$(get_libdir)
-	install -c -m 0644 "${S}"/src/elkhound/libelkhound.a "${ED}"/usr/$(get_libdir)
-	install -c -m 0644 "${S}"/src/ast/libast.a "${ED}"/usr/$(get_libdir)
-	install -c -m 0644 "${S}"/src/smbase/libsmbase.a "${ED}"/usr/$(get_libdir)
-	mkdir -p "${ED}"/usr/include/{ast,elkhound,smbase}
+	exeinto /usr/bin
+	doexe "${S}"/src/elkhound/elkhound
+	doexe "${S}"/src/ast/astgen
+	dolib.a "${S}"/src/smbase/libsmbase.a
+	dolib.a "${S}"/src/ast/libast.a
+	dolib.a "${S}"/src/elkhound/libelkhound.a
+
+	# Note: Header files are just all installed. The original code does not
+	# clearly making a difference between internal and exported header files.
 	SMBASE_HEADERS=( array.h arraymap.h arrayqueue.h astlist.h autofile.h bflatten.h
 		bit2d.h bitarray.h boxprint.h breaker.h ckheap.h crc.h cycles.h datablok.h
 		exc.h flatten.h gprintf.h growbuf.h hashline.h hashtbl.h macros.h missing.h
@@ -80,20 +81,25 @@ src_install() {
 		str.h strdict.h strhash.h stringset.h strobjdict.h strsobjdict.h strtokp.h
 		strutil.h svdict.h syserr.h taillist.h test.h thashtbl.h trace.h trdelete.h
 		typ.h unixutil.h vdtllist.h voidlist.h vptrmap.h warn.h xassert.h xobjlist.h )
+	insinto /usr/include/smbase
+	for i in ${SMBASE_HEADERS[@]}; do
+		doins "${S}"/src/smbase/${i}
+	done
+
 	AST_HEADERS=( agrampar.h ast.ast.h ast.hand.h asthelp.h ccsstr.h embedded.h
 		fakelist.h fileloc.h gramlex.h locstr.h reporterr.h strtable.h xmlhelp.h )
+	insinto /usr/include/ast
+	for i in ${AST_HEADERS[@]}; do
+		doins "${S}"/src/ast/${i}
+	done
+
 	ELKHOUND_HEADERS=( asockind.h cyctimer.h emitcode.h flatutil.h genml.h glr.h
 		glrconfig.h gramanl.h gramast.h grammar.h grampar.h lexerint.h mlsstr.h
 		ownerspec.h parsetables.h ptreeact.h ptreenode.h rcptr.h ssxnode.h useract.h
 		util.h )
-	for i in ${SMBASE_HEADERS[@]}; do
-		install -c -m 0644 "${S}"/src/smbase/${i} "${ED}"/usr/include/smbase
-	done
-	for i in ${AST_HEADERS[@]}; do
-		install -c -m 0644 "${S}"/src/ast/${i} "${ED}"/usr/include/ast
-	done
+	insinto /usr/include/elkhound
 	for i in ${ELKHOUND_HEADERS[@]}; do
-		install -c -m 0644 "${S}"/src/elkhound/${i} "${ED}"/usr/include/elkhound
+		doins "${S}"/src/elkhound/${i}
 	done
 
 	if use doc; then

@@ -1,1 +1,203 @@
-/var/lib/layman/science/licenses/smartgit
+License Agreement for SmartGit
+
+Last date of change: 2017-09-07
+
+	1 Subject of the Contract:
+			The license terms of syntevo GmbH (hereinafter called "licensor") are applied for the concession of the rights of use for the
+			entire or partly use of the object code of the software SmartGit (hereinafter called "SOFTWARE") to contractors, juristic
+			persons under public law or official fund assets in terms of &sect;310 in conjunction with &sect;14 BGB [Civil Code] (hereinafter called "licensee").
+			Herewith the inclusion of the licensee's own terms and conditions is contradicted, unless their validity has explicitly been agreed to.
+
+	2 Scope of the Rights of Use
+		2.1 The following terms are valid for the assignment and use of the SOFTWARE including any
+			documentation and the license file (a file that is custom-made for each individual granting of a license, the file being necessary
+			for the operation of the SOFTWARE).
+			
+		2.2 They are not valid for additional services such as installation, integration, parameterization and customization of the SOFTWARE to the
+			licensee's requirements.
+
+		2.3 If the licensor grants a "life-long" license, the licensee may use any new SOFTWARE version which has been released by the licensor
+			until the SOFTWARE has reached its end of life. It's at the sole discretion of the licensor to declare the SOFTWARE's end of life. 
+
+	3 Rights of Use
+
+		3.1 The SOFTWARE is partly copyrighted in favour of the licensor and partly in favour of other holders of rights.
+
+		3.2 The SOFTWARE is handed over to the licensee for its intended use.
+			The scope of the intended use as well as the kind and scope of the rights of use result from the assignment contract and said license terms.
+			They especially depend on whether the licensee gets a
+				SOFTWARE Non-Commercial License,
+				SOFTWARE Commercial License.
+
+			3.2.1 If a SOFTWARE Non-Commercial License is agreed-upon with the licensee, the licensor grants to licensee the non-exclusive, non-transferable and permanent
+			right, which is limited according to the terms of clause 7 and terminated according to the terms of clause 3.2.1.1, to have the SOFTWARE used
+				- on a arbitrary number of single-user computers or on a central server or via terminal server clients,
+				- simultaneously by a arbitrary number of users,
+				- solely for non-commercial purposes. A purpose is considered non-commercial only if the SOFTWARE is exclusively used<br>
+					* to actively work on open-source projects,
+					* for learning or teaching on a public academic institution,
+					* in the spare time to manage projects where you don't get financial compensation for (hobby usage),
+					* by public charitable organizations primarily targeting philanthropy, health research, education or social well-being.
+
+				3.2.1.1 The Non-Commercial License is only valid for the latest version of the SOFTWARE as it is published on licensor's website and for all versions which have been first published not earlier
+				than 6 months prior to the latest published version ('License Transition Period').
+				The SOFTWARE may contain a feature which enforces the termination of the Non-Commercial License for older versions by making them stop working after the License Transition Period.
+
+			3.2.2 If a SOFTWARE Commercial License is agreed-upon with the licensee, the licensor grants to licensee the worldwide, non-exclusive, non-transferable right to have the SOFTWARE used
+				- on a central server or via terminal server clients or as an in situ installation on single-user computers
+				- by the agreed-upon number of all users nameable on demand, that means to have the SOFTWARE saved, loaded, displayed and run permanently or temporarily.
+					Every user known by name can be replaced by another user known by name only once in a month.
+					From that time on, said first user must not use the SOFTWARE anymore and said second user may start to use the SOFTWARE.
+					At no time may the number of the users known by name exceed the number of the acquired licenses (example: If the licensee has bought the SOFTWARE for
+					five users whose names he can indicate on demand, only these five users may use the SOFTWARE. This is true independently of the number of the respective
+					installations and of the fact if they are done on a central server or via terminal server clients or as a local installation on single-user computers).
+					
+				3.3.2.1 If the Commercial License has been purchased with a one-time fee, it is granted permanently (for an unlimited period of time), limited by clause 7.
+
+				3.3.2.2 If the Commercial License has been purchased by a subscription, it is only valid for the agreed-upon subscription period, limited by clause 7.
+				The subscription extends automatically by the subscription period.
+				Both, licensee and licensor, can cancel the subscription at any time; the termination will become effective at the end of the subscription period.
+
+		3.3 The licensee undertakes to take care that the intended use of the SOFTWARE is assured by appropriate technical and organizational measures.
+
+		3.4 The licensee is obliged to back up the data orderly and regularly (especially with respect to working copies and repositories).
+
+		3.5 The licensee is entitled to produce one backup from the SOFTWARE.
+
+		3.6 The licensee is not entitled to translate, process, arrange the SOFTWARE differently or adapt or alter it and to copy the achieved results.
+
+		3.7 The licensee is not entitled to distribute the SOFTWARE.
+			This comprises any form of sublicensing, especially selling, letting, leasing or lending.
+			Passing on the license file, a digitally signed file containing name and address of the licensee which allows the technical
+			exploitation of the SOFTWARE is also considered to be a form of distribution.
+
+		3.8 The licensee is not entitled to make the SOFTWARE publicly accessible in such a way that it is accessible to the public at any place and at any
+			time.
+
+		3.9 The licensee undertakes not to decompile the SOFTWARE.
+
+	4 Demo
+
+		4.1 If the SOFTWARE is handed over only for test purposes, the licensor grants the licensee the non-exclusive, non-transferable right,
+			limited to the test period of thirty-one (31) days, to have a non-registered copy of the SOFTWARE (demo) used on a arbitrary number of
+			single-user computers or on a central server or via terminal server clients by a arbitrary number of users simultaneously for test purposes only,
+			that means not productively, which again means to have the SOFTWARE saved, loaded, displayed and run permanently or temporarily.
+
+		4.2 The demo of the SOFTWARE includes a function that terminates the use of the SOFTWARE after the expiration of the test period.
+			After the payment of the agreed-upon license fee and the agreement to said license terms within the agreed-upon scope, this function is
+			deactivated and the licensee gets the agreed-upon rights of use according to these license terms.
+			Bypassing this technical protective function results in an immediate loss of all conceded rights of use.
+			In this case a termination according to clause&nbsp;5 is no longer applicable.
+
+	5 Check for Updates/Internal Error reporting
+
+		5.1 The SOFTWARE contains features which will automatically connect to licensor's servers to
+			- check for a new program version
+			- in case of an internal error, report a "crash footprint"
+			For the Commercial License, the sent data contains NO POTENTIALLY SENSITIVE INFORMATION.
+			For the Non-Commercial License, the sent data may contain the user's Git or Mercurial email address, all other sent data contains NO POTENTIALLY SENSITIVE INFORMATION.
+			The user can opt-out from both SOFTWARE features.
+
+		5.2 Only upon user confirmation the SOFTWARE will send a full "bug report" to licensor for investigation.
+			The contents of a full "bug report" may contain POTENTIALLY SENSITIVE INFORMATION and should be reviewed by the licensee before sending.
+
+		5.3 The licensor treats the information sent by the licensee according to 5.2 as confidential
+			and only uses it to enhance or fix problems in the SOFTWARE or other software of the licensor.
+
+	6 Liability
+
+		6.1 When the SOFTWARE is handed over cost-free or for test purposes, the licensor is only liable in case that malice or gross negligence are blamed
+			on him.
+
+		6.2 The licensee's rights on indemnification due to a certain lack are excluded, if, for example, he has known the lack at the conclusion of the
+			contract, especially when there had been a test phase before that date.
+			If the licensee has not known of a lack due to gross negligence, he can only claim rights with respect to that lack if the licensor had fraudulently
+			concealed the lack or had taken over a guarantee for the quality of that object.
+
+		6.3 In case of data loss the licensor is only liable for the effort that would have been necessary for the recovery of the data, provided that the
+			data backup was properly executed by the licensee.
+
+		6.4 For the rest, kind and scope of liability are fixed in the respective sales contracts.
+
+		6.5 If a third party asserts rights against the licensee because of claimed infringement of the SOFTWARE, the licensee is entitled to the rights defined in the corresponding sales contract.
+			However this only applies, if the licensee immediately notifies the licensor about the claims of the third party, does not accept any claimed infringement and
+			either leaves any legal actions, including possible out-of-court arrangements, to the licensor or only consummates them in agreement with the licensor.
+
+	7 Termination of the Rights of Use
+
+		7.1 The subscription license according to 3.3.2.2 can be terminated by either party with written notice on the agreed-upon period.
+
+		7.2 If the licensee culpably and materially violates the agreed-upon rights of use or intellectual property rights of the entitled person,
+			the licensor can cancel the rights to use the respective SOFTWARE.
+			In this case the fee will not be refunded.
+
+		7.3 The Non-Commercial License terminates automatically if the usage of SOFTWARE becomes commercial according to clause 3.2.1.
+
+		7.4 In case of cancellation the licensee is obliged to destroy the original of the SOFTWARE affected by the cancellation including any
+			documentation and all copies or to return them to the licensor.
+			If demanded by the licensor, the licensee will deliver a statement certifying the destruction.
+
+		7.5 The other legal provisions remain untouched.
+
+	8 Applicable Law and Place of Jurisdiction
+
+		8.1 The law of the Federal Republic of Germany is applicable for all legal relationships of the parties excluding the laws on the international
+			sale of goods.
+
+		8.2 The licensor has the right to change this license agreement for new SOFTWARE versions. By using these new SOFTWARE versions the new license agreement supersedes any older one.
+
+		8.3 If the licensee is a merchant, a juristic person under public law or a person having special property under public law, the exclusive place of
+			jurisdiction for all disputes from this contract will be the licensor's place of business.
+			The same is applicable for the case when the licensee does not have a domestic place of general jurisdiction in Germany or the licensor's residence or
+			habitual abode are not known at the time of filing an action.
+			The licensor's capacity to apply to the court of a different place of jurisdiction remains untouched.
+
+	9 The following third parties have rights on parts of the SOFTWARE:
+
+		* Java-Prettify, copyright by Chan Wai Shing (https://code.google.com/p/java-prettify/).
+			The corresponding license agreement (Apache License 2.0) can be found at https://code.google.com/p/java-prettify/.
+
+		* JGit, copyright by various authors (http://www.eclipse.org/jgit/).
+			The corresponding license agreement (Eclipse Distribution License 1.0) can be found at http://www.eclipse.org/org/documents/edl-v10.php
+			or in the file licenses/JGIT-LICENSE within the installation directory of the SOFTWARE.
+
+		* JMySpell, copyright 2007 by DreamTangerine (dreamtangerine@hotmail.com)
+			The corresponding license agreement can be found in the	file licenses/JMYSPELL-LICENSE within the installation directory of the SOFTWARE.
+
+		* JNA, copyright 2008 by Timothy Wall and Wayne Meissner (https://github.com/twall/jna)
+			The corresponding license agreement (LGPL 2.1) can be found at https://github.com/twall/jna/blob/master/LGPL2.1
+			or in the file licenses/JNA-LICENSE	within the installation directory of the SOFTWARE.
+
+		* JOpt-Simple, copyright by various authors (http://sourceforge.net/projects/jopt-simple/).
+			The corresponding license agreement (MIT License) can be found at http://pholser.github.io/jopt-simple/license.html
+			or in the file licenses/JOPT-SIMPLE-LICENSE within the installation directory of the SOFTWARE.
+
+		* JSon-Simple, copyright by various authors (https://code.google.com/p/json-simple/).
+			The corresponding license agreement (Apache License 2.0) can be found at https://code.google.com/p/json-simple/
+			or in the file licenses/JSON-SIMPLE-LICENSE within the installation directory of the SOFTWARE.
+
+		* Log4j, copyright by Apache Software Foundation
+			The corresponding license agreement (Apache License 2.0) can be found at http://www.apache.org/licenses/LICENSE-2.0
+			or in the file licenses/LOG4J-LICENSE within the installation directory of the SOFTWARE.
+
+		* Parboiled, copyright by Mathias Doenitz (https://github.com/sirthias/parboiled)
+			The corresponding license agreement (Apache License 2.0) can be found at https://github.com/sirthias/parboiled/blob/master/LICENSE
+			or in the file licenses/PARBOILED-LICENSE within the installation directory of the SOFTWARE.
+
+		* Pegdown, copyright by Mathias Doenitz (https://github.com/sirthias/pegdown)
+			The corresponding license agreement (Apache License v2.0) can be found at https://github.com/sirthias/pegdown/blob/master/LICENSE
+			or in the file licenses/PEGDOWN-LICENSE within the installation directory of the SOFTWARE.
+
+		* SWT, copyright by Eclipse (http://eclipse.org).
+			The corresponding license agreement can be found at http://www.eclipse.org/legal/epl-v10.html.
+
+		* SVNKit, copyright by TMate Software s.r.o. (http://svnkit.com/)
+			The corresponding license agreement (TMate License) can be found
+			in the file licenses/SVNKIT-LICENSE within the installation directory of the SOFTWARE.
+
+		* Trilead SSH API, Copyright (c) 2007 Trilead AG (http://www.trilead.com) and others.
+			The corresponding license agreement can be found 
+			in the file	licenses/TRILEAD-LICENSE within the installation directory of the SOFTWARE.
+
+	The licensee is obliged to abide by these third parties license terms.
+	Consequently they are part of this license agreement.

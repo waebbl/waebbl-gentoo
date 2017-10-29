@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<maintainer type="person">
+	<email>waebbl@gmail.com</email>
+	<description>Bernd Waibel</description>
+</maintainer>
+<longdescription>WeiDU is used to develop, distribute and install mods for
+	games based on the Infinity Engine.</longdescription>
+</pkgmetadata>

@@ -1,0 +1,38 @@
+diff --git a/src/elkhound/Makefile.in b/src/elkhound/Makefile.in
+index 3f0abe0..d11522f 100644
+--- a/src/elkhound/Makefile.in
++++ b/src/elkhound/Makefile.in
+@@ -512,26 +512,26 @@ dot:
+ 	fi
+ 
+ # use 'dot' to lay out the graph
+-%.ps: %.dot dot
+-	dot -Tps <$*.dot >$@
++%.svg: %.dot dot
++	dot -Tsvg <$*.dot >$@
+ 
+ # use 'convert' to make a PNG image with resolution not to exceed
+ # 1000 in X or 700 in Y ('convert' will preserve aspect ratio); this
+ # also antialiases, so it looks very nice (it's hard to reproduce
+ # this using 'gs' alone)
+-%.png: %.ps
+-	convert -geometry 1000x700 $^ $@
++#%.png: %.ps
++#	convert -geometry 1000x700 $^ $@
+ 
+ # glr is much smaller
+-gendoc/glr.png: gendoc/glr.ps
+-	convert -geometry 500x400 $^ $@
++#gendoc/glr.png: gendoc/glr.ps
++#	convert -geometry 500x400 $^ $@
+ 
+ gendoc/configure.txt: configure
+ 	./configure --help >$@
+ 
+ # "make doc" should build whatever we have that needs building
+ .PHONY: doc
+-doc: gendoc gendoc/elkhound_dep.png gendoc/glr.png gendoc/configure.txt
++doc: gendoc gendoc/elkhound_dep.svg gendoc/glr.svg gendoc/configure.txt
+ 	@echo "built documentation"
+ 
+ # some other random phony targets (I hate this clutter..)

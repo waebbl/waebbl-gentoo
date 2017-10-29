@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<maintainer type="person">
+	<email>waebbl@gmail.com</email>
+	<description>Primary maintainer</description>
+</maintainer>
+<longdescription>Tool to merge mod zip files back into Infinity Engine games.</longdescription>
+</pkgmetadata>

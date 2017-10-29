@@ -18,15 +18,13 @@ KEYWORDS="~amd64"
 IUSE="doc"
 
 DEPEND=">=dev-lang/ocaml-4.04.2[ocamlopt]
+	dev-util/elkhound
 	doc? ( >=dev-tex/hevea-2.29[ocamlopt]
 		>=dev-lang/perl-5.24.3 )"
 RDEPEND=""
 
-# Source directory; the dir where the sources can be found (automatically
-# unpacked) inside ${WORKDIR}.  The default value for S is ${WORKDIR}/${P}
-# If you don't need to change it, leave the S= line out of the ebuild
-# to keep it tidy.
-#S=${WORKDIR}/${P}
+DOCS=( README-WeiDU-Changes.txt )
+HTML_DOCS=( README-WeiDU.html )
 
 src_unpack() {
 	git-r3_src_unpack
@@ -37,44 +35,22 @@ src_prepare() {
 	cp "${S}/sample.Configuration" "${S}/Configuration"
 }
 
-# The following src_compile function is implemented as default by portage, so
-# you only need to call it, if you need different behaviour.
-#src_compile() {
-	# emake is a script that calls the standard GNU make with parallel
-	# building options for speedier builds (especially on SMP systems).
-	# Try emake first.  It might not work for some packages, because
-	# some makefiles have bugs related to parallelism, in these cases,
-	# use emake -j1 to limit make to a single process.  The -j1 is a
-	# visual clue to others that the makefiles have bugs that have been
-	# worked around.
+src_compile() {
+	# fails sometimes when using more than one cores
+	emake -j1 weidu weinstall tolower
+	if use doc; then
+		emake doc
+	fi
+}
 
-	#emake
-#}
+src_install() {
+	# weidu's Makefiles don't have an install target
+	exeinto /usr/bin
+	newexe tolower.asm.exe tolower
+	newexe weidu.asm.exe weidu
+	newexe weinstall.asm.exe weinstall
 
-# The following src_install function is implemented as default by portage, so
-# you only need to call it, if you need different behaviour.
-#src_install() {
-	# You must *personally verify* that this trick doesn't install
-	# anything outside of DESTDIR; do this by reading and
-	# understanding the install part of the Makefiles.
-	# This is the preferred way to install.
-	#emake DESTDIR="${D}" install
-
-	# When you hit a failure with emake, do not just use make. It is
-	# better to fix the Makefiles to allow proper parallelization.
-	# If you fail with that, use "emake -j1", it's still better than make.
-
-	# For Makefiles that don't make proper use of DESTDIR, setting
-	# prefix is often an alternative.  However if you do this, then
-	# you also need to specify mandir and infodir, since they were
-	# passed to ./configure as absolute paths (overriding the prefix
-	# setting).
-	#emake \
-	#	prefix="${D}"/usr \
-	#	mandir="${D}"/usr/share/man \
-	#	infodir="${D}"/usr/share/info \
-	#	libdir="${D}"/usr/$(get_libdir) \
-	#	install
-	# Again, verify the Makefiles!  We don't want anything falling
-	# outside of ${D}.
-#}
+	if use doc; then
+		einstalldocs
+	fi
+}

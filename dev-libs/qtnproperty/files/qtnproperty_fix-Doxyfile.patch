@@ -1,0 +1,14 @@
+diff --git a/Docs/Doxyfile b/Docs/Doxyfile
+index d9944f7..377887c 100644
+--- a/Docs/Doxyfile
++++ b/Docs/Doxyfile
+@@ -677,8 +677,7 @@ WARN_LOGFILE           =
+ # directories like "/usr/src/myproject". Separate the files or directories 
+ # with spaces.
+ 
+-INPUT                  = .. \
+-                         ../../Utils
++INPUT                  = ..
+ 
+ # This tag can be used to specify the character encoding of the source files 
+ # that doxygen parses. Internally doxygen uses the UTF-8 encoding, which is 

@@ -1,0 +1,68 @@
+diff --git a/Core/Core.pro b/Core/Core.pro
+index f43499c..cee6877 100644
+--- a/Core/Core.pro
++++ b/Core/Core.pro
+@@ -2,7 +2,7 @@ include(../Config.pri)
+ 
+ QT += quick
+ QT += script
+-CONFIG += staticlib
++# CONFIG += staticlib
+ CONFIG += qtn_unity_build
+ 
+ TARGET = QtnPropertyCore
+diff --git a/Demo/Demo.pro b/Demo/Demo.pro
+index 590c4b9..9cb861d 100644
+--- a/Demo/Demo.pro
++++ b/Demo/Demo.pro
+@@ -42,13 +42,13 @@ INCLUDEPATH += $$TOP_SRC_DIR/PropertyWidget
+ 
+ LIBS += -L$$BIN_DIR -lQtnPropertyCore -lQtnPropertyWidget
+ 
+-unix:PRE_TARGETDEPS += $$BIN_DIR/libQtnPropertyCore.a $$BIN_DIR/libQtnPropertyWidget.a
+-else:PRE_TARGETDEPS += $$BIN_DIR/QtnPropertyCore.lib  $$BIN_DIR/QtnPropertyWidget.lib
++#unix:PRE_TARGETDEPS += $$BIN_DIR/libQtnPropertyCore.a $$BIN_DIR/libQtnPropertyWidget.a
++#else:PRE_TARGETDEPS += $$BIN_DIR/QtnPropertyCore.lib  $$BIN_DIR/QtnPropertyWidget.lib
+ 
+-win32 {
+-} else:unix {
+-    QMAKE_LFLAGS += -Wl,-rpath,\'\$$ORIGIN\'
+-}
++#win32 {
++#} else:unix {
++#    QMAKE_LFLAGS += -Wl,-rpath,\'\$$ORIGIN\'
++#}
+ 
+ OTHER_FILES += \
+     Demo.pef
+diff --git a/PropertyWidget/PropertyWidget.pro b/PropertyWidget/PropertyWidget.pro
+index b5c0a95..daf28a2 100644
+--- a/PropertyWidget/PropertyWidget.pro
++++ b/PropertyWidget/PropertyWidget.pro
+@@ -5,7 +5,7 @@ TEMPLATE = lib
+ VERSION = 1.1.0
+ 
+ QT += core gui widgets script
+-CONFIG += staticlib
++# CONFIG += staticlib
+ CONFIG += qtn_unity_build
+ 
+ qtn_unity_build: SOURCES += QtnPropertyWidgetUnity.cpp
+diff --git a/Tests/Tests.pro b/Tests/Tests.pro
+index ce6ca37..161161c 100644
+--- a/Tests/Tests.pro
++++ b/Tests/Tests.pro
+@@ -27,9 +27,9 @@ PEG_SOURCES += PEG/test.pef \
+ OTHER_FILES += $$PEG_SOURCES
+ 
+ LIBS += -L$$BIN_DIR -lQtnPropertyCore
+-win32 {
+-} else:unix {
+-    QMAKE_LFLAGS += -Wl,-rpath,\'\$$ORIGIN\'
+-}
++#win32 {
++#} else:unix {
++#    QMAKE_LFLAGS += -Wl,-rpath,\'\$$ORIGIN\'
++#}
+ 
+ INCLUDEPATH += $$TOP_SRC_DIR/Core

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<maintainer type="person">
+	<email>alber@diserholt.com</email>
+	<description>Primary maintainer</description>
+</maintainer>
+<maintainer type="person">
+	<email>waebbl@gmail.com</email>
+	<name>Maintainer</name>
+</maintainer>
+<longdescription>
+	SimulationCraft is a tool to explore combat mechanis in the popular 
+	MMORPG World of Warcraft(tm).
+	It is a multi-player event driven simulatior written in C++ that models
+	player character damage-per-second in various raiding scenarios.
+</longdescription>
+<use>
+	<flag name="gui">Builds the Qt5 GUI</flag>
+</use>
+</pkgmetadata>

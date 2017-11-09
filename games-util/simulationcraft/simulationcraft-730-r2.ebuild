@@ -23,18 +23,21 @@ if [[ ${PV} = 9999* ]]; then
 	EGIT_BRANCH="legion-dev"
 else
 	inherit vcs-snapshot versionator
-	MY_PV=$(replace_version_separator '.' '-')
-	SRC_URI="https://github.com/${PN}/simc/archive/release-${MY_PV}.tar.gz -> ${P}.tar.gz"
+	MY_PV=${PV}-0${PVR:5}
+	SRC_URI="https://github.com/${PN}/simc/archive/release-${MY_PV}.tar.gz -> ${PN}-${MY_PV}.tar.gz"
 fi
 
-IUSE="+gui"
+IUSE="doc +gui"
 
 RDEPEND="gui? ( dev-qt/qtchooser )"
 DEPEND="
 	${RDEPEND}
 	dev-libs/openssl
 	gui? ( dev-qt/qtwebkit:5 )
+	doc? ( app-doc/doxygen )
 "
+
+S="${WORKDIR}/${PN}-${MY_PV}"
 
 src_configure() {
 	use gui && qtchooser -run-tool=qmake -qt=5 simcqt.pro PREFIX="${D}/usr" CONFIG+=openssl LIBS+="-lssl"
@@ -43,13 +46,23 @@ src_configure() {
 src_compile() {
 	emake -C engine OPENSSL=1 optimized || die "Building engine failed"
 	use gui && emake || die "Building GUI failed"
+	use doc && (cd doc && doxygen Doxyfile)
 }
 
 src_install() {
-#	install -D -m755 engine/simc "${D}"/usr/bin/simc
 	exeinto /usr/bin
 	doexe "${S}"/engine/simc
 	use gui && emake DESTDIR="${D}" install || die "Install failed"
+	if use doc; then
+		HTML_DOCS=( doc/doxygen/html/* )
+		einstalldocs
+		mv "${D}/usr/share/SimulationCraft/SimulationCraft/Error.html" "${D}/usr/share/doc/${PN}-${PVR}/html"
+		mv "${D}/usr/share/SimulationCraft/SimulationCraft/Welcome.html" "${D}/usr/share/doc/${PN}-${PVR}/html"
+		mv "${D}/usr/share/SimulationCraft/SimulationCraft/Welcome.png" "${D}/usr/share/doc/${PN}-${PVR}/html"
+		ln -s "../../doc/${PN}-${PVR}/html/Error.html" "${D}/usr/share/SimulationCraft/SimulationCraft/Error.html"
+		ln -s "../../doc/${PN}-${PVR}/html/Welcome.html" "${D}/usr/share/SimulationCraft/SimulationCraft/Welcome.html"
+		ln -s "../../doc/${PN}-${PVR}/html/Welcome.png" "${D}/usr/share/SimulationCraft/SimulationCraft/Welcome.png"
+	fi
 }
 
 pkg_postinst() {

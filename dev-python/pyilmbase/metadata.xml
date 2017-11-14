@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<maintainer type="person">
+	<email>waebbl@gmail.com</email>
+	<description>Maintainer</description>
+</maintainer>
+<longdescription>Provides python bindings for <pkg>media-libs/ilmbase</pkg></longdescription>
+<use>
+	<flag name="numpy">Add bindings for <pkg>dev-python/numpy</pkg> use.</flag>
+</use>
+</pkgmetadata>

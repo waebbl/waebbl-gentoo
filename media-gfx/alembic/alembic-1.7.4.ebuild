@@ -26,7 +26,7 @@ DEPEND="${PYTHON_DEP}
 	>=dev-util/cmake-3.7.2
 	boost? ( >=dev-libs/boost-1.62.0-r1 )
 	doc? ( >=app-doc/doxygen-1.8.13-r1 )
-	pyalembic? ( >=media-libs/pyilmbase-2.2.0 )"
+	pyalembic? ( >=dev-python/pyilmbase-2.2.0 )"
 
 RDEPEND="${PYTHON_DEP}
 	>=media-libs/openexr-2.2.0-r2

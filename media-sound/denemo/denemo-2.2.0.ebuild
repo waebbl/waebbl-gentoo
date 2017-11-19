@@ -12,13 +12,12 @@ LICENSE="GPL-3 OFL-1.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
-# Features currently not used:
-# --enable-debug(no) debug support
-# --enable-mem(no) memory debugging
-# --enable-gcov(no) coverage testing
+# configure options currently not used:
+# --enable-mem(no) memory debugging: needs Electric fence (efence), which
+#		is not available in portage. See https://github.com/boundarydevices/efence
 # --enable-gtk-doc-pdf(no) doesn't work
-IUSE="alsa +aubio +evince doc jack +fluidsynth gtk3 guile2 nls +portaudio \
-	+portmidi +rubberband test"
+IUSE="alsa +aubio coverage debug +evince doc jack +fluidsynth gtk3 guile2 \
+	nls +portaudio +portmidi +rubberband static test"
 
 RDEPEND="guile2? ( >=dev-scheme/guile-2:12
 		>=media-sound/lilypond-2.19.54[guile2=] )
@@ -73,7 +72,8 @@ src_configure() {
 			--disable-gtk-doc-pdf"
 	fi
 	econf \
-		--disable-static \
+		--disable-rpath \
+		$(use_enable static) \
 		$(usex gtk3 --enable-gtk3 --enable-gtk2) \
 		$(use_enable alsa) \
 		$(use_enable aubio) \
@@ -89,7 +89,7 @@ src_configure() {
 		--disable-mem \
 		$(use_enable test always-build-tests) \
 		--disable-installed-tests \
-		--disable-gcov
+		$(use_enable coverage gcov)
 }
 
 pkg_postinst() { xdg_desktop_database_update; }

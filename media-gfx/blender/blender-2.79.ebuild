@@ -283,11 +283,13 @@ pkg_postinst() {
 	ewarn
 	gnome2_icon_cache_update
 	xdg_mimeinfo_database_update
+	xdg_desktop_database_update
 }
 
 pkg_postrm() {
 	gnome2_icon_cache_update
 	xdg_mimeinfo_database_update
+	xdg_desktop_database_update
 
 	ewarn ""
 	ewarn "You may want to remove the following directory."

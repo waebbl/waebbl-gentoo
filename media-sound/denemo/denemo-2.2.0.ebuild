@@ -58,18 +58,21 @@ HTML_DOCS=( docs/denemo-manual.html docs/denemo.css )
 
 # --enable-doc does nothing for itself
 src_configure() {
+	myeconfargs=()
 	if use doc; then
-		EXTRA_ECONF="\
-			--enable-doc \
-			--enable-gtk-doc \
-			--enable-gtk-doc-html \
-			--disable-gtk-doc-pdf"
+		myeconfargs+=(
+			--enable-doc
+			--enable-gtk-doc
+			--enable-gtk-doc-html
+			--disable-gtk-doc-pdf
+		)
 	else
-		EXTRA_ECONF="\
-			--disable-doc \
-			--disable-gtk-doc \
-			--disable-gtk-doc-html \
-			--disable-gtk-doc-pdf"
+		myeconfargs+=(
+			--disable-doc
+			--disable-gtk-doc
+			--disable-gtk-doc-html
+			--disable-gtk-doc-pdf
+		)
 	fi
 	econf \
 		--disable-rpath \
@@ -89,7 +92,13 @@ src_configure() {
 		--disable-mem \
 		$(use_enable test always-build-tests) \
 		--disable-installed-tests \
-		$(use_enable coverage gcov)
+		$(use_enable coverage gcov) \
+		${myeconfargs[@]}
+}
+
+src_test() {
+	# make check fails if used with parallel builds
+	emake -j1 check || die
 }
 
 pkg_postinst() { xdg_desktop_database_update; }

@@ -103,8 +103,8 @@ pkg_postinst() {
 
 	einfo
 	einfo "You need to run"
-	einfo "/opt/pixar/RenderMan-Installer-ncr-21.5/bin/RenderManInstaller"
-	einfo "as root, and select the RenderMan Pro Server 21.5 option to"
+	einfo "/opt/pixar/RenderMan-Installer-ncr-21.6/bin/RenderManInstaller"
+	einfo "as root, and select the RenderMan Pro Server 21.6 option to"
 	einfo "actually download and install RenderMan."
 	ewarn "You need to have your Pixar forum login credentials ready!"
 	einfo

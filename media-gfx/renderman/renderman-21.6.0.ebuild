@@ -1,4 +1,4 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 # TODO: add amd64 only multilib-support -> package provides no 32-bit
@@ -9,7 +9,7 @@ inherit rpm
 
 DESCRIPTION="Renderman render engine"
 HOMEPAGE="https://renderman.pixar.com/"
-SRC_URI="RenderMan-InstallerNCR-21.5.0_1768966-linuxRHEL6_gcc44icc150.x86_64.rpm"
+SRC_URI="RenderMan-InstallerNCR-21.6.0_1803412-linuxRHEL6_gcc44icc150.x86_64.rpm"
 
 LICENSE="RenderMan-TMPL"
 SLOT="0"
@@ -74,7 +74,7 @@ pkg_nofetch() {
 		eerror "		rpm from"
 		eerror "	https://renderman.pixar.com/forum/ncrdownload.php?platform=linux."
 		eerror "		Save the file"
-		eerror "	RenderMan-InstallerNCR-21.5.0_1768966-linuxRHEL6_gcc44icc150.x86_64.rpm"
+		eerror "	RenderMan-InstallerNCR-21.6.0_1803412-linuxRHEL6_gcc44icc150.x86_64.rpm"
 		eerror "		in your ${DISTDIR}."
 		eerror
 		die "Need to manually download the package."

@@ -3,7 +3,7 @@
 <pkgmetadata>
 <maintainer type="person">
 	<email>waebbl@gmail.com</email>
-	<description>Primary maintainer</description>
+	<name>Bernd Waibel</name>
 </maintainer>
 <longdescription>Renderman renderer</longdescription>
 </pkgmetadata>

@@ -1,4 +1,4 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -6,7 +6,7 @@ EAPI=6
 inherit versionator xdg-utils
 
 DESCRIPTION="Wolfram Player for the interactive Computable Document Format (CDF)"
-SRC_URI="CDFPlayer_11.1.1_LINUX.sh"
+SRC_URI="CDFPlayer_11.2.0_LINUX.sh"
 HOMEPAGE="http://www.wolfram.com/cdf-player/"
 
 LICENSE="WolframCDFPlayer"

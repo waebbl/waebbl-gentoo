@@ -9,7 +9,7 @@ inherit rpm
 
 DESCRIPTION="Renderman render engine"
 HOMEPAGE="https://renderman.pixar.com/"
-SRC_URI="RenderMan-InstallerNCR-21.6.0_1803412-linuxRHEL6_gcc44icc150.x86_64.rpm"
+SRC_URI="RenderMan-InstallerNCR-21.7.0_1837774-linuxRHEL6_gcc44icc150.x86_64.rpm"
 
 LICENSE="RenderMan-TMPL"
 SLOT="0"
@@ -74,7 +74,7 @@ pkg_nofetch() {
 		eerror "		rpm from"
 		eerror "	https://renderman.pixar.com/forum/ncrdownload.php?platform=linux."
 		eerror "		Save the file"
-		eerror "	RenderMan-InstallerNCR-21.6.0_1803412-linuxRHEL6_gcc44icc150.x86_64.rpm"
+		eerror "	RenderMan-InstallerNCR-21.7.0_1837774-linuxRHEL6_gcc44icc150.x86_64.rpm"
 		eerror "		in your ${DISTDIR}."
 		eerror
 		die "Need to manually download the package."
@@ -103,8 +103,8 @@ pkg_postinst() {
 
 	einfo
 	einfo "You need to run"
-	einfo "/opt/pixar/RenderMan-Installer-ncr-21.6/bin/RenderManInstaller"
-	einfo "as root, and select the RenderMan Pro Server 21.6 option to"
+	einfo "/opt/pixar/RenderMan-Installer-ncr-21.7/bin/RenderManInstaller"
+	einfo "as root, and select the RenderMan Pro Server 21.7 option to"
 	einfo "actually download and install RenderMan."
 	ewarn "You need to have your Pixar forum login credentials ready!"
 	einfo

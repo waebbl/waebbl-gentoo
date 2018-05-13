@@ -1,4 +1,4 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -54,7 +54,7 @@ RDEPEND="${PYTHON_DEPS}
 	boost? ( >=dev-libs/boost-1.62:=[nls?,threads(+)] )
 	collada? ( >=media-libs/opencollada-1.6.18:= )
 	colorio? ( media-libs/opencolorio )
-	cuda? ( =dev-util/nvidia-cuda-toolkit-8.0*:= )
+	cuda? ( =dev-util/nvidia-cuda-toolkit-9.1*:= )
 	ffmpeg? ( media-video/ffmpeg:=[x264,mp3,encode,theora,jpeg2k?] )
 	libav? ( >=media-video/libav-11.3:=[x264,mp3,encode,theora,jpeg2k?] )
 	fftw? ( sci-libs/fftw:3.0= )
@@ -88,7 +88,7 @@ RDEPEND="${PYTHON_DEPS}
 	sdl? ( media-libs/libsdl2[sound,joystick] )
 	sndfile? ( media-libs/libsndfile )
 	tiff? ( media-libs/tiff:0 )
-	alembic? ( media-gfx/alembic[boost=] )
+	alembic? ( >=media-gfx/alembic-1.7.4[boost=] )
 	valgrind? ( dev-util/valgrind )"
 
 DEPEND="${RDEPEND}

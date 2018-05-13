@@ -1,4 +1,4 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -20,7 +20,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 RDEPEND=">=media-gfx/blender-${BLENDER_MIN_PV}
-	=media-gfx/renderman-${PV}"
+	>=media-gfx/renderman-${PV}"
 
 src_install() {
 	# TODO: improve this, will break on -rX releases!

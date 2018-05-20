@@ -1,0 +1,13 @@
+diff --git a/IlmThread/CMakeLists.txt b/IlmThread/CMakeLists.txt
+index 60f282a..eaab1ae 100644
+--- a/IlmThread/CMakeLists.txt
++++ b/IlmThread/CMakeLists.txt
+@@ -26,7 +26,7 @@ ENDIF()
+ ADD_LIBRARY ( IlmThread ${LIB_TYPE}
+   ${ILMTHREAD_LIBRARY_SOURCES}
+   )
+-TARGET_LINK_LIBRARIES(IlmThread Iex)
++TARGET_LINK_LIBRARIES(IlmThread Iex pthread)
+ 
+ INSTALL ( TARGETS
+   IlmThread

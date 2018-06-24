@@ -1,0 +1,26 @@
+Description: fix version string for VNC plugin module.
+Index: virtualbox/Config.kmk
+===================================================================
+--- virtualbox.orig/Config.kmk	2015-04-02 15:47:04.439745251 +0200
++++ virtualbox/Config.kmk	2015-04-02 15:47:04.435745250 +0200
+@@ -3072,6 +3072,7 @@
+ 	-e 's/@VBOX_VERSION_MINOR@/$(VBOX_VERSION_MINOR)/g' \
+ 	-e 's/@VBOX_VERSION_BUILD@/$(VBOX_VERSION_BUILD)/g' \
+ 	-e 's/@VBOX_VERSION_STRING@/$(VBOX_VERSION_STRING)/g' \
++	-e 's/@VBOX_VERSION_STRING_RAW@/$(VBOX_VERSION_STRING_RAW)/g' \
+ 	-e 's/@VBOX_SVN_REV@/$(VBOX_SVN_REV)/g' \
+ 	-e 's/@VBOX_VENDOR@/$(VBOX_VENDOR)/g' \
+ 	-e 's/@VBOX_VENDOR_SHORT@/$(VBOX_VENDOR_SHORT)/g' \
+Index: virtualbox/src/VBox/ExtPacks/VNC/ExtPack.xml
+===================================================================
+--- virtualbox.orig/src/VBox/ExtPacks/VNC/ExtPack.xml	2015-04-02 15:47:04.439745251 +0200
++++ virtualbox/src/VBox/ExtPacks/VNC/ExtPack.xml	2015-04-02 15:47:04.435745250 +0200
+@@ -2,7 +2,7 @@
+ <VirtualBoxExtensionPack xmlns="http://www.virtualbox.org/VirtualBoxExtensionPack" version="1.0">
+     <Name>VNC</Name>
+     <Description>VNC plugin module</Description>
+-    <Version revision="@VBOX_SVN_REV@">@VBOX_VERSION_STRING@</Version>
++    <Version revision="@VBOX_SVN_REV@">@VBOX_VERSION_STRING_RAW@</Version>
+     <MainModule>VBoxVNCMain</MainModule>
+     <VRDEModule>VBoxVNC</VRDEModule>
+     <ShowLicense/>

@@ -1,0 +1,43 @@
+Description: Silently enable the host I/O cache when the image is on an ext4/XFS partition.
+ No need to warn users about it.
+Author: Felix Geyer <fgeyer@debian.org>
+
+diff --git a/src/VBox/Main/src-client/ConsoleImpl2.cpp b/src/VBox/Main/src-client/ConsoleImpl2.cpp
+index 61dbf0a59..cfb76fc48 100644
+--- a/src/VBox/Main/src-client/ConsoleImpl2.cpp
++++ b/src/VBox/Main/src-client/ConsoleImpl2.cpp
+@@ -4038,34 +4038,12 @@ int Console::i_checkMediumLocation(IMedium *pMedium, bool *pfUseHostIOCache)
+             if (   enmFsTypeFile == RTFSTYPE_EXT4
+                 || enmFsTypeFile == RTFSTYPE_XFS)
+             {
+-                i_atVMRuntimeErrorCallbackF(0, "Ext4PartitionDetected",
+-                        N_("The host I/O cache for at least one controller is disabled "
+-                           "and the medium '%ls' for this VM "
+-                           "is located on an %s partition. There is a known Linux "
+-                           "kernel bug which can lead to the corruption of the virtual "
+-                           "disk image under these conditions.\n"
+-                           "Either enable the host I/O cache permanently in the VM "
+-                           "settings or put the disk image and the snapshot folder "
+-                           "onto a different file system.\n"
+-                           "The host I/O cache will now be enabled for this medium"),
+-                        strFile.raw(), enmFsTypeFile == RTFSTYPE_EXT4 ? "ext4" : "xfs");
+                 *pfUseHostIOCache = true;
+             }
+             else if (  (   enmFsTypeSnap == RTFSTYPE_EXT4
+                         || enmFsTypeSnap == RTFSTYPE_XFS)
+                      && !mfSnapshotFolderExt4WarningShown)
+             {
+-                i_atVMRuntimeErrorCallbackF(0, "Ext4PartitionDetected",
+-                        N_("The host I/O cache for at least one controller is disabled "
+-                           "and the snapshot folder for this VM "
+-                           "is located on an %s partition. There is a known Linux "
+-                           "kernel bug which can lead to the corruption of the virtual "
+-                           "disk image under these conditions.\n"
+-                           "Either enable the host I/O cache permanently in the VM "
+-                           "settings or put the disk image and the snapshot folder "
+-                           "onto a different file system.\n"
+-                           "The host I/O cache will now be enabled for this medium"),
+-                        enmFsTypeSnap == RTFSTYPE_EXT4 ? "ext4" : "xfs");
+                 *pfUseHostIOCache = true;
+                 mfSnapshotFolderExt4WarningShown = true;
+             }

@@ -1,0 +1,20 @@
+Description: Remove check for invalid characters in the build path since we have fixed
+ kBuild to handle those pathes starting from version 1:0.1.98svn2318-7.
+Author: Felix Geyer <fgeyer@debian.org>
+
+Index: virtualbox/configure
+===================================================================
+--- virtualbox.orig/configure	2013-11-19 04:36:42.817631012 -0500
++++ virtualbox/configure	2013-11-19 04:36:42.813631012 -0500
+@@ -180,11 +180,6 @@
+ # the restricting tool is ar (mri mode).
+ INVALID_CHARS="[^A-Za-z0-9/\\$:._-]"
+ 
+-if (cd `dirname $0`; pwd)|grep -q "$INVALID_CHARS"; then
+-  echo "Error: VBox base path contains invalid characters!"
+-  exit 1
+-fi
+-
+ # Posix /bin/sh isn't supporting echo -n. Use printf instead.
+ ECHO_N="printf"
+ 

@@ -1,0 +1,124 @@
+Description: Disable "Check for Updates" action.
+Bug-Ubuntu: https://bugs.launchpad.net/bugs/272212
+Author: Daniel Hahler <ubuntu@thequod.de>, Felix Geyer <fgeyer@debian.org>
+
+diff a/src/VBox/Frontends/VirtualBox/src/net/UIUpdateManager.cpp b/src/VBox/Frontends/VirtualBox/src/net/UIUpdateManager.cpp
+Index: virtualbox/src/VBox/Frontends/VirtualBox/src/net/UIUpdateManager.cpp
+===================================================================
+--- virtualbox.orig/src/VBox/Frontends/VirtualBox/src/net/UIUpdateManager.cpp
++++ virtualbox/src/VBox/Frontends/VirtualBox/src/net/UIUpdateManager.cpp
+@@ -482,6 +482,8 @@
+ 
+ void UIUpdateManager::sltForceCheck()
+ {
++    return;
++
+     /* Force call for new version check: */
+     sltCheckIfUpdateIsNecessary(true /* force call */);
+ }
+Index: virtualbox/src/VBox/Frontends/VirtualBox/src/globals/UIActionPool.cpp
+===================================================================
+--- virtualbox.orig/src/VBox/Frontends/VirtualBox/src/globals/UIActionPool.cpp
++++ virtualbox/src/VBox/Frontends/VirtualBox/src/globals/UIActionPool.cpp
+@@ -1116,7 +1116,6 @@
+     m_pool[UIActionIndex_M_Application_S_Preferences] = new UIActionSimplePreferences(this);
+ #ifdef VBOX_GUI_WITH_NETWORK_MANAGER
+     m_pool[UIActionIndex_M_Application_S_NetworkAccessManager] = new UIActionSimpleNetworkAccessManager(this);
+-    m_pool[UIActionIndex_M_Application_S_CheckForUpdates] = new UIActionSimpleCheckForUpdates(this);
+ #endif /* VBOX_GUI_WITH_NETWORK_MANAGER */
+     m_pool[UIActionIndex_M_Application_S_ResetWarnings] = new UIActionSimpleResetWarnings(this);
+     m_pool[UIActionIndex_M_Application_S_Close] = new UIActionSimplePerformClose(this);
+@@ -1162,8 +1161,6 @@
+ #ifdef VBOX_GUI_WITH_NETWORK_MANAGER
+     connect(action(UIActionIndex_M_Application_S_NetworkAccessManager), &UIAction::triggered,
+             gNetworkManager, &UINetworkManager::show, Qt::UniqueConnection);
+-    connect(action(UIActionIndex_M_Application_S_CheckForUpdates), &UIAction::triggered,
+-            gUpdateManager, &UIUpdateManager::sltForceCheck, Qt::UniqueConnection);
+ #endif /* VBOX_GUI_WITH_NETWORK_MANAGER */
+     connect(action(UIActionIndex_M_Application_S_ResetWarnings), &UIAction::triggered,
+             &msgCenter(), &UIMessageCenter::sltResetSuppressedMessages, Qt::UniqueConnection);
+@@ -1244,7 +1241,7 @@
+     if (!fUpdateAllowed)
+     {
+         m_restrictedActionsMenuApplication[UIActionRestrictionLevel_Base] = (UIExtraDataMetaDefs::MenuApplicationActionType)
+-            (m_restrictedActionsMenuApplication[UIActionRestrictionLevel_Base] | UIExtraDataMetaDefs::MenuApplicationActionType_CheckForUpdates);
++            (m_restrictedActionsMenuApplication[UIActionRestrictionLevel_Base]);
+     }
+ #endif /* VBOX_GUI_WITH_NETWORK_MANAGER */
+ 
+Index: virtualbox/src/VBox/Frontends/VirtualBox/src/globals/UIActionPool.h
+===================================================================
+--- virtualbox.orig/src/VBox/Frontends/VirtualBox/src/globals/UIActionPool.h
++++ virtualbox/src/VBox/Frontends/VirtualBox/src/globals/UIActionPool.h
+@@ -62,7 +62,6 @@
+     UIActionIndex_M_Application_S_Preferences,
+ #ifdef VBOX_GUI_WITH_NETWORK_MANAGER
+     UIActionIndex_M_Application_S_NetworkAccessManager,
+-    UIActionIndex_M_Application_S_CheckForUpdates,
+ #endif /* VBOX_GUI_WITH_NETWORK_MANAGER */
+     UIActionIndex_M_Application_S_ResetWarnings,
+     UIActionIndex_M_Application_S_Close,
+Index: virtualbox/src/VBox/Frontends/VirtualBox/src/settings/UISettingsDialogSpecific.cpp
+===================================================================
+--- virtualbox.orig/src/VBox/Frontends/VirtualBox/src/settings/UISettingsDialogSpecific.cpp
++++ virtualbox/src/VBox/Frontends/VirtualBox/src/settings/UISettingsDialogSpecific.cpp
+@@ -304,6 +304,10 @@
+ #endif /* !VBOX_WITH_NETFLT */
+             break;
+         }
++        case GlobalSettingsPageType_Update:
++        {
++            return false;
++        }
+         default:
+             break;
+     }
+Index: virtualbox/src/VBox/Frontends/VirtualBox/src/selector/UISelectorWindow.cpp
+===================================================================
+--- virtualbox.orig/src/VBox/Frontends/VirtualBox/src/selector/UISelectorWindow.cpp
++++ virtualbox/src/VBox/Frontends/VirtualBox/src/selector/UISelectorWindow.cpp
+@@ -1435,8 +1435,6 @@
+     /* 'About' action goes to Application menu: */
+     pMenu->addAction(actionPool()->action(UIActionIndex_M_Application_S_About));
+ # ifdef VBOX_GUI_WITH_NETWORK_MANAGER
+-    /* 'Check for Updates' action goes to Application menu: */
+-    pMenu->addAction(actionPool()->action(UIActionIndex_M_Application_S_CheckForUpdates));
+     /* 'Network Access Manager' action goes to Application menu: */
+     pMenu->addAction(actionPool()->action(UIActionIndex_M_Application_S_NetworkAccessManager));
+ # endif /* VBOX_GUI_WITH_NETWORK_MANAGER */
+@@ -1479,7 +1476,7 @@
+     addAction(actionPool()->action(UIActionIndexST_M_File_S_ShowHostNetworkManager));
+ #  ifdef VBOX_GUI_WITH_NETWORK_MANAGER
+     addAction(actionPool()->action(UIActionIndex_M_Application_S_NetworkAccessManager));
+-    addAction(actionPool()->action(UIActionIndex_M_Application_S_CheckForUpdates));
++//    addAction(actionPool()->action(UIActionIndex_M_Application_S_CheckForUpdates));
+ #  endif /* VBOX_GUI_WITH_NETWORK_MANAGER */
+     addAction(actionPool()->action(UIActionIndex_M_Application_S_ResetWarnings));
+     addAction(actionPool()->action(UIActionIndexST_M_File_S_Close));
+@@ -1506,9 +1504,6 @@
+ # ifdef VBOX_GUI_WITH_NETWORK_MANAGER
+     /* 'Network Access Manager' action goes to 'File' menu: */
+     pMenu->addAction(actionPool()->action(UIActionIndex_M_Application_S_NetworkAccessManager));
+-    /* 'Check for Updates' action goes to 'File' menu: */
+-    if (gEDataManager->applicationUpdateEnabled())
+-        pMenu->addAction(actionPool()->action(UIActionIndex_M_Application_S_CheckForUpdates));
+ # endif /* VBOX_GUI_WITH_NETWORK_MANAGER */
+     /* 'Reset Warnings' action goes 'File' menu: */
+     pMenu->addAction(actionPool()->action(UIActionIndex_M_Application_S_ResetWarnings));
+Index: virtualbox/doc/manual/en_US/user_Introduction.xml
+===================================================================
+--- virtualbox.orig/doc/manual/en_US/user_Introduction.xml
++++ virtualbox/doc/manual/en_US/user_Introduction.xml
+@@ -1771,10 +1771,12 @@
+          used to trigger certain VM actions (see <xref
+          linkend="specialcharacters"/>)</para>
+       </listitem>
++<!--
+       <listitem>
+          <para><emphasis role="bold">Update</emphasis> Enables the user
+          to specify various settings for Automatic Updates.</para>
+       </listitem>
++-->
+       <listitem>
+          <para><emphasis role="bold">Language</emphasis> Enables the user to
+          specify the GUI language.</para>

@@ -1,0 +1,15 @@
+--- a/Config.kmk	2017-11-23 16:15:39.000000000 +0700
++++ b/Config.kmk	2017-12-09 14:27:49.446113809 +0700
+@@ -1804,9 +1804,9 @@
+   VBOX_BLD_PYTHON := $(firstword $(rsort $(wildcard $(KBUILD_DEVTOOLS)/win.x86/python/v*/python$(HOSTSUFF_EXE))) \
+   				   python-not-found.exe)
+  else
+-  VBOX_BLD_PYTHON := $(firstword $(which python2.7$(HOSTSUFF_EXE)) $(which python2.6$(HOSTSUFF_EXE)) \
+-                                 $(which python$(HOSTSUFF_EXE)) $(which python3$(HOSTSUFF_EXE)) \
+-				   python-not-found)
++  VBOX_BLD_PYTHON := $(firstword $(which python$(HOSTSUFF_EXE)) $(which python3$(HOSTSUFF_EXE)) \
++					$(which python2.7$(HOSTSUFF_EXE)) $(which python2.6$(HOSTSUFF_EXE)) \
++  					python-not-found)
+  endif
+ endif
+ 

@@ -20,7 +20,10 @@ LICENSE="BSD"
 SLOT="0"
 IUSE="test"
 
-PATCHES=( "${FILESDIR}/${PN}-${PV}-fix_docker.py.patch" )
+PATCHES=(
+	"${FILESDIR}/${PN}-${PV}-fix_docker.py.patch"
+	"${FILESDIR}/${PN}-${PV}-respect_X_vnc_manual_flags.patch"
+)
 
 RDEPEND="
 	app-emulation/docker

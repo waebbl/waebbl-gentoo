@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>dracwyrm@gentoo.org</email>
+		<name>Jonathan Scruggs</name>
+	</maintainer>
+	<maintainer type="person">
+		<email>agrigo2001@yahoo.com.au</email>
+		<name>Adrian Grigo</name>
+	</maintainer>
+	<maintainer type="project">
+		<email>proxy-maint@gentoo.org</email>
+		<name>Proxy Maintainers</name>
+	</maintainer>
+	<longdescription>
+		Libraries from Dreamworks Animation for the efficient manipulation 
+		of volumetric data used in big budget movies like 'Cloudy with a
+		Chance of Meatballs2' and 'How to Train Your Dragon 2'. 
+	</longdescription>
+	<upstream>
+		<remote-id type="github">dreamworksanimation/openvdb</remote-id>
+	</upstream>
+</pkgmetadata>

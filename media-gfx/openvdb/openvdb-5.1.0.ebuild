@@ -57,6 +57,7 @@ src_configure() {
 		-DBLOSC_LOCATION="${myprefix}"
 		-DCMAKE_INSTALL_DOCDIR="share/doc/${PF}"
 		-DGLFW3_LOCATION="${myprefix}"
+		-DOPENVDB_ABI_VERSION_NUMBER=5
 		-DOPENVDB_BUILD_DOCS=$(usex doc)
 		-DOPENVDB_BUILD_PYTHON_MODULE=$(usex python)
 		-DOPENVDB_BUILD_UNITTESTS=$(usex test)

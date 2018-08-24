@@ -72,6 +72,7 @@ COMMON_DEPEND="
 	dev-java/xerces
 	dev-libs/boost:=[python,${PYTHON_USEDEP}]
 	dev-libs/xerces-c[icu]
+	sci-libs/libmed
 	sci-libs/orocos_kdl
 	sci-libs/opencascade:7.3.0[vtk(+)]
 	sys-cluster/openmpi

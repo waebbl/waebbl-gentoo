@@ -7,8 +7,7 @@ inherit cmake-utils eutils check-reqs multilib java-pkg-opt-2 flag-o-matic
 
 DESCRIPTION="Development platform for CAD/CAE, 3D surface/solid modeling and data exchange"
 HOMEPAGE="http://www.opencascade.com/"
-COMMIT="42da0d5115bff683c6b596e66cdeaff957f81e7d"
-SRC_URI="https://git.dev.opencascade.org/gitweb/?p=occt.git;a=snapshot;h=${COMMIT};sf=tgz -> ${P}.tar.gz"
+SRC_URI="https://git.dev.opencascade.org/gitweb/?p=occt.git;a=snapshot;h=refs/tags/V7_3_0;sf=tgz -> ${P}.tar.gz"
 
 LICENSE="|| ( Open-CASCADE-LGPL-2.1-Exception-1.0 LGPL-2.1 )"
 SLOT="${PV}"
@@ -43,7 +42,7 @@ CHECKREQS_DISK_BUILD="3584M"
 
 CMAKE_BUILD_TYPE=Release
 
-S="${WORKDIR}/occt-${COMMIT::7}"
+S="${WORKDIR}/occt-V7_3_0"
 
 PATCHES=(
 	"${FILESDIR}"/ffmpeg4.patch

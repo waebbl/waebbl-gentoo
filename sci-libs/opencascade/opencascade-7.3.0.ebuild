@@ -48,6 +48,7 @@ PATCHES=(
 	"${FILESDIR}"/ffmpeg4.patch
 	"${FILESDIR}"/fix-install-dir-references.patch
 	"${FILESDIR}"/vtk7.patch
+	"${FILESDIR}"/opencascade-fix-install-dir-reference.patch
 	)
 
 pkg_setup() {
@@ -58,7 +59,7 @@ pkg_setup() {
 src_prepare() {
 	cmake-utils_src_prepare
 	java-pkg-opt-2_src_prepare
-	local my_install_dir=${EROOT}usr/$(get_libdir)/${P}/ros
+	my_install_dir=${EROOT}usr/$(get_libdir)/${P}/ros
 	local my_env_install="#!/bin/sh -f
 if [ -z \"\$PATH\" ]; then
 	export PATH=VAR_CASROOT/Linux/bin

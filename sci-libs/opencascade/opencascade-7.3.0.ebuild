@@ -7,7 +7,8 @@ inherit cmake-utils eutils check-reqs multilib java-pkg-opt-2 flag-o-matic
 
 DESCRIPTION="Development platform for CAD/CAE, 3D surface/solid modeling and data exchange"
 HOMEPAGE="http://www.opencascade.com/"
-SRC_URI="http://www.${PN}.com/sites/default/files/private/occt/OCC_7.3.0_release/opencascade-7.3.0.tgz"
+COMMIT="42da0d5115bff683c6b596e66cdeaff957f81e7d"
+SRC_URI="https://git.dev.opencascade.org/gitweb/?p=occt.git;a=snapshot;h=${COMMIT};sf=tgz -> ${P}.tar.gz"
 
 LICENSE="|| ( Open-CASCADE-LGPL-2.1-Exception-1.0 LGPL-2.1 )"
 SLOT="${PV}"
@@ -35,26 +36,20 @@ DEPEND="${RDEPEND}
 
 # https://bugs.gentoo.org/show_bug.cgi?id=352435
 # https://www.gentoo.org/foundation/en/minutes/2011/20110220_trustees.meeting_log.txt
-RESTRICT="bindist fetch"
+RESTRICT="bindist"
 
 CHECKREQS_MEMORY="256M"
 CHECKREQS_DISK_BUILD="3584M"
 
 CMAKE_BUILD_TYPE=Release
 
-#S=${WORKDIR}/occt-V7_3_0
+S="${WORKDIR}/occt-${COMMIT::7}"
 
 PATCHES=(
 	"${FILESDIR}"/ffmpeg4.patch
 	"${FILESDIR}"/fix-install-dir-references.patch
 	"${FILESDIR}"/vtk7.patch
 	)
-
-pkg_nofetch() {
-	einfo "To download ${PN} fetch"
-	einfo "${SRC_URI}"
-	einfo "and place it in your distfiles directory."
-}
 
 pkg_setup() {
 	check-reqs_pkg_setup
@@ -64,7 +59,7 @@ pkg_setup() {
 src_prepare() {
 	cmake-utils_src_prepare
 	java-pkg-opt-2_src_prepare
-my_install_dir=${EROOT}usr/$(get_libdir)/${P}/ros
+	local my_install_dir=${EROOT}usr/$(get_libdir)/${P}/ros
 	local my_env_install="#!/bin/sh -f
 if [ -z \"\$PATH\" ]; then
 	export PATH=VAR_CASROOT/Linux/bin
@@ -125,8 +120,8 @@ src_configure() {
 		-DCMAKE_CONFIGURATION_TYPES="Gentoo"
 		-DBUILD_WITH_DEBUG=$(usex debug)
 		-DCMAKE_INSTALL_PREFIX="${my_install_dir}"
-		-DINSTALL_DIR_DOC="/usr/share/doc/${P}"
-		-DINSTALL_DIR_CMAKE="/usr/$(get_libdir)/cmake"
+		-DINSTALL_DIR_DOC="${EPREFIX}/usr/share/doc/${P}"
+		-DINSTALL_DIR_CMAKE="${EPREFIX}/usr/$(get_libdir)/cmake"
 		-DUSE_D3D=no
 		-DUSE_FREEIMAGE=$(usex freeimage)
 		-DUSE_GL2PS=$(usex gl2ps)

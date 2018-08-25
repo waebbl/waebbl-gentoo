@@ -3,12 +3,12 @@
 
 EAPI=6
 
-inherit cmake-utils eutils check-reqs multilib java-pkg-opt-2 flag-o-matic versionator
+inherit cmake-utils eapi7-ver eutils check-reqs multilib java-pkg-opt-2 flag-o-matic
 
 DESCRIPTION="Development platform for CAD/CAE, 3D surface/solid modeling and data exchange"
 HOMEPAGE="http://www.opencascade.com/"
 
-MY_PV="$(replace_all_version_separators '_')"
+MY_PV="$(ver_rs 1-2 '_')"
 SRC_URI="https://git.dev.opencascade.org/gitweb/?p=occt.git;a=snapshot;h=refs/tags/V${MY_PV};sf=tgz -> ${P}.tar.gz"
 
 LICENSE="|| ( Open-CASCADE-LGPL-2.1-Exception-1.0 LGPL-2.1 )"
@@ -101,7 +101,7 @@ TIX_LIBRARY=${my_sys_lib}/tix$(grep TIX_VER /usr/include/tix.h | sed 's/^.*"\(.*
 TK_LIBRARY=${my_sys_lib}/tk$(grep TK_VER /usr/include/tk.h | sed 's/^.*"\(.*\)".*/\1/')
 TCL_LIBRARY=${my_sys_lib}/tcl$(grep TCL_VER /usr/include/tcl.h | sed 's/^.*"\(.*\)".*/\1/')"
 
-	( 	echo "${my_env_install}"
+	(	echo "${my_env_install}"
 		echo "${my_env}" | sed -e "s:^:export :" ) \
 	| sed -e "s:VAR_CASROOT:${S}:g" > env.sh || die
 	source env.sh
@@ -139,6 +139,9 @@ src_configure() {
 
 src_install() {
 	cmake-utils_src_install
+
+	# make draw.sh non-world-writable
+	chmod go-w "${D}/${my_install_dir}/bin/draw.sh"
 
 	insinto /etc/env.d/${PN}
 	newins "${S}/50${PN}" ${PV}

@@ -149,8 +149,8 @@ src_configure() {
 		-DCMAKE_INSTALL_INCLUDEDIR=/usr/include/${P}
 		-DFREECAD_USE_EXTERNAL_SMESH=0
 		-DFREECAD_USE_EXTERNAL_KDL="ON"
-		-DOCC_INCLUDE_DIR=/usr/lib64/opencascade-7.3.0/ros/include/opencascade
-		-DOCC_LIBRARY_DIR=/usr/lib64/opencascade-7.3.0/ros/lib
+		-DOCC_INCLUDE_DIR="${CASROOT}/include/opencascade"
+		-DOCC_LIBRARY_DIR="${CASROOT}/lib"
 		-DOPENMPI_INCLUDE_DIRS=/usr/include/
 		$(enable_module addonmgr)
 		$(enable_module arch)

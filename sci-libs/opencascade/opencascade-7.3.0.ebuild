@@ -3,11 +3,13 @@
 
 EAPI=6
 
-inherit cmake-utils eutils check-reqs multilib java-pkg-opt-2 flag-o-matic
+inherit cmake-utils eutils check-reqs multilib java-pkg-opt-2 flag-o-matic versionator
 
 DESCRIPTION="Development platform for CAD/CAE, 3D surface/solid modeling and data exchange"
 HOMEPAGE="http://www.opencascade.com/"
-SRC_URI="https://git.dev.opencascade.org/gitweb/?p=occt.git;a=snapshot;h=refs/tags/V7_3_0;sf=tgz -> ${P}.tar.gz"
+# convert x.x.x to x_x_x
+MY_PV="$(replace_all_version_separators '_')"
+SRC_URI="https://git.dev.opencascade.org/gitweb/?p=occt.git;a=snapshot;h=refs/tags/V${MY_PV};sf=tgz -> ${P}.tar.gz"
 
 LICENSE="|| ( Open-CASCADE-LGPL-2.1-Exception-1.0 LGPL-2.1 )"
 SLOT="${PV}"
@@ -42,7 +44,7 @@ CHECKREQS_DISK_BUILD="3584M"
 
 CMAKE_BUILD_TYPE=Release
 
-S="${WORKDIR}/occt-V7_3_0"
+S="${WORKDIR}/occt-V${MY_PV}"
 
 PATCHES=(
 	"${FILESDIR}"/ffmpeg4.patch
@@ -52,12 +54,12 @@ PATCHES=(
 
 pkg_setup() {
 	check-reqs_pkg_setup
-	java-pkg-opt-2_pkg_setup
+	use java && java-pkg-opt-2_pkg_setup
 }
 
 src_prepare() {
 	cmake-utils_src_prepare
-	java-pkg-opt-2_src_prepare
+	use java && java-pkg-opt-2_src_prepare
 	local my_install_dir=${EROOT}usr/$(get_libdir)/${P}/ros
 	local my_env_install="#!/bin/sh -f
 if [ -z \"\$PATH\" ]; then

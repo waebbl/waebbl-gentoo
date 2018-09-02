@@ -18,6 +18,11 @@
 		of volumetric data used in big budget movies like 'Cloudy with a
 		Chance of Meatballs2' and 'How to Train Your Dragon 2'. 
 	</longdescription>
+	<use>
+		<flag name="abi4-compat" restrict=">=media-gfx/openvdb-5.2.0">
+			Build openvdb with compatibility for older ABIs
+		</flag>
+	</use>
 	<upstream>
 		<remote-id type="github">dreamworksanimation/openvdb</remote-id>
 	</upstream>

@@ -11,11 +11,11 @@ inherit cmake-utils desktop eutils xdg-utils gnome2-utils python-single-r1 git-r
 DESCRIPTION="QT based Computer Aided Design application"
 HOMEPAGE="http://www.freecadweb.org/"
 
-#EGIT_REPO_URI="https://github.com/FreeCAD/FreeCAD.git"
-#EGIT_BRANCH="releases/FreeCAD-0-17"
-#EGIT_COMMIT="0258808"
-EGIT_REPO_URI="file:///mnt/data/code/github/freecad/"
+EGIT_REPO_URI="https://github.com/FreeCAD/FreeCAD.git"
 EGIT_BRANCH="master"
+#EGIT_COMMIT="0258808"
+#EGIT_REPO_URI="file:///mnt/data/code/github/freecad/"
+#EGIT_BRANCH="master"
 
 LICENSE="GPL-2"
 SLOT="0"

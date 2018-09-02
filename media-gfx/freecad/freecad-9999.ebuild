@@ -6,7 +6,7 @@ EAPI=6
 # As of 2017-12-30 only python3_5 works (that is FreeCAD does not crash on startup)
 PYTHON_COMPAT=( python3_6 )
 
-inherit cmake-utils eutils xdg-utils gnome2-utils fortran-2 python-single-r1 git-r3
+inherit cmake-utils desktop eutils xdg-utils gnome2-utils python-single-r1 git-r3
 
 DESCRIPTION="QT based Computer Aided Design application"
 HOMEPAGE="http://www.freecadweb.org/"
@@ -15,14 +15,18 @@ HOMEPAGE="http://www.freecadweb.org/"
 #EGIT_BRANCH="releases/FreeCAD-0-17"
 #EGIT_COMMIT="0258808"
 EGIT_REPO_URI="file:///mnt/data/code/github/freecad/"
-EGIT_BRANCH="cmake"
+EGIT_BRANCH="master"
 
 LICENSE="GPL-2"
 SLOT="0"
 
-# Takem from CMakeLists.txt
 # TODO:
 #   vr: needs a rift package
+#	pcl: sci-libs/pcl
+#	netgen: sci-mathematics/netgen
+#	openscad: media-gfx/openscad
+#	smesh: needs a salome-platform package
+#	zipio++: needs a package
 IUSE_FREECAD_MODULES="
 	+freecad_modules_addonmgr
 	+freecad_modules_arch
@@ -63,21 +67,17 @@ IUSE_FREECAD_MODULES="
 	+freecad_modules_web"
 IUSE="eigen3 +freetype +qt5 swig ${IUSE_FREECAD_MODULES}"
 
-# TODO:
-#   DEPEND and RDEPEND:
-#		salomesmesh - science overlay
-#		zipio++ - not in portage yet
 COMMON_DEPEND="
 	${PYTHON_DEPS}
-	dev-java/xerces
 	dev-libs/boost:=[python,${PYTHON_USEDEP}]
 	dev-libs/xerces-c[icu]
-	sci-libs/libmed
+	sci-libs/libmed[fortran,python,${PYTHON_USEDEP}]
 	sci-libs/orocos_kdl
 	sci-libs/opencascade:7.3.0[vtk(+)]
 	sys-cluster/openmpi
 	sys-libs/zlib
 	virtual/glu
+	virtual/opengl
 	eigen3? ( dev-cpp/eigen:3 )
 	freecad_modules_draft? ( dev-python/pyside:2[svg,${PYTHON_USEDEP}] )
 	freecad_modules_plot? ( dev-python/matplotlib[${PYTHON_USEDEP}] )
@@ -100,27 +100,21 @@ COMMON_DEPEND="
 		dev-qt/qtxml:5
 		media-libs/coin
 	)"
-# There's not slot 0 for pyside and shiboken
-#	!qt5? (
-#		dev-python/pyside:0[${PYTHON_USEDEP}]
-#		dev-python/shiboken:0[${PYTHON_USEDEP}]
-#	)"
 RDEPEND="${COMMON_DEPEND}
 	dev-python/numpy[${PYTHON_USEDEP}]
 	dev-python/pivy[${PYTHON_USEDEP}]"
 DEPEND="${COMMON_DEPEND}
 	qt5? ( dev-python/pyside-tools:2[${PYTHON_USEDEP}] )
 	swig? ( dev-lang/swig:= )"
-#	!qt5? ( dev-python/pyside-tools:0[${PYTHON_USEDEP}] ) # dito as in COMMON_DEPEND
 
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 CMAKE_BUILD_TYPE=Release
 
 DOCS=( README.md ChangeLog.txt )
 
-#	"${FILESDIR}/qt5.11.patch"
 PATCHES=(
 	"${FILESDIR}/smesh-pthread.patch"
+	"${FILESDIR}/freecad-ModPath-find-boost_python.patch"
 	)
 
 enable_module() {
@@ -135,8 +129,14 @@ enable_module() {
 }
 
 pkg_setup() {
-	fortran-2_pkg_setup
 	python-single-r1_pkg_setup
+}
+
+src_prepare() {
+	# the upstream provided file doesn't find coin, but cmake ships
+	# a working one, so we use this.
+	rm -f "${S}/cMake/FindCoin3D.cmake"
+	cmake-utils_src_prepare
 }
 
 src_configure() {
@@ -144,13 +144,15 @@ src_configure() {
 		-DBUILD_FREETYPE="$(usex freetype)"
 		-DBUILD_GUI="$(usex qt5)"
 		-DBUILD_QT5="$(usex qt5)"
-		-DCMAKE_INSTALL_DATADIR=/usr/share/${P}
+		-DCMAKE_INSTALL_DATADIR=/usr/share/${PN}
 		-DCMAKE_INSTALL_DOCDIR=/usr/share/doc/${PF}
-		-DCMAKE_INSTALL_INCLUDEDIR=/usr/include/${P}
+		-DCMAKE_INSTALL_INCLUDEDIR=/usr/include/${PN}
+		-DCMAKE_INSTALL_PREFIX=/usr/$(get_libdir)/${PN}
 		-DFREECAD_USE_EXTERNAL_SMESH=0
 		-DFREECAD_USE_EXTERNAL_KDL="ON"
-		-DOCC_INCLUDE_DIR=/usr/lib64/opencascade-7.3.0/ros/include/opencascade
-		-DOCC_LIBRARY_DIR=/usr/lib64/opencascade-7.3.0/ros/lib
+		# opencascade-7.3.0 sets CASROOT in /etc/env.d/51opencascade
+		-DOCC_INCLUDE_DIR=${CASROOT}/include/opencascade
+		-DOCC_LIBRARY_DIR=${CASROOT}/lib
 		-DOPENMPI_INCLUDE_DIRS=/usr/include/
 		$(enable_module addonmgr)
 		$(enable_module arch)
@@ -198,23 +200,31 @@ src_configure() {
 src_install() {
 	cmake-utils_src_install
 
+	dosym ../$(get_libdir)/${PN}/bin/FreeCAD /usr/bin/freecad
+	dosym ../$(get_libdir)/${PN}/bin/FreeCADCmd /usr/bin/freecadcmd
+
 	make_desktop_entry FreeCAD "FreeCAD" "" "" "MimeType=application/x-extension-fcstd;"
 
 	# install mimetype for FreeCAD files
 	insinto /usr/share/mime/packages
 	newins "${FILESDIR}"/${PN}.sharedmimeinfo "${PN}.xml"
 
+	insinto /usr/share/pixmaps
+	newins "${S}"/src/Gui/Icons/${PN}.xpm "${PN}.xpm"
+
 	# install icons to correct place rather than /usr/share/freecad
-	pushd "${ED%/}"/usr/share/${P} || die
 	local size
 	for size in 16 32 48 64; do
-		newicon -s ${size} freecad-icon-${size}.png freecad.png
+		newicon -s ${size} "${S}"/src/Gui/Icons/${PN}-icon-${size}.png ${PN}.png
 	done
-	doicon -s scalable freecad.svg
-	newicon -s 64 -c mimetypes freecad-doc.png application-x-extension-fcstd.png
-	popd || die
+	doicon -s scalable "${S}"/src/Gui/Icons/${PN}.svg
+	newicon -s 64 -c mimetypes "${S}"/src/Gui/Icons/${PN}-doc.png application-x-extension-fcstd.png
 
-	python_optimize "${ED%/}"/usr/{,share/${P}/}Mod/
+	rm "${ED}"/usr/share/${PN}/${PN}-{doc,icon-{16,32,48,64}}.png
+	rm "${ED}"/usr/share/${PN}/${PN}.svg
+	rm "${ED}"/usr/share/${PN}/${PN}.xpm
+
+	python_optimize "${ED%/}"/usr/share/${PN}/Mod/ "${ED%/}"/usr/$(get_libdir)/${PN}{/Ext,/Mod}/
 }
 
 pkg_postinst() {

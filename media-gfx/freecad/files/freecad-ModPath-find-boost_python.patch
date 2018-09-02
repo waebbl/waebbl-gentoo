@@ -1,0 +1,23 @@
+diff --git a/src/Mod/Path/libarea/CMakeLists.txt b/src/Mod/Path/libarea/CMakeLists.txt
+index 3084693f9..8107b34eb 100644
+--- a/src/Mod/Path/libarea/CMakeLists.txt
++++ b/src/Mod/Path/libarea/CMakeLists.txt
+@@ -15,13 +15,13 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+ if(NOT FREECAD_USE_PYBIND11)
+     if(NOT FREECAD_LIBPACK_USE OR FREECAD_LIBPACK_CHECKFILE_CLBUNDLER)
+         # boost-python >= 1.67 on some platforms has suffix
+-        set(BOOST_PY_SUFFIX ${PYTHON_VERSION_MAJOR}${PYTHON_VERSION_MINOR})
++        set(BOOST_PY_SUFFIX ${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR})
+ 
+-        find_package( Boost COMPONENTS python${BOOST_PY_SUFFIX} )
+-        if (NOT Boost_PYTHON${BOOST_PY_SUFFIX}_FOUND)
++        find_package( Boost COMPONENTS python-${BOOST_PY_SUFFIX} )
++        if (NOT Boost_PYTHON-${BOOST_PY_SUFFIX}_FOUND)
+             # try just the major version
+-            find_package( Boost COMPONENTS python${PYTHON_VERSION_MAJOR} )
+-            if (NOT Boost_PYTHON${PYTHON_VERSION_MAJOR}_FOUND)
++            find_package( Boost COMPONENTS python-${PYTHON_VERSION_MAJOR} )
++            if (NOT Boost_PYTHON-${PYTHON_VERSION_MAJOR}_FOUND)
+                 # unversioned
+                 find_package( Boost COMPONENTS python REQUIRED)
+             endif()

@@ -1,6 +1,9 @@
 # Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
+# TODO:
+# install the src files referenced in 51opencascade
+
 EAPI=6
 
 inherit check-reqs cmake-utils eapi7-ver eutils flag-o-matic java-pkg-opt-2 multilib

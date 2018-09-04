@@ -17,7 +17,12 @@ SRC_URI="https://git.dev.opencascade.org/gitweb/?p=occt.git;a=snapshot;h=refs/ta
 LICENSE="|| ( Open-CASCADE-LGPL-2.1-Exception-1.0 LGPL-2.1 )"
 SLOT="${PV}"
 KEYWORDS="~amd64 ~x86"
-IUSE="debug doc examples ffmpeg freeimage gl2ps gles2 java tbb test +vtk"
+# TODO: test pch use flag
+IUSE="debug doc examples ffmpeg freeimage gl2ps gles2 inspector java qt5 tbb test +vtk"
+
+REQUIRED_USE="
+	inspector? ( qt5 )
+"
 
 RDEPEND="app-eselect/eselect-opencascade
 	dev-lang/tcl:0=
@@ -34,6 +39,13 @@ RDEPEND="app-eselect/eselect-opencascade
 	freeimage? ( media-libs/freeimage )
 	gl2ps? ( x11-libs/gl2ps )
 	java? ( >=virtual/jdk-0:= )
+	qt5? (
+		dev-qt/qtcore
+		dev-qt/qtgui
+		dev-qt/qtquickcontrols2
+		dev-qt/qtwidgets
+		dev-qt/qtxml
+	)
 	tbb? ( dev-cpp/tbb )
 	vtk? ( sci-libs/vtk[rendering] )"
 DEPEND="${RDEPEND}
@@ -54,6 +66,7 @@ PATCHES=(
 	"${FILESDIR}"/ffmpeg4.patch
 	"${FILESDIR}"/fix-install-dir-references.patch
 	"${FILESDIR}"/vtk7.patch
+	"${FILESDIR}"/${P}-find-qt.patch
 	)
 
 pkg_setup() {
@@ -67,15 +80,16 @@ src_prepare() {
 }
 
 src_configure() {
+#		-DBUILD_USE_PCH=$(usex pch)
 	local mycmakeargs=(
 		-DBUILD_DOC_Overview=$(usex doc)
+		-DBUILD_Inspector=$(usex inspector)
 		-DBUILD_WITH_DEBUG=$(usex debug)
 		-DCMAKE_CONFIGURATION_TYPES="Gentoo"
 		-DCMAKE_INSTALL_PREFIX="/usr/$(get_libdir)/${P}/ros"
 		-DINSTALL_DIR_DOC="/usr/share/doc/${P}"
 		-DINSTALL_DIR_CMAKE="/usr/$(get_libdir)/cmake"
 		-DINSTALL_DOC_Overview=$(usex doc)
-		-DINSTALL_SAMPLES=$(usex examples)
 		-DINSTALL_TEST_CASES=$(usex test)
 		-DUSE_D3D=no
 		-DUSE_FFMPEG=$(usex ffmpeg)
@@ -86,25 +100,53 @@ src_configure() {
 		-DUSE_VTK=$(usex vtk)
 	)
 
+#	if use qt5; then
+#		mycmakeargs+=(
+#			-D3RDPARTY_QT_DIR=/usr
+#		)
+#	fi
+
+	if use examples; then
+		mycmakeargs+=(
+			-DINSTALL_SAMPLES="yes"
+		)
+		if use qt5; then
+			mycmakeargs+=(
+				-DBUILD_SAMPLES_QT="yes"
+			)
+		fi
+	fi
+
 	cmake-utils_src_configure
 }
 
 src_install() {
 	cmake-utils_src_install
 
-	# make draw.sh non-world-writable
+	# make draw.sh and inspector.sh (if selected) non-world-writable
 	chmod go-w "${D}/${EROOT}/usr/$(get_libdir)/${P}/ros/bin/draw.sh"
+	if use inspector; then
+		chmod go-w "${D}/${EROOT}/usr/$(get_libdir)/${P}/ros/bin/inspector.sh"
+	fi
 
 	# /etc/env.d
-	sed -e "s|VAR_CASROOT|${EROOT}usr/$(get_libdir)/${P}/ros|g" < "${FILESDIR}/51${PN}" > "${S}/51${PN}"
-	doenvd "${S}/51${PN}"
+	sed -e "s|VAR_CASROOT|${EROOT}usr/$(get_libdir)/${P}/ros|g" < "${FILESDIR}/51${PN}" > "${S}/${PV}"
+	# respect slotting
+	insinto "/etc/env.d/${PN}"
+	doins "${S}/${PV}"
 
 	# /etc/ld.so.conf.d
-	dodir /etc/ld.so.conf.d/
-	echo "${EROOT}usr/$(get_libdir)/${P}/ros/lib" > ${ED}/etc/ld.so.conf.d/50${PN}.conf || die
+	# do we really need this?
+#	dodir /etc/ld.so.conf.d/
+#	echo "${EROOT}usr/$(get_libdir)/${P}/ros/lib" > ${ED}/etc/ld.so.conf.d/50${PN}.conf || die
 
 	# remove examples
 	if ! use examples; then
 		rm -rf "${EROOT}/usr/$(get_libdir)/${P}/ros/share/${P}/samples" || die
 	fi
+}
+
+pkg_postinst() {
+	eselect ${PN} set ${PV}
+	einfo "You can switch between available ${PN} implementations using eselect ${PN}"
 }

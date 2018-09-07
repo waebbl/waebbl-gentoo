@@ -12,18 +12,25 @@ DESCRIPTION="QT based Computer Aided Design application"
 HOMEPAGE="http://www.freecadweb.org/"
 
 EGIT_REPO_URI="https://github.com/FreeCAD/FreeCAD.git"
-EGIT_BRANCH="master"
-#EGIT_COMMIT="0258808"
 #EGIT_REPO_URI="file:///mnt/data/code/github/freecad/"
 #EGIT_BRANCH="master"
+#EGIT_COMMIT="0258808"
 
 LICENSE="GPL-2"
 SLOT="0"
 
 # TODO:
+#	pcl: sci-libs/pcl - stalled until the linkage described in the below link is resolved!
+#       currently not compiling against sci-libs/pcl. The provided cmakefiles seems to
+#       only support windows. See https://forum.freecadweb.org/viewtopic.php?f=4&t=30763
+#       +IUSE=pcl
+#       +COMMON_DEPEND=	pcl? ( >=sci-libs/pcl-1.8.1[qt5,vtk(+)] )
+#           probably need to specify which vtk modules are needed
+#       +src_configure: -DFREECAD_USE_PCL=$(usex pcl)
+#       +metadata.xml: <flag name=pcl>
+#
 #   vr: needs a rift package
-#	pcl: sci-libs/pcl
-#	netgen: sci-mathematics/netgen
+#	netgen: sci-mathematics/netgen: doesn't compile -> upstream sci overlay
 #	openscad: media-gfx/openscad
 #	smesh: needs a salome-platform package
 #	zipio++: needs a package
@@ -43,7 +50,7 @@ IUSE_FREECAD_MODULES="
 	+freecad_modules_material
 	+freecad_modules_mesh
 	+freecad_modules_mesh_part
-	+freecad_modules_openscad
+	freecad_modules_openscad
 	+freecad_modules_part
 	+freecad_modules_part_design
 	+freecad_modules_path
@@ -194,7 +201,7 @@ src_configure() {
 	)
 
 	cmake-utils_src_configure
-	einfo "${P} will be built against opencascade version ${CASROOT}"
+#	einfo "${P} will be built against opencascade version ${CASROOT}"
 }
 
 src_install() {

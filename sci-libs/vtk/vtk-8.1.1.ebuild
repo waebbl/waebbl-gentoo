@@ -112,10 +112,13 @@ RDEPEND="
 DEPEND="${RDEPEND}
 	doc? ( app-doc/doxygen )"
 
+<<<<<<< HEAD
 PATCHES=(
 	"${FILESDIR}/${PF}-fix-designer-plugin-install-dir.patch"
 )
 
+=======
+>>>>>>> sci-libs/vtk: update to version 8.1.1
 S="${WORKDIR}"/VTK-${PV}
 
 RESTRICT="test"
@@ -162,6 +165,10 @@ src_configure() {
 		-DVTK_USE_SYSTEM_CONSTANTLY=ON
 		-DVTK_USE_SYSTEM_EXPAT=ON
 		-DVTK_USE_SYSTEM_FREETYPE=ON
+<<<<<<< HEAD
+=======
+#		-DVTK_USE_SYSTEM_FreeType=ON
+>>>>>>> sci-libs/vtk: update to version 8.1.1
 		# Use bundled gl2ps (bundled version is a patched version of 1.3.9. Post 1.3.9 versions should be compatible)
 		-DVTK_USE_SYSTEM_GL2PS=OFF
 		-DVTK_USE_SYSTEM_HDF5=ON
@@ -170,6 +177,10 @@ src_configure() {
 		-DVTK_USE_SYSTEM_JPEG=ON
 		-DVTK_USE_SYSTEM_LIBPROJ4=ON
 		-DVTK_USE_SYSTEM_LIBXML2=ON
+<<<<<<< HEAD
+=======
+#		-DVTK_USE_SYSTEM_LibXml2=ON
+>>>>>>> sci-libs/vtk: update to version 8.1.1
 		-DVTK_USE_SYSTEM_MPI4PY=ON
 		-DVTK_USE_SYSTEM_NETCDF=ON
 		-DVTK_USE_SYSTEM_OGGTHEORA=ON
@@ -262,7 +273,11 @@ src_configure() {
 			-DVTK_USE_QVTK_QTOPENGL=ON
 			-DQT_WRAP_CPP=ON
 			-DQT_WRAP_UI=ON
+<<<<<<< HEAD
 			-DVTK_INSTALL_QT_DIR="$(qt5_get_libdir)/qt5/plugins/designer"
+=======
+			-DVTK_QT_INSTALL_PLUGIN_DIR="${EPREFIX}/$(qt5_get_plugindir)/designer"
+>>>>>>> sci-libs/vtk: update to version 8.1.1
 			-DDESIRED_QT_VERSION=5
 			-DVTK_QT_VERSION=5
 			-DQT_MOC_EXECUTABLE="$(qt5_get_bindir)/moc"

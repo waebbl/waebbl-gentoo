@@ -45,7 +45,7 @@
 		<flag name="freecad_modules_tux" restrict="=media-gfx/freecad-9999">Build the FreeCAD Tux module</flag>
 		<flag name="freecad_modules_web" restrict="=media-gfx/freecad-9999">Build the FreeCAD web module</flag>
 		<flag name="freetype" restrict="=media-gfx/freecad-9999">Enables support for freetype needed by part of part module</flag>
-<!--		<flag name="pcl">Build support for sci-libs/pcl</flag>-->
+		<flag name="pcl">Build support for sci-libs/pcl</flag>
 		<flag name="swig" restrict="=media-gfx/freecad-9999">Enables SWIG binding for pivy"</flag>
 	</use>
 </pkgmetadata>

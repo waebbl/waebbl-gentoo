@@ -13,23 +13,15 @@ HOMEPAGE="http://www.freecadweb.org/"
 
 EGIT_REPO_URI="https://github.com/FreeCAD/FreeCAD.git"
 #EGIT_REPO_URI="file:///mnt/data/code/github/freecad/"
-#EGIT_BRANCH="master"
+EGIT_BRANCH="master"
 #EGIT_COMMIT="0258808"
 
 LICENSE="GPL-2"
 SLOT="0"
 
 # TODO:
-#	pcl: sci-libs/pcl - stalled until the linkage described in the below link is resolved!
-#       currently not compiling against sci-libs/pcl. The provided cmakefiles seems to
-#       only support windows. See https://forum.freecadweb.org/viewtopic.php?f=4&t=30763
-#       +IUSE=pcl
-#       +COMMON_DEPEND=	pcl? ( >=sci-libs/pcl-1.8.1[qt5,vtk(+)] )
-#           probably need to specify which vtk modules are needed
-#       +src_configure: -DFREECAD_USE_PCL=$(usex pcl)
-#       +metadata.xml: <flag name=pcl>
-#
-#   vr: needs a rift package
+#   vr: needs a rift package: does this make sense? Currently they don't have
+#		support for linux. The last linux package dates back to 2015!
 #	netgen: sci-mathematics/netgen: doesn't compile -> upstream sci overlay
 #	openscad: media-gfx/openscad
 #	smesh: needs a salome-platform package
@@ -72,7 +64,7 @@ IUSE_FREECAD_MODULES="
 	+freecad_modules_test
 	+freecad_modules_tux
 	+freecad_modules_web"
-IUSE="eigen3 +freetype +qt5 swig ${IUSE_FREECAD_MODULES}"
+IUSE="eigen3 +freetype pcl +qt5 swig ${IUSE_FREECAD_MODULES}"
 
 COMMON_DEPEND="
 	${PYTHON_DEPS}
@@ -93,6 +85,7 @@ COMMON_DEPEND="
 		sys-cluster/openmpi[cxx]
 	)
 	freetype? ( media-libs/freetype )
+	pcl? ( >=sci-libs/pcl-1.8.1[qt5,vtk(+)] )
 	qt5? (
 		dev-libs/libspnav
 		dev-python/pyside:2[concurrent,network,opengl,printsupport,svg,xmlpatterns,webkit,${PYTHON_USEDEP}]
@@ -157,6 +150,7 @@ src_configure() {
 		-DCMAKE_INSTALL_PREFIX=/usr/$(get_libdir)/${PN}
 		-DFREECAD_USE_EXTERNAL_SMESH=0
 		-DFREECAD_USE_EXTERNAL_KDL="ON"
+		-DFREECAD_USE_PCL=$(usex pcl)
 		# opencascade-7.3.0 sets CASROOT in /etc/env.d/51opencascade
 		-DOCC_INCLUDE_DIR=${CASROOT}/include/opencascade
 		-DOCC_LIBRARY_DIR=${CASROOT}/lib

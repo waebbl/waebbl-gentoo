@@ -1,0 +1,13 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 0493af7..3e74eed 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -128,7 +128,7 @@ ENDIF()
+ 
+ ## Installation of the doc
+ IF(MEDFILE_INSTALL_DOC)
+-  INSTALL(DIRECTORY doc DESTINATION ${CMAKE_INSTALL_PREFIX}/share)
++  INSTALL(DIRECTORY doc DESTINATION ${CMAKE_INSTALL_PREFIX}/share/doc/libmed-${MED_NUM_MAJEUR}.${MED_NUM_MINEUR}.${MED_NUM_RELEASE})
+ ENDIF()
+ 
+ #######################

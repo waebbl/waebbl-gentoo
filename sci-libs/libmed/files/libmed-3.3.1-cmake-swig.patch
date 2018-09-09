@@ -1,0 +1,13 @@
+diff --git a/python/CMakeLists.txt b/python/CMakeLists.txt
+index 1e45797..a034d85 100644
+--- a/python/CMakeLists.txt
++++ b/python/CMakeLists.txt
+@@ -53,7 +53,7 @@ FOREACH(f ${_swig_files})
+   SET_SOURCE_FILES_PROPERTIES(${f} PROPERTIES SWIG_MODULE_NAME ${_module_name})
+ 
+   SET(SWIG_MODULE_libbatch_EXTRA_DEPS ${SWIG_LB_DPYS})
+-  SWIG_ADD_MODULE(${_module_name} python ${f})
++  SWIG_ADD_LIBRARY(${_module_name} LANGUAGE python SOURCES ${f})
+   SWIG_LINK_LIBRARIES(${_module_name} ${_link_libs})
+ 
+   INSTALL(TARGETS ${SWIG_MODULE_${_module_name}_REAL_NAME} DESTINATION ${_install_dir})

@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-PYTHON_COMPAT=( python{2_7,3_5,3_6} )
+PYTHON_COMPAT=( python2_7 )
 
 inherit autotools multilib-minimal python-single-r1 toolchain-funcs
 
@@ -45,4 +45,9 @@ multilib_src_configure() {
 	)
 
 	econf "${myeconfargs[@]}"
+}
+
+# fails to install successfully if MAKEOPTS is set to use more than one core.
+multilib_src_install() {
+	EMAKE_SOURCE=${S} emake DESTDIR="${D}" -j1 install
 }

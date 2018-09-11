@@ -17,7 +17,7 @@ BOOSTHEADERLIBSFULL_REPO_URI="https://bitbucket.org/Coin3D/boost-header-libs-ful
 EHG_PROJECT="Coin3D"
 
 LICENSE="|| ( GPL-2 PEL )"
-KEYWORDS="~amd64 ~x86"
+#KEYWORDS="~amd64 ~x86"
 SLOT="0"
 IUSE="+3ds-import debug doc +dragger +javascript +manipulator +nodekit +openal qthelp +simage static-libs test threads +vrml97"
 

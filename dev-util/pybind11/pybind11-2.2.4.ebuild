@@ -80,12 +80,12 @@ src_test() {
 src_install() {
 	cmake-utils_src_install
 
-	# install man and info pages
-	doman "${S}"/docs/.build/man/pybind11.1
-	doinfo "${S}"/docs/.build/texinfo/pybind11.info
-
 	if use doc; then
 #		einstalldocs
+		# install man and info pages
+		doman "${S}"/docs/.build/man/pybind11.1
+		doinfo "${S}"/docs/.build/texinfo/pybind11.info
+
 		insinto /usr/share/doc/${PF}/html
 		doins -r "${S}"/docs/.build/html/*
 	fi

@@ -61,13 +61,11 @@ src_compile() {
 
 	# documentation is not covered by cmake, but has it's own makefile
 	# using sphinx
-	pushd "${S}"/docs
-	emake info man
-
 	if use doc; then
-		emake html
+		pushd "${S}"/docs
+		emake info man html
+		popd
 	fi
-	popd
 }
 
 # TODO:

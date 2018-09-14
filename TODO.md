@@ -16,7 +16,10 @@
 
 - [ ] dev-libs/tvision: comilation problems with newer gcc versions. See bugzilla. Possibly switch to cmake?
 - [ ] media-sound/denemo: improvements with guile-2, no longer support guile-1 in the ebuild, see bugzilla.
+- [ ] improve freecad support by adding the missing dependencies
 
 ## Less needed packages not in official trees
 - [ ] look through and check whether updates are needed
-- [ ] improve freecad support by adding the missing dependencies
+
+## Other things to do
+- [ ] check possibilities for CI of the repo. Possible use cases: automatic merging of all ebuild, automatic merging after update

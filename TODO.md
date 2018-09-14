@@ -1,4 +1,4 @@
-##Packages to check and possibly include
+## Packages to check and possibly include
 
 - [ ] [sci-libs/trilinos](https://github.com/trilinos/Trilinos) available in science overlay in current version. Possibly no need for another package
 - [ ] [sci-libs/mumps](http://mumps.enseeiht.fr) availabe in science overlay in outdated version, needs manual download?
@@ -12,11 +12,11 @@
 - [ ] [sci-visualization/knossos](https://github.com/knossos-project/knossos) new package: visualization and annotation of 3D image data.
 - [ ] [app-arch/zipios](https://github.com/Zipios/Zipios) new package: used by freecad, currently internal package is used
 
-##Packages which need updating
+## Packages which need updating
 
 - [ ] dev-libs/tvision: comilation problems with newer gcc versions. See bugzilla. Possibly switch to cmake?
 - [ ] media-sound/denemo: improvements with guile-2, no longer support guile-1 in the ebuild, see bugzilla.
 
-##Less needed packages not in official trees
+## Less needed packages not in official trees
 - [ ] look through and check whether updates are needed
 - [ ] improve freecad support by adding the missing dependencies

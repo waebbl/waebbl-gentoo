@@ -81,7 +81,7 @@ src_prepare() {
 
 src_configure() {
 	local mycmakeargs=(
-# 		-DBUILD_USE_PCH=$(usex pch)	# TODO: test pch use flag
+#		-DBUILD_USE_PCH=$(usex pch)	# TODO: test pch use flag
 		-DBUILD_DOC_Overview=$(usex doc)
 		-DBUILD_Inspector=$(usex inspector)
 		-DBUILD_WITH_DEBUG=$(usex debug)
@@ -98,11 +98,11 @@ src_configure() {
 		-DUSE_GL2PS=$(usex gl2ps)
 		-DUSE_GLES2=$(usex gles2)
 		-DUSE_TBB=$(usex tbb)
-		-DUSE_VTK=$(usex vtk)		
+		-DUSE_VTK=$(usex vtk)
 	)
 
-	use examples && mycmakeargs += ( -DBUILD_SAMPLES_QT=$(usex qt5) )
-	
+	use examples && mycmakeargs+=( -DBUILD_SAMPLES_QT=$(usex qt5) )
+
 	cmake-utils_src_configure
 }
 
@@ -112,7 +112,7 @@ src_install() {
 	# make draw.sh and inspector.sh (if selected) non-world-writable
 	chmod go-w "${D}/${EROOT}/usr/$(get_libdir)/${P}/ros/bin/draw.sh"
 	use inspector && chmod go-w "${D}/${EROOT}/usr/$(get_libdir)/${P}/ros/bin/inspector.sh"
-	
+
 	# /etc/env.d
 	sed -e "s|VAR_CASROOT|${EROOT}usr/$(get_libdir)/${P}/ros|g" < "${FILESDIR}/51${PN}" > "${S}/${PV}"
 	# respect slotting

@@ -101,7 +101,7 @@ src_configure() {
 		-DUSE_VTK=$(usex vtk)		
 	)
 
-	use example && mycmakeargs += ( -DBUILD_SAMPLES_QT=$(usex qt5) )
+	use examples && mycmakeargs += ( -DBUILD_SAMPLES_QT=$(usex qt5) )
 	
 	cmake-utils_src_configure
 }

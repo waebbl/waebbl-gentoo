@@ -13,19 +13,20 @@ LICENSE="GPL-3"
 SLOT="0"
 IUSE=""
 
-RDEPEND=">=dev-qt/qtcore-5.2:5
-        app-text/poppler"
+RDEPEND="
+	>=dev-qt/qtcore-5.2:5
+	app-text/poppler
+"
 DEPEND="${RDEPEND}"
 
-
 src_configure() {
-    eqmake5 -r PREFIX="/usr" "${S}/src/uConfig.pro"
+	eqmake5 -r PREFIX="/usr" "${S}/src/uConfig.pro"
 }
 
 src_install() {
-    emake INSTALL_ROOT="${D}" install
-    dolib.so bin/libkicad.so*
-    dolib.so bin/libpdf_extract.so*
-    dobin bin/uconfig
-    dobin bin/uconfig_gui
+	emake INSTALL_ROOT="${D}" install
+	dolib.so bin/libkicad.so*
+	dolib.so bin/libpdf_extract.so*
+	dobin bin/uconfig
+	dobin bin/uconfig_gui
 }

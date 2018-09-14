@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<maintainer type="person">
+	<email>waebbl@mail.com</email>
+	<name>Bernd Waibel</name>
+</maintainer>
+<longdescription>
+	Extract pinout from PDF datasheet and create KiCAD schematics. Save
+	directly as a KiCAD library file.
+</longdescription>
+<upstream>
+	<bugs-to>https://github.com/Robotips/uConfig/issues</bugs-to>
+	<remote-id type="github" />
+</upstream>
+</pkgmetadata>

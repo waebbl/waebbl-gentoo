@@ -90,6 +90,7 @@ src_configure() {
 		-DINSTALL_DIR_DOC="/usr/share/doc/${P}"
 		-DINSTALL_DIR_CMAKE="/usr/$(get_libdir)/cmake"
 		-DINSTALL_DOC_Overview=$(usex doc)
+		-DINSTALL_SAMPLES=$(usex examples)
 		-DINSTALL_TEST_CASES=$(usex test)
 		-DUSE_D3D=no
 		-DUSE_FFMPEG=$(usex ffmpeg)
@@ -97,8 +98,7 @@ src_configure() {
 		-DUSE_GL2PS=$(usex gl2ps)
 		-DUSE_GLES2=$(usex gles2)
 		-DUSE_TBB=$(usex tbb)
-		-DUSE_VTK=$(usex vtk)
-		-DINSTALL_SAMPLES=$(usex examples)
+		-DUSE_VTK=$(usex vtk)		
 	)
 
 	use example && mycmakeargs += ( -DBUILD_SAMPLES_QT=$(usex qt5) )

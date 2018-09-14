@@ -81,6 +81,7 @@ src_prepare() {
 
 src_configure() {
 	local mycmakeargs=(
+# 		-DBUILD_USE_PCH=$(usex pch)	# TODO: test pch use flag
 		-DBUILD_DOC_Overview=$(usex doc)
 		-DBUILD_Inspector=$(usex inspector)
 		-DBUILD_WITH_DEBUG=$(usex debug)

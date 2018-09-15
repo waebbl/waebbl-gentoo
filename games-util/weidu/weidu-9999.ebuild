@@ -10,7 +10,7 @@ HOMEPAGE="https://www.weidu.org https://github.com/WeiDUorg/weidu"
 SRC_URI=""
 EGIT_REPO_URI="https://github.com/WeiDUorg/weidu.git"
 # For now we need the devel branch. Master is not working with >=ocaml-4.02.3
-EGIT_BRANCH="devel"
+EGIT_BRANCH="master"
 
 LICENSE="GPL-2"
 SLOT="0"

@@ -120,9 +120,7 @@ src_install() {
 	doins "${S}/${PV}"
 
 	# remove examples
-	if ! use examples; then
-		rm -rf "${EROOT}/usr/$(get_libdir)/${P}/ros/share/${P}/samples" || die
-	fi
+	use examples || (rm -rf "${EROOT}/usr/$(get_libdir)/${P}/ros/share/${P}/samples" || die)
 }
 
 pkg_postinst() {

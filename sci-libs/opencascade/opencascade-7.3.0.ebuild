@@ -114,7 +114,7 @@ src_install() {
 	use inspector && chmod go-w "${D}/${EROOT}/usr/$(get_libdir)/${P}/ros/bin/inspector.sh"
 
 	# /etc/env.d
-	sed -e "s|VAR_CASROOT|${EROOT}usr/$(get_libdir)/${P}/ros|g" < "${FILESDIR}/51${PN}" > "${S}/${PV}"
+	sed -e "s|VAR_CASROOT|${EROOT}usr/$(get_libdir)/${P}/ros|g" < "${FILESDIR}/${PN}.env" > "${S}/${PV}"
 	# respect slotting
 	insinto "/etc/env.d/${PN}"
 	doins "${S}/${PV}"

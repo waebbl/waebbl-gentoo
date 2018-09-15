@@ -14,7 +14,6 @@ EGIT_BRANCH="master"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64"
 IUSE="doc"
 
 DEPEND=">=dev-lang/ocaml-4.04.2[ocamlopt]

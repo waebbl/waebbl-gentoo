@@ -15,7 +15,7 @@
 ## Packages which need updating
 
 - [ ] dev-libs/tvision: comilation problems with newer gcc versions. See bugzilla. Possibly switch to cmake?
-- [ ] media-sound/denemo: improvements with guile-2, no longer support guile-1 in the ebuild, see bugzilla.
+- [x] media-sound/denemo: improvements with guile-2, no longer support guile-1 in the ebuild, see bugzilla.
 - [ ] improve freecad support by adding the missing dependencies
 - [x] look into weidu compile failure -> added versioned ebuild, issue is restricted to devel branch, see [this issue](https://github.com/WeiDUorg/weidu/issues/127)
 

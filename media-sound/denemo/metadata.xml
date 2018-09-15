@@ -26,8 +26,8 @@
 	<flag name="evince" restrict="&gt;media-sound/denemo-2.2.0">
 		Use <pkg>app-text/evince</pkg> document viewer</flag>
 	<flag name="guile2" restrict="&gt;media-sound/denemo-2.2.0">
-		Enable support for the <pkg>dev-scheme/guile</pkg> language.
-		If enabled uses guile-2*, if disabled uses guile-1.8*</flag>
+		Enable support for the <pkg>dev-scheme/guile</pkg> language. Only
+		guile-2* is supported by this ebuild.</flag>
 	<flag name="doc" restrict="&gt;media-sound/denemo-2.2.0">
 		Use <pkg>dev-util/gtk-doc</pkg> to build documentation in html format</flag>
 	<flag name="gtk3" restrict="&gt;media-sound/denemo-2.2.0">

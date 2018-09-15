@@ -9,7 +9,7 @@ EAPI=6
 inherit check-reqs cmake-utils eapi7-ver eutils flag-o-matic java-pkg-opt-2 multilib
 
 DESCRIPTION="Development platform for CAD/CAE, 3D surface/solid modeling and data exchange"
-HOMEPAGE="http://www.opencascade.com/"
+HOMEPAGE="https://www.opencascade.com"
 # convert version string x.x.x to x_x_x
 MY_PV="$(ver_rs 1- '_')"
 SRC_URI="https://git.dev.opencascade.org/gitweb/?p=occt.git;a=snapshot;h=refs/tags/V${MY_PV};sf=tgz -> ${P}.tar.gz"
@@ -114,7 +114,8 @@ src_install() {
 	use inspector && chmod go-w "${D}/${EROOT}/usr/$(get_libdir)/${P}/ros/bin/inspector.sh"
 
 	# /etc/env.d
-	sed -e "s|VAR_CASROOT|${EROOT}usr/$(get_libdir)/${P}/ros|g" < "${FILESDIR}/${PN}.env" > "${S}/${PV}"
+	echo "# See: ${HOMEPAGE}/doc/occt-${PV}/overview/html/index.html#OCCT_OVW_SECTION_4_2" > "${S}/${PV}"
+	sed -e "s|VAR_CASROOT|${EROOT}usr/$(get_libdir)/${P}/ros|g" < "${FILESDIR}/${PN}.env" >> "${S}/${PV}"
 	# use TBB for memory allocation optimizations?
 	if use tbb ; then
 		echo "MMGT_OPT=2" >> "${S}/${PV}"

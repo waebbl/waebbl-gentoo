@@ -1,3 +1,6 @@
+
+![travis-ci status](https://travis-ci.org/waebbl/waebbl-gentoo.svg?branch=master)
+
 # gentoo-overlay
 
 This is my personal overlay of gentoo ebuilds. It has some focus on the domain 3D, i.e. you will find mostly ebuilds for modeling and CAx software, but also some other ebuilds, which are either not in the official portage tree, or with whom I had trouble compiling them from official tree.

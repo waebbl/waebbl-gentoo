@@ -16,7 +16,7 @@ IUSE=""
 RDEPEND="dev-db/sqlite
         dev-libs/libgcrypt:*
         dev-libs/libxml2
-        dev-libs/mxml
+        dev-libs/mini-xml
         net-im/pidgin"
 DEPEND="${RDEPEND}
         dev-util/cmake"

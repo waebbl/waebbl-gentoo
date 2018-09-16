@@ -1,0 +1,10 @@
+diff --git a/tools/medimport/CMakeLists.txt b/tools/medimport/CMakeLists.txt
+index 8305e37..48e5361 100644
+--- a/tools/medimport/CMakeLists.txt
++++ b/tools/medimport/CMakeLists.txt
+@@ -84,4 +84,4 @@ IF(NOT (WIN32 AND MEDFILE_BUILD_STATIC_LIBS))
+   INSTALL(TARGETS medimport DESTINATION bin )  
+ ENDIF()
+ 
+-INSTALL(FILES include/medimport_win_dll.h include/MEDimport.h include/MEDimport.hxx include/medimportcxx_win_dll.h DESTINATION include)
++INSTALL(FILES include/medimport_win_dll.h include/MEDimport.h include/MEDimport.hxx include/medimportcxx_win_dll.h DESTINATION include/libmed)

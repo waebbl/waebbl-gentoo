@@ -13,8 +13,9 @@ inherit cmake-utils fortran-2 python-single-r1
 MY_P="med-${PV}"
 
 DESCRIPTION="A library to store and exchange meshed data or computation results"
-HOMEPAGE="http://www.salome-platform.org/"
-SRC_URI="http://files.salome-platform.org/Salome/other/${MY_P}.tar.gz"
+HOMEPAGE="https://www.salome-platform.org/"
+SRC_URI="https://files.salome-platform.org/Salome/other/${MY_P}.tar.gz
+	https://waebbl.github.io/libmed-3.3.1-hdf5-1.10-support.patch.gz"
 
 LICENSE="GPL-3 LGPL-3"
 SLOT="0"
@@ -32,12 +33,14 @@ DEPEND="${RDEPEND}
 "
 CMAKE_BUILD_TYPE="Release"
 
-#	"${FILESDIR}/hdf5-1.10-support.patch"
+#	"${FILESDIR}/${P}-hdf5-1.10-support.patch"
 PATCHES=(
 	"${FILESDIR}/${P}-cmake-fortran.patch"
 	"${FILESDIR}/${P}-cmake-swig.patch"
 	"${FILESDIR}/${P}-cmake-no-python-compile.patch"
 	"${FILESDIR}/${P}-cmake-fix-doc-installdir.patch"
+	"${FILESDIR}/${P}-cmake-install-include-dir.patch"
+	"${FILESDIR}/${P}-cmake-medimport-install-include-dir.patch"
 	"${FILESDIR}/${P}-nosymlink.patch"
 )
 
@@ -51,6 +54,7 @@ pkg_setup() {
 }
 
 src_prepare() {
+	eapply "${WORKDIR}/${P}-hdf5-1.10-support.patch"
 	cmake-utils_src_prepare
 }
 
@@ -72,6 +76,4 @@ src_install() {
 
 	dosym mdump3 usr/bin/mdump
 	dosym xmdump3 /usr/bin/xmdump
-
-#	python_optimize
 }

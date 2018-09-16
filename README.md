@@ -1,5 +1,5 @@
 
-![travis-ci status](https://travis-ci.org/waebbl/waebbl-gentoo.svg?branch=master)
+[![Build Status](https://travis-ci.org/waebbl/waebbl-gentoo.svg?branch=master)](https://travis-ci.org/waebbl/waebbl-gentoo)
 
 # gentoo-overlay
 

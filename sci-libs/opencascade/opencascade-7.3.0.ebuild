@@ -22,6 +22,7 @@ IUSE="debug doc examples ffmpeg freeimage gl2ps gles2 inspector java optimize qt
 
 REQUIRED_USE="
 	inspector? ( qt5 )
+	?? ( optimize tbb )
 "
 
 RDEPEND="app-eselect/eselect-opencascade
@@ -104,6 +105,21 @@ src_configure() {
 	use examples && mycmakeargs+=( -DBUILD_SAMPLES_QT=$(usex qt5) )
 
 	cmake-utils_src_configure
+
+	# prepare /etc/env.d file
+	sed -e "s|VAR_CASROOT|${EROOT}usr/$(get_libdir)/${P}/ros|g" < "${FILESDIR}/${PN}.env.in" >> "${S}/${PV}"
+
+	# use TBB for memory allocation optimizations?
+	if use tbb ; then
+		sed -i -e 's|^#MMGT_OPT=0$|MMGT_OPT=2|' "${S}/${PV}"
+	fi
+
+	if use optimize ; then
+		# use internal optimized memory manager?
+		sed -i -e 's|^#MMGT_OPT=0$|MMGT_OPT=1|' "${S}/${PV}"
+		# don't clear memory ?
+		sed -i -e 's|^#MMGT_CLEAR=1$|MMGT_CLEAR=0|' "${S}/${PV}"
+	fi
 }
 
 src_install() {
@@ -113,20 +129,6 @@ src_install() {
 	chmod go-w "${D}/${EROOT}/usr/$(get_libdir)/${P}/ros/bin/draw.sh"
 	use inspector && chmod go-w "${D}/${EROOT}/usr/$(get_libdir)/${P}/ros/bin/inspector.sh"
 
-	# /etc/env.d
-	echo "# See: ${HOMEPAGE}/doc/occt-${PV}/overview/html/index.html#OCCT_OVW_SECTION_4_2" > "${S}/${PV}"
-	sed -e "s|VAR_CASROOT|${EROOT}usr/$(get_libdir)/${P}/ros|g" < "${FILESDIR}/${PN}.env" >> "${S}/${PV}"
-	# use TBB for memory allocation optimizations?
-	if use tbb ; then
-		echo "MMGT_OPT=2" >> "${S}/${PV}"
-	else
-		# use optimized memory manager ?
-		if use optimize ; then
-			echo "MMGT_OPT=1" >> "${S}/${PV}"
-		fi
-	fi
-	# don't clear memory ?
-	use optimize && echo "MMGT_CLEAR=0" >> "${S}/${PV}"
 	# respect slotting
 	insinto "/etc/env.d/${PN}"
 	doins "${S}/${PV}"

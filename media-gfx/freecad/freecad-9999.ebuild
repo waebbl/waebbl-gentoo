@@ -204,7 +204,7 @@ src_install() {
 	dosym ../$(get_libdir)/${PN}/bin/FreeCAD /usr/bin/freecad
 	dosym ../$(get_libdir)/${PN}/bin/FreeCADCmd /usr/bin/freecadcmd
 
-	make_desktop_entry FreeCAD "FreeCAD" "" "" "MimeType=application/x-extension-fcstd;"
+	make_desktop_entry freecad "FreeCAD" "" "" "MimeType=application/x-extension-fcstd;"
 
 	# install mimetype for FreeCAD files
 	insinto /usr/share/mime/packages

@@ -5,13 +5,13 @@ EAPI=6
 
 DESCRIPTION="Text User Interface that implements the well known CUA widgets"
 HOMEPAGE="http://tvision.sourceforge.net/"
-MY_PV=${PV}-${PVR:7}
+MY_PV=${PVR:0:5}-${PVR:6}
 SRC_URI="mirror://sourceforge/tvision/rhtvision_${MY_PV}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~x86"
-IUSE="+X debug gpm static"
+IUSE="+X debug gpm static-libs"
 
 DOCS=( readme.txt THANKS TODO )
 HTML_DOCS=( www-site/. )
@@ -37,8 +37,8 @@ DEPEND="${RDEPEND}"
 PATCHES=(
 	"${FILESDIR}/${P}-fix-dot-INC.patch"
 	"${FILESDIR}/${P}-ldconfig.patch"
+	"${FILESDIR}/${P}-abs.patch"
 	"${FILESDIR}/${P}-build-system.patch"
-	"${FILESDIR}/${P}-gcc6.patch"
 	"${FILESDIR}/${P}-flags.patch"
 )
 
@@ -51,7 +51,7 @@ src_configure() {
 		--cflags="${CFLAGS} --std=c99" \
 		--cxxflags="${CXXFLAGS} --std=c++98" \
 		$(use_with debug debug) \
-		$(usex static "" --without-static) \
+		$(usex static-libs "" --without-static) \
 	|| die
 }
 
@@ -64,7 +64,7 @@ src_install() {
 	dosym rhtvision /usr/include/tvision
 
 	# remove CVS directory which gets copied over
-	rm -rf "${D}/usr/share/doc/${PN}-${PVR}/html/CVS"
+	rm -rf "${D}/usr/share/doc/${P}/html/CVS" || die
 
 	# TODO: remove locales which are not needed, depending on current user
 	# locale settings. How?

@@ -1,0 +1,68 @@
+diff --git a/classes/tdesktop.cc b/classes/tdesktop.cc
+index 38f1be4..041e0a0 100644
+--- a/classes/tdesktop.cc
++++ b/classes/tdesktop.cc
+@@ -142,8 +142,8 @@ TBackground *TDeskTop::initBackground( TRect r )
+ static
+ unsigned iSqr( unsigned i )
+ {
+-    unsigned res1 = 2;
+-    unsigned res2 = i/res1;
++    int res1 = 2;
++    int res2 = i/res1;
+     while( abs( res1 - res2 ) > 1 )
+         {
+         res1 = (res1 + res2)/2;
+diff --git a/classes/tdisplay.cc b/classes/tdisplay.cc
+index 9225d48..fd44ecd 100644
+--- a/classes/tdisplay.cc
++++ b/classes/tdisplay.cc
+@@ -360,10 +360,10 @@ void TDisplay::setArgv(int aArgc, char **aArgv, char **aEnvir)
+  environment=aEnvir;
+ }
+ 
+-Boolean TDisplay::searchClosestRes(TScreenResolution *res, unsigned x,
+-                                   unsigned y, unsigned cant, unsigned &pos)
++Boolean TDisplay::searchClosestRes(TScreenResolution *res, int x,
++                                   int y, unsigned cant, unsigned &pos)
+ {
+- unsigned i, minDif, indexMin, dif;
++ int i, minDif, indexMin, dif;
+  int firstXMatch=-1;
+  // Look for an exact match of width
+  for (i=0; i<cant && res[i].x<x; i++)
+diff --git a/classes/x11/x11src.cc b/classes/x11/x11src.cc
+index 538457e..13dbca2 100644
+--- a/classes/x11/x11src.cc
++++ b/classes/x11/x11src.cc
+@@ -2536,7 +2536,7 @@ TScreenFont256 *TScreenX11::ChooseClosestFont(unsigned fW, unsigned fH)
+     nFont=&font10x20;
+  else
+    {
+-    unsigned target=fW*fH;
++    int target=fW*fH;
+     int dif1=abs(8*16-target);
+     int dif2=abs(10*20-target);
+     if (dif1<dif2)
+diff --git a/include/tv/screen.h b/include/tv/screen.h
+index e143f1f..9e6a1b5 100644
+--- a/include/tv/screen.h
++++ b/include/tv/screen.h
+@@ -30,7 +30,7 @@ struct TScreenFont256
+ 
+ struct TScreenResolution
+ {
+- unsigned x,y;
++ int x,y;
+ };
+ 
+ // Type for the callback called when the driver needs a new font.
+@@ -152,7 +152,7 @@ public:
+  static Boolean  setDontMoveHiddenCursor(Boolean value);
+  static Boolean  getDontMoveHiddenCursor() { return opts1 & DontMoveHiddenCursor ? True : False; };
+  // Helper to look for the closest resolution from a list
+- static Boolean  searchClosestRes(TScreenResolution *res, unsigned x, unsigned y,
++ static Boolean  searchClosestRes(TScreenResolution *res, int x, int y,
+                                   unsigned cant, unsigned &pos);
+  // Returns the default palette
+  static const TScreenColor *getDefaultPalette() { return PC_BIOSPalette; }

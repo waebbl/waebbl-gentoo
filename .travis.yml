@@ -20,7 +20,7 @@ before_script:
     - wget -qO - "https://github.com/gentoo/portage/archive/portage-${PORTAGE_VER}.tar.gz" | tar xz
     - wget -qO - "https://github.com/gentoo-mirror/gentoo/archive/master.tar.gz" | tar xz -C /usr/portage --strip-components=1
     - mkdir -p ~/virtualenv/repos/qt
-    - wget -qO - "https://github.com/gentoo-mirror/qt/archive/master.tar.gz" | tar xz -C /var/db/repos/qt --strip-components=1
+    - wget -qO - "https://github.com/gentoo-mirror/qt/archive/master.tar.gz" | tar xz -C ~/virtualenv/repos/qt --strip-components=1
     - chmod a+rwx spinner.sh
     - echo "portage:x:250:250:portage:/var/tmp/portage:/bin/false" >> /etc/passwd
     - echo "portage::250:portage,travis" >> /etc/group

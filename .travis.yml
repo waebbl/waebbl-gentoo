@@ -19,7 +19,7 @@ before_script:
     - wget "https://raw.githubusercontent.com/mrueg/repoman-travis/master/spinner.sh"
     - wget -qO - "https://github.com/gentoo/portage/archive/portage-${PORTAGE_VER}.tar.gz" | tar xz
     - wget -qO - "https://github.com/gentoo-mirror/gentoo/archive/master.tar.gz" | tar xz -C /usr/portage --strip-components=1
-    - mkdir -p /var/db/repos/qt
+    - mkdir -p ~/virtualenv/repos/qt
     - wget -qO - "https://github.com/gentoo-mirror/qt/archive/master.tar.gz" | tar xz -C /var/db/repos/qt --strip-components=1
     - chmod a+rwx spinner.sh
     - echo "portage:x:250:250:portage:/var/tmp/portage:/bin/false" >> /etc/passwd
@@ -28,7 +28,7 @@ before_script:
     - ln -s $TRAVIS_BUILD_DIR/portage-portage-${PORTAGE_VER}/cnf/repos.conf /etc/portage/repos.conf/gentoo.conf
     - echo "" >> /etc/portage/repos.conf/qt.conf
     - echo "[qt]" >> /etc/portage/repos.conf/qt.conf
-    - echo "location = /var/db/repos/qt" >> /etc/portage/repos.conf/qt.conf
+    - echo "location = ~/virtualenv/repos/qt" >> /etc/portage/repos.conf/qt.conf
     - echo "sync-type = git" >> /etc/portage/repos.conf/qt.conf
     - echo "sync-uri = https://github.com/gentoo-mirror/qt.git" >> /etc/portage/repos.conf/qt.conf
     - ln -s /usr/portage/profiles/default/linux/amd64/17.0 /etc/portage/make.profile

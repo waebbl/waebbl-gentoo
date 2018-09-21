@@ -26,13 +26,12 @@ before_script:
     - sudo chown travis:portage /var/db/repos/qt
     - wget -qO - "https://github.com/gentoo-mirror/qt/archive/master.tar.gz" | tar xz -C /var/db/repos/qt --strip-components=1
     - wget "https://www.gentoo.org/dtd/metadata.dtd" -O /usr/portage/distfiles/metadata.dtd
-    - mkdir -p /etc/portage/repos.conf
-    - ln -s $TRAVIS_BUILD_DIR/portage-portage-${PORTAGE_VER}/cnf/repos.conf /etc/portage/repos.conf/gentoo.conf
-    - echo "" >> /etc/portage/repos.conf/qt.conf
-    - echo "[qt]" >> /etc/portage/repos.conf/qt.conf
-    - echo "location = /var/db/repos/qt" >> /etc/portage/repos.conf/qt.conf
-    - echo "sync-type = git" >> /etc/portage/repos.conf/qt.conf
-    - echo "sync-uri = https://github.com/gentoo-mirror/qt.git" >> /etc/portage/repos.conf/qt.conf
+    - ln -s $TRAVIS_BUILD_DIR/portage-portage-${PORTAGE_VER}/cnf/repos.conf /etc/portage/repos.conf
+    - echo "" >> /etc/portage/repos.conf
+    - echo "[qt]" >> /etc/portage/repos.conf
+    - echo "location = /var/db/repos/qt" >> /etc/portage/repos.conf
+    - echo "sync-type = git" >> /etc/portage/repos.conf
+    - echo "sync-uri = https://github.com/gentoo-mirror/qt.git" >> /etc/portage/repos.conf
     - ln -s /usr/portage/profiles/default/linux/amd64/17.0 /etc/portage/make.profile
     - SIZE=$(stat -c %s .travis.yml.upstream)
     - if ! cmp -n $SIZE -s .travis.yml .travis.yml.upstream; then echo -e "\e[31m !!! .travis.yml outdated! Update available https://github.com/mrueg/repoman-travis \e[0m" > /tmp/update ; fi

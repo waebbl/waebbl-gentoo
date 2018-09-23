@@ -11,6 +11,7 @@
 - [ ] [sci-mathematics/ngsolve](https://github.com/NGSolve/ngsolve) new package: FEM tools tied to sci-libs/netgen
 - [ ] [sci-visualization/knossos](https://github.com/knossos-project/knossos) new package: visualization and annotation of 3D image data.
 - [ ] [app-arch/zipios](https://github.com/Zipios/Zipios) new package: used by freecad, currently internal package is used
+- [ ] [media-gfx/makehuman](https://github.com/makehumancommunity/makehuman) new package: take a look at cg overlay, if their ebuild is usable
 
 ## Packages which need updating
 
@@ -25,6 +26,7 @@
 - [ ] media-gfx/alembic has 1.7.9
 - [ ] media-gfx/renderman-for-blender might have update to 22
 - [ ] dev-util/smartgit has 18.1
+- [ ] migration from versionator to eapi7-ver for some packages
 
 ## Other things to do
 - [ ] check possibilities for CI of the repo. Possible use cases: automatic merging of all ebuild, automatic merging after update

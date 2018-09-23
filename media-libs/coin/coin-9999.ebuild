@@ -5,8 +5,6 @@ EAPI=6
 
 inherit cmake-utils mercurial
 
-MY_P=${P/c/C}
-
 DESCRIPTION="A high-level 3D graphics toolkit, fully compatible with SGI Open Inventor 2.1"
 HOMEPAGE="https://bitbucket.org/Coin3D/coin/wiki/Home"
 
@@ -17,9 +15,8 @@ BOOSTHEADERLIBSFULL_REPO_URI="https://bitbucket.org/Coin3D/boost-header-libs-ful
 EHG_PROJECT="Coin3D"
 
 LICENSE="|| ( GPL-2 PEL )"
-#KEYWORDS="~amd64 ~x86"
 SLOT="0"
-IUSE="+3ds-import debug doc +dragger +javascript +manipulator +nodekit +openal qthelp +simage static-libs test threads +vrml97"
+IUSE="+3ds-import debug doc +draggers exceptions +javascript +manipulators nodekits +openal qthelp +simage static-libs test threads +vrml97"
 
 # NOTE: expat is not really needed as --enable-system-expat is broken
 # avi, guile, jpeg2000, pic, rgb, tga, xwd not added (did not find where the support is)
@@ -48,6 +45,12 @@ DEPEND="${RDEPEND}
 		 qthelp? ( dev-qt/qthelp:5 )
 	)
 "
+
+REQUIRED_USE="
+	?? ( draggers nodekits )
+	?? ( manipulators nodekits )
+"
+
 S="${WORKDIR}/${MY_P}"
 
 PATCHES=(
@@ -67,12 +70,13 @@ src_unpack() {
 
 	EHG_REPO_URI=${BOOSTHEADERLIBSFULL_REPO_URI}
 	EHG_CHECKOUT_DIR="${WORKDIR}/boost-header-libs-full"
-	EHG_REVISION="1ed503a"
+	EHG_REVISION="25bb778"
 	mercurial_fetch
 
 	EHG_REPO_URI=${COIN_REPO_URI}
 	EHG_CHECKOUT_DIR="${S}"
-	EHG_REVISION="bcc3be2"
+	EHG_BRANCH="default"
+#	EHG_REVISION="cf2a467"
 	mercurial_fetch
 }
 
@@ -84,17 +88,21 @@ src_configure() {
 		-DCOIN_BUILD_SINGLE_LIB=ON
 		-DCOIN_BUILD_TESTS=$(usex test)
 		-DCOIN_HAVE_JAVASCRIPT=$(usex javascript ON OFF)
-		-DCOIN_QT_HELP=$(usex doc)
+		-DCOIN_QT_HELP=$(usex qthelp)
 		-DCOIN_THREADSAFE=$(usex threads ON OFF)
 		-DCOIN_VERBOSE=$(usex debug)
 		-DHAVE_3DS_IMPORT_CAPABILITIES=$(usex 3ds-import ON OFF)
-		-DHAVE_DRAGGERS=$(usex dragger ON OFF)
+		-DHAVE_DRAGGERS=$(usex draggers ON OFF)
 		-DHAVE_MAN=$(usex doc ON OFF)
-		-DHAVE_MANIPULATORS=$(usex manipulator ON OFF)
-		-DHAVE_NODEKITS=$(usex nodekit ON OFF)
+		-DHAVE_MANIPULATORS=$(usex manipulators ON OFF)
+		-DHAVE_NODEKITS=$(usex nodekits ON OFF)
 		-DHAVE_SOUND=$(usex openal ON OFF)
 		-DHAVE_VRML97=$(usex vrml97 ON OFF)
+		-DOPENAL_RUNTIME_LINKING=$(usex openal ON OFF)
 		-DSIMAGE_RUNTIME_LINKING=$(usex simage ON OFF)
+		-DSPIDERMONKEY_RUNTIME_LINKING=$(usex javascript ON OFF)
+		-DUSE_EXCEPTIONS=$(usex exceptions ON OFF)
+		-DUSE_EXTERNAL_EXPAT=ON
 	)
 
 	cmake-utils_src_configure

@@ -7,9 +7,10 @@
 </maintainer>
 <use>
 	<flag name="3ds-import">Enables 3ds import capabilities</flag>
-	<flag name="dragger">Enables Dragger support</flag>
-	<flag name="manipulator">Enables Manipulator support</flag>
-	<flag name="nodekit">Enables Nodekit support</flag>
+	<flag name="draggers">Enables Dragger support</flag>
+	<flag name="exceptions">Enable g++ exceptions</flag>
+	<flag name="manipulators">Enables Manipulator support</flag>
+	<flag name="nodekits">Enables Nodekit support</flag>
 	<flag name="qthelp">Enable qthelp documentation"</flag>
 	<flag name="simage">Enables runtime linkage of simage library</flag>
 	<flag name="vrml97">Enables VRML97 support</flag>

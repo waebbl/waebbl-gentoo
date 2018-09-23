@@ -20,6 +20,7 @@
 - [ ] improve freecad support by adding the missing dependencies
 - [x] look into weidu compile failure -> added versioned ebuild, issue is restricted to devel branch, see [this issue](https://github.com/WeiDUorg/weidu/issues/127)
 - [ ] dev-python/pyside: need a local ebuild? On [Qt for Python](http://wiki.qt.io/Qt_for_Python/GettingStarted/X11) they say, the same version as Qt is needed. The ebuild from qt overlay uses branch 5.9, but people (including me) might have installed Qt 5.11 already. Also there would be no cross-repo dependency.
+- [ ] OpenEXR Suite: see [PR](https://github.com/gentoo/gentoo/pull/9729) and [Bug](https://bugs.gentoo.org/639998)
 
 ## Less needed packages not in official trees
 - [ ] look through and check whether updates are needed

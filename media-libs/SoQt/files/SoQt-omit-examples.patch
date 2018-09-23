@@ -1,0 +1,13 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 2af71f1..539997e 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -352,7 +352,7 @@ if(X11_Xi_FOUND)
+ endif()
+ 
+ ##### small test programs (to be run interactively)
+-add_subdirectory(test-code)
++#add_subdirectory(test-code)
+ 
+ ##### documentation
+ find_package(Doxygen)

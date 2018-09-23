@@ -35,6 +35,7 @@ DEPEND="${RDEPEND}
 
 PATCHES=(
 	"${FILESDIR}/${PN}-1.5.0-pkgconfig-partial.patch"
+	"${FILESDIR}/${PN}-omit-examples.patch"
 )
 
 DOCS=(AUTHORS ChangeLog FAQ HACKING NEWS README)
@@ -70,6 +71,8 @@ src_configure() {
 	local mycmakeargs=(
 		-DCMAKE_INSTALL_DOCDIR="${EPREFIX%/}/usr/share/doc/${PF}"
 		-DCMAKE_INSTALL_MANDIR="${EPREFIX%/}/usr/share"
+		-DCMAKE_SKIP_INSTALL_RPATH:BOOL=YES
+		-DCMAKE_SKIP_RPATH:BOOL=YES
 		-DCOIN_IV_EXTENSIONS=$(usex coin-iv-extensions ON OFF)
 		-DHAVE_SPACENAV_SUPPORT=$(usex spacenav ON OFF)
 		-DUSE_QT5=ON

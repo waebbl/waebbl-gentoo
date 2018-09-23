@@ -17,9 +17,8 @@ SOGUI_REPO_URI="https://bitbucket.org/Coin3D/sogui"
 EHG_PROJECT="Coin3D"
 
 LICENSE="|| ( GPL-2 PEL )"
-#KEYWORDS="~amd64 ~x86"
 SLOT="0"
-IUSE="+coin-iv-extensions"
+IUSE="+coin-iv-extensions spacenav"
 
 RDEPEND="
 	~media-libs/coin-9999
@@ -28,6 +27,7 @@ RDEPEND="
 	dev-qt/qtgui:5
 	dev-qt/qtopengl:5
 	dev-qt/qtwidgets:5
+	spacenav? ( >=dev-libs/libspnav-0.2.2 )
 "
 DEPEND="${RDEPEND}
 	virtual/pkgconfig
@@ -47,7 +47,7 @@ src_unpack() {
 
 	EHG_REPO_URI=${BOOSTHEADERLIBSFULL_REPO_URI}
 	EHG_CHECKOUT_DIR="${WORKDIR}/boost-header-libs-full"
-	EHG_REVISION="1ed503a"
+	EHG_REVISION="25bb778"
 	mercurial_fetch
 
 	EHG_REPO_URI=${SOANYDATA_REPO_URI}
@@ -67,9 +67,12 @@ src_unpack() {
 }
 
 src_configure() {
-	local myconfargs=(
-		-DUSE_QT5=ON
+	local mycmakeargs=(
+		-DCMAKE_INSTALL_DOCDIR="${EPREFIX%/}/usr/share/doc/${PF}"
+		-DCMAKE_INSTALL_MANDIR="${EPREFIX%/}/usr/share"
 		-DCOIN_IV_EXTENSIONS=$(usex coin-iv-extensions ON OFF)
+		-DHAVE_SPACENAV_SUPPORT=$(usex spacenav ON OFF)
+		-DUSE_QT5=ON
 	)
 
 	cmake-utils_src_configure

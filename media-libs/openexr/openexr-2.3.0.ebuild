@@ -15,13 +15,23 @@ KEYWORDS="~amd64 -arm ~arm64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~amd64-fbsd ~x8
 IUSE="cpu_flags_x86_avx examples static-libs"
 
 RDEPEND="
+	>=media-libs/ilmbase-${PV}:=[${MULTILIB_USEDEP}]
 	sys-libs/zlib[${MULTILIB_USEDEP}]
-	>=media-libs/ilmbase-${PV}:=[${MULTILIB_USEDEP}]"
+"
 DEPEND="${RDEPEND}
+	>=sys-devel/autoconf-archive-2016.09.16
 	virtual/pkgconfig[${MULTILIB_USEDEP}]
-	>=sys-devel/autoconf-archive-2016.09.16"
+"
 
 DOCS=( AUTHORS ChangeLog NEWS README.md )
+MULTILIB_WRAPPED_HEADERS=( /usr/include/OpenEXR/OpenEXRConfig.h )
+
+PATCHES=(
+	"${FILESDIR}/${PN}-2.2.0-fix-cpuid-on-abi_x86_32.patch"
+	"${FILESDIR}/${PN}-2.2.0-fix-config.h-collision.patch"
+	"${FILESDIR}/${PN}-2.2.0-Install-missing-header-files.patch"
+	"${FILESDIR}/${P}-fix-build-system.patch"
+)
 
 src_prepare() {
 	default
@@ -31,11 +41,15 @@ src_prepare() {
 }
 
 multilib_src_configure() {
-	ECONF_SOURCE="${S}" econf \
-		--enable-threading \
-		$(use_enable cpu_flags_x86_avx avx) \
-		$(use_enable static-libs static) \
+	local myeconfargs=(
+		--disable-imffuzztest
+		--disable-imfhugetest
+		--enable-threading
+		$(use_enable cpu_flags_x86_avx avx)
 		$(use_enable examples imfexamples)
+		$(use_enable static-libs static)
+	)
+	ECONF_SOURCE="${S}" econf "${myeconfargs[@]}"
 }
 
 multilib_src_install_all() {

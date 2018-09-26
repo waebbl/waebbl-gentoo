@@ -1,0 +1,136 @@
+diff --git a/Makefile.in b/Makefile.in
+index 711e3cb..a5f302f 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -255,9 +255,6 @@ NM = @NM@
+ NMEDIT = @NMEDIT@
+ OBJDUMP = @OBJDUMP@
+ OBJEXT = @OBJEXT@
+-OPENEXR_CTL_CXXFLAGS = @OPENEXR_CTL_CXXFLAGS@
+-OPENEXR_CTL_LDFLAGS = @OPENEXR_CTL_LDFLAGS@
+-OPENEXR_CTL_LIBS = @OPENEXR_CTL_LIBS@
+ OPENEXR_CXXFLAGS = @OPENEXR_CXXFLAGS@
+ OPENEXR_LDFLAGS = @OPENEXR_LDFLAGS@
+ OPENEXR_LIBS = @OPENEXR_LIBS@
+diff --git a/config/Makefile.in b/config/Makefile.in
+index 43911c6..991f104 100644
+--- a/config/Makefile.in
++++ b/config/Makefile.in
+@@ -225,9 +225,6 @@ NM = @NM@
+ NMEDIT = @NMEDIT@
+ OBJDUMP = @OBJDUMP@
+ OBJEXT = @OBJEXT@
+-OPENEXR_CTL_CXXFLAGS = @OPENEXR_CTL_CXXFLAGS@
+-OPENEXR_CTL_LDFLAGS = @OPENEXR_CTL_LDFLAGS@
+-OPENEXR_CTL_LIBS = @OPENEXR_CTL_LIBS@
+ OPENEXR_CXXFLAGS = @OPENEXR_CXXFLAGS@
+ OPENEXR_LDFLAGS = @OPENEXR_LDFLAGS@
+ OPENEXR_LIBS = @OPENEXR_LIBS@
+diff --git a/doc/Makefile.in b/doc/Makefile.in
+index a40d208..ec216c4 100644
+--- a/doc/Makefile.in
++++ b/doc/Makefile.in
+@@ -205,9 +205,6 @@ NM = @NM@
+ NMEDIT = @NMEDIT@
+ OBJDUMP = @OBJDUMP@
+ OBJEXT = @OBJEXT@
+-OPENEXR_CTL_CXXFLAGS = @OPENEXR_CTL_CXXFLAGS@
+-OPENEXR_CTL_LDFLAGS = @OPENEXR_CTL_LDFLAGS@
+-OPENEXR_CTL_LIBS = @OPENEXR_CTL_LIBS@
+ OPENEXR_CXXFLAGS = @OPENEXR_CXXFLAGS@
+ OPENEXR_LDFLAGS = @OPENEXR_LDFLAGS@
+ OPENEXR_LIBS = @OPENEXR_LIBS@
+diff --git a/exrdisplay/Makefile.am b/exrdisplay/Makefile.am
+index ad14fa5..33ae988 100644
+--- a/exrdisplay/Makefile.am
++++ b/exrdisplay/Makefile.am
+@@ -5,11 +5,9 @@ if HAVE_FLTK
+ bin_PROGRAMS = exrdisplay
+ 
+ INCLUDES = @OPENEXR_CXXFLAGS@ \
+-        @GL_CXXFLAGS@ @CG_CXXFLAGS@ @FLTK_CXXFLAGS@ -I$(top_builddir) \
+-	@OPENEXR_CTL_CXXFLAGS@
++        @GL_CXXFLAGS@ @CG_CXXFLAGS@ @FLTK_CXXFLAGS@ -I$(top_builddir)
+ 
+ LDADD = @OPENEXR_LDFLAGS@ @OPENEXR_LIBS@ \
+-        @OPENEXR_CTL_LDFLAGS@ @OPENEXR_CTL_LIBS@ \
+         @CG_LDFLAGS@ @FLTK_LDFLAGS@
+         
+ all-local:
+diff --git a/exrdisplay/Makefile.in b/exrdisplay/Makefile.in
+index ea4e4c6..743896c 100644
+--- a/exrdisplay/Makefile.in
++++ b/exrdisplay/Makefile.in
+@@ -250,9 +250,6 @@ NM = @NM@
+ NMEDIT = @NMEDIT@
+ OBJDUMP = @OBJDUMP@
+ OBJEXT = @OBJEXT@
+-OPENEXR_CTL_CXXFLAGS = @OPENEXR_CTL_CXXFLAGS@
+-OPENEXR_CTL_LDFLAGS = @OPENEXR_CTL_LDFLAGS@
+-OPENEXR_CTL_LIBS = @OPENEXR_CTL_LIBS@
+ OPENEXR_CXXFLAGS = @OPENEXR_CXXFLAGS@
+ OPENEXR_LDFLAGS = @OPENEXR_LDFLAGS@
+ OPENEXR_LIBS = @OPENEXR_LIBS@
+@@ -332,11 +329,9 @@ top_build_prefix = @top_build_prefix@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+ @HAVE_FLTK_TRUE@INCLUDES = @OPENEXR_CXXFLAGS@ \
+-@HAVE_FLTK_TRUE@        @GL_CXXFLAGS@ @CG_CXXFLAGS@ @FLTK_CXXFLAGS@ -I$(top_builddir) \
+-@HAVE_FLTK_TRUE@	@OPENEXR_CTL_CXXFLAGS@
++@HAVE_FLTK_TRUE@        @GL_CXXFLAGS@ @CG_CXXFLAGS@ @FLTK_CXXFLAGS@ -I$(top_builddir)
+ 
+ @HAVE_FLTK_TRUE@LDADD = @OPENEXR_LDFLAGS@ @OPENEXR_LIBS@ \
+-@HAVE_FLTK_TRUE@        @OPENEXR_CTL_LDFLAGS@ @OPENEXR_CTL_LIBS@ \
+ @HAVE_FLTK_TRUE@        @CG_LDFLAGS@ @FLTK_LDFLAGS@
+ 
+ exrdisplay_SOURCES = \
+diff --git a/playexr/Makefile.am b/playexr/Makefile.am
+index 9077eff..45be869 100644
+--- a/playexr/Makefile.am
++++ b/playexr/Makefile.am
+@@ -7,14 +7,11 @@ bin_PROGRAMS = playexr
+ playexr_CPPFLAGS = $(AM_CPPFLAGS) 
+ 
+ INCLUDES = \
+-	@OPENEXR_CTL_CXXFLAGS@ \
+ 	@GL_CXXFLAGS@ \
+ 	@CG_CXXFLAGS@
+ 
+ LDADD =	\
+-	@OPENEXR_CTL_LDFLAGS@ \
+-	@CG_LDFLAGS@ \
+-	@OPENEXR_CTL_LIBS@
++	@CG_LDFLAGS@
+ 
+ 
+ 
+diff --git a/playexr/Makefile.in b/playexr/Makefile.in
+index 137eb94..4eb744a 100644
+--- a/playexr/Makefile.in
++++ b/playexr/Makefile.in
+@@ -259,9 +259,6 @@ NM = @NM@
+ NMEDIT = @NMEDIT@
+ OBJDUMP = @OBJDUMP@
+ OBJEXT = @OBJEXT@
+-OPENEXR_CTL_CXXFLAGS = @OPENEXR_CTL_CXXFLAGS@
+-OPENEXR_CTL_LDFLAGS = @OPENEXR_CTL_LDFLAGS@
+-OPENEXR_CTL_LIBS = @OPENEXR_CTL_LIBS@
+ OPENEXR_CXXFLAGS = @OPENEXR_CXXFLAGS@
+ OPENEXR_LDFLAGS = @OPENEXR_LDFLAGS@
+ OPENEXR_LIBS = @OPENEXR_LIBS@
+@@ -342,14 +339,11 @@ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+ @HAVE_CG_TRUE@playexr_CPPFLAGS = $(AM_CPPFLAGS) 
+ @HAVE_CG_TRUE@INCLUDES = \
+-@HAVE_CG_TRUE@	@OPENEXR_CTL_CXXFLAGS@ \
+ @HAVE_CG_TRUE@	@GL_CXXFLAGS@ \
+ @HAVE_CG_TRUE@	@CG_CXXFLAGS@
+ 
+ @HAVE_CG_TRUE@LDADD = \
+-@HAVE_CG_TRUE@	@OPENEXR_CTL_LDFLAGS@ \
+-@HAVE_CG_TRUE@	@CG_LDFLAGS@ \
+-@HAVE_CG_TRUE@	@OPENEXR_CTL_LIBS@
++@HAVE_CG_TRUE@	@CG_LDFLAGS@
+ 
+ @HAVE_CG_TRUE@playexr_SOURCES = \
+ @HAVE_CG_TRUE@	main.cpp \

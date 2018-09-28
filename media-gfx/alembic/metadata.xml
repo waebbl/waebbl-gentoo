@@ -22,10 +22,6 @@
 	<flag name="prman" restrict="&gt;=media-gfx/alembic-1.7.9">
 		Compile Alembic plugin for Renderman (experimental)
 	</flag>
-	<flag name="pyalembic" restrict="&gt;media-gfx/alembic-1.7.9">
-		<!-- renamed to python in 1.7.9 -->
-		Build pyalembic python bindings (needs <pkg>dev-python/pyilmbase</pkg>)
-	</flag>
 	<flag name="python" restrict="&gt;=media-gfx/alembic-1.7.9">
 		Build pyalembic python bindings (needs <pkg>dev-python/pyilmbase</pkg>)
 	</flag>

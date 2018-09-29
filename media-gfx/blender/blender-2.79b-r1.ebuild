@@ -2,45 +2,39 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-PYTHON_COMPAT=( python3_6 )
+
+PYTHON_COMPAT=( python{3_5,3_6} )
 
 inherit check-reqs cmake-utils xdg-utils flag-o-matic gnome2-utils \
-	pax-utils python-single-r1 toolchain-funcs versionator
+	pax-utils python-single-r1 toolchain-funcs eapi7-ver
 
 DESCRIPTION="3D Creation/Animation/Publishing System"
 HOMEPAGE="http://www.blender.org"
-#SRC_URI="http://download.blender.org/source/${P}.tar.gz"
-SRC_URI=""
+
+SRC_URI="http://download.blender.org/source/${P}.tar.gz"
 
 # Blender can have letters in the version string,
-# so strip of the letter if it exists.
-MY_PV="$(get_version_component_range 1-2)"
+# so strip off the letter if it exists.
+MY_PV="$(ver_cut 1-2)"
 
 SLOT="0"
 LICENSE="|| ( GPL-2 BL )"
 KEYWORDS="~amd64 ~x86"
-# opencl has been masked due to removal of x11-drivers/ati-drivers
-IUSE="alembic +boost +bullet +dds +elbeem +game-engine +openexr collada \
-	colorio cuda cycles debug dna doc ffmpeg fftw headless jack jemalloc \
-	jpeg2k libav llvm man ndof nls openal openimageio openmp opensubdiv \
-	openvdb osl player sdl sndfile test tiff valgrind"
+IUSE="+bullet +dds +elbeem +game-engine +openexr alembic collada colorio \
+	cuda cycles debug doc ffmpeg fftw headless jack jemalloc jpeg2k libav \
+	llvm man ndof nls openal opencl openimageio openmp opensubdiv openvdb \
+	osl player sdl sndfile test tiff valgrind"
 
-# OpenCL and nVidia performance is rubbish with Blender
-# If you have nVidia, use CUDA.
 REQUIRED_USE="${PYTHON_REQUIRED_USE}
-	player? ( game-engine !headless )
+	alembic? ( openexr )
 	cuda? ( cycles )
-	cycles? ( boost openexr tiff openimageio )
-	colorio? ( boost )
-	openvdb? ( boost )
-	nls? ( boost )
-	openal? ( boost )
+	cycles? ( openexr tiff openimageio )
+	opencl? ( cycles )
 	osl? ( cycles llvm )
-	game-engine? ( boost )
-	alembic? ( boost openexr )
-	?? ( ffmpeg libav )"
+	player? ( game-engine !headless )"
 
 RDEPEND="${PYTHON_DEPS}
+	>=dev-libs/boost-1.62:=[nls?,threads(+)]
 	dev-libs/lzo:2
 	>=dev-python/numpy-1.10.1[${PYTHON_USEDEP}]
 	dev-python/requests[${PYTHON_USEDEP}]
@@ -53,10 +47,10 @@ RDEPEND="${PYTHON_DEPS}
 	virtual/jpeg:0=
 	virtual/libintl
 	virtual/opengl
-	boost? ( >=dev-libs/boost-1.62:=[nls?,threads(+)] )
+	alembic? ( >=media-gfx/alembic-1.7.4 )
 	collada? ( >=media-libs/opencollada-1.6.18:= )
 	colorio? ( media-libs/opencolorio )
-	cuda? ( =dev-util/nvidia-cuda-toolkit-9.1*:= )
+	cuda? ( dev-util/nvidia-cuda-toolkit:= )
 	ffmpeg? ( media-video/ffmpeg:=[x264,mp3,encode,theora,jpeg2k?] )
 	libav? ( >=media-video/libav-11.3:=[x264,mp3,encode,theora,jpeg2k?] )
 	fftw? ( sci-libs/fftw:3.0= )
@@ -75,14 +69,15 @@ RDEPEND="${PYTHON_DEPS}
 	)
 	nls? ( virtual/libiconv )
 	openal? ( media-libs/openal )
+	opencl? ( virtual/opencl )
 	openimageio? ( >=media-libs/openimageio-1.7.0 )
 	openexr? (
 		>=media-libs/ilmbase-2.2.0:=
 		>=media-libs/openexr-2.2.0:=
 	)
-	opensubdiv? ( media-libs/opensubdiv[cuda=] )
+	opensubdiv? ( >=media-libs/opensubdiv-3.3.0:=[cuda=,opencl=] )
 	openvdb? (
-		media-gfx/openvdb[${PYTHON_USEDEP},abi3-compat(+),openvdb-compression(+)]
+		media-gfx/openvdb[${PYTHON_USEDEP},-abi3-compat(-),abi4-compat(+)]
 		dev-cpp/tbb
 		>=dev-libs/c-blosc-1.5.2
 	)
@@ -90,34 +85,28 @@ RDEPEND="${PYTHON_DEPS}
 	sdl? ( media-libs/libsdl2[sound,joystick] )
 	sndfile? ( media-libs/libsndfile )
 	tiff? ( media-libs/tiff:0 )
-	alembic? ( >=media-gfx/alembic-1.7.4[boost=] )
 	valgrind? ( dev-util/valgrind )"
 
 DEPEND="${RDEPEND}
-	virtual/pkgconfig
 	>=dev-cpp/eigen-3.2.8:3
-	nls? ( sys-devel/gettext )
+	virtual/pkgconfig
 	doc? (
 		app-doc/doxygen[-nodot(-),dot(+),latex]
 		dev-python/sphinx[latex]
-	)"
+	)
+	nls? ( sys-devel/gettext )"
 
-#PATCHES=( "${FILESDIR}/${PN}-fix-install-rules.patch" )
-
-case ${PV} in
-9999)
-	EGIT_REPO_URI="https://git.blender.org/blender.git"
-	inherit git-r3
-	;;
-esac
+PATCHES=(
+	"${FILESDIR}/${PN}-fix-install-rules.patch"
+	"${FILESDIR}/${P}-gcc-8.patch"
+	"${FILESDIR}/${P}-ffmpeg-4-compat.patch"
+)
 
 blender_check_requirements() {
-	if [[ ${MERGE_TYPE} != binary ]]; then
-		use openmp && tc-check-openmp
+	[[ ${MERGE_TYPE} != binary ]] && use openmp && tc-check-openmp
 
-		if use doc; then
-			CHECKREQS_DISK_BUILD="4G" check-reqs_pkg_pretend
-		fi
+	if use doc; then
+		CHECKREQS_DISK_BUILD="4G" check-reqs_pkg_pretend
 	fi
 }
 
@@ -150,9 +139,10 @@ src_prepare() {
 src_configure() {
 	# FIX: forcing '-funsigned-char' fixes an anti-aliasing issue with menu
 	# shadows, see bug #276338 for reference
-	#append-flags -funsigned-char
+	append-flags -funsigned-char
 	append-lfs-flags
-	append-cppflags -DOPENVDB_3_ABI_COMPATIBLE
+	# Blender is compatible ABI 4 or less, so use ABI 4.
+	append-cppflags -DOPENVDB_ABI_VERSION_NUMBER=4
 
 	local mycmakeargs=(
 		-DPYTHON_VERSION="${EPYTHON/python/}"
@@ -168,10 +158,8 @@ src_configure() {
 		-DWITH_SYSTEM_LZO=ON
 		-DWITH_C11=ON
 		-DWITH_CXX11=ON
-		-DWITH_CYCLES_NATIVE_ONLY=ON
 		-DWITH_ALEMBIC=$(usex alembic)
-		-DWITH_ALEMBIC_HDF5=$(usex alembic)
-		-DWITH_BOOST=$(usex boost)
+		-DWITH_BOOST=ON
 		-DWITH_BULLET=$(usex bullet)
 		-DWITH_CODEC_FFMPEG=$(usex ffmpeg)
 		-DWITH_CODEC_SNDFILE=$(usex sndfile)
@@ -179,7 +167,6 @@ src_configure() {
 		-DWITH_CYCLES_DEVICE_CUDA=$(usex cuda TRUE FALSE)
 		-DWITH_CYCLES=$(usex cycles)
 		-DWITH_CYCLES_OSL=$(usex osl)
-		-DWITH_CYCLES_OPENSUBDIV=$(usex opensubdiv)
 		-DWITH_LLVM=$(usex llvm)
 		-DWITH_FFTW3=$(usex fftw)
 		-DWITH_GAMEENGINE=$(usex game-engine)
@@ -195,7 +182,7 @@ src_configure() {
 		-DWITH_MOD_FLUID=$(usex elbeem)
 		-DWITH_MOD_OCEANSIM=$(usex fftw)
 		-DWITH_OPENAL=$(usex openal)
-		-DWITH_OPENCL=OFF
+		-DWITH_OPENCL=$(usex opencl)
 		-DWITH_OPENCOLORIO=$(usex colorio)
 		-DWITH_OPENCOLLADA=$(usex collada)
 		-DWITH_OPENIMAGEIO=$(usex openimageio)
@@ -264,7 +251,7 @@ src_install() {
 	cmake-utils_src_install
 
 	# fix doc installdir
-	docinto html
+	docinto "html"
 	dodoc "${CMAKE_USE_DIR}"/release/text/readme.html
 	rm -r "${ED%/}"/usr/share/doc/blender || die
 

@@ -2,16 +2,12 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 	<maintainer restrict="&gt;=media-gfx/blender-2.77" type="person">
-		<email>j.scruggs@gmail.com</email>
+		<email>dracwyrm@gentoo.org</email>
 		<name>Jonathan Scruggs</name>
 	</maintainer>
 	<maintainer restrict="&gt;=media-gfx/blender-2.77" type="person">
 		<email>agrigo2001@yahoo.com.au</email>
 		<name>Adrian Grigo</name>
-	</maintainer>
-	<maintainer type="project">
-		<email>proxy-maint@gentoo.org</email>
-		<name>Proxy Maintainers</name>
 	</maintainer>
 	<maintainer type="project">
 		<email>graphics@gentoo.org</email>
@@ -24,12 +20,14 @@
 	</longdescription>
 
 	<use>
-		<flag name="alembic" restrict="=media-gfx/blender-9999">
-			Add support for <pkg>media-gfx/alembic</pkg> to store scene data
+		<flag name="alembic" restrict="&gt;=media-gfx/blender-2.79b-r1">
+			Enable support for <pkg>media-gfx/alembic</pkg>
 		</flag>
-		<flag name="boost">
+	<!--
+		<flag name="boost" restrict="&lt;media-gfx/blender-2.79">
 			Enable features depending on boost.
 		</flag>
+	-->
 		<flag name="bullet">
 			Enable Bullet (Physics Engine).
 		</flag>
@@ -50,9 +48,6 @@
 		</flag>
 		<flag name="dds">
 			Adds DDS textures support to Blender.
-		</flag>
-		<flag name="dna" restrict="=media-gfx/blender-9999">
-			Builds the Blender file format reference.
 		</flag>
 		<flag name="doc">
 			Build C and Python API documentation directly from the source code.
@@ -78,7 +73,15 @@
 		<flag name="ndof">
 			Enable NDOF input devices (SpaceNavigator and friends).
 		</flag>
+		<flag name="opencl" restrict="&lt;=media-gfx/blender-2.79">
+			Allow OpenCL Graphics Acceleration. This may
+			require extra graphics card drivers.</flag>
 		<flag name="openimageio">Enable OpenImageIO Support</flag>
+		<!--
+		<flag name="opennl" restrict="&lt;=media-gfx/blender-2.73">
+			Enable use of Open Numerical Library
+		</flag>
+		-->
 		<flag name="opensubdiv" restrict="&gt;=media-gfx/blender-2.77">
 			Add rendering support form OpenSubdiv from Dreamworks Animation
 			through <pkg>media-libs/opensubdiv</pkg>.
@@ -86,12 +89,18 @@
 		<flag name="openvdb" restrict="&gt;=media-gfx/blender-2.77">
 			Add GPU preview rendering. Only works with nVidia cards.
 		</flag>
-		<flag name="osl" restrict="&gt;=media-gfx/blender-2.78b">
+		<flag name="osl" restrict="&gt;=media-gfx/blender-2.79">
 			Add support for OpenShadingLanguage scripting.
 		</flag>
 		<flag name="player">
 			Build the Blender Player. THis requires the Game engine.
 		</flag>
+		<!--
+		<flag name="redcode" restrict="&lt;=media-gfx/blender-2.73">
+			This flag add support for RED CODE camera digital format (5K HD
+			images *.r3d) - EXPERIMENTAL.
+		</flag>
+		-->
 		<flag name="test" restrict="&gt;=media-gfx/blender-2.77">
 			Build the provided unit tests.
 		</flag>

@@ -22,14 +22,16 @@ RDEPEND="
 	cg? ( media-gfx/nvidia-cg-toolkit )
 "
 
-DEPEND="${RDEPEND}
-	virtual/pkgconfig"
+DEPEND="
+	${RDEPEND}
+	virtual/pkgconfig
+"
 
 DOCS=( ChangeLog README.md )
 
 PATCHES=(
 	"${FILESDIR}/${P}-fix-configure.patch"
-	"${FILESDIR}/${P}-fix-makefiles.patch"
+	"${FILESDIR}/${P}-fix-cg-libdir.patch"
 )
 
 src_prepare() {
@@ -40,11 +42,15 @@ src_prepare() {
 
 src_configure() {
 	local myeconfargs=(
+		--disable-openexrctltest
 		--with-fltk-config="/usr/bin/fltk-config"
 	)
 
 	if use cg; then
-		myeconfargs+=( --with-cg-prefix="/opt/nvidia-cg-toolkit" )
+		myeconfargs+=(
+			--enable-cg
+			--with-cg-prefix="/opt/nvidia-cg-toolkit"
+		)
 		append-ldflags "$(no-as-needed)" # binary-only libCg is not properly linked
 	fi
 

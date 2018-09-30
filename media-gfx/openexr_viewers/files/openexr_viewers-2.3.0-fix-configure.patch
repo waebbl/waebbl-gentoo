@@ -21,27 +21,6 @@ index 0ae7531..f2cdfee 100644
  AC_PROG_MAKE_SET
  
  dnl
-@@ -64,20 +63,6 @@ AM_PATH_PKGCONFIG(
-    [-lIlmImf -lImath -lIex -lHalf -lz -lpthread],
-    [openexr-prefix])
- 
--dnl
--dnl check optional OpenexrCTL (see comment above)
--dnl
--AM_PATH_PKGCONFIG(
--   [OPENEXR_CTL_CXXFLAGS],
--   [OPENEXR_CTL_LDFLAGS],
--   [OPENEXR_CTL_LIBS],
--   [OpenEXR_CTL],
--   [OpenEXR CTL],
--   [$LIB64_IF_EXISTS -L/usr/local/lib],
--   [-lIlmImfCtl -lIlmImf -lz -lImath -lHalf -lIex -lIlmThread -lpthread -lIlmCtlSimd -lIlmCtlMath -lIlmCtl],
--   [openexrctl-prefix])
--
--
- dnl Enable and choose c++ standard
- AC_ARG_ENABLE(cxxstd,
-               AC_HELP_STRING([--enable-cxxstd=14],
 @@ -124,19 +109,8 @@ AC_ARG_ENABLE(threading,
                [multithread="${enableval}"], [multithread=yes])
  
@@ -64,79 +43,13 @@ index 0ae7531..f2cdfee 100644
  fi
  
  
-@@ -156,42 +130,6 @@ AM_COMPILELINKRUN(
- 
- 
- 
--AM_COMPILELINKRUN(
--   [OpenEXR_CTL],
--   [openexrctltest],
--   [$OPENEXR_CTL_CXXFLAGS],
--   [$OPENEXR_CTL_LDFLAGS],
--   [$OPENEXR_CTL_LIBS],[[
--#include <ImfCtlApplyTransforms.h>
--#include <CtlSimdInterpreter.h>
--#include <ImfHeader.h>
--#include <ImfFrameBuffer.h>
--#include <ImathBox.h>
--#include <ImfNamespace.h>
--#include <vector>
--#include <cstdlib>
--    using namespace Ctl;
--    using namespace OPENEXR_IMF_NAMESPACE;
--    using namespace Imath;
--]],
--   [[
--    SimdInterpreter interpreter;
--    std::vector<std::string> transformNames;
--    Box2i transformWindow (V2i (0, 0), V2i (0, 0));
--    Header envHeader;
--    Header inHeader;
--    Header outHeader;
--    FrameBuffer inFb;
--    FrameBuffer outFb;
--
--    ImfCtl::applyTransforms (interpreter, transformNames, transformWindow,
--                             envHeader, inHeader, inFb, outHeader, outFb);
--   ]],
--   AC_MSG_RESULT([Compiled and ran OpenEXR_CTL test program.]); have_ctl=yes, 
--   AC_MSG_RESULT([The OpenEXR_CTL package could not be found.  Will build and install playexr and exrdisplay without ctl support. ]); have_ctl=no)
--
--
--
- dnl
- dnl if some autoconf expert knows how to get the actual prefix used, please 
- dnl tell us.  Until then...
-@@ -204,22 +142,6 @@ fi
- 
- 
- 
--[if (test "${have_ctl}" = yes) ; then
--   OPENEXR_CTL_CXXFLAGS="$OPENEXR_CTL_CXXFLAGS -DHAVE_CTL_INTERPRETER=1 -DCTL_MODULE_BASE_PATH=\\\"$ACTUAL_PREFIX/lib/CTL\\\""
--else
--   OPENEXR_CTL_CXXFLAGS="-DHAVE_CTL_INTERPRETER=0 $OPENEXR_CXXFLAGS"
--   OPENEXR_CTL_LIBS="-DHAVE_CTL_INTERPRETER=0 $OPENEXR_LIBS"
--   OPENEXR_CTL_LDFLAGS="-DHAVE_CTL_INTERPRETER=0 $OPENEXR_LDFLAGS"
--fi]
--
--dnl
--dnl These are already shared by AM_PATH_PKGCONFIG... now we update them
--dnl with the latest changes
--AC_SUBST(OPENEXR_CTL_CXXFLAGS)
--AC_SUBST(OPENEXR_CTL_LDFLAGS)
--AC_SUBST(OPENEXR_CTL_LIBS)
--
--
- dnl
- dnl check for alternate OpenGL headers
- dnl
 @@ -233,10 +155,13 @@ AM_PATH_FLTK(have_fltk=yes, have_fltk=no)
  dnl
  dnl check for Cg
  dnl
 -if test "${have_fltk}" = yes; then
-+AC_ARG_ENABLE(cg, AC_HELP_STRING([--enable-cg],
-+	[enable nvidia cg support [[default=check]]]), [want_cg="${enableval}"], [want_cg=yes])
++AC_ARG_ENABLE(cg, AS_HELP_STRING([--enable-cg],
++	[enable nvidia cg support [[default: test]]]), [want_cg="${enableval}"], [want_cg=yes])
 +
 +if test "${have_fltk}" = yes -a "${want_cg}" != no; then
    AM_PATH_CG(have_cg=yes, have_cg=no)
@@ -168,27 +81,3 @@ index 0ae7531..f2cdfee 100644
  
    dnl OS X universal binary support, requires --disable-dependency-tracking
    AC_ARG_ENABLE(osx-universal-binaries,
-@@ -295,7 +210,6 @@ AC_SUBST(AM_CXXFLAGS)
- 
- AM_CONDITIONAL(HAVE_FLTK, test "x$have_fltk" = xyes)
- AM_CONDITIONAL(HAVE_CG, test "x$have_cg" = xyes)
--AM_CONDITIONAL(HAVE_CTL, test "x$have_ctl" = xyes)
- 
- AC_OUTPUT([
- Makefile
-@@ -312,7 +226,6 @@ Summary for OpenEXR features:
- 
- build exrdisplay FLTK application		$have_fltk
-     with fragment shader support		$have_cg
--ctl support                                     $have_ctl
- build OS X universal binaries                   $build_osxuniversal
- ---------------------------------------------
-   ])
-@@ -323,7 +236,6 @@ Summary for OpenEXR features:
- 
- build exrdisplay FLTK application		$have_fltk
-     with fragment shader support		$have_cg
--ctl support                                     $have_ctl
- ---------------------------------------------
-   ])
- fi

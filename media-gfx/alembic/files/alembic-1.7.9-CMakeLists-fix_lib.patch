@@ -9,13 +9,13 @@ index 298f4be..18b3ff5 100644
 -SET(RUNTIME_INSTALL_DIR lib)
 -SET(LIBRARY_INSTALL_DIR lib)
 -SET(ARCHIVE_INSTALL_DIR lib)
-+SET(RUNTIME_INSTALL_DIR lib64)
-+SET(LIBRARY_INSTALL_DIR lib64)
-+SET(ARCHIVE_INSTALL_DIR lib64)
++SET(RUNTIME_INSTALL_DIR lib${LIB_SUFFIX})
++SET(LIBRARY_INSTALL_DIR lib${LIB_SUFFIX})
++SET(ARCHIVE_INSTALL_DIR lib${LIB_SUFFIX})
  IF (ALEMBIC_SHARED_LIBS)
      SET(LIB_TYPE SHARED)
 -    SET(ARCHIVE_INSTALL_DIR lib)
-+    SET(ARCHIVE_INSTALL_DIR lib64)
++    SET(ARCHIVE_INSTALL_DIR lib${LIB_SUFFIX})
      IF (WIN32)
          ADD_DEFINITIONS(-DALEMBIC_DLL)
      ENDIF()
@@ -28,7 +28,7 @@ index 69e00da..47ccf66 100644
  set_target_properties(AlembicArnoldProcedural PROPERTIES
      INSTALL_RPATH_USE_LINK_PATH TRUE
 -    INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib)
-+    INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib64)
++    INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX})
  
  INSTALL ( TARGETS
    AlembicArnoldProcedural
@@ -41,7 +41,7 @@ index 451409c..c882971 100644
  set_target_properties(abcconvert PROPERTIES
      INSTALL_RPATH_USE_LINK_PATH TRUE
 -    INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib)
-+    INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib64)
++    INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX})
  
  INSTALL(TARGETS abcconvert DESTINATION bin)
 diff --git a/bin/AbcDiff/CMakeLists.txt b/bin/AbcDiff/CMakeLists.txt
@@ -53,7 +53,7 @@ index 511864a..bed92b2 100644
  set_target_properties(abcdiff PROPERTIES
      INSTALL_RPATH_USE_LINK_PATH TRUE
 -    INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib)
-+    INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib64)
++    INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX})
  
  INSTALL(TARGETS abcdiff DESTINATION bin)
 diff --git a/bin/AbcEcho/CMakeLists.txt b/bin/AbcEcho/CMakeLists.txt
@@ -65,7 +65,7 @@ index be5f5c1..eca449a 100644
  set_target_properties(abcecho abcechobounds PROPERTIES
      INSTALL_RPATH_USE_LINK_PATH TRUE
 -    INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib)
-+    INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib64)
++    INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX})
  
  INSTALL(TARGETS abcecho abcechobounds DESTINATION bin)
 diff --git a/bin/AbcLs/CMakeLists.txt b/bin/AbcLs/CMakeLists.txt
@@ -77,7 +77,7 @@ index 815f84f..92f83c4 100644
  set_target_properties(abcls PROPERTIES
      INSTALL_RPATH_USE_LINK_PATH TRUE
 -    INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib)
-+    INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib64)
++    INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX})
  
  INSTALL(TARGETS abcls DESTINATION bin)
 diff --git a/bin/AbcStitcher/CMakeLists.txt b/bin/AbcStitcher/CMakeLists.txt
@@ -89,7 +89,7 @@ index a963420..a84e00b 100644
  set_target_properties(abcstitcher PROPERTIES
      INSTALL_RPATH_USE_LINK_PATH TRUE
 -    INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib)
-+    INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib64)
++    INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX})
  
  INSTALL(TARGETS abcstitcher DESTINATION bin)
 diff --git a/bin/AbcTree/CMakeLists.txt b/bin/AbcTree/CMakeLists.txt
@@ -101,7 +101,7 @@ index b4f65f1..74225ac 100644
  set_target_properties(abctree PROPERTIES
      INSTALL_RPATH_USE_LINK_PATH TRUE
 -    INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib)
-+    INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib64)
++    INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX})
  
  INSTALL(TARGETS abctree DESTINATION bin)
 diff --git a/lib/Alembic/CMakeLists.txt b/lib/Alembic/CMakeLists.txt
@@ -113,7 +113,7 @@ index fb3def8..d5bbcec 100644
  ENDIF()
  
 -SET( ALEMBIC_LIB_INSTALL_DIR lib CACHE PATH "Where to install the Alembic libs")
-+SET( ALEMBIC_LIB_INSTALL_DIR lib64 CACHE PATH "Where to install the Alembic libs")
++SET( ALEMBIC_LIB_INSTALL_DIR lib${LIB_SUFFIX} CACHE PATH "Where to install the Alembic libs")
  INSTALL(TARGETS Alembic
          EXPORT AlembicTargets
          LIBRARY DESTINATION ${ALEMBIC_LIB_INSTALL_DIR}
@@ -122,7 +122,7 @@ index fb3def8..d5bbcec 100644
      )
  
 -SET(ConfigPackageLocation lib/cmake/Alembic CACHE PATH
-+SET(ConfigPackageLocation lib64/cmake/Alembic CACHE PATH
++SET(ConfigPackageLocation lib${LIB_SUFFIX}/cmake/Alembic CACHE PATH
      "Where to install the Alembic's cmake files")
  
  INSTALL(FILES
@@ -135,7 +135,7 @@ index 50d2fd2..f8bc850 100644
  set_target_properties(AbcExport PROPERTIES
      INSTALL_RPATH_USE_LINK_PATH TRUE
 -    INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib)
-+    INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib64)
++    INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX})
  
  INSTALL(TARGETS AbcExport
          DESTINATION ${ALEMBIC_MAYA_PLUGINS_INSTALL_DIR})
@@ -148,7 +148,7 @@ index 6826183..e71e612 100644
  set_target_properties(AbcImport PROPERTIES
      INSTALL_RPATH_USE_LINK_PATH TRUE
 -    INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib)
-+    INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib64)
++    INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX})
  
  INSTALL(TARGETS AbcImport
          DESTINATION ${ALEMBIC_MAYA_PLUGINS_INSTALL_DIR})
@@ -161,7 +161,7 @@ index 6b46e91..3635bcc 100644
  set_target_properties(AlembicRiProcedural PROPERTIES
      INSTALL_RPATH_USE_LINK_PATH TRUE
 -    INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib)
-+    INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib64)
++    INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX})
  
  INSTALL(TARGETS
      AlembicRiProcedural
@@ -174,7 +174,7 @@ index 91c45c4..c87eec6 100644
  
      SET( ALEMBIC_PYTHON_INSTALL_DIR
 -        lib/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/site-packages
-+        lib64/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/site-packages
++        lib${LIB_SUFFIX}/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/site-packages
          CACHE PATH
          "Alembic's python bindings install directory"
      )
@@ -183,7 +183,7 @@ index 91c45c4..c87eec6 100644
      set_target_properties(alembic PROPERTIES
          INSTALL_RPATH_USE_LINK_PATH TRUE
 -        INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib)
-+        INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib64)
++        INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX})
  ELSE()
      MESSAGE(FATAL_ERROR "Unable to find Python libs")
  ENDIF()

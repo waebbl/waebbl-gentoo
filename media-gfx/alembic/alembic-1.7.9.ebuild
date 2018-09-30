@@ -41,6 +41,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-FindIlmBase-pkgconfig.patch"
 	"${FILESDIR}/${P}-CMakeLists-fix_lib.patch"
 	"${FILESDIR}/${P}-prman.patch"
+	"${FILESDIR}/${P}-fix-python-import.patch"
 )
 
 src_prepare() {
@@ -54,6 +55,7 @@ src_configure() {
 		# is defined
 		-DALEMBIC_LIB_USES_BOOST=$(usex boost)
 		-DALEMBIC_LIB_USES_TR1=$(usex !boost)
+		-DPYILMBASE_ROOT="/usr"
 		-DUSE_ARNOLD=$(usex arnold)
 		-DUSE_BINARIES=ON
 		-DUSE_EXAMPLES=$(usex examples)

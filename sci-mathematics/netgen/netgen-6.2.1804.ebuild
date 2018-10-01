@@ -81,7 +81,7 @@ src_configure() {
 	if use opencascade; then
 		mycmakeargs+=(
 			-DOCC_INCLUDE_DIR="${CASROOT}"/include/opencascade
-			-DOCC_LIBRARY="${CASROOT}"/lib
+			-DOCC_LIBRARY_DIR="${CASROOT}"/lib
 		)
 	fi
 

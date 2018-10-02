@@ -17,8 +17,8 @@ SLOT="0"
 IUSE=""
 
 RDEPEND="
-	~media-libs/coin-9999
-	~media-libs/SoQt-9999
+	~media-libs/coin-9999:=
+	~media-libs/SoQt-9999:=
 "
 DEPEND="
 	${RDEPEND}

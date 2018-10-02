@@ -19,8 +19,8 @@ IUSE=""
 S="${WORKDIR}/Coin3D-pivy-a84100beff22"
 
 RDEPEND="
-	~media-libs/coin-4.0.0a_pre20180921
-	~media-libs/SoQt-1.6.0a_pre20180813
+	~media-libs/coin-4.0.0a_pre20180921:=
+	~media-libs/SoQt-1.6.0a_pre20180813:=
 "
 DEPEND="
 	${RDEPEND}

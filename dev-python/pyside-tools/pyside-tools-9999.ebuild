@@ -11,7 +11,7 @@ inherit cmake-utils python-r1 virtualx git-r3
 DESCRIPTION="PySide development tools (lupdate, rcc, uic)"
 HOMEPAGE="https://wiki.qt.io/PySide2"
 EGIT_REPO_URI="https://code.qt.io/pyside/pyside-tools.git"
-EGIT_BRANCH="dev"
+EGIT_BRANCH="5.9"
 
 # Although "LICENSE-uic" suggests the "pyside2uic" directory to be dual-licensed
 # under the BSD 3-clause and GPL v2 licenses, this appears to be an oversight;

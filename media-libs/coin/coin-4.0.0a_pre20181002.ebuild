@@ -79,7 +79,7 @@ src_unpack() {
 
 	EHG_REPO_URI=${COIN_REPO_URI}
 	EHG_CHECKOUT_DIR="${S}"
-	EHG_REVISION="cf2a467"
+	EHG_REVISION="c4c0ea7"
 	mercurial_fetch
 }
 

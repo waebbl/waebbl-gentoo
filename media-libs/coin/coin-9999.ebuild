@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -16,7 +16,7 @@ EHG_PROJECT="Coin3D"
 
 LICENSE="|| ( GPL-2 PEL )"
 SLOT="0"
-IUSE="+3ds-import debug doc +draggers exceptions +javascript +manipulators nodekits +openal qthelp +simage static-libs test threads +vrml97"
+IUSE="+3ds-import debug doc +draggers exceptions +javascript +manipulators +nodekits +openal qthelp +simage static-libs test threads +vrml97"
 
 # NOTE: expat is not really needed as --enable-system-expat is broken
 # avi, guile, jpeg2000, pic, rgb, tga, xwd not added (did not find where the support is)
@@ -47,8 +47,8 @@ DEPEND="${RDEPEND}
 "
 
 REQUIRED_USE="
-	?? ( draggers nodekits )
-	?? ( manipulators nodekits )
+	draggers? ( nodekits )
+	manipulators? ( nodekits )
 "
 
 S="${WORKDIR}/${MY_P}"

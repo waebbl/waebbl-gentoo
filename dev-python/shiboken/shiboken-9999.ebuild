@@ -10,7 +10,7 @@ inherit cmake-utils llvm python-r1 git-r3
 DESCRIPTION="Tool for creating Python bindings for C++ libraries"
 HOMEPAGE="https://wiki.qt.io/PySide2"
 EGIT_REPO_URI="https://code.qt.io/pyside/pyside-setup.git"
-EGIT_BRANCH="dev"
+EGIT_BRANCH="5.9"
 EGIT_SUBMODULES=()
 
 # The "sources/shiboken2/libshiboken" directory is triple-licensed under the GPL

@@ -22,12 +22,12 @@ SLOT="0"
 IUSE="+coin-iv-extensions spacenav"
 
 RDEPEND="
-	>=media-libs/coin-4.0.0-r1
+	>=media-libs/coin-4.0.0-r1:=
 	virtual/opengl
-	dev-qt/qtcore:5
-	dev-qt/qtgui:5
-	dev-qt/qtopengl:5
-	dev-qt/qtwidgets:5
+	dev-qt/qtcore:5=
+	dev-qt/qtgui:5=
+	dev-qt/qtopengl:5=
+	dev-qt/qtwidgets:5=
 	spacenav? ( >=dev-libs/libspnav-0.2.2 )
 "
 DEPEND="${RDEPEND}

@@ -10,7 +10,7 @@ inherit cmake-utils python-r1 virtualx git-r3
 DESCRIPTION="Python bindings for the Qt framework"
 HOMEPAGE="https://wiki.qt.io/PySide2"
 EGIT_REPO_URI="https://code.qt.io/pyside/pyside-setup.git"
-EGIT_BRANCH="dev"
+EGIT_BRANCH="5.9"
 EGIT_SUBMODULES=()
 
 # See "sources/pyside2/PySide2/licensecomment.txt" for licensing details.

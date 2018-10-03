@@ -26,19 +26,19 @@ IUSE="+3ds-import debug doc +draggers exceptions +javascript +manipulators +node
 # avi, guile, jpeg2000, pic, rgb, tga, xwd not added (did not find where the support is)
 RDEPEND="
 	app-arch/bzip2
-	dev-libs/expat
-	>=dev-libs/boost-1.65.0
+	dev-libs/expat:=
+	>=dev-libs/boost-1.65.0:=
 	media-libs/fontconfig
 	media-libs/freetype:2
 	sys-libs/zlib
 	virtual/opengl
 	virtual/glu
-	x11-libs/libICE
-	x11-libs/libSM
-	x11-libs/libX11
-	x11-libs/libXext
-	javascript? ( dev-lang/spidermonkey:0 )
-	openal? ( media-libs/openal )
+	x11-libs/libICE:=
+	x11-libs/libSM:=
+	x11-libs/libX11:=
+	x11-libs/libXext:=
+	javascript? ( dev-lang/spidermonkey:0= )
+	openal? ( media-libs/openal:= )
 	simage? ( media-libs/simage:= )
 "
 DEPEND="${RDEPEND}

@@ -141,7 +141,7 @@ src_configure() {
 		-DBUILD_FREETYPE="$(usex freetype)"
 		-DBUILD_GUI="$(usex qt5)"
 		-DBUILD_QT5="$(usex qt5)"
-		-DCMAKE_INSTALL_DATADIR=/usr/share/${PN}
+		-DCMAKE_INSTALL_DATADIR=/usr/share/${PN}/data
 		-DCMAKE_INSTALL_DOCDIR=/usr/share/doc/${PF}
 		-DCMAKE_INSTALL_INCLUDEDIR=/usr/include/${PN}
 		-DCMAKE_INSTALL_PREFIX=/usr/$(get_libdir)/${PN}

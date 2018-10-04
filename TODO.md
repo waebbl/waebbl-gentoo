@@ -23,6 +23,7 @@
 - [ ] dev-python/pyside: need a local ebuild? On [Qt for Python](http://wiki.qt.io/Qt_for_Python/GettingStarted/X11) they say, the same version as Qt is needed. The ebuild from qt overlay uses branch 5.9, but people (including me) might have installed Qt 5.11 already. Also there would be no cross-repo dependency.
 - [x] OpenEXR Suite: see [PR](https://github.com/gentoo/gentoo/pull/10030) and [Bug](https://bugs.gentoo.org/639998)
 - [x] media-gfx/alembic has 1.7.9 -> see [Bugzilla](https://bugs.gentoo.org/667230) and [PR](https://github.com/gentoo/gentoo/pull/10003)
+- [ ] games-util/simulationcraft new version 801-01: check if cmake is working
 
 ## Less needed packages not in official trees
 - [ ] look through and check whether updates are needed

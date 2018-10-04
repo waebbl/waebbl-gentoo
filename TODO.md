@@ -13,6 +13,7 @@
 - [ ] [app-arch/zipios](https://github.com/Zipios/Zipios) new package: used by freecad, currently internal package is used
 - [ ] [media-gfx/makehuman](https://github.com/makehumancommunity/makehuman) new package: take a look at cg overlay, if their ebuild is usable
 - [ ] [media-gfx/solvespace](https://github.com/solvespace/solvespace) new package: parametric 2D/3D CAD package
+- [ ] [sci-libs/gmsh](https://gitlab.onelab.info/gmsh/gmsh) available in science overlay with an outdated version (current: 4.0.2)
 
 ## Packages which need updating
 

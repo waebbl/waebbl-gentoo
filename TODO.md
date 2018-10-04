@@ -29,8 +29,8 @@
 - [ ] look through and check whether updates are needed
 - [ ] media-gfx/renderman has update to 22
 - [ ] media-gfx/renderman-for-blender might have update to 22
-- [ ] dev-util/smartgit has 18.1
-- [ ] migration from versionator to eapi7-ver for some packages
+- [x] dev-util/smartgit has 18.1
+- [x] migration from versionator to eapi7-ver for some packages
 
 ## Other things to do
 - [ ] check possibilities for CI of the repo. Possible use cases: automatic merging of all ebuild, automatic merging after update

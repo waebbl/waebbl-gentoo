@@ -34,3 +34,4 @@
 
 ## Other things to do
 - [ ] check possibilities for CI of the repo. Possible use cases: automatic merging of all ebuild, automatic merging after update
+- [ ] start updating ebuilds to EAPI 7

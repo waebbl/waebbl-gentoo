@@ -12,6 +12,7 @@
 - [ ] [sci-visualization/knossos](https://github.com/knossos-project/knossos) new package: visualization and annotation of 3D image data.
 - [ ] [app-arch/zipios](https://github.com/Zipios/Zipios) new package: used by freecad, currently internal package is used
 - [ ] [media-gfx/makehuman](https://github.com/makehumancommunity/makehuman) new package: take a look at cg overlay, if their ebuild is usable
+- [ ] [media-gfx/solvespace](https://github.com/solvespace/solvespace) new package: parametric 2D/3D CAD package
 
 ## Packages which need updating
 

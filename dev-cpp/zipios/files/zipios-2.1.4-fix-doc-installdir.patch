@@ -1,0 +1,13 @@
+diff --git a/doc/CMakeLists.txt b/doc/CMakeLists.txt
+index 7bfeacd..666559f 100644
+--- a/doc/CMakeLists.txt
++++ b/doc/CMakeLists.txt
+@@ -77,7 +77,7 @@ function( AddDoxygenTarget TARGET_NAME VERSION_MAJOR VERSION_MINOR VERSION_PATCH
+ 
+         string( TOLOWER ${TARGET_NAME} LOWER_TARGET_NAME )
+         install( DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${DOCUMENTATION_OUTPUT}/
+-                DESTINATION ${DATA_INSTALL_DIR}/doc/${LOWER_TARGET_NAME}/html/
++                DESTINATION ${DATA_INSTALL_DIR}/doc/${LOWER_TARGET_NAME}-${FULL_VERSION}/html/
+         )
+         # The following installs the man3 files, we only install the man
+         # pages of public classes. For more details the user will have to

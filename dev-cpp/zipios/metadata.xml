@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<maintainer type="person">
+	<email>waebbl@gmail.com</email>
+	<name>Bernd Waibel</name>
+</maintainer>
+<longdescription>
+	Small C++ library for reading and writing zip files. Structure and 
+	public interface are loosely based on the java.util.zip package. It
+	also provides a way for applications to support file from multiple
+	sources, e.g. from zip files or from ordinary directories, 
+	tranparently.
+</longdescription>
+<upstream>
+	<maintainer status="active">
+		<email>russel@winder.org.uk</email>
+		<name>Russel Winder</name>
+	</maintainer>
+	<bugs-to>https://github.com/Zipios/Zipios/issues</bugs-to>
+	<remote-id type="github">Zipios/Zipios</remote-id>
+</upstream>
+</pkgmetadata>

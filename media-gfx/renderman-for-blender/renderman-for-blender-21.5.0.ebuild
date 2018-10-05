@@ -1,12 +1,14 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
+
+# TODO: verify it will work with 'renderman-for-blender' instead of
+#		'renderman_for_blender'
 
 EAPI=6
 
-inherit vcs-snapshot versionator
+inherit eapi7-ver
 
-MY_PV="$(replace_all_version_separators '_')"
-MY_PN="$(replace_all_version_separators '_' ${PN})"
+MY_PV=$(ver_rs 1- "_")
 BLENDER_MIN_PV="2.78"
 
 DESCRIPTION="RenderMan addon for blender"
@@ -17,16 +19,20 @@ DOCS=( README.md installation.txt changelog.txt )
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 
-RDEPEND=">=media-gfx/blender-${BLENDER_MIN_PV}
-	>=media-gfx/renderman-${PV}"
+S="${WORKDIR}/RenderManForBlender-${MY_PV}"
+
+RDEPEND="
+	>=media-gfx/blender-${BLENDER_MIN_PV}
+	>=media-gfx/renderman-${PV}
+"
 
 src_install() {
-	# TODO: improve this, will break on -rX releases!
 	local blend_p="$(best_version media-gfx/blender)"
 	local blend_pv="$(echo ${blend_p} | cut -d - -f 3)"
-	local mypath="/usr/share/blender/${blend_pv}/scripts/addons/${MY_PN}"
+	blend_pv=$(ver_cut 1-2 "${blend_pv}")
+	local mypath="/usr/share/blender/${blend_pv}/scripts/addons/${PN}"
 	insinto ${mypath}
 	doins -r "${S}"/*
 	einstalldocs

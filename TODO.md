@@ -16,6 +16,12 @@
 - [ ] [sci-libs/gmsh](https://gitlab.onelab.info/gmsh/gmsh) available in science overlay with an outdated version (current: 4.0.2)
 - [ ] [media-gfx/tetwild](https://github.com/Yixin-Hu/TetWild): new package (additional deps needed: pymesh, pyrenderer, CLI11, see his README.md for details)
 
+
+## Packages with bugs assigned
+
+- [ ] media-gfx/alembic-1.7.9: see https://bugs.gentoo.org/667728
+
+
 ## Packages which need updating
 
 - [ ] dev-libs/tvision: comilation problems with newer gcc versions. See bugzilla. Possibly switch to cmake?
@@ -25,13 +31,17 @@
 - [x] OpenEXR Suite: see [PR](https://github.com/gentoo/gentoo/pull/10030) and [Bug](https://bugs.gentoo.org/639998)
 - [ ] games-util/simulationcraft new version 801-01: check if cmake is working
 
+
 ## Less needed packages not in official trees
+
 - [ ] look through and check whether updates are needed
-- [ ] media-gfx/renderman has update to 22
+- [x] media-gfx/renderman has update to 22
 - [ ] media-gfx/renderman-for-blender might have update to 22
 - [x] dev-util/smartgit has 18.1
 - [x] migration from versionator to eapi7-ver for some packages
 
+
 ## Other things to do
+
 - [ ] check possibilities for CI of the repo. Possible use cases: automatic merging of all ebuild, automatic merging after update
 - [ ] start updating ebuilds to EAPI 7

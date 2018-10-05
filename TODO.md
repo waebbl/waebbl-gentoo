@@ -19,7 +19,7 @@
 ## Packages with bugs assigned
 
 - [ ] media-gfx/alembic-1.7.9: see https://bugs.gentoo.org/667728
-- [ ] [dev-util/codespell](https://github.com/codespell-project/codespell) new package: tool to check spelling in code files, see [bug](https://bugs.gentoo.org/667830)
+- [x] [dev-util/codespell](https://github.com/codespell-project/codespell) new package: tool to check spelling in code files, see [Bug](https://bugs.gentoo.org/667830)
 - [ ] dev-libs/tvision: comilation problems with newer gcc versions. See bugzilla. Possibly switch to cmake?
 - [x] media-sound/denemo: improvements with guile-2, no longer support guile-1 in the ebuild, see bugzilla.
 - [x] OpenEXR Suite: see [PR](https://github.com/gentoo/gentoo/pull/10030) and [Bug](https://bugs.gentoo.org/639998)

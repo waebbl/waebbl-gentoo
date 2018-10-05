@@ -5,7 +5,6 @@
 - [ ] [dev-util/tribits](https://github.com/TriBITSPub/TriBITS) new package: improvement to cmake for large scale, multi-repository projects
 - [ ] [sci-misc/elmer](https://github.com/ElmerCSC/elmerfem) available in science overlay in outdated version as meta and subpackages. Possibly only need one package with latest version
 - [ ] [net-im/quaternion](https://github.com/QMatrixClient/Quaternion) new package: Qt5 client for matrix protocol
-- [x] [dev-util/codespell](https://github.com/codespell-project/codespell) new package: tool to check spelling in code files, see [bug](https://bugs.gentoo.org/667830)
 - [ ] [sci-mathematics/salome-meta](https://salome-platform.org/) new package: probably use salome-platform as package name without the need for meta and subpackages. Tool for numerical simulation. Currently the subpackage sci-libs/libmed is available
 - [ ] [media-libs/smesh](https://salome-platform.org/) new package: possibly make separate smesh package from salome platform first, for use in freecad
 - [ ] [sci-mathematics/ngsolve](https://github.com/NGSolve/ngsolve) new package: FEM tools tied to sci-libs/netgen
@@ -20,15 +19,16 @@
 ## Packages with bugs assigned
 
 - [ ] media-gfx/alembic-1.7.9: see https://bugs.gentoo.org/667728
+- [ ] [dev-util/codespell](https://github.com/codespell-project/codespell) new package: tool to check spelling in code files, see [bug](https://bugs.gentoo.org/667830)
+- [ ] dev-libs/tvision: comilation problems with newer gcc versions. See bugzilla. Possibly switch to cmake?
+- [x] media-sound/denemo: improvements with guile-2, no longer support guile-1 in the ebuild, see bugzilla.
+- [x] OpenEXR Suite: see [PR](https://github.com/gentoo/gentoo/pull/10030) and [Bug](https://bugs.gentoo.org/639998)
 
 
 ## Packages which need updating
 
-- [ ] dev-libs/tvision: comilation problems with newer gcc versions. See bugzilla. Possibly switch to cmake?
-- [x] media-sound/denemo: improvements with guile-2, no longer support guile-1 in the ebuild, see bugzilla.
 - [ ] improve freecad support by adding the missing dependencies
 - [x] dev-python/pyside: need a local ebuild? On [Qt for Python](http://wiki.qt.io/Qt_for_Python/GettingStarted/X11) they say, the same version as Qt is needed. The ebuild from qt overlay uses branch 5.9, but people (including me) might have installed Qt 5.11 already. Also there would be no cross-repo dependency.
-- [x] OpenEXR Suite: see [PR](https://github.com/gentoo/gentoo/pull/10030) and [Bug](https://bugs.gentoo.org/639998)
 - [ ] games-util/simulationcraft new version 801-01: check if cmake is working
 
 

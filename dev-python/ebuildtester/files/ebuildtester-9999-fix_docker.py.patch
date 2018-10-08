@@ -1,5 +1,5 @@
 diff --git a/ebuildtester/docker.py b/ebuildtester/docker.py
-index 85fa6db..f0dc64a 100644
+index 6dc9d98..2bbf50b 100644
 --- a/ebuildtester/docker.py
 +++ b/ebuildtester/docker.py
 @@ -151,7 +151,7 @@ class Docker:
@@ -7,55 +7,7 @@ index 85fa6db..f0dc64a 100644
              "--cap-add", "SYS_ADMIN",
              "--device", "/dev/fuse",
 -            "--storage-opt", "size=50G",
-+            "--storage-opt", "size=128G",
++            "--storage-opt", "size=110G",
              "--workdir", "/root",
              "--volume", "%s:/usr/portage" % local_portage,
              "--volume", "/usr/portage/distfiles:/usr/portage/distfiles"]
-@@ -204,8 +204,17 @@ class Docker:
-         if options.options.unstable:
-             self.execute("echo ACCEPT_KEYWORDS=\\\"~amd64\\\" " +
-                          ">> /etc/portage/make.conf")
-+
-+        use_str="echo USE=\\\""
-         if options.options.with_X:
--            self.execute("echo USE=\\\"X\\\" >> /etc/portage/make.conf")
-+            use_str += "X"
-+
-+        if options.options.global_use:
-+            for o in options.options.global_use:
-+                use_str += " %s" % o
-+
-+        use_str += "\\\" >> /etc/portage/make.conf"
-+        self.execute("%s" % use_str)
- 
-     def _enable_overlays(self, overlays):
-         """Enable overlays."""
-@@ -263,7 +272,7 @@ class Docker:
-         for a in options.options.unmask:
-             options.log.info("  unmasking %s" % a)
-             self.execute(
--                "echo \"%s\" ~amd64 >> /etc/portage/package.accept_keywords" %
-+                "echo \"%s\" ~amd64 >> /etc/portage/package.accept_keywords/testbuild" %
-                 a)
- 
-     def _update(self):
-@@ -295,7 +304,7 @@ class Docker:
-             self.execute(
-                 ("echo =sys-devel/gcc-%s ** >> " %
-                  options.options.gcc_version) +
--                "/etc/portage/package.accept_keywords")
-+                "/etc/portage/package.accept_keywords/testbuild")
-             self.execute("emerge --verbose sys-devel/gcc")
-             gcc = re.sub("-r[0-9]+$", "", options.options.gcc_version)
-             self.execute("gcc-config $(gcc-config --list-profiles | " +
-@@ -307,8 +316,8 @@ class Docker:
-         """Print summary."""
- 
-         options.log.info("summary")
--        self.execute("if [[ -f /etc/portage/accept_keywords ]]; then " +
--                     "cat /etc/portage/package.accept_keywords; fi")
-+        self.execute("if [[ -f /etc/portage/accept_keywords/testbuild ]]; then " +
-+                     "cat /etc/portage/package.accept_keywords/testbuild; fi")
-         self.execute("if [[ -f /etc/portage/package.use/testbuild ]]; then " +
-                      "cat /etc/portage/package.use/testbuild; fi")
-         self.execute("emerge --info")

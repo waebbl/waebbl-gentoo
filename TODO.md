@@ -13,6 +13,7 @@
 - [ ] [media-gfx/solvespace](https://github.com/solvespace/solvespace) new package: parametric 2D/3D CAD package
 - [ ] [sci-libs/gmsh](https://gitlab.onelab.info/gmsh/gmsh) available in science overlay with an outdated version (current: 4.0.2)
 - [ ] [media-gfx/tetwild](https://github.com/Yixin-Hu/TetWild): new package (additional deps needed: pymesh, pyrenderer, CLI11, see his README.md for details)
+- [ ] [sci-visualization/vistrails](https://github.com/VisTrails/VisTrails): new package (b.g.o has ebuild for 1.4 / 1.5)
 
 
 ## Packages with bugs assigned

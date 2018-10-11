@@ -14,6 +14,7 @@
 - [ ] [sci-libs/gmsh](https://gitlab.onelab.info/gmsh/gmsh) available in science overlay with an outdated version (current: 4.0.2)
 - [ ] [media-gfx/tetwild](https://github.com/Yixin-Hu/TetWild): new package (additional deps needed: pymesh, pyrenderer, CLI11, see his README.md for details)
 - [ ] [sci-visualization/vistrails](https://github.com/VisTrails/VisTrails): new package (b.g.o has ebuild for 1.4 / 1.5)
+- [ ] [sci-libs/vxl](https://github.com/vxl/vxl): available as live ebuild in science overlay
 
 
 ## Packages with bugs assigned

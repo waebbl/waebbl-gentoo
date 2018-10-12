@@ -15,6 +15,8 @@
 - [ ] [media-gfx/tetwild](https://github.com/Yixin-Hu/TetWild): new package (additional deps needed: pymesh, pyrenderer, CLI11, see his README.md for details)
 - [ ] [sci-visualization/vistrails](https://github.com/VisTrails/VisTrails): new package (b.g.o has ebuild for 1.4 / 1.5)
 - [ ] [sci-libs/vxl](https://github.com/vxl/vxl): available as live ebuild in science overlay
+- [ ] [dev-python/pythonocc](https://github.com/tpaviot) new package: python bindings for OpenCASCADE, several repos
+- [ ] [sci-visualization/ifcopenshell](https://github.com/IfcOpenShell/IfcOpenShell) new package: importer, converter and viewer for IFC files used in architecture
 
 
 ## Packages with bugs assigned
@@ -22,8 +24,8 @@
 - [ ] media-gfx/alembic-1.7.9: see https://bugs.gentoo.org/667728
 - [x] [dev-util/codespell](https://github.com/codespell-project/codespell) new package: tool to check spelling in code files, see [Bug](https://bugs.gentoo.org/667830)
 - [ ] dev-libs/tvision: comilation problems with newer gcc versions. See bugzilla. Possibly switch to cmake?
-- [x] media-sound/denemo: improvements with guile-2, no longer support guile-1 in the ebuild, see bugzilla.
-- [x] OpenEXR Suite: see [PR](https://github.com/gentoo/gentoo/pull/10030) and [Bug](https://bugs.gentoo.org/639998)
+- [x] media-sound/denemo: improvements with guile-2, no longer support guile-1 in the ebuild, see bugzilla. -> merded
+- [x] OpenEXR Suite: see [PR](https://github.com/gentoo/gentoo/pull/10030) and [Bug](https://bugs.gentoo.org/639998) -> merged
 
 
 ## Packages which need updating

@@ -17,6 +17,7 @@
 - [ ] [sci-libs/vxl](https://github.com/vxl/vxl): available as live ebuild in science overlay
 - [ ] [dev-python/pythonocc](https://github.com/tpaviot) new package: python bindings for OpenCASCADE, several repos
 - [ ] [sci-visualization/ifcopenshell](https://github.com/IfcOpenShell/IfcOpenShell) new package: importer, converter and viewer for IFC files used in architecture
+- [ ] [sci-visualization/analysis-situs](https://gitlab.com/ssv/AnalysisSitus) new package: [Homepage](http://analysissitus.org) analyzing models in B-REP representation using the OpenCASCADE kernel
 
 
 ## Packages with bugs assigned

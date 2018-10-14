@@ -1,23 +1,22 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 # TODO:
-# install the src files referenced in 51opencascade
+# check the src files referenced in 51opencascade, i.e. resources and the like
+# check where cmake gets it's '-s' linker flag to avoid pre-stripping (QA)
 
 EAPI=6
 
-inherit check-reqs cmake-utils eapi7-ver eutils flag-o-matic java-pkg-opt-2 multilib
+inherit check-reqs cmake-utils eapi7-ver flag-o-matic java-pkg-opt-2 multilib
 
 DESCRIPTION="Development platform for CAD/CAE, 3D surface/solid modeling and data exchange"
 HOMEPAGE="https://www.opencascade.com"
-# convert version string x.x.x to x_x_x
 MY_PV="$(ver_rs 1- '_')"
 SRC_URI="https://git.dev.opencascade.org/gitweb/?p=occt.git;a=snapshot;h=refs/tags/V${MY_PV};sf=tgz -> ${P}.tar.gz"
 
 LICENSE="|| ( Open-CASCADE-LGPL-2.1-Exception-1.0 LGPL-2.1 )"
 SLOT="${PV}"
 KEYWORDS="~amd64 ~x86"
-# TODO: test pch use flag
 IUSE="debug doc examples ffmpeg freeimage gl2ps gles2 inspector java optimize qt5 tbb test +vtk"
 
 REQUIRED_USE="
@@ -25,7 +24,9 @@ REQUIRED_USE="
 	?? ( optimize tbb )
 "
 
-RDEPEND="app-eselect/eselect-opencascade
+RDEPEND="
+	app-eselect/eselect-opencascade
+	dev-cpp/eigen
 	dev-lang/tcl:0=
 	dev-lang/tk:0=
 	dev-tcltk/itcl
@@ -41,11 +42,11 @@ RDEPEND="app-eselect/eselect-opencascade
 	gl2ps? ( x11-libs/gl2ps )
 	java? ( >=virtual/jdk-0:= )
 	qt5? (
-		dev-qt/qtcore
-		dev-qt/qtgui
-		dev-qt/qtquickcontrols2
-		dev-qt/qtwidgets
-		dev-qt/qtxml
+		dev-qt/qtcore:=
+		dev-qt/qtgui:=
+		dev-qt/qtquickcontrols2:=
+		dev-qt/qtwidgets:=
+		dev-qt/qtxml:=
 	)
 	tbb? ( dev-cpp/tbb )
 	vtk? ( sci-libs/vtk[rendering] )"
@@ -54,7 +55,10 @@ DEPEND="${RDEPEND}
 
 # https://bugs.gentoo.org/show_bug.cgi?id=352435
 # https://www.gentoo.org/foundation/en/minutes/2011/20110220_trustees.meeting_log.txt
-RESTRICT="bindist"
+RESTRICT="
+	bindist
+	!test? ( test )
+"
 
 CHECKREQS_MEMORY="256M"
 CHECKREQS_DISK_BUILD="3584M"
@@ -64,11 +68,11 @@ CMAKE_BUILD_TYPE=Release
 S="${WORKDIR}/occt-V${MY_PV}"
 
 PATCHES=(
-	"${FILESDIR}"/ffmpeg4.patch
-	"${FILESDIR}"/fix-install-dir-references.patch
-	"${FILESDIR}"/vtk7.patch
-	"${FILESDIR}"/${P}-find-qt.patch
-	)
+	"${FILESDIR}/${P}-ffmpeg4.patch"
+	"${FILESDIR}/${P}-find-qt.patch"
+	"${FILESDIR}/${P}-vtk7.patch"
+	"${FILESDIR}/${P}-fix-install.patch"
+)
 
 pkg_setup() {
 	check-reqs_pkg_setup
@@ -82,13 +86,12 @@ src_prepare() {
 
 src_configure() {
 	local mycmakeargs=(
-#		-DBUILD_USE_PCH=$(usex pch)	# TODO: test pch use flag
 		-DBUILD_DOC_Overview=$(usex doc)
 		-DBUILD_Inspector=$(usex inspector)
 		-DBUILD_WITH_DEBUG=$(usex debug)
 		-DCMAKE_CONFIGURATION_TYPES="Gentoo"
-		-DCMAKE_INSTALL_PREFIX="/usr/$(get_libdir)/${P}/ros"
-		-DINSTALL_DIR_DOC="/usr/share/doc/${P}"
+		-DCMAKE_INSTALL_PREFIX="/usr/$(get_libdir)/${PF}/ros"
+		-DINSTALL_DIR_DOC="/usr/share/doc/${PF}"
 		-DINSTALL_DIR_CMAKE="/usr/$(get_libdir)/cmake"
 		-DINSTALL_DOC_Overview=$(usex doc)
 		-DINSTALL_SAMPLES=$(usex examples)
@@ -107,34 +110,30 @@ src_configure() {
 	cmake-utils_src_configure
 
 	# prepare /etc/env.d file
-	sed -e "s|VAR_CASROOT|${EROOT}usr/$(get_libdir)/${P}/ros|g" < "${FILESDIR}/${PN}.env.in" >> "${S}/${PV}"
+	sed -e "s|VAR_CASROOT|${EROOT}usr/$(get_libdir)/${P}/ros|g" < "${FILESDIR}/${PN}.env.in" >> "${S}/${PV}" || die
 
 	# use TBB for memory allocation optimizations?
-	if use tbb ; then
-		sed -i -e 's|^#MMGT_OPT=0$|MMGT_OPT=2|' "${S}/${PV}"
-	fi
+	use tbb && (sed -i -e 's|^#MMGT_OPT=0$|MMGT_OPT=2|' "${S}/${PV}" || die)
 
 	if use optimize ; then
 		# use internal optimized memory manager?
-		sed -i -e 's|^#MMGT_OPT=0$|MMGT_OPT=1|' "${S}/${PV}"
+		sed -i -e 's|^#MMGT_OPT=0$|MMGT_OPT=1|' "${S}/${PV}" || die
 		# don't clear memory ?
-		sed -i -e 's|^#MMGT_CLEAR=1$|MMGT_CLEAR=0|' "${S}/${PV}"
+		sed -i -e 's|^#MMGT_CLEAR=1$|MMGT_CLEAR=0|' "${S}/${PV}" || die
 	fi
 }
 
 src_install() {
 	cmake-utils_src_install
 
-	# make draw.sh and inspector.sh (if selected) non-world-writable
-	chmod go-w "${D}/${EROOT}/usr/$(get_libdir)/${P}/ros/bin/draw.sh"
-	use inspector && chmod go-w "${D}/${EROOT}/usr/$(get_libdir)/${P}/ros/bin/inspector.sh"
-
 	# respect slotting
 	insinto "/etc/env.d/${PN}"
 	doins "${S}/${PV}"
 
 	# remove examples
-	use examples || (rm -rf "${EROOT}/usr/$(get_libdir)/${P}/ros/share/${P}/samples" || die)
+	use examples || (rm -rf "${ED}/usr/$(get_libdir)/${P}/ros/share/${PN}/samples" || die)
+	use java || (rm -rf "${ED}/usr/$(get_libdir)/${P}/ros/share/${PN}/samples/java" || die)
+	use qt5 || (rm -rf "${ED}/usr/$(get_libdir)/${P}/ros/share/${PN}/samples/qt" || die)
 }
 
 pkg_postinst() {

@@ -1,9 +1,9 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
 
-inherit autotools multilib-minimal
+inherit autotools flag-o-matic toolchain-funcs multilib-minimal
 
 DESCRIPTION="ILM's OpenEXR high dynamic-range image file format libraries"
 HOMEPAGE="http://openexr.com/"
@@ -49,6 +49,11 @@ multilib_src_configure() {
 		$(use_enable examples imfexamples)
 		$(use_enable static-libs static)
 	)
+
+	# TODO: check if this still applies on updates!
+	# internal tool dwaLookup fails to run when linked with gold linker
+	tc-ld-disable-gold
+
 	ECONF_SOURCE="${S}" econf "${myeconfargs[@]}"
 }
 

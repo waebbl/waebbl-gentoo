@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -25,7 +25,17 @@ DEPEND="${RDEPEND}
 	${PYTHON_DEP}
 	>=virtual/pkgconfig-0-r1"
 
+PATCHES=(
+	"${FILESDIR}/${P}-link-pyimath.patch"
+	"${FILESDIR}/${P}-fix-build-system.patch"
+)
+
 DOCS=( README.md )
+
+src_prepare() {
+	default
+	eautoreconf
+}
 
 src_configure() {
 	local myeconfargs=(
@@ -39,7 +49,8 @@ src_configure() {
 }
 
 src_install() {
-	emake DESTDIR="${D}" install
+	# Fails to install with multiple jobs
+	emake DESTDIR="${D}" -j1 install
 
 	einstalldocs
 

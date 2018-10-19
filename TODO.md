@@ -8,7 +8,7 @@
 - [ ] [media-libs/smesh](https://salome-platform.org/) new package: possibly make separate smesh package from salome platform first, for use in freecad
 - [ ] [sci-mathematics/ngsolve](https://github.com/NGSolve/ngsolve) new package: FEM tools tied to sci-libs/netgen
 - [ ] [sci-visualization/knossos](https://github.com/knossos-project/knossos) new package: visualization and annotation of 3D image data.
-- [ ] [app-arch/zipios](https://github.com/Zipios/Zipios) new package: used by freecad, currently internal package is used
+- [x] [app-arch/zipios](https://github.com/Zipios/Zipios) new package: used by freecad, currently internal package is used.
 - [ ] [media-gfx/makehuman](https://github.com/makehumancommunity/makehuman) new package: take a look at cg overlay, if their ebuild is usable
 - [ ] [media-gfx/solvespace](https://github.com/solvespace/solvespace) new package: parametric 2D/3D CAD package
 - [ ] [sci-libs/gmsh](https://gitlab.onelab.info/gmsh/gmsh) available in science overlay with an outdated version (current: 4.0.2)

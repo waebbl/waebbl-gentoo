@@ -1,7 +1,7 @@
 ## Packages to check and possibly include
 
 - [ ] [sci-libs/trilinos](https://github.com/trilinos/Trilinos) available in science overlay in current version. Possibly no need for another package
-- [ ] [sci-libs/mumps](http://mumps.enseeiht.fr) availabe in science overlay in outdated version, needs manual download?
+- [x] [sci-libs/mumps](http://mumps.enseeiht.fr) availabe in science overlay in outdated version, needs manual download? Has been included in official tree and updated to current release.
 - [ ] [sci-misc/elmer](https://github.com/ElmerCSC/elmerfem) available in science overlay in outdated version as meta and subpackages. Possibly only need one package with latest version
 - [ ] [net-im/quaternion](https://github.com/QMatrixClient/Quaternion) new package: Qt5 client for matrix protocol
 - [ ] [sci-mathematics/salome-meta](https://salome-platform.org/) new package: probably use salome-platform as package name without the need for meta and subpackages. Tool for numerical simulation. Currently the subpackage sci-libs/libmed is available

@@ -1,6 +1,5 @@
 ## Packages to check and possibly include
 
-- [ ] [sci-libs/trilinos](https://github.com/trilinos/Trilinos) available in science overlay in current version. Possibly no need for another package
 - [x] [sci-libs/mumps](http://mumps.enseeiht.fr) availabe in science overlay in outdated version, needs manual download? Has been included in official tree and updated to current release.
 - [ ] [sci-misc/elmer](https://github.com/ElmerCSC/elmerfem) available in science overlay in outdated version as meta and subpackages. Possibly only need one package with latest version
 - [ ] [net-im/quaternion](https://github.com/QMatrixClient/Quaternion) new package: Qt5 client for matrix protocol
@@ -18,6 +17,7 @@
 - [ ] [dev-python/pythonocc](https://github.com/tpaviot) new package: python bindings for OpenCASCADE, several repos
 - [ ] [sci-visualization/ifcopenshell](https://github.com/IfcOpenShell/IfcOpenShell) new package: importer, converter and viewer for IFC files used in architecture
 - [ ] [sci-visualization/analysis-situs](https://gitlab.com/ssv/AnalysisSitus) new package: [Homepage](http://analysissitus.org) analyzing models in B-REP representation using the OpenCASCADE kernel -> currently windows only
+- [ ] [media-gfx/luxcorerender](https://github.com/LuxCoreRender/LuxCore) new package: supported by freecad.
 
 
 ## Packages with bugs assigned
@@ -49,3 +49,5 @@
 
 - [ ] check possibilities for CI of the repo. Possible use cases: automatic merging of all ebuild, automatic merging after update
 - [ ] start updating ebuilds to EAPI 7
+- [ ] [sci-libs/trilinos](https://github.com/trilinos/Trilinos) available in science overlay in current version. Fetch is currently not working, using the github sources it doesn't compile (patching, configuration and compile errors). Also the set of use-flags is somewhat counterintuitive, in that it states various gentoo packages to use. Trilinos itself has a high level abstraction of internal packages to build. Using them as use flags, would IMO make more sense.
+

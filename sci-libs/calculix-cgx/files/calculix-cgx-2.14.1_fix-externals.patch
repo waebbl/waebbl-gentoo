@@ -1,0 +1,40 @@
+diff --git a/src/cgx.h b/src/cgx.h
+index cd06d28..f1d880d 100755
+--- a/src/cgx.h
++++ b/src/cgx.h
+@@ -89,8 +89,8 @@ rendering is done in the index-mode.
+     "/usr/local/CalculiX/ccx_2.14/doc/ccx/ccx.html",\
+     "/usr/local/CalculiX/cgx_2.8/doc/aflib/aflib.pdf"}
+ #else
+-  #define     HELPFILE        {"/usr/local/CalculiX/cgx_2.14.1/doc/cgx/cgx.html",\
+-    "/usr/local/CalculiX/ccx_2.14/doc/ccx/ccx.html"}
++  #define     HELPFILE        {"/usr/share/doc/calculix-cgx-2.14.1/html/cgx.html",\
++    "/usr/share/doc/calculic-ccx-2.14/html/ccx.html"}
+ #endif
+ 
+ #define     INITFILE        {".cgx"}
+@@ -103,9 +103,9 @@ rendering is done in the index-mode.
+ #else
+ /* #define     BROWSER         {"netscape"} */
+ /*   #define     BROWSER         {"mozilla"} */
+-  #define     BROWSER         {"firefox"}
++  #define     BROWSER         {"xdg-open"}
+ /* #define     PSVIEWER         {"ghostview"} */
+-  #define     PSVIEWER         {"gv"}
++  #define     PSVIEWER         {"evince"}
+ #endif
+ 
+ /* more parameters, better do not change them! */
+diff --git a/src/extUtil.h b/src/extUtil.h
+index 08f9528..1214a55 100755
+--- a/src/extUtil.h
++++ b/src/extUtil.h
+@@ -32,7 +32,7 @@ void printf_fflush(const char *fmt,...);
+ }
+   #endif
+ #else
+-  #include <GL/glut_cgx.h>
++  #include <GL/glut.h>
+ #endif
+ 
+ #define     PI          3.14159265358979323846264338327950288

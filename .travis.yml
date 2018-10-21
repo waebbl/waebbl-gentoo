@@ -26,5 +26,5 @@ before_script:
     - ln -s /usr/portage/profiles/default/linux/amd64/17.0 /etc/portage/make.profile
     - cd travis-overlay
 script:
-    - ./../spinner.sh "python ../portage-portage-${PORTAGE_VER}/repoman/bin/repoman full -d -i"
+    - ./../spinner.sh "python ../portage-portage-${PORTAGE_VER}/repoman/bin/repoman full -d -x -i"
 # You can append own scripts after this line

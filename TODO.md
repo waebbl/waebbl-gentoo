@@ -18,6 +18,7 @@
 - [ ] [sci-visualization/ifcopenshell](https://github.com/IfcOpenShell/IfcOpenShell) new package: importer, converter and viewer for IFC files used in architecture
 - [ ] [sci-visualization/analysis-situs](https://gitlab.com/ssv/AnalysisSitus) new package: [Homepage](http://analysissitus.org) analyzing models in B-REP representation using the OpenCASCADE kernel -> currently windows only
 - [ ] [media-gfx/luxcorerender](https://github.com/LuxCoreRender/LuxCore) new package: supported by freecad.
+- [ ] [media-libs/opencamlib](https://github.com/aewallin/opencamlib) new package: supported by freecad.
 
 
 ## Packages with bugs assigned

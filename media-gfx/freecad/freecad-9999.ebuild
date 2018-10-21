@@ -149,8 +149,8 @@ src_configure() {
 		-DFREECAD_USE_EXTERNAL_KDL="ON"
 		-DFREECAD_USE_PCL=$(usex pcl)
 		# opencascade-7.3.0 sets CASROOT in /etc/env.d/51opencascade
-		-DOCC_INCLUDE_DIR=${CASROOT}/include/opencascade
-		-DOCC_LIBRARY_DIR=${CASROOT}/lib
+		-DOCC_INCLUDE_DIR="${CASROOT}"/include/opencascade
+		-DOCC_LIBRARY_DIR="${CASROOT}"/$(get_libdir)
 		-DOPENMPI_INCLUDE_DIRS=/usr/include/
 	)
 

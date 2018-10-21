@@ -20,6 +20,7 @@
 - [ ] [media-gfx/luxcorerender](https://github.com/LuxCoreRender/LuxCore) new package: supported by freecad.
 - [ ] [media-libs/opencamlib](https://github.com/aewallin/opencamlib) new package: supported by freecad.
 - [ ] [sci-mathematics/fenics](https://bitbucket.org/fenics-project) new package: supported by freecad.
+- [ ] [media-gfx/odafileconverter](https://www.opendesign.com/guestfiles/oda_file_converter) new package: for DWG file import/export support in freecad (binary package)
 
 
 ## Packages with bugs assigned

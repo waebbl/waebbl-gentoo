@@ -15,7 +15,6 @@ before_script:
     - mkdir -p travis-overlay /etc/portage /usr/portage/distfiles
     - mv !(travis-overlay) travis-overlay/
     - mv .git travis-overlay/
-    - wget "https://raw.githubusercontent.com/mrueg/repoman-travis/master/.travis.yml" -O .travis.yml.upstream
     - wget "https://raw.githubusercontent.com/mrueg/repoman-travis/master/spinner.sh"
     - wget -qO - "https://github.com/gentoo/portage/archive/portage-${PORTAGE_VER}.tar.gz" | tar xz
     - wget -qO - "https://github.com/gentoo-mirror/gentoo/archive/master.tar.gz" | tar xz -C /usr/portage --strip-components=1

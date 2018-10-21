@@ -18,37 +18,34 @@ KEYWORDS="~amd64 ~x86"
 # opencascade not supported upstream?
 IUSE="ffmpeg jpeg mpi opencascade +python"
 
-COMMON_DEPEND="
-	dev-lang/tcl:0
-	dev-lang/tk:0
-	dev-tcltk/tix
-	dev-tcltk/togl:0
-	sys-libs/zlib
+RDEPEND="
+	${PYTHON_DEPS}
+	dev-lang/tcl:0=
+	dev-lang/tk:0=
+	dev-tcltk/tix:=
+	dev-tcltk/togl:0=
+	sys-libs/zlib:=
+	virtual/glu
 	virtual/opengl
-	x11-libs/libICE
-	x11-libs/libX11
-	x11-libs/libXext
-	x11-libs/libXmu
+	x11-libs/libICE:=
+	x11-libs/libX11:=
+	x11-libs/libXext:=
+	x11-libs/libXmu:=
 	ffmpeg? ( virtual/ffmpeg )
 	jpeg? ( virtual/jpeg:0= )
 	python? ( dev-util/pybind11 )
 	mpi? (
-		>=sci-libs/parmetis-4.0.3[mpi?]
+		>=sci-libs/parmetis-4.0.3:=[mpi?]
 		virtual/mpi[cxx,threads]
-		opencascade? ( sci-libs/hdf5[mpi] )
+		opencascade? ( sci-libs/hdf5:=[mpi] )
 	)
 	opencascade? ( sci-libs/opencascade:7.3.0=[ffmpeg?] )
 "
 
 DEPEND="
+	${RDEPEND}
 	${PYTHON_DEPS}
-	${COMMON_DEPEND}
 	>=dev-util/cmake-3.9.6
-"
-
-RDEPEND="
-	${PYTHON_DEPS}
-	${COMMON_DEPEND}
 "
 
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
@@ -81,7 +78,7 @@ src_configure() {
 	if use opencascade; then
 		mycmakeargs+=(
 			-DOCC_INCLUDE_DIR="${CASROOT}"/include/opencascade
-			-DOCC_LIBRARY_DIR="${CASROOT}"/lib
+			-DOCC_LIBRARY_DIR="${CASROOT}"/$(get_libdir)
 		)
 	fi
 

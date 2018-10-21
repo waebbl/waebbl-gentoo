@@ -110,16 +110,17 @@ src_configure() {
 	cmake-utils_src_configure
 
 	# prepare /etc/env.d file
-	sed -e "s|VAR_CASROOT|${EROOT}usr/$(get_libdir)/${P}/ros|g" < "${FILESDIR}/${PN}.env.in" >> "${S}/${PV}" || die
+	sed -e 's|VAR_CASROOT|'${EROOT}'usr/'$(get_libdir)'/'${P}'/ros|g' < "${FILESDIR}/${PN}.env.in" >> "${T}/${PV}" || die
+	sed -i -e 's|ros/lib|ros/'$(get_libdir)'|' "${T}/${PV}" || die
 
 	# use TBB for memory allocation optimizations?
-	use tbb && (sed -i -e 's|^#MMGT_OPT=0$|MMGT_OPT=2|' "${S}/${PV}" || die)
+	use tbb && (sed -i -e 's|^#MMGT_OPT=0$|MMGT_OPT=2|' "${T}/${PV}" || die)
 
 	if use optimize ; then
 		# use internal optimized memory manager?
-		sed -i -e 's|^#MMGT_OPT=0$|MMGT_OPT=1|' "${S}/${PV}" || die
+		sed -i -e 's|^#MMGT_OPT=0$|MMGT_OPT=1|' "${T}/${PV}" || die
 		# don't clear memory ?
-		sed -i -e 's|^#MMGT_CLEAR=1$|MMGT_CLEAR=0|' "${S}/${PV}" || die
+		sed -i -e 's|^#MMGT_CLEAR=1$|MMGT_CLEAR=0|' "${T}/${PV}" || die
 	fi
 }
 
@@ -128,7 +129,7 @@ src_install() {
 
 	# respect slotting
 	insinto "/etc/env.d/${PN}"
-	doins "${S}/${PV}"
+	doins "${T}/${PV}"
 
 	# remove examples
 	use examples || (rm -rf "${ED}/usr/$(get_libdir)/${P}/ros/share/${PN}/samples" || die)

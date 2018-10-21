@@ -18,6 +18,8 @@ KEYWORDS="~amd64 ~x86"
 
 IUSE="doc test"
 
+RESTRICT="!test? ( test )"
+
 DEPEND="
 	${PYTHON_DEP}
 	>=dev-util/cmake-3.9.6
@@ -25,7 +27,13 @@ DEPEND="
 		dev-python/breathe[${PYTHON_USEDEP}]
 		dev-python/sphinx[${PYTHON_USEDEP}]
 	)
-	test? ( dev-python/pytest[${PYTHON_USEDEP}] )
+	test? (
+		dev-cpp/catch
+		dev-libs/boost[python,${PYTHON_USEDEP}]
+		dev-python/numpy[${PYTHON_USEDEP}]
+		dev-python/pytest[${PYTHON_USEDEP}]
+		sci-libs/scipy[${PYTHON_USEDEP}]
+	)
 "
 
 RDEPEND="
@@ -38,10 +46,7 @@ RDEPEND="
 
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
-#S=${WORKDIR}/${P}
-
 DOCS=( README.md CONTRIBUTING.md ISSUE_TEMPLATE.md )
-#HTML_DOCS=( "${S}"/docs/.build/html/* )
 
 pkg_setup() {
 	python-single-r1_pkg_setup
@@ -62,31 +67,28 @@ src_compile() {
 	# documentation is not covered by cmake, but has it's own makefile
 	# using sphinx
 	if use doc; then
-		pushd "${S}"/docs
+		pushd "${S}"/docs || die
 		emake info man html
-		popd
+		popd || die
 	fi
 }
 
-# TODO:
-# figure out how test works. It just builds some libs
 src_test() {
 	cmake-utils_src_test
-	pushd "${BUILD_DIR}"
+	pushd "${BUILD_DIR}" || die
 	emake check
-	popd
+	popd || die
 }
 
 src_install() {
 	cmake-utils_src_install
 
 	if use doc; then
-#		einstalldocs
+		local HTML_DOCS=( "${S}"/docs/.build/html/. )
+		einstalldocs
+
 		# install man and info pages
 		doman "${S}"/docs/.build/man/pybind11.1
 		doinfo "${S}"/docs/.build/texinfo/pybind11.info
-
-		insinto /usr/share/doc/${PF}/html
-		doins -r "${S}"/docs/.build/html/*
 	fi
 }

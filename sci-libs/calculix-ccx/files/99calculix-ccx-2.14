@@ -1,0 +1,42 @@
+#
+# The following variables can be used to tweak parallel execution of
+# various aspects of CalculiX CrunchiX.
+# For examples of their usage, please see the documentation!
+#
+
+# OMP_NUM_THREADS is a general purpose variable to specify the number
+# of cores to be used in parallel.
+OMP_NUM_THREADS="8"
+
+# Any of the variables declared below can be used for special purposes
+# to override the values of OMP_NUM_THREADS. If any of them is declared,
+# it will take precedence over OMP_NUM_THREADS
+
+# CCX_NPROC_STIFFNESS is used when creating element stiffness matrices
+# in parallel. Default is 1.
+#CCX_NPROC_STIFFNESS="1"
+
+# CCX_NPROC_EQUATION_SOLVER is used to solve the system of equations using
+# the multithreaded version of sci-libs/spooles. Default is 1.
+#CCX_NPROC_EQUATION_SOLVER="1"
+
+# CCX_NPROC_RESULTS is used to create material tangent matrices and 
+# calculate the stresses at integration points in parallel. Default is 1.
+#CCX_NPROC_RESULTS="1"
+
+# CCX_NPROC_VIEWFACTOR is used to calculate the viewfactors for thermal
+# radiation computations in parallel. Default is 1.
+#CCX_NPROC_VIEWFACTOR="1"
+
+# CCX_NPROC_CFD is used to perform several operations in CFD calculations
+# (computational fluid dynamics) in parallel. Default is 1.
+#CCX_NPROC_CFD="1"
+
+# CCX_NPROC_BIOTSAVART is used to calculate the magnetic intensity by use
+# of the Biot-Savart law in parallel. Default is 1.
+#CCX_NPROC_BIOTSAVART="1"
+
+# CalculiX CrunchiX detects the number of available cores in many cases by
+# using a sysconf call. If this fails or does not work correctly for any 
+# reason, you can use NUMBER_OF_CPUS to override this value
+#NUMBER_OF_CPUS="8"

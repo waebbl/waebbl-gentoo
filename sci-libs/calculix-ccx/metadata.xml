@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
+	<maintainer type="person">
+		<email>waebbl@gmail.com</email>
+		<name>Bernd Waibel</name>
+	</maintainer>
 	<maintainer type="project">
 		<email>sci@gentoo.org</email>
 		<name>Gentoo Science Project</name>
 	</maintainer>
+	<longdescription>
+	CalculiX CrunchiX is a free 3D structural finite element (FEM) program
+	containing a pre- and postprocessor and a solver for FEM problems.
+	</longdescription>
 	<use>
-		<flag name="arpack"> Add sparse eigen value support via sci-libs/arpack </flag>
+		<flag name="arpack">
+			Add sparse eigen value support via <pkg>sci-libs/arpack</pkg>
+		</flag>
+		<flag name="taucs">
+			Add sparse linear solver support via <pkg>sci-libs/taucs</pkg>
+			(experimental)
+		</flag>
 	</use>
 </pkgmetadata>

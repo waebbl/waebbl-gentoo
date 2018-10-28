@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -14,7 +14,7 @@ MY_P="med-${PV}"
 
 DESCRIPTION="A library to store and exchange meshed data or computation results"
 HOMEPAGE="https://www.salome-platform.org/"
-SRC_URI="https://files.salome-platform.org/Salome/other/${MY_P}.tar.gz
+SRC_URI="http://files.salome-platform.org/Salome/other/${MY_P}.tar.gz
 	https://waebbl.github.io/libmed-3.3.1-hdf5-1.10-support.patch.gz
 	https://waebbl.github.io/libmed-3.3.1-tests-python3.patch.gz"
 
@@ -95,8 +95,8 @@ src_install() {
 	sed -i -e 's|import medenum|from . import medenum|' "${BUILD_DIR}"/python/med/*.py || die
 	DESTDIR="${D}" cmake-utils_src_install
 
-	dosym mdump3 usr/bin/mdump || die
-	dosym xmdump3 /usr/bin/xmdump || die
+	dosym mdump3 usr/bin/mdump
+	dosym xmdump3 /usr/bin/xmdump
 
 	# prevent test executables being installed
 	if use test; then

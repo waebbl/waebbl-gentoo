@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -64,6 +64,8 @@ src_prepare() {
 
 	use double-precision && \
 		sed -i -e '/REALTYPEWIDTH/s/32/64/' metis/include/metis.h
+
+	cmake-utils_src_prepare
 }
 
 src_configure() {
@@ -73,8 +75,8 @@ src_configure() {
 			-DMETIS_PATH="${S}/metis"
 			-DGKRAND=ON
 			-DMETIS_INSTALL=ON
-			$(cmake-utils_use openmp OPENMP)
-			$(cmake-utils_use pcre PCRE)
+			-DOPENMP=$(usex openmp)
+			-DPCRE=$(usex pcre)
 			$@
 		)
 		cmake-utils_src_configure

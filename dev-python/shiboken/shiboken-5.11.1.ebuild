@@ -21,16 +21,13 @@ KEYWORDS="~amd64 ~x86"
 IUSE="numpy test"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
-# Minimum version of Qt required.
-QT_PV="5.9.0:5"
-
 DEPEND="
 	${PYTHON_DEPS}
 	dev-libs/libxml2
 	dev-libs/libxslt
-	>=dev-qt/qtcore-${QT_PV}
-	>=dev-qt/qtxml-${QT_PV}
-	>=dev-qt/qtxmlpatterns-${QT_PV}
+	~dev-qt/qtcore-${PV}:5=
+	~dev-qt/qtxml-${PV}:5=
+	~dev-qt/qtxmlpatterns-${PV}:5=
 	>=sys-devel/clang-3.9.1:=
 	numpy? ( dev-python/numpy )
 "
@@ -39,6 +36,11 @@ RDEPEND="${DEPEND}"
 S=${WORKDIR}/pyside-setup-everywhere-src-${PV}/sources/shiboken2
 
 DOCS=( AUTHORS )
+
+PATCHES=(
+	"${FILESDIR}"/${P}-fix-clang-include-path.patch
+	"${FILESDIR}"/${P}-fix-warnings.patch
+)
 
 # Ensure the path returned by get_llvm_prefix() contains clang as well.
 llvm_check_deps() {
@@ -56,9 +58,7 @@ src_prepare() {
 		sed -i -e '1iinclude(rpath.cmake)' CMakeLists.txt || die
 	fi
 
-	# CMakeLists.txt assumes clang builtin includes are installed
-	# under LLVM_INSTALL_DIR. They are not on Gentoo. See bug 624682.
-	sed -i -e "/set(CLANG_BUILTIN_INCLUDES_DIR_PREFIX /s:\${CLANG_DIR}:${EPREFIX}/usr:" CMakeLists.txt || die
+#	eapply "${FILESDIR}"/${P}-fix-warnings.patch
 
 	cmake-utils_src_prepare
 }
@@ -70,8 +70,7 @@ src_configure() {
 			-DPYTHON_EXECUTABLE="${PYTHON}"
 			-DPYTHON_SITE_PACKAGES="$(python_get_sitedir)"
 		)
-		# CMakeLists.txt expects LLVM_INSTALL_DIR as an environment variable.
-		LLVM_INSTALL_DIR="$(get_llvm_prefix)" cmake-utils_src_configure
+		cmake-utils_src_configure
 	}
 	python_foreach_impl configuration
 }

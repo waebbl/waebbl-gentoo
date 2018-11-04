@@ -22,10 +22,11 @@ SLOT="0"
 # TODO:
 #   vr: needs a rift package: does this make sense? Currently they don't have
 #		support for linux. The last linux package dates back to 2015!
-#	netgen: sci-mathematics/netgen: doesn't compile -> upstream sci overlay
-#	openscad: media-gfx/openscad
+#	netgen: sci-mathematics/netgen: updated version, but FreeCAD doesn't compile
+#		against it, probably due to a needed external smesh with netgen support
 #	smesh: needs a salome-platform package
-#	zipio++: needs a package
+#	zipio++: FreeCAD uses quite outdated zipio and doesn't compile against.
+#		new versions. Ebuild is available in overlay.
 
 # looks like netgen needs external smesh compiled with netgen support
 IUSE="eigen3 +freetype pcl +qt5 swig -system-smesh" # netgen
@@ -47,10 +48,12 @@ done
 unset module
 
 #	netgen? ( >=sci-mathematics/netgen-6.2.1804:=[mpi,opencascade,${PYTHON_USEDEP}] )
-COMMON_DEPEND="
+RDEPEND="
 	${PYTHON_DEPS}
 	dev-libs/boost:=[python,${PYTHON_USEDEP}]
 	dev-libs/xerces-c[icu]
+	dev-python/numpy[${PYTHON_USEDEP}]
+	dev-python/pivy:=[${PYTHON_USEDEP}]
 	sci-libs/libmed:=[fortran,python,${PYTHON_USEDEP}]
 	sci-libs/orocos_kdl:=
 	sci-libs/opencascade:7.3.0=[vtk(+)]
@@ -67,7 +70,7 @@ COMMON_DEPEND="
 	pcl? ( >=sci-libs/pcl-1.8.1:=[qt5,vtk(+)] )
 	qt5? (
 		dev-libs/libspnav
-		dev-python/pyside:2=[concurrent,network,opengl,printsupport,svg,xmlpatterns,webkit,${PYTHON_USEDEP}]
+		dev-python/pyside:2=[gui,svg,${PYTHON_USEDEP}]
 		dev-python/shiboken:2=[${PYTHON_USEDEP}]
 		dev-qt/qtconcurrent:5
 		dev-qt/qtcore:5
@@ -78,15 +81,17 @@ COMMON_DEPEND="
 		dev-qt/qtwebkit:5
 		dev-qt/qtxml:5
 		media-libs/coin:=[draggers(+),manipulators(+),nodekits(+),simage]
-	)"
-RDEPEND="${COMMON_DEPEND}
-	dev-python/numpy[${PYTHON_USEDEP}]
-	dev-python/pivy:=[${PYTHON_USEDEP}]"
-DEPEND="${COMMON_DEPEND}
+	)
+"
+DEPEND="
+	${RDEPEND}
 	qt5? ( dev-python/pyside-tools:2[${PYTHON_USEDEP}] )
-	swig? ( dev-lang/swig )"
+	swig? ( dev-lang/swig )
+"
 
-REQUIRED_USE="${PYTHON_REQUIRED_USE}
+# To get required dependencies: 'grep REQUIRED_MODS CMakeLists.txt'
+REQUIRED_USE="
+	${PYTHON_REQUIRED_USE}
 	freecad_modules_arch? ( freecad_modules_part freecad_modules_mesh freecad_modules_draft )
 	freecad_modules_draft? ( freecad_modules_sketcher )
 	freecad_modules_drawing? ( freecad_modules_part freecad_modules_spreadsheet )
@@ -108,12 +113,14 @@ REQUIRED_USE="${PYTHON_REQUIRED_USE}
 	freecad_modules_sketcher? ( freecad_modules_part )
 	freecad_modules_spreadsheet? ( freecad_modules_draft )
 	freecad_modules_start? ( freecad_modules_web )
-	freecad_modules_techdraw? ( freecad_modules_part freecad_modules_spreadsheet freecad_modules_drawing )"
+	freecad_modules_techdraw? ( freecad_modules_part freecad_modules_spreadsheet freecad_modules_drawing )
+"
 
 CMAKE_BUILD_TYPE=Release
 
 DOCS=( README.md ChangeLog.txt )
 
+# FIXME: Check the find-Coin.tag patch after updates of media-libs/coin
 PATCHES=(
 	"${FILESDIR}/smesh-pthread.patch"
 	"${FILESDIR}/freecad-ModPath-find-boost_python.patch"
@@ -154,7 +161,7 @@ src_configure() {
 		-DOPENMPI_INCLUDE_DIRS=/usr/include/
 	)
 
-	# disable experimental und debugging modules per default by now
+	# disable vr module by default for now
 	for module in ${FREECAD_DISABLED_MODULES}; do
 		mycmakeargs+=( -DBUILD_${module}=OFF )
 	done
@@ -179,31 +186,31 @@ src_configure() {
 src_install() {
 	cmake-utils_src_install
 
-	dosym ../$(get_libdir)/${PN}/bin/FreeCAD /usr/bin/freecad || die
-	dosym ../$(get_libdir)/${PN}/bin/FreeCADCmd /usr/bin/freecadcmd || die
+	dosym ../$(get_libdir)/${PN}/bin/FreeCAD /usr/bin/freecad
+	dosym ../$(get_libdir)/${PN}/bin/FreeCADCmd /usr/bin/freecadcmd
 
-	make_desktop_entry freecad "FreeCAD" "" "" "MimeType=application/x-extension-fcstd;" || die
+	make_desktop_entry freecad "FreeCAD" "" "" "MimeType=application/x-extension-fcstd;"
 
 	# install mimetype for FreeCAD files
 	insinto /usr/share/mime/packages
-	newins "${FILESDIR}"/${PN}.sharedmimeinfo "${PN}.xml" || die
+	newins "${FILESDIR}"/${PN}.sharedmimeinfo "${PN}.xml"
 
 	insinto /usr/share/pixmaps
-	newins "${S}"/src/Gui/Icons/${PN}.xpm "${PN}.xpm" || die
+	newins "${S}"/src/Gui/Icons/${PN}.xpm "${PN}.xpm"
 
 	# install icons to correct place rather than /usr/share/freecad
 	local size
 	for size in 16 32 48 64; do
-		newicon -s ${size} "${S}"/src/Gui/Icons/${PN}-icon-${size}.png ${PN}.png || die
+		newicon -s ${size} "${S}"/src/Gui/Icons/${PN}-icon-${size}.png ${PN}.png
 	done
 	doicon -s scalable "${S}"/src/Gui/Icons/${PN}.svg
-	newicon -s 64 -c mimetypes "${S}"/src/Gui/Icons/${PN}-doc.png application-x-extension-fcstd.png || die
+	newicon -s 64 -c mimetypes "${S}"/src/Gui/Icons/${PN}-doc.png application-x-extension-fcstd.png
 
 	rm "${ED}"/usr/share/${PN}/data/${PN}-{doc,icon-{16,32,48,64}}.png || die
 	rm "${ED}"/usr/share/${PN}/data/${PN}.svg || die
 	rm "${ED}"/usr/share/${PN}/data/${PN}.xpm || die
 
-	python_optimize "${ED%/}"/usr/share/${PN}/data/Mod/ "${ED%/}"/usr/$(get_libdir)/${PN}{/Ext,/Mod}/ || die
+	python_optimize "${ED%/}"/usr/share/${PN}/data/Mod/ "${ED%/}"/usr/$(get_libdir)/${PN}{/Ext,/Mod}/
 }
 
 pkg_postinst() {

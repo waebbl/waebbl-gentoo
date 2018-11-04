@@ -92,7 +92,10 @@ src_test() {
 
 src_install() {
 	# workaround to fix 'import medenum' statement in installed python files
-	sed -i -e 's|import medenum|from . import medenum|' "${BUILD_DIR}"/python/med/*.py || die
+	if use python; then
+		sed -i -e 's|import medenum|from . import medenum|' "${BUILD_DIR}"/python/med/*.py || die
+	fi
+
 	DESTDIR="${D}" cmake-utils_src_install
 
 	dosym mdump3 usr/bin/mdump

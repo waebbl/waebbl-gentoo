@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<maintainer type="person">
+	<email>waebbl@gmail.com</email>
+	<name>Bernd Waibel</name>
+</maintainer>
+<longdescription>
+A collection of high-performance ray tracing kernels, developed at Intel.
+It's targeted at graphics application engineers who want to improve
+performance of their photo-realistic application.
+</longdescription>
+<use>
+	<flag name="clang">
+		Use <pkg>sys-devel/clang</pkg> to compile Embree
+	</flag>
+	<flag name="ispc">
+		Enables ISPC support for Embree through <pkg>dev-lang/ispc</pkg>
+	</flag>
+	<flag name="tbb">
+		Use Intel's threading library <pkg>dev-cpp/tbb</pkg>
+	</flag>
+	<flag name="tutorial">
+		Compile and install the Embree tutorials.
+	</flag>
+</use>
+<upstream>
+	<remote-id type="github">embree/embree</remote-id>
+</upstream>
+</pkgmetadata>

@@ -21,6 +21,9 @@
 - [ ] [media-libs/opencamlib](https://github.com/aewallin/opencamlib) new package: supported by freecad.
 - [ ] [sci-mathematics/fenics](https://bitbucket.org/fenics-project) new package: supported by freecad.
 - [ ] [media-gfx/odafileconverter](https://www.opendesign.com/guestfiles/oda_file_converter) new package: for DWG file import/export support in freecad (binary package)
+- [ ] [media-gfx/shipcad](https://github.com/gpgreen/ShipCAD): new package: CAD software for ship construction
+- [ ] [media-gfx/meshroom](https://github.com/alicevision/meshroom): new package: 3D reconstruction software
+- [ ] [media-libs/alicevision](https://github.com/alicevision/AliceVision): new package: photogrammetric computer vision framework, needed by meshroom
 
 
 ## Packages with bugs assigned

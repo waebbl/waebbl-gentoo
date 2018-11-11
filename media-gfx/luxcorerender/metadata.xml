@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<maintainer type="person">
+	<email>waebbl@gmail.com</email>
+	<name>Bernd Waibel</name>
+</maintainer>
+<longdescription>
+LuxCoreRender is a physically corret, inbiased rendering engine. It is 
+built on physically based equations that model the transportation of
+light.
+</longdescription>
+<use>
+	<flag name="opencl">Build with OpenCL support</flag>
+</use>
+<upstream>
+	<remote-id type="github">LuxCoreRender/LuxCore</remote-id>
+</upstream>
+</pkgmetadata>

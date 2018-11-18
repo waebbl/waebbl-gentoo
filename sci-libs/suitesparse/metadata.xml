@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<maintainer type="project">
+	<email>sci@gentoo.org</email>
+	<name>Gentoo Science Project</name>
+</maintainer>
+<longdescription lang="en">
+<!-- FIXME: rework this -->
+SuiteSparse is a suite of sparse matrix libraries from University of
+Florida Computer Science Department. Currently, this includes:
+	* AMD: symmetric approximate minimum degree
+	* BTF: permutation to block triangular form
+	* CAMD: symmetric approximate minimum degree
+	* CCOLAMD: constrained column approximate minimum degree
+	* COLAMD: column approximate minimum degree
+	* CHOLMOD: sparse supernodal Cholesky factorization and update/downdate
+	* CSparse: a concise sparse matrix package
+	* CXSparse: an extended version of CSparse
+	* GraphBLAS: graph algorithms implemented with BLAS
+	* KLU: sparse LU factorization, for circuit simulation
+	* LDL: a simple LDL^T factorization
+	* Mongoose: graph partioning package
+	* RBio: read/write sparse matrices in Rutherford / Boeing format
+	* SPQR: multifrontal sparse QT factorization
+	* SuiteSparse_config: common configuration for all but CSparse
+	* UMFPACK: sparse multifrontal LU factorization
+The Gentoo package does not include the suitesparse MATLAB tools from
+upstream, from the packages above and the following MATLAB-only packages:
+	* LINFACTOR: solve Ax=b using LU or CHOL
+	* MESHND: 2D and 3D mesh generation and nested dissection
+	* SSMULT: sparse matrix times sparse matrix 
+</longdescription>
+<use>
+	<flag name="cuda">Use CUDA for cholmod and spqr</flag>
+	<flag name="tbb">Use Intel's <pkg>dev-cpp/tbb</pkg> for threading</flag>
+</use>
+</pkgmetadata>

@@ -29,7 +29,7 @@ SLOT="0"
 #		new versions. Ebuild is available in overlay.
 
 # looks like netgen needs external smesh compiled with netgen support
-IUSE="eigen3 +freetype pcl +qt5 swig -system-smesh" # netgen
+IUSE="doc eigen3 +freetype pcl +qt5 swig -system-smesh" # netgen
 
 FREECAD_EXPERIMENTAL_MODULES="assembly inspection path reverseengineering"
 FREECAD_DEBUG_MODULES="sandbox template test"
@@ -61,6 +61,7 @@ RDEPEND="
 	virtual/glu
 	virtual/mpi[cxx,fortran,threads]
 	virtual/opengl
+	doc? ( ~app-doc/${PN}-doc-${PV} )
 	eigen3? ( dev-cpp/eigen:3= )
 	freecad_modules_draft? ( dev-python/pyside:2=[svg,${PYTHON_USEDEP}] )
 	freecad_modules_plot? ( dev-python/matplotlib[${PYTHON_USEDEP}] )

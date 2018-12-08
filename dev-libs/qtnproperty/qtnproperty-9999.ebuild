@@ -1,11 +1,11 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 # TODO:
 #	* install headers
 #	* improve qmake files, add install targets
 
-EAPI=6
+EAPI=7
 
 inherit qmake-utils git-r3
 
@@ -19,7 +19,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE="demo doc static test"
 
-#RESTRICT="test"
+RESTRICT="!test? ( test )"
 
 DEPEND="dev-qt/qtcore:5
 	dev-qt/qtdeclarative:5

@@ -7,25 +7,18 @@
 # original ebuild.
 # Thanks to Albert Diserholt for creating the original ebuild.
 
-EAPI=6
+EAPI=7
 
 # Putting long description into metadata.xml, as repoman restricts
 # descriptions to max. 80 chars.
+MY_PV=${PV}-0${PVR:5}
 DESCRIPTION="SimulationCraft is a tool to explore combat mechanics in World of Warcraft."
 HOMEPAGE="http://simulationcraft.org/"
+SRC_URI="https://github.com/${PN}/simc/archive/release-${MY_PV}.tar.gz -> ${PN}-${MY_PV}.tar.gz"
+
 LICENSE="GPL-3"
 SLOT="0"
-
-if [[ ${PV} = 9999* ]]; then
-	inherit git-r3
-	EGIT_REPO_URI="https://github.com/simulationcraft/simc.git"
-	EGIT_BRANCH="bfa-dev" # update for new expansion
-else
-	MY_PV=${PV}-0${PVR:5}
-	SRC_URI="https://github.com/${PN}/simc/archive/release-${MY_PV}.tar.gz -> ${PN}-${MY_PV}.tar.gz"
-	KEYWORDS="~amd64 ~x86"
-fi
-
+KEYWORDS="~amd64 ~x86"
 IUSE="doc +gui"
 
 RDEPEND="

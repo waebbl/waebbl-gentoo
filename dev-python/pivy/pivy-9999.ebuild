@@ -1,16 +1,16 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 PYTHON_COMPAT=( python3_6 )
 
-inherit distutils-r1 git-r3
+inherit distutils-r1 mercurial
 
 DESCRIPTION="Coin3d bindings for Python"
 HOMEPAGE="http://pivy.coin3d.org/"
-EGIT_REPO_URI="https://bitbucket.org/Coin3D/pivy.git"
-#EGIT_COMMIT="a2eab798"
+
+PIVY_REPO_URI="https://bitbucket.org/Coin3D/pivy"
 
 LICENSE="ISC"
 SLOT="0"
@@ -24,3 +24,12 @@ DEPEND="
 	${RDEPEND}
 	dev-lang/swig
 "
+
+S="${WORKDIR}/${PN}"
+
+src_unpack() {
+	EHG_REPO_URI=${PIVY_REPO_URI}
+	EHG_CHECKOUT_DIR=${S}
+	EHG_BRANCH="default"
+	mercurial_fetch
+}

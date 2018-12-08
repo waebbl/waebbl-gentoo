@@ -5,6 +5,8 @@ EAPI=6
 
 inherit cmake-utils mercurial
 
+MY_P=${P/c/C}
+
 DESCRIPTION="A high-level 3D graphics toolkit, fully compatible with SGI Open Inventor 2.1"
 HOMEPAGE="https://bitbucket.org/Coin3D/coin/wiki/Home"
 
@@ -70,13 +72,14 @@ src_unpack() {
 
 	EHG_REPO_URI=${BOOSTHEADERLIBSFULL_REPO_URI}
 	EHG_CHECKOUT_DIR="${WORKDIR}/boost-header-libs-full"
-	EHG_REVISION="25bb778"
+	EHG_REVISION="1ed503a"
 	mercurial_fetch
+	unset EHG_REVISION
 
 	EHG_REPO_URI=${COIN_REPO_URI}
 	EHG_CHECKOUT_DIR="${S}"
 	EHG_BRANCH="default"
-#	EHG_REVISION="cf2a467"
+#	EHG_REVISION="e74da18"
 	mercurial_fetch
 }
 

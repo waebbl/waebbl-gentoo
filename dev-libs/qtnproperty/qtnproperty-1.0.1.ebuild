@@ -1,9 +1,9 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-inherit qmake-utils vcs-snapshot
+inherit qmake-utils
 
 DESCRIPTION="Tool to extend properties in the Qt5 framework."
 HOMEPAGE="https://github.com/lexxmark/QtnProperty/wiki"
@@ -14,7 +14,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE="demo doc test"
 
-#RESTRICT="test"
+RESTRICT="!test? ( test )"
 
 DEPEND="dev-qt/qtcore:5
 	dev-qt/qtdeclarative:5

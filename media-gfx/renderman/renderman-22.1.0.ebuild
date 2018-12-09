@@ -3,7 +3,7 @@
 
 # TODO: add amd64 only multilib-support -> package provides no 32-bit
 
-EAPI=6
+EAPI=7
 
 MULTILIB_COMPAT=( abi_x86_64 )
 inherit rpm multilib-minimal

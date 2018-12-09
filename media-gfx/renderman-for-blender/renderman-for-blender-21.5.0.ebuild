@@ -4,9 +4,7 @@
 # TODO: verify it will work with 'renderman-for-blender' instead of
 #		'renderman_for_blender'
 
-EAPI=6
-
-inherit eapi7-ver
+EAPI=7
 
 MY_PV=$(ver_rs 1- "_")
 BLENDER_MIN_PV="2.78"

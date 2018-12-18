@@ -32,4 +32,7 @@ src_unpack() {
 	EHG_CHECKOUT_DIR=${S}
 	EHG_BRANCH="default"
 	mercurial_fetch
+
+	# Those fake headers are not provided
+	touch "${S}"/fake_headers/{cstddef,cstdarg,cassert} || die "Failed to touch fake headers"
 }

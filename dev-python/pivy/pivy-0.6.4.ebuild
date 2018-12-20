@@ -16,13 +16,18 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-#S="${WORKDIR}/Coin3D-pivy-a84100beff22"
-
 RDEPEND="
-	media-libs/coin:=
-	media-libs/SoQt:=
+	>=media-libs/coin-4.0.0a_pre20180416:=
+	>=media-libs/SoQt-1.6.0a_pre20180813:=
 "
 DEPEND="
 	${RDEPEND}
 	dev-lang/swig
 "
+
+src_prepare() {
+	default
+
+	# Those fake headers are not provided
+	touch "${S}"/fake_headers/{cstddef,cstdarg,cassert} || die "Failed to touch fake headers"
+}

@@ -51,36 +51,36 @@ unset module
 RDEPEND="
 	${PYTHON_DEPS}
 	dev-libs/boost:=[python,${PYTHON_USEDEP}]
-	dev-libs/xerces-c[icu]
-	dev-python/numpy[${PYTHON_USEDEP}]
+	dev-libs/xerces-c:=[icu]
+	dev-python/numpy:=[${PYTHON_USEDEP}]
 	dev-python/pivy:=[${PYTHON_USEDEP}]
 	sci-libs/libmed:=[fortran,python,${PYTHON_USEDEP}]
 	sci-libs/orocos_kdl:=
 	sci-libs/opencascade:7.3.0=[vtk(+)]
-	sys-libs/zlib
+	sys-libs/zlib:=
 	virtual/glu
 	virtual/mpi[cxx,fortran,threads]
 	virtual/opengl
 	doc? ( ~app-doc/${PN}-doc-${PV} )
 	eigen3? ( dev-cpp/eigen:3= )
 	freecad_modules_draft? ( dev-python/pyside:2=[svg,${PYTHON_USEDEP}] )
-	freecad_modules_plot? ( dev-python/matplotlib[${PYTHON_USEDEP}] )
+	freecad_modules_plot? ( dev-python/matplotlib:=[${PYTHON_USEDEP}] )
 	freecad_modules_openscad? ( media-gfx/openscad:= )
 	freecad_modules_smesh? ( sci-libs/hdf5:= )
-	freetype? ( media-libs/freetype )
+	freetype? ( media-libs/freetype:= )
 	pcl? ( >=sci-libs/pcl-1.8.1:=[qt5,vtk(+)] )
 	qt5? (
-		dev-libs/libspnav
+		dev-libs/libspnav:=
 		dev-python/pyside:2=[gui,svg,${PYTHON_USEDEP}]
 		dev-python/shiboken:2=[${PYTHON_USEDEP}]
-		dev-qt/qtconcurrent:5
-		dev-qt/qtcore:5
-		dev-qt/qtnetwork:5
-		dev-qt/qtopengl:5
-		dev-qt/qtprintsupport:5
-		dev-qt/qtsvg:5
-		dev-qt/qtwebkit:5
-		dev-qt/qtxml:5
+		dev-qt/qtconcurrent:5=
+		dev-qt/qtcore:5=
+		dev-qt/qtnetwork:5=
+		dev-qt/qtopengl:5=
+		dev-qt/qtprintsupport:5=
+		dev-qt/qtsvg:5=
+		dev-qt/qtwebkit:5=
+		dev-qt/qtxml:5=
 		media-libs/coin:=[draggers(+),manipulators(+),nodekits(+),simage]
 	)
 "

@@ -26,20 +26,20 @@ REQUIRED_USE="
 
 RDEPEND="
 	app-eselect/eselect-opencascade
-	dev-cpp/eigen
+	dev-cpp/eigen:=
 	dev-lang/tcl:0=
 	dev-lang/tk:0=
-	dev-tcltk/itcl
-	dev-tcltk/itk
-	dev-tcltk/tix
-	media-libs/freetype:2
-	media-libs/ftgl
-	virtual/glu
-	virtual/opengl
-	x11-libs/libXmu
-	ffmpeg? ( virtual/ffmpeg )
-	freeimage? ( media-libs/freeimage )
-	gl2ps? ( x11-libs/gl2ps )
+	dev-tcltk/itcl:=
+	dev-tcltk/itk:=
+	dev-tcltk/tix:=
+	media-libs/freetype:2=
+	media-libs/ftgl:=
+	virtual/glu:=
+	virtual/opengl:=
+	x11-libs/libXmu:=
+	ffmpeg? ( virtual/ffmpeg:= )
+	freeimage? ( media-libs/freeimage:= )
+	gl2ps? ( x11-libs/gl2ps:= )
 	java? ( >=virtual/jdk-0:= )
 	qt5? (
 		dev-qt/qtcore:=
@@ -48,8 +48,8 @@ RDEPEND="
 		dev-qt/qtwidgets:=
 		dev-qt/qtxml:=
 	)
-	tbb? ( dev-cpp/tbb )
-	vtk? ( sci-libs/vtk[rendering] )"
+	tbb? ( dev-cpp/tbb:= )
+	vtk? ( >=sci-libs/vtk-8.1.0:=[rendering] )"
 DEPEND="${RDEPEND}
 	doc? ( app-doc/doxygen )"
 

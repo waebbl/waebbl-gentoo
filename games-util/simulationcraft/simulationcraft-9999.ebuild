@@ -7,7 +7,7 @@
 # original ebuild.
 # Thanks to Albert Diserholt for creating the original ebuild.
 
-EAPI=6
+EAPI=7
 
 inherit cmake-utils git-r3
 

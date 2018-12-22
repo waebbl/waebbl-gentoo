@@ -1,10 +1,10 @@
 # Copyright 1999-2018 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 PYTHON_COMPAT=( python3_6 )
-inherit cmake-utils eapi7-ver python-single-r1 toolchain-funcs
+inherit cmake-utils python-single-r1 toolchain-funcs
 
 MY_PV=$(ver_cut 1-2)$(ver_cut 3-4)
 MY_P=${PN}_v${MY_PV}

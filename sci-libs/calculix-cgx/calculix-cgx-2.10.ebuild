@@ -1,9 +1,7 @@
 # Copyright 1999-2018 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
-
-inherit eutils
+EAPI=7
 
 MY_P=cgx_${PV}
 
@@ -15,19 +13,18 @@ SRC_URI="http://www.dhondt.de/${MY_P}.all.tar.bz2
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-# nptl removed since I cannot work around it
 IUSE="doc examples"
 
-RDEPEND="media-libs/mesa[nptl]
-	>=media-libs/freeglut-1.0
-	virtual/opengl
-	x11-libs/libX11
-	x11-libs/libXmu
-	x11-libs/libXi
-	x11-libs/libXext
-	x11-libs/libXt
-	x11-libs/libSM
-	x11-libs/libICE"
+RDEPEND="media-libs/mesa:=
+	>=media-libs/freeglut-1.0:=
+	virtual/opengl:=
+	x11-libs/libX11:=
+	x11-libs/libXmu:=
+	x11-libs/libXi:=
+	x11-libs/libXext:=
+	x11-libs/libXt:=
+	x11-libs/libSM:=
+	x11-libs/libICE:="
 DEPEND="${RDEPEND}
 	doc? ( app-text/ghostscript-gpl )"
 

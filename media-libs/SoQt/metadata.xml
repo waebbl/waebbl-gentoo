@@ -7,6 +7,7 @@
 </maintainer>
 <use>
 	<flag name="coin-iv-extensions">Enables extra open inventor extensions</flag>
+	<flag name="qthelp">Enable qthelp documentation</flag>
 	<flag name="spacenav">
 		Add support for SpaceNavigator and friends through 
 		<pkg>dev-libs/libspnav</pkg>.

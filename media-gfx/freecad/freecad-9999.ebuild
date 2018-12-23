@@ -3,7 +3,6 @@
 
 EAPI=6
 
-# As of 2017-12-30 only python3_5 works (that is FreeCAD does not crash on startup)
 PYTHON_COMPAT=( python3_6 )
 
 inherit check-reqs cmake-utils desktop eutils xdg-utils gnome2-utils python-single-r1 git-r3
@@ -129,7 +128,7 @@ PATCHES=(
 	"${FILESDIR}/${P}-find-Coin.tag.patch"
 	)
 
-CHECKREQS_DISK_BUILD="4G"
+CHECKREQS_DISK_BUILD="5G"
 
 pkg_setup() {
 	check-reqs_pkg_setup

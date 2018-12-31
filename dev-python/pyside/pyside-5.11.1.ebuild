@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Authors
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -57,35 +57,35 @@ REQUIRED_USE="
 DEPEND="
 	${PYTHON_DEPS}
 	~dev-python/shiboken-${PV}:${SLOT}[${PYTHON_USEDEP}]
-	~dev-qt/qtcore-${PV}:5=
-	~dev-qt/qtxml-${PV}:5=
-	3d? ( ~dev-qt/qt3d-${PV}:5= )
-	charts? ( ~dev-qt/qtcharts-${PV}:5= )
-	concurrent? ( ~dev-qt/qtconcurrent-${PV}:5= )
-	datavis? ( ~dev-qt/qtdatavis3d-${PV}:5= )
-	declarative? ( ~dev-qt/qtdeclarative-${PV}:5=[widgets?] )
-	designer? ( ~dev-qt/designer-${PV}:5= )
-	gui? ( ~dev-qt/qtgui-${PV}:5= )
-	help? ( ~dev-qt/qthelp-${PV}:5= )
-	location? ( ~dev-qt/qtlocation-${PV}:5= )
-	multimedia? ( ~dev-qt/qtmultimedia-${PV}:5=[widgets?] )
-	network? ( ~dev-qt/qtnetwork-${PV}:5= )
-	opengl? ( ~dev-qt/qtopengl-${PV}:5= )
-	positioning? ( ~dev-qt/qtpositioning-${PV}:5= )
-	printsupport? ( ~dev-qt/qtprintsupport-${PV}:5= )
-	script? ( ~dev-qt/qtscript-${PV}:5= )
-	scxml? ( ~dev-qt/qtscxml-${PV}:5= )
-	sensors? ( ~dev-qt/qtsensors-${PV}:5= )
-	speech? ( ~dev-qt/qtspeech-${PV}:5= )
-	sql? ( ~dev-qt/qtsql-${PV}:5= )
-	svg? ( ~dev-qt/qtsvg-${PV}:5= )
-	testlib? ( ~dev-qt/qttest-${PV}:5= )
-	webchannel? ( ~dev-qt/qtwebchannel-${PV}:5= )
-	webengine? ( ~dev-qt/qtwebengine-${PV}:5=[widgets] )
-	websockets? ( ~dev-qt/qtwebsockets-${PV}:5= )
-	widgets? ( ~dev-qt/qtwidgets-${PV}:5= )
-	x11extras? ( ~dev-qt/qtx11extras-${PV}:5= )
-	xmlpatterns? ( ~dev-qt/qtxmlpatterns-${PV}:5= )
+	>=dev-qt/qtcore-${PV}:5=
+	>=dev-qt/qtxml-${PV}:5=
+	3d? ( >=dev-qt/qt3d-${PV}:5= )
+	charts? ( >=dev-qt/qtcharts-${PV}:5= )
+	concurrent? ( >=dev-qt/qtconcurrent-${PV}:5= )
+	datavis? ( >=dev-qt/qtdatavis3d-${PV}:5= )
+	declarative? ( >=dev-qt/qtdeclarative-${PV}:5=[widgets?] )
+	designer? ( >=dev-qt/designer-${PV}:5= )
+	gui? ( >=dev-qt/qtgui-${PV}:5= )
+	help? ( >=dev-qt/qthelp-${PV}:5= )
+	location? ( >=dev-qt/qtlocation-${PV}:5= )
+	multimedia? ( >=dev-qt/qtmultimedia-${PV}:5=[widgets?] )
+	network? ( >=dev-qt/qtnetwork-${PV}:5= )
+	opengl? ( >=dev-qt/qtopengl-${PV}:5= )
+	positioning? ( >=dev-qt/qtpositioning-${PV}:5= )
+	printsupport? ( >=dev-qt/qtprintsupport-${PV}:5= )
+	script? ( >=dev-qt/qtscript-${PV}:5= )
+	scxml? ( >=dev-qt/qtscxml-${PV}:5= )
+	sensors? ( >=dev-qt/qtsensors-${PV}:5= )
+	speech? ( >=dev-qt/qtspeech-${PV}:5= )
+	sql? ( >=dev-qt/qtsql-${PV}:5= )
+	svg? ( >=dev-qt/qtsvg-${PV}:5= )
+	testlib? ( >=dev-qt/qttest-${PV}:5= )
+	webchannel? ( >=dev-qt/qtwebchannel-${PV}:5= )
+	webengine? ( >=dev-qt/qtwebengine-${PV}:5=[widgets] )
+	websockets? ( >=dev-qt/qtwebsockets-${PV}:5= )
+	widgets? ( >=dev-qt/qtwidgets-${PV}:5= )
+	x11extras? ( >=dev-qt/qtx11extras-${PV}:5= )
+	xmlpatterns? ( >=dev-qt/qtxmlpatterns-${PV}:5= )
 "
 RDEPEND="${DEPEND}"
 
@@ -171,7 +171,7 @@ src_test() {
 src_install() {
 	installation() {
 		cmake-utils_src_install
-		mv "${ED}"usr/$(get_libdir)/pkgconfig/${PN}2{,-${EPYTHON}}.pc || die
+		mv "${ED%/}"/usr/$(get_libdir)/pkgconfig/${PN}2{,-${EPYTHON}}.pc || die
 	}
 	python_foreach_impl installation
 }

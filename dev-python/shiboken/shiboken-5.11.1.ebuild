@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Authors
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -21,13 +21,15 @@ KEYWORDS="~amd64 ~x86"
 IUSE="numpy test"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
+QT_PV="5.9.0:5"
+
 DEPEND="
 	${PYTHON_DEPS}
 	dev-libs/libxml2
 	dev-libs/libxslt
-	~dev-qt/qtcore-${PV}:5=
-	~dev-qt/qtxml-${PV}:5=
-	~dev-qt/qtxmlpatterns-${PV}:5=
+	>=dev-qt/qtcore-${QT_PV}=
+	>=dev-qt/qtxml-${QT_PV}=
+	>=dev-qt/qtxmlpatterns-${QT_PV}=
 	>=sys-devel/clang-3.9.1:=
 	numpy? ( dev-python/numpy )
 "

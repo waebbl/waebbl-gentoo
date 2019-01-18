@@ -1,14 +1,12 @@
 diff --git a/cMake/FindCoin3DDoc.cmake b/cMake/FindCoin3DDoc.cmake
-index 883368445..736780f3c 100644
+index 883368445..02473fd68 100644
 --- a/cMake/FindCoin3DDoc.cmake
 +++ b/cMake/FindCoin3DDoc.cmake
-@@ -23,6 +23,9 @@ IF (COIN3D_FOUND)
+@@ -23,6 +23,7 @@ IF (COIN3D_FOUND)
        find_path(COIN3D_DOC_PATH index.html 
                  /usr/share/doc/libcoin80-doc/html
                  /usr/share/doc/coin/html
-+                # TODO: needs to be updated after each coin update until
-+                # a better solution is found or coin has gone more stable
-+                /usr/share/doc/coin-4.0.0a_pre20180921/html
++                /usr/share/doc/coin-4.0.0a/html
        )
        IF( EXISTS ${COIN3D_DOC_PATH})
          message(STATUS "Coin3D doc is installed")

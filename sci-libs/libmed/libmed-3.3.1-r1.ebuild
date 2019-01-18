@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Authors
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -7,6 +7,7 @@ FORTRAN_NEEDED=fortran
 FORTRAN_NEED_OPENMP=1
 # TODO: test other python implementations before adding them
 PYTHON_COMPAT=( python3_6 )
+CMAKE_MAKEFILE_GENERATOR="emake"
 
 inherit cmake-utils fortran-2 python-single-r1
 

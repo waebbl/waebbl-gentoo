@@ -1,0 +1,15 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 84f2281..efe96a4 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -135,8 +135,8 @@ ENDIF()
+ 
+ ## Installation of the doc
+ IF(MEDFILE_INSTALL_DOC  OR MEDFILE_BUILD_DOC)
+-  INSTALL(DIRECTORY doc/html.dox/ DESTINATION ${CMAKE_INSTALL_PREFIX}/share/doc/med-fichier-${MED_STR_VERSION} REGEX "Makefile*" EXCLUDE PATTERN "*.am" EXCLUDE)
+-  INSTALL(DIRECTORY doc/gif doc/jpg doc/png DESTINATION ${CMAKE_INSTALL_PREFIX}/share/doc/med-fichier-${MED_STR_VERSION} FILES_MATCHING PATTERN "*.gif" PATTERN "*.jpg" PATTERN "*.svg" PATTERN "*.png")
++  INSTALL(DIRECTORY doc/html.dox/ DESTINATION ${CMAKE_INSTALL_PREFIX}/share/doc/med-fichier-${MED_STR_VERSION}/html REGEX "Makefile*" EXCLUDE PATTERN "*.am" EXCLUDE)
++  INSTALL(DIRECTORY doc/gif doc/jpg doc/png DESTINATION ${CMAKE_INSTALL_PREFIX}/share/doc/med-fichier-${MED_STR_VERSION}/html FILES_MATCHING PATTERN "*.gif" PATTERN "*.jpg" PATTERN "*.svg" PATTERN "*.png")
+ ENDIF()
+ 
+ #######################

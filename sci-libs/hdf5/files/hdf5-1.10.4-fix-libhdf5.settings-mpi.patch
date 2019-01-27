@@ -1,0 +1,13 @@
+diff --git a/src/libhdf5.settings.in b/src/libhdf5.settings.in
+index 531cd00..30e8887 100644
+--- a/src/libhdf5.settings.in
++++ b/src/libhdf5.settings.in
+@@ -26,7 +26,7 @@ Linking Options:
+                         LDFLAGS: @LDFLAGS@
+                      H5_LDFLAGS: @H5_LDFLAGS@
+                      AM_LDFLAGS: @AM_LDFLAGS@
+-                Extra libraries: @LIBS@
++                Extra libraries: @LIBS@ -lmpi_cxx
+                        Archiver: @AR@
+                        AR_FLAGS: @AR_FLAGS@
+                          Ranlib: @RANLIB@

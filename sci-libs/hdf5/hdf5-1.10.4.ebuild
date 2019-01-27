@@ -3,6 +3,8 @@
 
 EAPI=5
 
+# FIXME: add java support
+
 FORTRAN_NEEDED=fortran
 AUTOTOOLS_AUTORECONF=1
 
@@ -68,6 +70,10 @@ src_prepare() {
 	sed -i -e "s/SHLIB:-no/SHLIB:-yes/g" tools/src/misc/h5cc.in || die
 	hprefixify m4/libtool.m4
 	autotools-utils_src_prepare
+	if use mpi; then
+		find "${S}" -type f -name Makefile.in | xargs sed -i -e 's|LIBS = @LIBS@|LIBS = @LIBS@ -lmpi_cxx|' || die "sed failed"
+		epatch "${FILESDIR}/${P}-fix-libhdf5.settings-mpi.patch"
+	fi
 }
 
 src_configure() {
@@ -80,10 +86,12 @@ src_configure() {
 		$(use_enable fortran)
 		$(use_enable hl)
 		$(use_enable mpi parallel)
+		$(use_enable static-libs static)
 		$(use_enable threads threadsafe)
 		$(use_with szip szlib)
 		$(use_with threads pthread)
 		$(use_with zlib)
+		--with-default-plugindir="${EPREFIX}"/usr/$(get_libdir)/hdf5/plugin
 	)
 	autotools-utils_src_configure
 }

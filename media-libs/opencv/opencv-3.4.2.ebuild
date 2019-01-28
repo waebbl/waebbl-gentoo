@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -255,9 +255,9 @@ src_prepare() {
 	fi
 
 	if use contrib; then
-# no longer applies. The modules/dnn_modern dir does no longer exist
-#		cd  "${WORKDIR}/${PN}_contrib-${PV}" || die
+		cd  "${WORKDIR}/${PN}_contrib-${PV}" || die
 #		eapply "${FILESDIR}/${PN}-3.3.0-remove-tiny-dnn-autodownload.patch"
+		eapply "${FILESDIR}/${P}-fix-hdf-mpi.patch"
 
 		if use contrib_xfeatures2d; then
 			mv "${WORKDIR}"/*.i "${WORKDIR}/${PN}_contrib-${PV}"/modules/xfeatures2d/src/ || die

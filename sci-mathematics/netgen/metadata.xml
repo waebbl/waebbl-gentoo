@@ -20,6 +20,9 @@
 		<flag name="ffmpeg">
 			Enable video recording with <pkg>virtual/ffmpeg</pkg>
 		</flag>
+		<flag name="gui">
+			Build the graphical user interface
+		</flag>
 		<flag name="jpeg">
 			Enable snapshots using a <pkg>virtual/jpeg</pkg>
 		</flag>

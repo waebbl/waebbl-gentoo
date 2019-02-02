@@ -1,5 +1,5 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index ef0ee42..6c208b5 100644
+index ef0ee42..36f8464 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -28,7 +28,7 @@ else(APPLE)
@@ -61,7 +61,23 @@ index ef0ee42..6c208b5 100644
      install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/netgen.sh DESTINATION /etc/profile.d COMPONENT netgen)
  
      string(ASCII 27 Esc)
-@@ -359,7 +359,7 @@ add_subdirectory(tests)
+@@ -319,6 +319,7 @@ if(INSTALL_PROFILES)
+ endif(INSTALL_PROFILES)
+ 
+ #######################################################################
++if(APPLE)
+ file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/fixup.cmake "\
+ include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/netgen_fixup.cmake)
+ set(APP ${CMAKE_INSTALL_PREFIX})
+@@ -336,6 +337,7 @@ endif(NOT bundle_filename)
+ execute_process(COMMAND hdiutil create -volname Netgen -srcfolder ${CMAKE_INSTALL_PREFIX} -ov -format UDZO \${bundle_filename}-${PACKAGE_VERSION}.dmg)
+ ")
+   add_custom_target(bundle COMMAND ${CMAKE_COMMAND} "-P" "${CMAKE_CURRENT_BINARY_DIR}/fixup.cmake")
++endif(APPLE)
+ #######################################################################
+ # CTest
+ enable_testing()
+@@ -359,7 +361,7 @@ add_subdirectory(tests)
  #######################################################################
  # Debian packager
  
@@ -70,7 +86,7 @@ index ef0ee42..6c208b5 100644
      set(CPACK_SOURCE_GENERATOR "TGZ")
      set(CPACK_SOURCE_IGNORE_FILES "/cmake/;/build/;/.gz/;~$;${CPACK_SOURCE_IGNORE_FILES}")
      set(CPACK_PACKAGE_VERSION ${PACKAGE_VERSION} )
-@@ -390,7 +390,7 @@ if(UNIX)
+@@ -390,7 +392,7 @@ if(UNIX)
          set(CPACK_DEBIAN_PACKAGE_NAME ${CPACK_PACKAGE_NAME})
          set(CPACK_PACKAGE_FILE_NAME "netgen-${PACKAGE_VERSION}_${CPACK_DEBIAN_PACKAGE_ARCHITECTURE}")   
      endif(temp)

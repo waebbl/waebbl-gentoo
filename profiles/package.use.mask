@@ -7,6 +7,10 @@
 # This file is only for generic masks. For arch-specific masks (i.e.
 # mask everywhere, unmask on arch/*) use arch/base.
 
+# Bernd Waibel <waebbl@gmail.com> (10 Feb 2019)
+# GUI needs internal togl, build is currently broken
+sci-mathematics/netgen gui
+
 # Bernd Waibel <waebbl@gmail.com> (01 Oct 2018)
 # External smesh support needs testing.
 # Also no package currently in the tree.

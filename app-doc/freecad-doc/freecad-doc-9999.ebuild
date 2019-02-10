@@ -1,8 +1,9 @@
-# Copyright 1999-2018 Gentoo Authors
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
+CMAKE_MAKEFILE_GENERATOR="emake"
 inherit check-reqs cmake-utils git-r3
 
 DESCRIPTION="QT based computer aided design application manuals"
@@ -17,7 +18,7 @@ IUSE=""
 
 RDEPEND="
 	>=media-libs/coin-4.0.0a_pre20180416:=[doc]
-	>=sci-libs/libmed-3.3.1:=
+	>=sci-libs/med-fichier-4.0.0:=
 	>=sci-libs/opencascade-7.3.0:=
 	>=virtual/mpi-2.0-r4:=[cxx,threads]
 "

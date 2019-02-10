@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<maintainer type="person">
+	<email>waebbl@gmail.com</email>
+	<name>Bernd Waibel</name>
+</maintainer>
+<longdescription>
+A collection of high-performance, high-quality denoising filters for
+images rendered with ray tracing. It's part of the Intel Rendering
+Framework.
+</longdescription>
+<upstream>
+	<remote-id type="github">OpenImageDenoise/oidn</remote-id>
+</upstream>
+</pkgmetadata>

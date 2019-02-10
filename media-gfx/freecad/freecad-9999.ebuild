@@ -1,11 +1,11 @@
-# Copyright 1999-2018 Gentoo Authors
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
 
 PYTHON_COMPAT=( python3_6 )
 
-inherit check-reqs cmake-utils desktop eutils xdg-utils gnome2-utils python-single-r1 git-r3
+inherit check-reqs cmake-utils desktop git-r3 gnome2-utils python-single-r1 xdg-utils
 
 DESCRIPTION="QT based Computer Aided Design application"
 HOMEPAGE="http://www.freecadweb.org/"
@@ -53,7 +53,7 @@ RDEPEND="
 	dev-libs/xerces-c:=[icu]
 	dev-python/numpy:=[${PYTHON_USEDEP}]
 	dev-python/pivy:=[${PYTHON_USEDEP}]
-	sci-libs/libmed:=[fortran,python,${PYTHON_USEDEP}]
+	>=sci-libs/med-fichier-4.0.0:=[fortran,python,${PYTHON_USEDEP}]
 	sci-libs/orocos_kdl:=
 	sci-libs/opencascade:7.3.0=[vtk(+)]
 	sys-libs/zlib:=

@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Authors
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -40,6 +40,7 @@ RDEPEND="
 	>=dev-libs/boost-1.65.0:=[python?,${PYTHON_USEDEP},threads(+)]
 	>=dev-python/numpy-1.14.5:=[${PYTHON_USEDEP}]
 	>=media-libs/embree-3.2.4:=[ispc]
+	>=media-libs/oidn-0.8.1:=
 	>=media-libs/freetype-2.9.1-r1:=[X,bzip2]
 	media-libs/libpng:0=[cpu_flags_x86_sse?]
 	>=media-libs/openexr-2.3.0:=

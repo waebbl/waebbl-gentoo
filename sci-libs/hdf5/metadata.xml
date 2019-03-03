@@ -12,6 +12,10 @@
 	than 2 GB, and supports parallel I/O.
 </longdescription>
 <use>
+<!--	<flag name="deprecated">
+		Enable support for old API versions (1.8.x). 
+		Disabling this might break packages!
+	</flag>-->
 	<flag name="hl">
 		Enable high level API
 		(https://support.hdfgroup.org/HDF5/doc/HL/index.html)

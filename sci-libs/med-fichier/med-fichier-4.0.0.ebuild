@@ -39,6 +39,8 @@ PATCHES=(
 	"${FILESDIR}/${P}-fix-binaries-symlink.patch"
 	"${FILESDIR}/${P}-fix-install-doc.patch"
 	"${FILESDIR}/${P}-fix-install-lib.patch"
+	"${FILESDIR}/${P}-fix-mpi.patch"
+	"${FILESDIR}/${P}-fix-h5set_fapl_mpio.patch"
 )
 
 S=${WORKDIR}/${MY_P}
@@ -81,11 +83,6 @@ src_test() {
 }
 
 src_install() {
-	# workaround to fix 'import medenum' statement in installed python files
-#	if use python; then
-#		sed -i -e 's|import medenum|from . import medenum|' "${BUILD_DIR}"/python/med/*.py || die
-#	fi
-
 	local PYTHONDONTWRITEBYTECODE
 	export PYTHONDONTWRITEBYTECODE
 

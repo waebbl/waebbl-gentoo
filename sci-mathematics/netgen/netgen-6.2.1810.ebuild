@@ -37,7 +37,7 @@ RDEPEND="
 	mpi? (
 		>=sci-libs/parmetis-4.0.3:=[mpi?]
 		virtual/mpi[cxx,threads]
-		opencascade? ( >=sci-libs/hdf5-1.10.4:=[mpi] )
+		opencascade? ( >=sci-libs/hdf5-1.10.5:=[mpi] )
 	)
 	opencascade? ( sci-libs/opencascade:7.3.0=[ffmpeg?] )
 "

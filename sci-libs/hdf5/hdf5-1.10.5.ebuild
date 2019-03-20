@@ -19,7 +19,7 @@ SRC_URI="https://support.hdfgroup.org/ftp/HDF5/releases/${MAJOR_P}/${P}/src/CMak
 LICENSE="NCSA-HDF"
 SLOT="0/${PV%%_p*}"
 KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd ~amd64-linux ~x86-linux"
-IUSE="cxx debug examples fortran +hl mpi static-libs szip threads zlib"
+IUSE="cxx debug examples fortran +hl mpi szip threads zlib"
 
 REQUIRED_USE="
 	cxx? ( !mpi ) mpi? ( !cxx )
@@ -102,10 +102,6 @@ src_prepare() {
 			-i "${WORKDIR}/CMake-${P}"/HDF5options.cmake || die
 	fi
 
-	if use static-libs; then
-		echo 'set (ADD_BUILD_OPTIONS "${ADD_BUILD_OPTIONS}" -DBUILD_SHARED_LIBS:BOOL=OFF)' >> "${WORKDIR}/CMake-${P}"/HDF5options.cmake || die
-	fi
-
 	sed \
 		-e 's|/usr/lib|/usr/'$(get_libdir)'|' \
 		-i "${WORKDIR}/CMake-${P}"/HDF5options.cmake || die
@@ -120,8 +116,12 @@ src_install() {
 	# hack as their cmake routines don't respect passed arguments
 	mv "${ED}"/usr/lib "${ED}"/usr/$(get_libdir) || die
 
-	use static-libs || (rm -f "${ED}"/usr/$(get_libdir)/*.a || die)
-
 	# twice installed, they're already in /usr/share/doc/${PF}
 	rm -f "${ED}"/usr/share/{COPYING,RELEASE.txt,USING_HDF5_CMake.txt} || die
+
+	# doesn't get generated properly
+	if use mpi; then
+		sed -e 's|_ENABLE_PARALLEL OFF|_ENABLE_PARALLEL ON|' \
+		-i "${ED}"/usr/share/cmake/hdf5/hdf5-config.cmake || die
+	fi
 }

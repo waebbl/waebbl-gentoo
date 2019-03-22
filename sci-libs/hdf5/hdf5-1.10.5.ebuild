@@ -1,25 +1,26 @@
 # Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=5
 
-# FIXME: add java support (java? ( !mpi )
-# FIXME: add test USE flag
+# FIXME: add java support
 
 FORTRAN_NEEDED=fortran
+AUTOTOOLS_AUTORECONF=1
 
-inherit cmake-utils fortran-2 multilib multiprocessing prefix toolchain-funcs
+inherit autotools-utils eapi7-ver fortran-2 flag-o-matic multilib prefix toolchain-funcs
 
+MY_P=${PN}-${PV/_p/-patch}
 MAJOR_P=${PN}-$(ver_cut 1-2 ${PV})
 
 DESCRIPTION="General purpose library and file format for storing scientific data"
-HOMEPAGE="https://www.hdfgroup.org/HDF5/"
-SRC_URI="https://support.hdfgroup.org/ftp/HDF5/releases/${MAJOR_P}/${P}/src/CMake-${P}.tar.gz -> ${P}.tar.gz"
+HOMEPAGE="http://www.hdfgroup.org/HDF5/"
+SRC_URI="http://www.hdfgroup.org/ftp/HDF5/releases/${MAJOR_P}/${MY_P}/src/${MY_P}.tar.bz2"
 
 LICENSE="NCSA-HDF"
 SLOT="0/${PV%%_p*}"
 KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd ~amd64-linux ~x86-linux"
-IUSE="cxx debug examples fortran +hl mpi szip threads zlib"
+IUSE="cxx debug examples fortran +hl mpi static-libs szip threads zlib"
 
 REQUIRED_USE="
 	cxx? ( !mpi ) mpi? ( !cxx )
@@ -31,12 +32,13 @@ RDEPEND="
 	zlib? ( sys-libs/zlib:0= )"
 
 DEPEND="${RDEPEND}
-	>=dev-util/cmake-3.10.3"
+	sys-devel/libtool:2
+	>=sys-devel/autoconf-2.69"
 
-S="${WORKDIR}/CMake-${P}/${P}"
+S="${WORKDIR}/${MY_P}"
 
 pkg_setup() {
-#	tc-export CXX CC AR # workaround for bug 285148
+	tc-export CXX CC AR # workaround for bug 285148
 	use fortran && fortran-2_pkg_setup
 
 	if use mpi; then
@@ -45,6 +47,7 @@ pkg_setup() {
 			ewarn "Try to uninstall the current hdf5 prior to enabling mpi support."
 		fi
 		export CC=mpicc
+		export CXX=mpicxx
 		use fortran && export FC=mpif90
 	elif has_version 'sci-libs/hdf5[mpi]'; then
 		ewarn "Installing hdf5 with mpi disabled while having hdf5 installed with mpi enabled may fail."
@@ -53,75 +56,43 @@ pkg_setup() {
 }
 
 src_prepare() {
-	cp "${FILESDIR}"/HDF5options.cmake "${WORKDIR}/CMake-${P}" || die "Failed to copy options file"
-
+	# respect gentoo examples directory
 	sed \
-		-e 's|MAX_PROC_COUNT 8|MAX_PROC_COUNT '$(makeopts_jobs)'|' \
-		-i "${WORKDIR}/CMake-${P}"/HDF5options.cmake || die
-
-	if use fortran; then
-		sed \
-			-e 's|-DHDF5_BUILD_FORTRAN:BOOL=OFF|-DHDF5_BUILD_FORTRAN:BOOL=ON|' \
-			-i "${WORKDIR}/CMake-${P}"/HDF5options.cmake || die
+		-e "s:hdf5_examples:doc/${PF}/examples:g" \
+		-i $(find . -name Makefile.am) $(find . -name "run*.sh.in") || die
+	sed \
+		-e '/docdir/d' \
+		-i config/commence.am || die
+	if ! use examples; then
+		sed -e '/^install:/ s/install-examples//' \
+			-i Makefile.am || die #409091
 	fi
-
-	if use prefix; then
-		sed \
-			-e 's|-DCMAKE_INSTALL_PREFIX:PATH=/usr|-DCMAKE_INSTALL_PREFIX:PATH='${EPREFIX}'/usr|' \
-			-i "${WORKDIR}/CMake-${P}"/HDF5options.cmake || die
-	fi
-
-	if use zlib; then
-		sed \
-			-e 's|-DHDF5_ENABLE_Z_LIB_SUPPORT:BOOL=OFF|-DHDF5_ENABLE_Z_LIB_SUPPORT:BOOL=ON|' \
-			-i "${WORKDIR}/CMake-${P}"/HDF5options.cmake || die
-	fi
-
-	if use szip; then
-		sed \
-			-e 's|-DHDF5_ENABLE_SZIP_SUPPORT:BOOL=OFF|-DHDF5_ENABLE_SZIP_SUPPORT:BOOL=ON|' \
-			-e 's|-DHDF5_ENABLE_SZIP_ENCODING:BOOL=OFF|-DHDF5_ENABLE_SZIP_ENCODING:BOOL=ON|' \
-			-i "${WORKDIR}/CMake-${P}"/HDF5options.cmake || die
-	fi
-
+	# enable shared libs by default for h5cc config utility
+	sed -i -e "s/SHLIB:-no/SHLIB:-yes/g" tools/src/misc/h5cc.in || die
+	hprefixify m4/libtool.m4
+	autotools-utils_src_prepare
 	if use mpi; then
-		sed \
-			-e 's|-DHDF5_ENABLE_PARALLEL:BOOL=OFF|-DHDF5_ENABLE_PARALLEL:BOOL=ON|' \
-			-i "${WORKDIR}/CMake-${P}"/HDF5options.cmake || die
+		find "${S}" -type f -name Makefile.in | xargs sed -i -e 's|LIBS = @LIBS@|LIBS = @LIBS@ -lmpi_cxx|' || die "sed failed"
+		epatch "${FILESDIR}/${PN}-1.10.4-fix-libhdf5.settings-mpi.patch"
 	fi
-
-	if use cxx; then
-		sed \
-			-e 's|-DHDF5_BUILD_CPP_LIB:BOOL:OFF|-DHDF5_BUILD_CPP_LIB:BOOL=ON|' \
-			-i "${WORKDIR}/CMake-${P}"/HDF5options.cmake || die
-	fi
-
-	if use threads; then
-		sed \
-			-e 's|-DHDF5_ENABLE_THREADSAFE:BOOL=OFF|-DHDF5_ENABLE_THREADSAFE:BOOL=ON|' \
-			-i "${WORKDIR}/CMake-${P}"/HDF5options.cmake || die
-	fi
-
-	sed \
-		-e 's|/usr/lib|/usr/'$(get_libdir)'|' \
-		-i "${WORKDIR}/CMake-${P}"/HDF5options.cmake || die
-
-	cmake-utils_src_prepare
 }
 
-src_install() {
-	local DOCS=( "${S}/release_docs/." )
-	cmake-utils_src_install
-
-	# hack as their cmake routines don't respect passed arguments
-	mv "${ED}"/usr/lib "${ED}"/usr/$(get_libdir) || die
-
-	# twice installed, they're already in /usr/share/doc/${PF}
-	rm -f "${ED}"/usr/share/{COPYING,RELEASE.txt,USING_HDF5_CMake.txt} || die
-
-	# doesn't get generated properly
-	if use mpi; then
-		sed -e 's|_ENABLE_PARALLEL OFF|_ENABLE_PARALLEL ON|' \
-		-i "${ED}"/usr/share/cmake/hdf5/hdf5-config.cmake || die
-	fi
+src_configure() {
+	local myeconfargs=(
+		--docdir="${EPREFIX}"/usr/share/doc/${PF}
+		--enable-deprecated-symbols
+		$(use debug && echo --enable-build-mode=debug || echo --enable-build-mode=production)
+		$(use_enable debug codestack)
+		$(use_enable cxx)
+		$(use_enable fortran)
+		$(use_enable hl)
+		$(use_enable mpi parallel)
+		$(use_enable static-libs static)
+		$(use_enable threads threadsafe)
+		$(use_with szip szlib)
+		$(use_with threads pthread)
+		$(use_with zlib)
+		--with-default-plugindir="${EPREFIX}"/usr/$(get_libdir)/hdf5/plugin
+	)
+	autotools-utils_src_configure
 }

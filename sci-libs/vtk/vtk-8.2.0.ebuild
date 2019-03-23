@@ -114,7 +114,7 @@ DEPEND="${RDEPEND}
 
 PATCHES=(
 	"${FILESDIR}/${P}-libdir.patch"
-	"${FILESDIR}/${PN}-8.1.1-fix-designer-plugin-install-dir.patch"
+	"${FILESDIR}/${P}-fix-designer-plugin-install-dir.patch"
 )
 
 S="${WORKDIR}"/VTK-${PV}

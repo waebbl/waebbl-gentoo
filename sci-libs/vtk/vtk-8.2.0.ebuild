@@ -45,7 +45,9 @@ RDEPEND="
 	dev-libs/expat
 	dev-libs/jsoncpp:=
 	dev-libs/libxml2:2
+	>=dev-libs/pugixml-1.9
 	>=media-libs/freetype-2.5.4
+	media-libs/glew:0=
 	>=media-libs/libharu-2.3.0-r2
 	media-libs/libpng:0=
 	media-libs/libtheora
@@ -131,7 +133,7 @@ pkg_setup() {
 src_prepare() {
 	local x
 	# missing: VPIC freerange sqlite utf8 verdict xmdf2 xmdf3
-	for x in expat freetype hdf5 jpeg jsoncpp libharu libxml2 lz4 mpi4py netcdf png tiff zlib; do
+	for x in expat freetype glew hdf5 jpeg jsoncpp libharu libxml2 lz4 mpi4py netcdf png tiff zlib; do
 		ebegin "Dropping bundled ${x}"
 		rm -r ThirdParty/${x}/vtk${x} || die
 		eend $?
@@ -162,6 +164,7 @@ src_configure() {
 		-DVTK_USE_SYSTEM_FREETYPE=ON
 		# Use bundled gl2ps (bundled version is a patched version of 1.3.9. Post 1.3.9 versions should be compatible)
 		-DVTK_USE_SYSTEM_GL2PS=OFF
+		-DVTK_USE_SYSTEM_GLEW=ON
 		-DVTK_USE_SYSTEM_HDF5=ON
 		-DVTK_USE_SYSTEM_JPEG=ON
 		-DVTK_USE_SYSTEM_LIBXML2=ON

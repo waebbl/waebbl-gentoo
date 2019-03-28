@@ -5,7 +5,7 @@ EAPI=7
 
 PYTHON_COMPAT=( python3_6 )
 
-inherit check-reqs cmake-utils desktop gnome2-utils python-single-r1 xdg-utils
+inherit check-reqs cmake-utils desktop python-single-r1 xdg-utils
 
 MY_PV=$(ver_rs 1 '_')
 
@@ -72,6 +72,7 @@ RDEPEND="
 		dev-libs/libspnav:=
 		dev-python/pyside:2=[gui,svg,${PYTHON_USEDEP}]
 		dev-python/shiboken:2=[${PYTHON_USEDEP}]
+		dev-qt/designer:5=
 		dev-qt/qtconcurrent:5=
 		dev-qt/qtcore:5=
 		dev-qt/qtnetwork:5=
@@ -79,6 +80,7 @@ RDEPEND="
 		dev-qt/qtprintsupport:5=
 		dev-qt/qtsvg:5=
 		dev-qt/qtwebkit:5=
+		dev-qt/qtx11extras:5=
 		dev-qt/qtxml:5=
 		media-libs/coin:=[draggers(+),manipulators(+),nodekits(+),simage]
 	)
@@ -220,7 +222,7 @@ src_install() {
 }
 
 pkg_postinst() {
-	gnome2_icon_cache_update
+	xdg_icon_cache_update
 	xdg_desktop_database_update
 	xdg_mimeinfo_database_update
 }
@@ -228,5 +230,5 @@ pkg_postinst() {
 pkg_postrm() {
 	xdg_mimeinfo_database_update
 	xdg_desktop_database_update
-	gnome2_icon_cache_update
+	xdg_icon_cache_update
 }

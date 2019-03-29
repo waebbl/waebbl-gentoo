@@ -72,7 +72,7 @@ src_prepare() {
 	hprefixify m4/libtool.m4
 	autotools-utils_src_prepare
 	if use mpi; then
-		find "${S}" -type f -name Makefile.in | xargs sed -i -e 's|LIBS = @LIBS@|LIBS = @LIBS@ -lmpi_cxx|' || die "sed failed"
+		find "${S}" -type f -name Makefile.in | xargs sed -i -e 's|LIBS = @LIBS@|LIBS = @LIBS@ -lmpi_cxx -lmpi|' || die "sed failed"
 		epatch "${FILESDIR}/${PN}-1.10.4-fix-libhdf5.settings-mpi.patch"
 	fi
 }

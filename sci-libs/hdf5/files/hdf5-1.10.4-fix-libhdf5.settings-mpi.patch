@@ -7,7 +7,7 @@ index 531cd00..30e8887 100644
                       H5_LDFLAGS: @H5_LDFLAGS@
                       AM_LDFLAGS: @AM_LDFLAGS@
 -                Extra libraries: @LIBS@
-+                Extra libraries: @LIBS@ -lmpi_cxx
++                Extra libraries: @LIBS@ -lmpi_cxx -lmpi
                         Archiver: @AR@
                         AR_FLAGS: @AR_FLAGS@
                           Ranlib: @RANLIB@

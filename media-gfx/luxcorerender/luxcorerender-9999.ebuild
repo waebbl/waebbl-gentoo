@@ -17,7 +17,7 @@ if [[ ${PV} = *9999 ]]; then
 	KEYWORDS=""
 else
 	SRC_URI="https://github.com/LuxCoreRender/LuxCore/archive/${MY_P}.tar.gz -> ${P}.tar.gz"
-	KEYWORDS="~amd64 ~x86"
+	KEYWORDS="~amd64"
 fi
 
 LICENSE="Apache-2.0"
@@ -71,8 +71,6 @@ REQUIRED_USE="
 
 PATCHES=( "${FILESDIR}/${PN}-find-boost.patch" )
 
-#S=${WORKDIR}/LuxCore-${MY_P}
-
 CMAKE_BUILD_TYPE="Release"
 
 pkg_setup() {
@@ -81,10 +79,6 @@ pkg_setup() {
 
 src_prepare() {
 	use openmp && tc-check-openmp
-
-	# fix pyside2-uic name
-	sed -e 's|pyside-uic|pyside2-uic|' -i "${S}"/cmake/Dependencies.cmake || die
-
 	cmake-utils_src_prepare
 }
 
@@ -94,9 +88,6 @@ src_configure() {
 	)
 	cmake-utils_src_configure
 }
-
-#src_compile() {
-#}
 
 src_install() {
 	# Note: upstream currently doesn't provide an install target

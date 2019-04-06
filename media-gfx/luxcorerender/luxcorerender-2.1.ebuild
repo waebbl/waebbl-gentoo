@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Authors
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -17,7 +17,7 @@ if [[ ${PV} = *9999 ]]; then
 	KEYWORDS=""
 else
 	SRC_URI="https://github.com/LuxCoreRender/LuxCore/archive/${MY_P}.tar.gz -> ${P}.tar.gz"
-	KEYWORDS="~amd64 ~x86"
+	KEYWORDS="~amd64"
 fi
 
 LICENSE="Apache-2.0"
@@ -40,6 +40,7 @@ RDEPEND="
 	>=dev-libs/boost-1.65.0:=[python?,${PYTHON_USEDEP},threads(+)]
 	>=dev-python/numpy-1.14.5:=[${PYTHON_USEDEP}]
 	>=media-libs/embree-3.2.4:=[ispc]
+	>=media-libs/oidn-0.8.1:=
 	>=media-libs/freetype-2.9.1-r1:=[X,bzip2]
 	media-libs/libpng:0=[cpu_flags_x86_sse?]
 	>=media-libs/openexr-2.3.0:=
@@ -81,10 +82,6 @@ pkg_setup() {
 
 src_prepare() {
 	use openmp && tc-check-openmp
-
-	# fix pyside2-uic name
-	sed -e 's|pyside-uic|pyside2-uic|' -i "${S}"/cmake/Dependencies.cmake || die
-
 	cmake-utils_src_prepare
 }
 
@@ -94,9 +91,6 @@ src_configure() {
 	)
 	cmake-utils_src_configure
 }
-
-#src_compile() {
-#}
 
 src_install() {
 	# Note: upstream currently doesn't provide an install target

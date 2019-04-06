@@ -54,7 +54,7 @@ RDEPEND="
 	dev-libs/xerces-c:=[icu]
 	dev-python/numpy:=[${PYTHON_USEDEP}]
 	dev-python/pivy:=[${PYTHON_USEDEP}]
-	>=sci-libs/med-fichier-4.0.0:=[fortran,python,${PYTHON_USEDEP}]
+	>=sci-libs/libmed-4.0.0:=[fortran,python,${PYTHON_USEDEP}]
 	sci-libs/orocos_kdl:=
 	sci-libs/opencascade:7.3.0=[vtk(+)]
 	sys-libs/zlib:=

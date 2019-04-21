@@ -5,10 +5,10 @@ EAPI=7
 
 PYTHON_COMPAT=( python3_6 )
 
-inherit check-reqs cmake-utils desktop python-single-r1 xdg-utils
+inherit check-reqs cmake-utils desktop python-single-r1 xdg
 
-MY_PV=$(ver_rs 1 '_')
-
+MY_PV=$(ver_cut 1-2)
+MY_PV=$(ver_rs 1 '_' ${MY_PV})
 DESCRIPTION="QT based Computer Aided Design application"
 HOMEPAGE="https://www.freecadweb.org/"
 SRC_URI="https://github.com/FreeCAD/FreeCAD/archive/${PV}.tar.gz -> ${P}.tar.gz
@@ -221,14 +221,14 @@ src_install() {
 	python_optimize "${ED%/}"/usr/share/${PN}/data/Mod/ "${ED%/}"/usr/$(get_libdir)/${PN}{/Ext,/Mod}/
 }
 
-pkg_postinst() {
-	xdg_icon_cache_update
-	xdg_desktop_database_update
-	xdg_mimeinfo_database_update
-}
+#pkg_postinst() {
+#	xdg_icon_cache_update
+#	xdg_desktop_database_update
+#	xdg_mimeinfo_database_update
+#}
 
-pkg_postrm() {
-	xdg_mimeinfo_database_update
-	xdg_desktop_database_update
-	xdg_icon_cache_update
-}
+#pkg_postrm() {
+#	xdg_mimeinfo_database_update
+#	xdg_desktop_database_update
+#	xdg_icon_cache_update
+#}

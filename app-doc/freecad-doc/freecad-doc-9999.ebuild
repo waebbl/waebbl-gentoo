@@ -18,7 +18,7 @@ IUSE=""
 
 RDEPEND="
 	>=media-libs/coin-4.0.0a_pre20180416:=[doc]
-	>=sci-libs/med-fichier-4.0.0:=
+	>=sci-libs/libmed-4.0.0
 	>=sci-libs/opencascade-7.3.0:=
 	>=virtual/mpi-2.0-r4:=[cxx,threads]
 "

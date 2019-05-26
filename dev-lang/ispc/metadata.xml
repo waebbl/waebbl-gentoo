@@ -5,6 +5,11 @@
 		<email>junghans@gentoo.org</email>
 		<name>Christoph Junghans</name>
 	</maintainer>
+	<use>
+		<flag name="sanitize">
+			Build with address sanitizer instrumentation using clang
+		</flag>
+	</use>
 	<upstream>
 		<remote-id type="github">ispc/ispc</remote-id>
 	</upstream>

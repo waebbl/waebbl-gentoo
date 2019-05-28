@@ -27,16 +27,14 @@ KEYWORDS="~amd64 ~x86 ~amd64-linux ~x86-linux"
 SLOT="0"
 IUSE="
 	all-modules aqua boost doc examples imaging ffmpeg gdal java json kaapi mpi
-	mysql odbc offscreen postgres python qt5 rendering tbb theora tk tcl
+	mysql odbc offscreen postgres python qt5 rendering tbb theora
 	video_cards_nvidia views web R +X xdmf2"
 
 REQUIRED_USE="
 	all-modules? ( python xdmf2 boost )
 	java? ( qt5 )
 	python? ( ${PYTHON_REQUIRED_USE} )
-	tcl? ( rendering )
 	examples? ( python )
-	tk? ( tcl )
 	web? ( python )
 	^^ ( X aqua offscreen )"
 
@@ -96,8 +94,6 @@ RDEPEND="
 	)
 	R? ( dev-lang/R )
 	tbb? ( dev-cpp/tbb )
-	tcl? ( dev-lang/tcl:0= )
-	tk? ( dev-lang/tk:0= )
 	video_cards_nvidia? ( x11-drivers/nvidia-drivers[tools,static-libs] )
 	web? (
 		${WEBAPP_DEPEND}
@@ -187,7 +183,6 @@ src_configure() {
 		-DVTK_Group_Imaging=$(usex imaging)
 		-DVTK_Group_MPI=$(usex mpi)
 		-DVTK_Group_Rendering=$(usex rendering)
-		-DVTK_Group_Tk=$(usex tk)
 		-DVTK_Group_Views=$(usex views)
 		-DVTK_Group_Web=$(usex web)
 		-DVTK_WWW_DIR="${ED%/}/${MY_HTDOCSDIR}"
@@ -267,13 +262,6 @@ src_install() {
 
 	# Stop web page images from being compressed
 	use doc && docompress -x /usr/share/doc/${PF}/doxygen
-
-	if use tcl; then
-		# install Tcl docs
-		docinto vtk_tcl
-		dodoc Wrapping/Tcl/README
-		docinto .
-	fi
 
 	# install examples
 	if use examples; then

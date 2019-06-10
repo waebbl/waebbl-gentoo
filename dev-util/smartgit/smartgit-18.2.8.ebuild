@@ -1,11 +1,10 @@
-# Copyright 1999-2018 Gentoo Authors
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-inherit eapi7-ver eutils java-utils-2
+inherit eutils java-utils-2
 
-#MY_PV="$(replace_all_version_separators _)"
 MY_PV="$(ver_rs 1- '_')"
 MY_P="${PN}-linux-${MY_PV}"
 

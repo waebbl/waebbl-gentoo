@@ -16,6 +16,6 @@
 		<name>Eric Larson</name>
 	</maintainer>
 	<bugs-to>https://github.com/codespell-project/codespell/issues</bugs-to>
-	<remote-id type="github">https://github.com/codespell-project/codespell</remote-id>
+	<remote-id type="github">codespell-project/codespell</remote-id>
 </upstream>
 </pkgmetadata>

@@ -1,12 +1,12 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 PYTHON_COMPAT=( python{3_5,3_6} )
 
 inherit check-reqs cmake-utils xdg-utils flag-o-matic gnome2-utils \
-	pax-utils python-single-r1 toolchain-funcs eapi7-ver
+	pax-utils python-single-r1 toolchain-funcs
 
 DESCRIPTION="3D Creation/Animation/Publishing System"
 HOMEPAGE="http://www.blender.org"
@@ -85,17 +85,20 @@ RDEPEND="${PYTHON_DEPS}
 	sdl? ( media-libs/libsdl2[sound,joystick] )
 	sndfile? ( media-libs/libsndfile )
 	tiff? ( media-libs/tiff:0 )
-	valgrind? ( dev-util/valgrind )"
-
-DEPEND="${RDEPEND}
+	valgrind? ( dev-util/valgrind )
+"
+DEPEND="
+	${RDEPEND}
 	>=dev-cpp/eigen-3.2.8:3
-	virtual/pkgconfig
 	doc? (
 		app-doc/doxygen[-nodot(-),dot(+),latex]
 		dev-python/sphinx[latex]
 	)
-	nls? ( sys-devel/gettext )"
-
+	nls? ( sys-devel/gettext )
+"
+BDEPEND="
+	virtual/pkgconfig
+"
 PATCHES=(
 	"${FILESDIR}/${PN}-fix-install-rules.patch"
 	"${FILESDIR}/${P}-gcc-8.patch"

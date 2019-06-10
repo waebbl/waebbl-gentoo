@@ -1,7 +1,7 @@
 # Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 PYTHON_COMPAT=( python2_7 python3_{5,6} )
 
@@ -27,9 +27,9 @@ DEPEND="
 	${PYTHON_DEPS}
 	dev-libs/libxml2
 	dev-libs/libxslt
-	>=dev-qt/qtcore-${QT_PV}=
-	>=dev-qt/qtxml-${QT_PV}=
-	>=dev-qt/qtxmlpatterns-${QT_PV}=
+	>=dev-qt/qtcore-${QT_PV}
+	>=dev-qt/qtxml-${QT_PV}
+	>=dev-qt/qtxmlpatterns-${QT_PV}
 	>=sys-devel/clang-3.9.1:=
 	numpy? ( dev-python/numpy )
 "
@@ -88,7 +88,7 @@ src_test() {
 src_install() {
 	installation() {
 		cmake-utils_src_install
-		mv "${ED}"usr/$(get_libdir)/pkgconfig/${PN}2{,-${EPYTHON}}.pc || die
+		mv "${ED%/}"/usr/$(get_libdir)/pkgconfig/${PN}2{,-${EPYTHON}}.pc || die
 	}
 	python_foreach_impl installation
 }

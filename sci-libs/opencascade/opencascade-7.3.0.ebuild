@@ -1,13 +1,13 @@
-# Copyright 1999-2018 Gentoo Authors
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 # TODO:
 # check the src files referenced in 51opencascade, i.e. resources and the like
 # check where cmake gets it's '-s' linker flag to avoid pre-stripping (QA)
 
-EAPI=6
+EAPI=7
 
-inherit check-reqs cmake-utils eapi7-ver flag-o-matic java-pkg-opt-2 multilib
+inherit check-reqs cmake-utils flag-o-matic java-pkg-opt-2 multilib
 
 DESCRIPTION="Development platform for CAD/CAE, 3D surface/solid modeling and data exchange"
 HOMEPAGE="https://www.opencascade.com"

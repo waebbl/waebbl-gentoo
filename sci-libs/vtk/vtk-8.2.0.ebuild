@@ -54,7 +54,7 @@ RDEPEND="
 	sci-libs/exodusii
 	sci-libs/hdf5:=
 	sci-libs/netcdf-cxx:3
-	sci-libs/proj[java?]
+	<sci-libs/proj-6[java?]
 	sys-libs/zlib
 	virtual/jpeg:0
 	virtual/opengl

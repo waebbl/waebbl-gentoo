@@ -1,23 +1,32 @@
-# Copyright 1999-2019 Gentoo Authos
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
 CMAKE_IN_SOURCE_BUILD="1"
-PYTHON_COMPAT=( python2_7 python3_{5,6} )
+PYTHON_COMPAT=( python2_7 python3_{5,6,7} )
 
 inherit cmake-utils python-r1 virtualx
 
 DESCRIPTION="PySide development tools (lupdate, rcc, uic)"
 HOMEPAGE="https://wiki.qt.io/PySide2"
-SRC_URI="https://download.qt.io/official_releases/QtForPython/pyside2/PySide2-${PV}-src/pyside-setup-everywhere-src-${PV}.tar.xz"
+
+if [[ ${PV} == *9999 ]]; then
+	inherit git-r3
+	EGIT_REPO_URI="https://code.qt.io/pyside/pyside-tools.git"
+	EGIT_BRANCH="5.9"
+	KEYWORDS=""
+else
+	SRC_URI="https://download.qt.io/official_releases/QtForPython/pyside2/PySide2-${PV}-src/pyside-setup-everywhere-src-${PV}.tar.xz"
+	KEYWORDS="~amd64 ~x86"
+fi
 
 # Although "LICENSE-uic" suggests the "pyside2uic" directory to be dual-licensed
 # under the BSD 3-clause and GPL v2 licenses, this appears to be an oversight;
 # all files in this (and every) directory are licensed only under the GPL v2.
 LICENSE="GPL-2"
 SLOT="2"
-KEYWORDS="~amd64 ~x86"
+
 IUSE="test"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
@@ -29,9 +38,8 @@ RDEPEND="
 	>=dev-python/shiboken-${PV}:${SLOT}[${PYTHON_USEDEP}]
 	dev-qt/qtcore:5
 "
-DEPEND="${RDEPEND}
-	test? ( virtual/pkgconfig )
-"
+DEPEND="${RDEPEND}"
+BDEPEND="test? ( virtual/pkgconfig )"
 
 S=${WORKDIR}/pyside-setup-everywhere-src-${PV}/sources/pyside2-tools
 

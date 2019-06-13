@@ -3,13 +3,23 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python2_7 python3_{5,6} )
+PYTHON_COMPAT=( python2_7 python3_{5,6,7} )
 
 inherit cmake-utils llvm python-r1
 
 DESCRIPTION="Tool for creating Python bindings for C++ libraries"
 HOMEPAGE="https://wiki.qt.io/PySide2"
-SRC_URI="https://download.qt.io/official_releases/QtForPython/pyside2/PySide2-${PV}-src/pyside-setup-everywhere-src-${PV}.tar.xz"
+
+if [[ ${PV} == *9999 ]]; then
+	inherit git-r3
+	EGIT_REPO_URI="https://code.qt.io/pyside/pyside-setup.git"
+	EGIT_BRANCH="5.9"
+	EGIT_SUBMODULES=()
+	KEYWORDS=""
+else
+	SRC_URI="https://download.qt.io/official_releases/QtForPython/pyside2/PySide2-${PV}-src/pyside-setup-everywhere-src-${PV}.tar.xz"
+	KEYWORDS="~amd64 ~x86"
+fi
 
 # The "sources/shiboken2/libshiboken" directory is triple-licensed under the GPL
 # v2, v3+, and LGPL v3. All remaining files are licensed under the GPL v3 with
@@ -17,10 +27,11 @@ SRC_URI="https://download.qt.io/official_releases/QtForPython/pyside2/PySide2-${
 # arbitrarily relicensed. (TODO)
 LICENSE="|| ( GPL-2 GPL-3+ LGPL-3 ) GPL-3"
 SLOT="2"
-KEYWORDS="~amd64 ~x86"
+
 IUSE="numpy test"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
+# Minimum version of Qt required.
 QT_PV="5.9.0:5"
 
 DEPEND="

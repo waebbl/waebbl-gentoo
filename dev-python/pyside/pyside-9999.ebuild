@@ -3,25 +3,34 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python2_7 python3_{5,6} )
+PYTHON_COMPAT=( python2_7 python3_{5,6,7} )
 
-inherit cmake-utils python-r1 virtualx git-r3
+inherit cmake-utils python-r1 virtualx
 
 DESCRIPTION="Python bindings for the Qt framework"
 HOMEPAGE="https://wiki.qt.io/Qt_for_Python"
-EGIT_REPO_URI="https://code.qt.io/pyside/pyside-setup.git"
-EGIT_BRANCH="5.9"
-EGIT_SUBMODULES=()
+
+if [[ ${PV} == *9999 ]]; then
+	inherit git-r3
+	EGIT_REPO_URI="https://code.qt.io/pyside/pyside-setup.git"
+	EGIT_BRANCH="5.9"
+	EGIT_SUBMODULES=()
+	KEYWORDS=""
+else
+	SRC_URI="https://download.qt.io/official_releases/QtForPython/pyside2/PySide2-${PV}-src/${PN}-setup-everywhere-src-${PV}.tar.xz"
+	KEYWORDS="~amd64 ~x86"
+fi
 
 # See "sources/pyside2/PySide2/licensecomment.txt" for licensing details.
 LICENSE="|| ( GPL-2 GPL-3+ LGPL-3 )"
 SLOT="2"
-KEYWORDS=""
 
 # TODO: webkit
 # Essential: core gui widgets printsupport sql network testlib concurrent
 #	x11extras
-# Shouldn't the essential modules be removed from IUSE?
+# Optional: 3d location positioning scxml sensors
+# Shouldn't the essential modules be removed from IUSE? Some optional
+# modules aren't handled yet in IUSE (see above), shouldn't we add them?
 IUSE="3d charts concurrent datavis declarative designer gui help location
 	multimedia network opengl positioning printsupport script scripttools
 	scxml sensors speech sql svg test testlib webchannel webengine
@@ -54,11 +63,12 @@ REQUIRED_USE="
 "
 
 # Minimum version of Qt required.
-QT_PV="5.9.0:5="
+QT_PV="5.9.0:5"
 
+#	webkit? ( dev-qt/qtwebkit:5=[printsupport] )
 DEPEND="
 	${PYTHON_DEPS}
-	>=dev-python/shiboken-${PV}:${SLOT}[${PYTHON_USEDEP}]
+	~dev-python/shiboken-${PV}:${SLOT}[${PYTHON_USEDEP}]
 	>=dev-qt/qtcore-${QT_PV}
 	>=dev-qt/qtxml-${QT_PV}
 	3d? ( >=dev-qt/qt3d-${QT_PV} )
@@ -102,6 +112,8 @@ src_prepare() {
 	cmake-utils_src_prepare
 }
 
+#		-DCMAKE_DISABLE_FIND_PACKAGE_Qt5WebKit=$(usex !webkit)
+#		-DCMAKE_DISABLE_FIND_PACKAGE_Qt5WebKitWidgets=$(usex !webkit)
 src_configure() {
 	# See COLLECT_MODULE_IF_FOUND macros in CMakeLists.txt
 	local mycmakeargs=(

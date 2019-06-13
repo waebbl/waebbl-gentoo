@@ -41,6 +41,8 @@ RDEPEND="
 DEPEND="${RDEPEND}"
 BDEPEND="test? ( virtual/pkgconfig )"
 
+S=${WORKDIR}/pyside-setup-everywhere-src-${PV}/sources/pyside2-tools
+
 src_prepare() {
 	cmake-utils_src_prepare
 

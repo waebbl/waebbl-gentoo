@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{5,6,7} )
+PYTHON_COMPAT=( python2_7 python3_{5,6,7} )
 
 inherit cmake-utils python-r1 virtualx
 
@@ -11,7 +11,7 @@ DESCRIPTION="Python bindings for the Qt framework"
 HOMEPAGE="https://wiki.qt.io/Qt_for_Python"
 
 if [[ ${PV} == *9999 ]]; then
-	inherit git-rc
+	inherit git-r3
 	EGIT_REPO_URI="https://code.qt.io/pyside/pyside-setup.git"
 	EGIT_BRANCH="5.9"
 	EGIT_SUBMODULES=()

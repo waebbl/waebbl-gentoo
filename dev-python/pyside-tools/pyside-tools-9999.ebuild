@@ -4,7 +4,7 @@
 EAPI=7
 
 CMAKE_IN_SOURCE_BUILD="1"
-PYTHON_COMPAT=( python3_{5,6,7} )
+PYTHON_COMPAT=( python2_7 python3_{5,6,7} )
 
 inherit cmake-utils python-r1 virtualx
 

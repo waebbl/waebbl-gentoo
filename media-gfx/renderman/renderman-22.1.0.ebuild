@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Authors
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 # TODO: add amd64 only multilib-support -> package provides no 32-bit
@@ -10,11 +10,11 @@ inherit rpm multilib-minimal
 
 DESCRIPTION="Renderman render engine"
 HOMEPAGE="https://renderman.pixar.com/"
-SRC_URI="RenderMan-InstallerNCR-${PVR}_1891132-linuxRHEL7_gcc48icc170.x86_64.rpm"
+SRC_URI="RenderMan-InstallerNCR-${PV}_1891132-linuxRHEL7_gcc48icc170.x86_64.rpm"
 
 LICENSE="RenderMan-TMPL"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64"
 IUSE="video_cards_nvidia"
 
 RESTRICT="bindist mirror fetch strip"
@@ -24,28 +24,28 @@ DEPEND=""
 # list from ldd output of the RenderManInstaller
 # Qt-5.6.1 is shipped with the installer
 RDEPEND="
-	app-arch/bzip2[${MULTILIB_USEDEP}]
-	app-arch/lz4[${MULTILIB_USEDEP}]
+	app-arch/bzip2:=[${MULTILIB_USEDEP}]
+	app-arch/lz4:=[${MULTILIB_USEDEP}]
 	app-arch/xz-utils[${MULTILIB_USEDEP}]
 	dev-libs/elfutils[${MULTILIB_USEDEP}]
 	dev-libs/expat[${MULTILIB_USEDEP}]
 	dev-libs/libbsd[${MULTILIB_USEDEP}]
-	dev-libs/libffi[${MULTILIB_USEDEP}]
 	dev-libs/libgpg-error[${MULTILIB_USEDEP}]
 	dev-libs/glib[${MULTILIB_USEDEP}]
-	dev-libs/libgcrypt:0[${MULTILIB_USEDEP}]
+	dev-libs/libgcrypt:0=[${MULTILIB_USEDEP}]
 	dev-libs/libpcre[${MULTILIB_USEDEP}]
 	media-gfx/graphite2[${MULTILIB_USEDEP}]
 	media-libs/fontconfig[${MULTILIB_USEDEP}]
 	media-libs/freetype[${MULTILIB_USEDEP}]
-	media-libs/harfbuzz[${MULTILIB_USEDEP}]
-	media-libs/libpng:0[${MULTILIB_USEDEP}]
+	media-libs/harfbuzz:=[${MULTILIB_USEDEP}]
+	media-libs/libpng:0=[${MULTILIB_USEDEP}]
 	media-libs/mesa[${MULTILIB_USEDEP}]
 	sys-apps/dbus[${MULTILIB_USEDEP}]
-	sys-apps/systemd[${MULTILIB_USEDEP}]
+	sys-apps/systemd:=[${MULTILIB_USEDEP}]
 	sys-apps/util-linux[${MULTILIB_USEDEP}]
 	sys-libs/libcap[${MULTILIB_USEDEP}]
 	sys-libs/zlib[${MULTILIB_USEDEP}]
+	virtual/libffi[${MULTILIB_USEDEP}]
 	virtual/opengl[${MULTILIB_USEDEP}]
 	x11-libs/libICE[${MULTILIB_USEDEP}]
 	x11-libs/libSM[${MULTILIB_USEDEP}]
@@ -55,8 +55,8 @@ RDEPEND="
 	x11-libs/libXext[${MULTILIB_USEDEP}]
 	x11-libs/libXi[${MULTILIB_USEDEP}]
 	x11-libs/libXrender[${MULTILIB_USEDEP}]
-	x11-libs/libxcb[${MULTILIB_USEDEP}]
-	video_cards_nvidia? ( x11-drivers/nvidia-drivers[${MULTILIB_USEDEP}] )
+	x11-libs/libxcb:=[${MULTILIB_USEDEP}]
+	video_cards_nvidia? ( x11-drivers/nvidia-drivers:=[${MULTILIB_USEDEP}] )
 "
 
 #S=${WORKDIR}/${P}

@@ -18,7 +18,7 @@
 - [ ] [sci-visualization/ifcopenshell](https://github.com/IfcOpenShell/IfcOpenShell) new package: importer, converter and viewer for IFC files used in architecture
 - [ ] [sci-visualization/analysis-situs](https://gitlab.com/ssv/AnalysisSitus) new package: [Homepage](http://analysissitus.org) analyzing models in B-REP representation using the OpenCASCADE kernel -> currently windows only
 - [x] [media-gfx/luxcorerender](https://github.com/LuxCoreRender/LuxCore) new package: supported by freecad. -> initial commit done
-- [ ] [media-libs/opencamlib](https://github.com/aewallin/opencamlib) new package: supported by freecad.
+- [x] [media-libs/opencamlib](https://github.com/aewallin/opencamlib) new package: supported by freecad.
 - [ ] [sci-mathematics/fenics](https://bitbucket.org/fenics-project) new package: supported by freecad.
 - [ ] [media-gfx/odafileconverter](https://www.opendesign.com/guestfiles/oda_file_converter) new package: for DWG file import/export support in freecad (binary package)
 - [ ] [media-gfx/shipcad](https://github.com/gpgreen/ShipCAD): new package: CAD software for ship construction

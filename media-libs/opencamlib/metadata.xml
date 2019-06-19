@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<maintainer type="person">
+	<email>waebbl@gmail.com</email>
+	<name>Bernd Waibel</name>
+</maintainer>
+<longdescription>
+	OpenCAMLib (ocl) is a C++ library with python bindings to create 3D
+	toolpaths for CNC machines;
+</longdescription>
+<!--
+<use>
+	<flag name="nodejs">
+		Build the nodejslib component
+	</flag>
+</use>
+-->
+<upstream>
+	<remote-id type="github">aewallin/opencamlib</remote-id>
+</upstream>
+</pkgmetadata>

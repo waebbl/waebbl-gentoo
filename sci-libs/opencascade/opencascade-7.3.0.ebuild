@@ -26,32 +26,35 @@ REQUIRED_USE="
 
 RDEPEND="
 	app-eselect/eselect-opencascade
-	dev-cpp/eigen:=
+	dev-cpp/eigen
 	dev-lang/tcl:0=
 	dev-lang/tk:0=
-	dev-tcltk/itcl:=
-	dev-tcltk/itk:=
-	dev-tcltk/tix:=
-	media-libs/freetype:2=
-	media-libs/ftgl:=
-	virtual/glu:=
-	virtual/opengl:=
-	x11-libs/libXmu:=
-	ffmpeg? ( virtual/ffmpeg:= )
-	freeimage? ( media-libs/freeimage:= )
-	gl2ps? ( x11-libs/gl2ps:= )
-	java? ( >=virtual/jdk-0:= )
+	dev-tcltk/itcl
+	dev-tcltk/itk
+	dev-tcltk/tix
+	media-libs/freetype:2
+	media-libs/ftgl
+	virtual/glu
+	virtual/opengl
+	x11-libs/libXmu
+	ffmpeg? ( virtual/ffmpeg )
+	freeimage? ( media-libs/freeimage )
+	gl2ps? ( x11-libs/gl2ps )
+	java? ( virtual/jdk:1.8 )
 	qt5? (
-		dev-qt/qtcore:=
-		dev-qt/qtgui:=
-		dev-qt/qtquickcontrols2:=
-		dev-qt/qtwidgets:=
-		dev-qt/qtxml:=
+		dev-qt/qtcore:5
+		dev-qt/qtgui:5
+		dev-qt/qtquickcontrols2:5
+		dev-qt/qtwidgets:5
+		dev-qt/qtxml:5
 	)
-	tbb? ( dev-cpp/tbb:= )
-	vtk? ( >=sci-libs/vtk-8.1.0:=[rendering] )"
-DEPEND="${RDEPEND}
-	doc? ( app-doc/doxygen )"
+	tbb? ( dev-cpp/tbb )
+	vtk? ( >=sci-libs/vtk-8.1.0[rendering] )
+"
+DEPEND="
+	${RDEPEND}
+	doc? ( app-doc/doxygen )
+"
 
 # https://bugs.gentoo.org/show_bug.cgi?id=352435
 # https://www.gentoo.org/foundation/en/minutes/2011/20110220_trustees.meeting_log.txt
@@ -110,7 +113,7 @@ src_configure() {
 	cmake-utils_src_configure
 
 	# prepare /etc/env.d file
-	sed -e 's|VAR_CASROOT|'${EROOT}'usr/'$(get_libdir)'/'${P}'/ros|g' < "${FILESDIR}/${PN}.env.in" >> "${T}/${PV}" || die
+	sed -e 's|VAR_CASROOT|'${EROOT%/}'/usr/'$(get_libdir)'/'${P}'/ros|g' < "${FILESDIR}/${PN}.env.in" >> "${T}/${PV}" || die
 	sed -i -e 's|ros/lib|ros/'$(get_libdir)'|' "${T}/${PV}" || die
 
 	# use TBB for memory allocation optimizations?
@@ -132,9 +135,9 @@ src_install() {
 	doins "${T}/${PV}"
 
 	# remove examples
-	use examples || (rm -rf "${ED}/usr/$(get_libdir)/${P}/ros/share/${PN}/samples" || die)
-	use java || (rm -rf "${ED}/usr/$(get_libdir)/${P}/ros/share/${PN}/samples/java" || die)
-	use qt5 || (rm -rf "${ED}/usr/$(get_libdir)/${P}/ros/share/${PN}/samples/qt" || die)
+	use examples || (rm -r "${ED}/usr/$(get_libdir)/${P}/ros/share/${PN}/samples" || die)
+	use java || (rm -r "${ED}/usr/$(get_libdir)/${P}/ros/share/${PN}/samples/java" || die)
+	use qt5 || (rm -r "${ED}/usr/$(get_libdir)/${P}/ros/share/${PN}/samples/qt" || die)
 }
 
 pkg_postinst() {

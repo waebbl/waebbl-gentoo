@@ -135,9 +135,9 @@ src_install() {
 	doins "${T}/${PV}"
 
 	# remove examples
-	use examples || (rm -r "${ED}/usr/$(get_libdir)/${P}/ros/share/${PN}/samples" || die)
-	use java || (rm -r "${ED}/usr/$(get_libdir)/${P}/ros/share/${PN}/samples/java" || die)
-	use qt5 || (rm -r "${ED}/usr/$(get_libdir)/${P}/ros/share/${PN}/samples/qt" || die)
+	use examples || (rm -rf "${ED}/usr/$(get_libdir)/${P}/ros/share/${PN}/samples" || die)
+	use java || (rm -rf "${ED}/usr/$(get_libdir)/${P}/ros/share/${PN}/samples/java" || die)
+	use qt5 || (rm -rf "${ED}/usr/$(get_libdir)/${P}/ros/share/${PN}/samples/qt" || die)
 }
 
 pkg_postinst() {

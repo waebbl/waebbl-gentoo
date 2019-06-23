@@ -1,6 +1,8 @@
 # Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
+# This is in currently WIP! It should work though.
+
 EAPI=7
 
 PYTHON_COMPAT=( python3_6 )
@@ -30,14 +32,12 @@ SLOT="0"
 # FIXME:
 #   vr: needs a rift package: does this make sense? Currently they don't have
 #		support for linux. The last linux package dates back to 2015!
-#	netgen: sci-mathematics/netgen: updated version, but FreeCAD doesn't compile
-#		against it, probably due to a needed external smesh with netgen support
 #	smesh: needs a salome-platform package
 #	zipio++: FreeCAD uses quite outdated zipio and doesn't compile against.
 #		new versions. Ebuild is available in overlay.
+# Possible candidates for mpi: hdf5 libmed vtk flann (netcdf, simage)
 
-# looks like netgen needs external smesh compiled with netgen support disabling it for now
-IUSE="debug doc pcl -system-smesh netgen"
+IUSE="debug doc netgen pcl -system-smesh"
 
 FREECAD_EXPERIMENTAL_MODULES="assembly"
 #FREECAD_DEBUG_MODULES="sandbox template"
@@ -62,11 +62,11 @@ unset module
 # unconditionally depend on it
 RDEPEND="
 	${PYTHON_DEPS}
-	dev-cpp/eigen:3
+	>=dev-cpp/eigen-3.3.1:3
 	dev-libs/OpenNI2[opengl(+)]
-	dev-libs/boost:=[python,${PYTHON_USEDEP}]
+	dev-libs/boost:=[python,threads,${PYTHON_USEDEP}]
 	dev-libs/libspnav
-	dev-libs/xerces-c[icu]
+	dev-libs/xerces-c
 	dev-python/matplotlib[${PYTHON_USEDEP}]
 	dev-python/numpy[${PYTHON_USEDEP}]
 	dev-python/pivy[${PYTHON_USEDEP}]
@@ -87,19 +87,22 @@ RDEPEND="
 	media-libs/coin[draggers(+),manipulators(+),nodekits(+),simage]
 	media-libs/freetype
 	media-libs/qhull
-	sci-libs/flann[openmp]
-	>=sci-libs/libmed-4.0.0[fortran,python,${PYTHON_USEDEP}]
-	sci-libs/orocos_kdl
+	sci-libs/flann[mpi,openmp]
+	>=sci-libs/libmed-4.0.0[fortran,mpi,python,${PYTHON_USEDEP}]
+	sci-libs/orocos_kdl:=
 	sci-libs/opencascade:7.3.0[vtk(+)]
-	sys-libs/zlib:=
+	sys-libs/zlib
 	virtual/glu
 	virtual/libusb:1
 	virtual/mpi[cxx,fortran,threads]
 	virtual/opengl
-	mesh? ( sci-libs/hdf5:= )
-	netgen? ( >=sci-mathematics/netgen-6.2.1810[mpi,opencascade,${PYTHON_USEDEP}] )
+	mesh? (
+		dev-util/pybind11[${PYTHON_USEDEP}]
+		sci-libs/hdf5:=[fortran,mpi,zlib]
+	)
+	netgen? ( >=sci-mathematics/netgen-6.2.1810[mpi,python,opencascade,${PYTHON_USEDEP}] )
 	openscad? ( media-gfx/openscad )
-	pcl? ( >=sci-libs/pcl-1.8.1:=[qt5(+),vtk(+)] )
+	pcl? ( >=sci-libs/pcl-1.8.1:=[opengl,openni2(+),qt5(+),vtk(+)] )
 "
 DEPEND="${RDEPEND}"
 BDEPEND="
@@ -108,13 +111,19 @@ BDEPEND="
 "
 
 # To get required dependencies: 'grep REQUIRES_MODS CMakeLists.txt'
+# We set the following requirements by default:
+# draft, import, part, plot, qt5, sketcher, start, web.
+#
+# Additionally if mesh is set, we auto-enable mesh_part, flat_mesh and smesh
 REQUIRED_USE="
 	${PYTHON_REQUIRED_USE}
 	arch? ( mesh )
+	debug? ( mesh )
 	drawing? ( spreadsheet )
 	inspection? ( mesh points )
-	path? ( mesh robot )
-	reverseengineering? ( mesh points )
+	netgen? ( fem )
+	path? ( robot )
+	reverseengineering? ( mesh )
 	ship? ( image )
 	techdraw? ( spreadsheet drawing )
 "
@@ -126,8 +135,8 @@ DOCS=( README.md ChangeLog.txt )
 # FIXME: Check the find-Coin.tag patch after updates of media-libs/coin
 PATCHES=(
 	"${FILESDIR}/smesh-pthread.patch"
-	"${FILESDIR}/freecad-ModPath-find-boost_python.patch"
 	"${FILESDIR}/${PN}-9999-find-Coin.tag.patch"
+	"${FILESDIR}/${P}-Fix-to-find-boost_python.patch"
 )
 
 CHECKREQS_DISK_BUILD="6G"
@@ -192,9 +201,12 @@ src_configure() {
 		-DCMAKE_INSTALL_DOCDIR=/usr/share/doc/${PF}
 		-DCMAKE_INSTALL_INCLUDEDIR=/usr/include/${PN}
 		-DCMAKE_INSTALL_PREFIX=/usr/$(get_libdir)/${PN}
-		-DFREECAD_USE_EXTERNAL_SMESH=0
+		-DFREECAD_USE_EXTERNAL_SMESH=OFF
 		-DFREECAD_USE_EXTERNAL_KDL=ON
+		-DFREECAD_USE_EXTERNAL_ZIPIOS=OFF # doesn't work yet, also no package in gentoo tree
+		-DFREECAD_USE_FREETYPE=ON
 		-DFREECAD_USE_PCL=$(usex pcl)
+		-DFREECAD_USE_PYBIND11=$(usex mesh)
 		# opencascade-7.3.0 sets CASROOT in /etc/env.d/51opencascade
 		-DOCC_INCLUDE_DIR="${CASROOT}"/include/opencascade
 		-DOCC_LIBRARY_DIR="${CASROOT}"/$(get_libdir)

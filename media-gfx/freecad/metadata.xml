@@ -26,15 +26,9 @@
 			Build the drawing module and workbench to display 3D work on a 
 			2D sheet
 		</flag>
-		<flag name="eigen">
-			Enables support for <pkg>dev-cpp/eigen</pkg>
-		</flag>
 		<flag name="fem">
 			Build the FEM module and workbench which provides Finite Element 
 			Analysis (FEA) workflows
-		</flag>
-		<flag name="freetype">
-			Enables support for freetype needed by part of part module
 		</flag>
 		<flag name="idf">
 			Build the IDF module to provide file exchange capabilities with
@@ -48,11 +42,6 @@
 			Build the inspection workbench which gives you specific tools
 			for examination of shapes (experimental)
 		</flag>
-		<!-- subdir and code has been removed upstream, option is still in CMakeLists.txt
-		<flag name="jtreader">
-			Build the JT reader module
-		</flag>
-		-->
 		<flag name="material">
 			Build the material module and workbench to work with materials
 		</flag>
@@ -78,12 +67,6 @@
 		<flag name="pcl">
 			Use external <pkg>sci-libs/pcl</pkg> for point clouds support.
 		</flag>
-		<!--
-		<flag name="plot">
-			Build the plot module and workbench to edit and save output plots 
-			created from others modules and tools
-		</flag>
-		-->
 		<flag name="points">
 			Build the points module and workbench for working with point clouds
 		</flag>
@@ -115,9 +98,6 @@
 		<flag name="system-smesh">
 			<!-- FIXME: remove this until we can build it external? -->
 			Use system-provided smesh (not implemented)
-		</flag>
-		<flag name="swig">
-			Enables SWIG binding for pivy
 		</flag>
 		<flag name="techdraw">
 			Build the techdraw module and workbench, a more advanced and 
@@ -158,6 +138,6 @@ template - Build the template module (only for testing / debugging)
 test - Build the test framework module and workbench used for debugging
 
 disabled: The Occulus SDK development for linux seems to be stalled. 
-As long there no stable means to add a package for it, we disable the use of vr.
+As long as there is no stable means to add a package for it, we disable the use of vr.
 vr - Build the VR module and workbench which provides Occulus Rift support (needs Occulus SDK 4.x or higher)
 -->

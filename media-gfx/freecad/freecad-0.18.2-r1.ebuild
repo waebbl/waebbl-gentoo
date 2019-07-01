@@ -37,7 +37,7 @@ SLOT="0"
 #		new versions. Ebuild is available in overlay.
 # Possible candidates for mpi: hdf5 libmed vtk flann (netcdf, simage)
 
-IUSE="debug doc netgen pcl -system-smesh"
+IUSE="debug doc mpi netgen pcl"
 
 FREECAD_EXPERIMENTAL_MODULES="assembly"
 #FREECAD_DEBUG_MODULES="sandbox template"
@@ -87,20 +87,22 @@ RDEPEND="
 	media-libs/coin[draggers(+),manipulators(+),nodekits(+),simage]
 	media-libs/freetype
 	media-libs/qhull
-	sci-libs/flann[mpi,openmp]
-	>=sci-libs/libmed-4.0.0[fortran,mpi,python,${PYTHON_USEDEP}]
+	sci-libs/flann[mpi?,openmp]
+	>=sci-libs/libmed-4.0.0[fortran,mpi?,python,${PYTHON_USEDEP}]
 	sci-libs/orocos_kdl:=
 	sci-libs/opencascade:7.3.0[vtk(+)]
 	sys-libs/zlib
 	virtual/glu
 	virtual/libusb:1
-	virtual/mpi[cxx,fortran,threads]
 	virtual/opengl
 	mesh? (
 		dev-util/pybind11[${PYTHON_USEDEP}]
-		sci-libs/hdf5:=[fortran,mpi,zlib]
+		sci-libs/hdf5:=[fortran,mpi?,zlib]
 	)
-	netgen? ( >=sci-mathematics/netgen-6.2.1810[mpi,python,opencascade,${PYTHON_USEDEP}] )
+	mpi? (
+		virtual/mpi[cxx,fortran,threads]
+	)
+	netgen? ( >=sci-mathematics/netgen-6.2.1810[mpi?,python,opencascade,${PYTHON_USEDEP}] )
 	openscad? ( media-gfx/openscad )
 	pcl? ( >=sci-libs/pcl-1.8.1:=[opengl,openni2(+),qt5(+),vtk(+)] )
 "
@@ -210,7 +212,6 @@ src_configure() {
 		# opencascade-7.3.0 sets CASROOT in /etc/env.d/51opencascade
 		-DOCC_INCLUDE_DIR="${CASROOT}"/include/opencascade
 		-DOCC_LIBRARY_DIR="${CASROOT}"/$(get_libdir)
-		-DOPENMPI_INCLUDE_DIRS=/usr/include/
 	)
 
 	if use debug; then
@@ -229,10 +230,15 @@ src_configure() {
 
 # NOTE: using mpi wrappers currently produces insecure runpaths in smesh
 #		libraries.
-	export CC=mpicc
-	export CXX=mpicxx
-	export FC=mpif77
-	export F77=mpif77
+	if use mpi; then
+		mycmakeargs+=(
+			-DOPENMPI_INCLUDE_DIRS=/usr/include/
+		)
+		export CC=mpicc
+		export CXX=mpicxx
+		export FC=mpif77
+		export F77=mpif77
+	fi
 
 	cmake-utils_src_configure
 }

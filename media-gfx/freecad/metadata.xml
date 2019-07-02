@@ -95,10 +95,11 @@
 		<flag name="surface">
 			Build the surface module and workbench
 		</flag>
+		<!-- FIXME: comment this until we can build it external?
 		<flag name="system-smesh">
-			<!-- FIXME: remove this until we can build it external? -->
 			Use system-provided smesh (not implemented)
 		</flag>
+		-->
 		<flag name="techdraw">
 			Build the techdraw module and workbench, a more advanced and 
 			feature-rich successor of the drawing workbench

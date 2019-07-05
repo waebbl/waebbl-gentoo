@@ -64,7 +64,7 @@ RDEPEND="
 	${PYTHON_DEPS}
 	>=dev-cpp/eigen-3.3.1:3
 	dev-libs/OpenNI2[opengl(+)]
-	dev-libs/boost:=[python,threads,${PYTHON_USEDEP}]
+	dev-libs/boost:=[mpi?,python,threads,${PYTHON_USEDEP}]
 	dev-libs/libspnav
 	dev-libs/xerces-c
 	dev-python/matplotlib[${PYTHON_USEDEP}]
@@ -143,7 +143,7 @@ PATCHES=(
 
 CHECKREQS_DISK_BUILD="6G"
 
-S="${WORKDIR}/FreeCAD-${PV}"
+[[ ${PV} == *9999 ]] && S="${WORKDIR}/freecad-${PV}" || S="${WORKDIR}/FreeCAD-${PV}"
 
 pkg_setup() {
 	check-reqs_pkg_setup
@@ -271,10 +271,11 @@ src_install() {
 	rm "${ED}"/usr/share/${PN}/data/${PN}.xpm || die
 
 	if use doc; then
-		cp -r "${WORKDIR}/FreeCAD 0_18 Quick Reference Guide" "${ED}/usr/share/doc/${PF}" || die
+		[[ ${PV} == *9999 ]] && einfo "Docs are not downloaded for ${PV}" \
+			|| (cp -r "${WORKDIR}/FreeCAD 0_18 Quick Reference Guide" "${ED}/usr/share/doc/${PF}" || die)
 	fi
 
-	python_optimize "${ED%/}"/usr/share/${PN}/data/Mod/ "${ED%/}"/usr/$(get_libdir)/${PN}{/Ext,/Mod}/
+	python_optimize "${ED}"/usr/share/${PN}/data/Mod/ "${ED}"/usr/$(get_libdir)/${PN}{/Ext,/Mod}/
 }
 
 #pkg_postinst() {

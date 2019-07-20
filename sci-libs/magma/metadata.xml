@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<maintainer type="person">
+	<email>waebbl@gmail.com</email>
+	<name>Bernd Waibel</name>
+</maintainer>
+<longdescription lang="en">
+The Matrix Algebra on GPU and Multicore Architecture project aims to
+develop a dense linear algebra library similar to LAPACK but for
+heterogeneous/hybrid architectures, starting with current
+"Multicore+GPU" systems.
+</longdescription>
+<use>
+	<flag name="kepler">Compile for GPU NVIDIA Kepler family (sm_3x)</flag>
+	<flag name="maxwell">Compile for GPU NVIDIA Maxwell family (sm_5x)</flag>
+	<flag name="pascal">Compile for GPU NVIDIA Pascal family (sm_6x)</flag>
+	<flag name="sparse">Additionally build the sparse matrix library</flag>
+	<flag name="volta">Compile for GPU NVIDIA Volta family (sm_7x)</flag>
+</use>
+</pkgmetadata>

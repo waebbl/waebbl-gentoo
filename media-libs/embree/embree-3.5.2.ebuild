@@ -124,11 +124,5 @@ src_configure() {
 src_install() {
 	cmake-utils_src_install
 
-	rm -rf "${ED}"/usr/share/doc/embree3 || die
-
-	# FIXME: solve this hack and patch the makefiles to do it
-	mkdir -p "${ED}"/usr/share/${PN}3 || die
-	mv "${ED}"/usr/bin/${PN}3/models "${ED}"/usr/share/${PN}3 || die
-
 	doenvd "${FILESDIR}"/99${PN}
 }

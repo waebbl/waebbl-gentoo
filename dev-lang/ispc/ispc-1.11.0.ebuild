@@ -5,7 +5,7 @@ EAPI=7
 
 PYTHON_COMPAT=( python2_7 )
 
-inherit cmake-utils python-any-r1
+inherit cmake-utils llvm python-any-r1
 
 DESCRIPTION="Intel SPMD Program Compiler"
 HOMEPAGE="https://ispc.github.com/"
@@ -33,22 +33,25 @@ RESTRICT="test"
 RDEPEND="
 	sys-devel/clang:=[llvm_targets_AArch64=,llvm_targets_ARM=]
 	sys-libs/ncurses:0=
-	sys-libs/zlib:=
+	sys-libs/zlib
+	doc? ( media-fonts/freefont )
 "
 DEPEND="
 	${RDEPEND}
 	${PYTHON_DEPS}
-	doc? (
-		app-doc/doxygen[dot(+)]
-		media-fonts/freefont
-	)
 "
 BDEPEND="
 	sys-devel/bison
 	sys-devel/flex
+	sys-devel/m4
+	doc? ( app-doc/doxygen[dot(+)] )
 "
 
 DOCS=( README.md "${S}"/docs/{ReleaseNotes.txt,faq.rst,ispc.rst,news.rst,perf.rst,perfguide.rst} )
+
+llvm_check_deps() {
+	has_version -d "sys-devel/clang:${LLVM_SLOT}[llvm_targets_AArch64=,llvm_targets_ARM=]"
+}
 
 src_prepare() {
 	# drop -Werror
@@ -69,7 +72,7 @@ src_configure() {
 		-DISPC_INCLUDE_EXAMPLES=OFF
 		-DISPC_INCLUDE_TESTS=$(usex test)
 		-DISPC_INCLUDE_UTILS=ON
-		-DISPC_NO_DUMPS=OFF
+		-DISPC_NO_DUMPS=ON # OFF needs llvm/clang with USE=debug
 		-DISPC_PREPARE_PACKAGE=OFF
 		-DISPC_STATIC_STDCXX_LINK=OFF
 		-DISPC_STATIC_LINK=OFF

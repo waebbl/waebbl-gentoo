@@ -15,11 +15,11 @@ SPV="$(ver_cut 1-2)"
 DESCRIPTION="The Visualization Toolkit"
 HOMEPAGE="https://www.vtk.org/"
 SRC_URI="
-	https://www.vtk.org/files/release/${SPV}/VTK-${PV}.tar.gz
-	doc? ( https://www.vtk.org/files/release/${SPV}/vtkDocHtml-${PV}.tar.gz )
+	https://vtk.org/files/release/${SPV}/VTK-${PV}.tar.gz
+	doc? ( https://vtk.org/files/release/${SPV}/vtkDocHtml-${PV}.tar.gz )
 	examples? (
-		https://www.vtk.org/files/release/${SPV}/VTKData-${PV}.tar.gz
-		https://www.vtk.org/files/release/${SPV}/VTKLargeData-${PV}.tar.gz
+		https://vtk.org/files/release/${SPV}/VTKData-${PV}.tar.gz
+		https://vtk.org/files/release/${SPV}/VTKLargeData-${PV}.tar.gz
 	)"
 
 LICENSE="BSD LGPL-2"

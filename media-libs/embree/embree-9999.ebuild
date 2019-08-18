@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Authors
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -25,23 +25,24 @@ SLOT="0"
 #)
 #CPU_FLAGS=( ${X86_CPU_FLAGS[@]/#/cpu_flags_x86_} )
 
-IUSE="clang ispc +tbb tutorial" # ${CPU_FLAGS[@]%:*}
+IUSE="clang ispc raymask +tbb tutorial static-libs" # ${CPU_FLAGS[@]%:*}
+
+REQUIRED_USE="clang? ( !tutorial )"
 
 RDEPEND="
-	>=media-libs/glfw-3.2.1:=
+	>=media-libs/glfw-3.2.1
 	virtual/opengl
-	ispc? ( dev-lang/ispc:= )
-	tbb? ( dev-cpp/tbb:= )
+	ispc? ( dev-lang/ispc )
+	tbb? ( dev-cpp/tbb )
 	tutorial? (
 		>=media-libs/libpng-1.6.34:0=
-		>=media-libs/openimageio-1.8.7:=
+		>=media-libs/openimageio-1.8.7
 		virtual/jpeg:0
 	)
 "
 
-DEPEND="
-	${RDEPEND}
-	>=dev-util/cmake-3.9.6
+DEPEND="${RDEPEND}"
+BDEPEND="
 	virtual/pkgconfig
 	clang? ( sys-devel/clang )
 "
@@ -60,20 +61,6 @@ src_prepare() {
 #	sed -e 's|-O3|-O2|' -i "${S}"/common/cmake/{clang,gnu,intel,ispc}.cmake || die
 }
 
-# FIXME: not used yet
-#	EMBREE_STACK_PROTECTOR: off by default; should we use a USE flag to
-#		enable this? Could have an impact on performance
-#	EMBREE_STATIC_LIB: off by default; do we really want this?
-#	EMBREE_IGNORE_IVALID_RAYS: off by default; make code robust against
-#		the risk of full-tree traversals caused by invalid rays (e.g. rays
-#		containing INF/NaN origins). Could have an impact on performance.
-#
-# Check the AVX512 options!
-#	EMBREE_ISA_AVX512KNL: Enables AVX-512 for Xeon Phi
-#	EMBREE_ISA_AVX512SKX: Enablex AVX-512 for Skylake
-#
-#	EMBREE_CURVE_SELF_INTERSECTION_AVOIDANCE_FACTOR: leave it at 2.0f for now
-#		0.0f disables self intersection avoidance.
 src_configure() {
 	if use clang; then
 		export CC=clang
@@ -85,7 +72,15 @@ src_configure() {
 		filter-ldflags "-Wl,--defsym=__gentoo_check_ldflags__=0"
 	fi
 
-# FIXME: The build currently only works with their own C{,XX}FLAGS,
+# FIXME:
+#	any option with a comment # default at the end of the line is
+#	currently set to use default value. Some of them could probably
+#	be turned into USE flags.
+#
+#	EMBREE_CURVE_SELF_INTERSECTION_AVOIDANCE_FACTOR: leave it at 2.0f for now
+#		0.0f disables self intersection avoidance.
+#
+# The build currently only works with their own C{,XX}FLAGS,
 # not respecting user flags.
 #		-DEMBREE_IGNORE_CMAKE_CXX_FLAGS=OFF
 	local mycmakeargs=(
@@ -93,9 +88,23 @@ src_configure() {
 #		-DCMAKE_C_COMPILER=$(tc-getCC)
 #		-DCMAKE_CXX_COMPILER=$(tc-getCXX)
 		-DCMAKE_SKIP_INSTALL_RPATH:BOOL=ON
-		-DEMBREE_ISA_AVX512KNL=OFF
-		-DEMBREE_ISA_AVX512SKX=OFF
+		-DEMBREE_BACKFACE_CULLING=OFF			# default
+		-DEMBREE_FILTER_FUNCTION=ON				# default
+		-DEMBREE_GEOMETRY_CURVE=ON				# default
+		-DEMBREE_GEOMETRY_GRID=ON				# default
+		-DEMBREE_GEOMETRY_INSTANCE=ON			# default
+		-DEMBREE_GEOMETRY_POINT=ON				# default
+		-DEMBREE_GEOMETRY_QUAD=ON				# default
+		-DEMBREE_GEOMETRY_SUBDIVISION=ON		# default
+		-DEMBREE_GEOMETRY_TRIANGLE=ON			# default
+		-DEMBREE_GEOMETRY_USER=ON				# default
+		-DEMBREE_IGNORE_INVALID_RAYS=OFF		# default
 		-DEMBREE_ISPC_SUPPORT=$(usex ispc)
+		-DEMBREE_RAY_MASK=$(usex raymask)
+		-DEMBREE_RAY_PACKETS=ON					# default
+		-DEMBREE_STACK_PROTECTOR=OFF			# default
+		-DEMBREE_STATIC_LIB=$(usex static-libs)
+		-DEMBREE_STAT_COUNTERS=OFF
 		-DEMBREE_TASKING_SYSTEM:STRING=$(usex tbb "TBB" "INTERNAL")
 		-DEMBREE_TUTORIALS=$(usex tutorial)
 	)
@@ -115,11 +124,11 @@ src_configure() {
 src_install() {
 	cmake-utils_src_install
 
-	rm -rf "${ED}"/usr/share/doc/embree3 || die
+#	rm -rf "${ED}"/usr/share/doc/embree3 || die
 
 	# FIXME: solve this hack and patch the makefiles to do it
-	mkdir -p "${ED}"/usr/share/${PN}3 || die
-	mv "${ED}"/usr/bin/${PN}3/models "${ED}"/usr/share/${PN}3 || die
+#	mkdir -p "${ED}"/usr/share/${PN}3 || die
+#	mv "${ED}"/usr/bin/${PN}3/models "${ED}"/usr/share/${PN}3 || die
 
 	doenvd "${FILESDIR}"/99${PN}
 }

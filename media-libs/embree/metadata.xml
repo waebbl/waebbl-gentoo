@@ -17,6 +17,9 @@ performance of their photo-realistic application.
 	<flag name="ispc">
 		Enables ISPC support for Embree through <pkg>dev-lang/ispc</pkg>
 	</flag>
+	<flag name="raymask">
+		Enable the ray masking feature
+	</flag>
 	<flag name="tbb">
 		Use Intel's threading library <pkg>dev-cpp/tbb</pkg>
 	</flag>

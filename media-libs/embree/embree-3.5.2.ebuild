@@ -25,7 +25,7 @@ SLOT="0"
 #)
 #CPU_FLAGS=( ${X86_CPU_FLAGS[@]/#/cpu_flags_x86_} )
 
-IUSE="clang ispc +tbb tutorial" # ${CPU_FLAGS[@]%:*}
+IUSE="clang ispc raymask +tbb tutorial static-libs" # ${CPU_FLAGS[@]%:*}
 
 REQUIRED_USE="clang? ( !tutorial )"
 
@@ -100,10 +100,10 @@ src_configure() {
 		-DEMBREE_GEOMETRY_USER=ON				# default
 		-DEMBREE_IGNORE_INVALID_RAYS=OFF		# default
 		-DEMBREE_ISPC_SUPPORT=$(usex ispc)
-		-DEMBREE_RAY_MASK=OFF					# default
+		-DEMBREE_RAY_MASK=$(usex raymask)
 		-DEMBREE_RAY_PACKETS=ON					# default
 		-DEMBREE_STACK_PROTECTOR=OFF			# default
-		-DEMBREE_STATIC_LIB=OFF
+		-DEMBREE_STATIC_LIB=$(usex static-libs)
 		-DEMBREE_STAT_COUNTERS=OFF
 		-DEMBREE_TASKING_SYSTEM:STRING=$(usex tbb "TBB" "INTERNAL")
 		-DEMBREE_TUTORIALS=$(usex tutorial)

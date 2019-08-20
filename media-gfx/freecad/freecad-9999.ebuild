@@ -95,6 +95,8 @@ RDEPEND="
 	virtual/glu
 	virtual/libusb:1
 	virtual/opengl
+	addonmgr? ( dev-python/git-python[${PYTHON_USEDEP}] )
+	fem? ( >=sci-libs/vtk-6.1.0-r4[boost,mpi?,python,qt5,rendering,${PYTHON_USEDEP}] )
 	mesh? (
 		dev-util/pybind11[${PYTHON_USEDEP}]
 		sci-libs/hdf5:=[fortran,mpi?,zlib]
@@ -117,13 +119,18 @@ BDEPEND="
 # draft, import, part, plot, qt5, sketcher, start, web.
 #
 # Additionally if mesh is set, we auto-enable mesh_part, flat_mesh and smesh
+# Fem actually needs smesh, but as long as we don't have a smesh package, we enable
+# smesh through the mesh USE flag. Note however, the fem<-smesh dependency isn't
+# reflected by the REQUIRES_MODS macro, but at CMakeLists.txt:308.
 REQUIRED_USE="
 	${PYTHON_REQUIRED_USE}
 	arch? ( mesh )
 	debug? ( mesh )
 	drawing? ( spreadsheet )
+	fem? ( mesh )
 	inspection? ( mesh points )
 	netgen? ( fem )
+	openscad? ( mesh )
 	path? ( robot )
 	reverseengineering? ( mesh )
 	ship? ( image )
@@ -135,10 +142,10 @@ CMAKE_BUILD_TYPE=Release
 DOCS=( README.md ChangeLog.txt )
 
 # FIXME: Check the find-Coin.tag patch after updates of media-libs/coin
+#	"${FILESDIR}/${P}-Fix-to-find-boost_python.patch"
+#	"${FILESDIR}/smesh-pthread.patch"
 PATCHES=(
-	"${FILESDIR}/smesh-pthread.patch"
 	"${FILESDIR}/${PN}-9999-find-Coin.tag.patch"
-	"${FILESDIR}/${PN}-0.18.2-Fix-to-find-boost_python.patch"
 )
 
 CHECKREQS_DISK_BUILD="6G"
@@ -212,6 +219,7 @@ src_configure() {
 		# opencascade-7.3.0 sets CASROOT in /etc/env.d/51opencascade
 		-DOCC_INCLUDE_DIR="${CASROOT}"/include/opencascade
 		-DOCC_LIBRARY_DIR="${CASROOT}"/$(get_libdir)
+		-DOCCT_CMAKE_FALLBACK=ON # don't use occt-config which isn't included in opencascade for Gentoo
 	)
 
 	if use debug; then

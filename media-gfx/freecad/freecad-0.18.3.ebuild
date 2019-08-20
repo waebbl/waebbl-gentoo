@@ -95,6 +95,7 @@ RDEPEND="
 	virtual/glu
 	virtual/libusb:1
 	virtual/opengl
+	addonmgr? ( dev-python/git-python[${PYTHON_USEDEP}] )
 	fem? ( >=sci-libs/vtk-6.1.0-r4[boost,mpi?,python,qt5,rendering,${PYTHON_USEDEP}] )
 	mesh? (
 		dev-util/pybind11[${PYTHON_USEDEP}]

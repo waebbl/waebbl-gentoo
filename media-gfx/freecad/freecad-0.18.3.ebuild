@@ -203,6 +203,7 @@ src_configure() {
 		-DBUILD_START=ON # basic workspace, enable it by default
 		-DBUILD_SURFACE=$(usex surface)
 		-DBUILD_TECHDRAW=$(usex techdraw)
+		-DBUILD_TEST=ON # build the FreeCAD runtime test module. For now we enable this by default!
 		-DBUILD_TUX=$(usex tux)
 		-DBUILD_VR=OFF
 		-DBUILD_WEB=ON # needed by start workspace
@@ -226,13 +227,11 @@ src_configure() {
 		mycmakeargs+=(
 			-DBUILD_SANDBOX=$(usex mesh)	# sandbox needs mesh support
 			-DBUILD_TEMPLATE=ON
-			-DBUILD_TEST=ON
 		)
 	else
 		mycmakeargs+=(
 			-DBUILD_SANDBOX=OFF
 			-DBUILD_TEMPLATE=OFF
-			-DBUILD_TEST=OFF
 		)
 	fi
 

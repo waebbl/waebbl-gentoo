@@ -40,6 +40,8 @@ REQUIRED_USE="
 
 RDEPEND="
 	app-arch/lz4
+	dev-db/sqlite
+	dev-libs/double-conversion:=
 	dev-libs/expat
 	dev-libs/jsoncpp:=
 	dev-libs/libxml2:2

@@ -89,8 +89,8 @@ RDEPEND="
 	media-libs/qhull
 	sci-libs/flann[mpi?,openmp]
 	|| (
-		>=sci-libs/med-4.0.0-r1[fortran,mpi?,python,${PYTHON_USEDEP}]
-		>=sci-libs/libmed-4.0.0[fortran,mpi?,python,${PYTHON_USEDEP}]
+		>=sci-libs/med-4.0.0-r1[mpi(+)?,python,${PYTHON_USEDEP}]
+		>=sci-libs/libmed-4.0.0[mpi?,python,${PYTHON_USEDEP}]
 	)
 	sci-libs/orocos_kdl:=
 	sci-libs/opencascade:7.3.0[vtk(+)]

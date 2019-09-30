@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Authors
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -11,7 +11,7 @@ SRC_URI=""
 
 LICENSE="public-domain mpeg2enc"
 SLOT="0"
-IUSE="debug gif jpeg jpeg2k png qt5 sndfile tiff vorbis"
+IUSE="debug gif jpeg png qt5 sndfile tiff vorbis"
 
 SIMAGE_REPO_URI="https://bitbucket.org/Coin3D/simage"
 CPACK_D_REPO_URI="https://bitbucket.org/ggabbiani/cpack.d"
@@ -20,7 +20,6 @@ EHG_PROJECT="Coin3D"
 RDEPEND="
 	gif? ( media-libs/giflib )
 	jpeg? ( virtual/jpeg:0= )
-	jpeg2k? ( media-libs/jasper )
 	png? ( media-libs/libpng:0= )
 	qt5? (
 		dev-qt/qtcore:5
@@ -69,7 +68,7 @@ src_configure() {
 		-DSIMAGE_XWD_SUPPORT=ON
 		-DUSE_GIF=$(usex gif)
 		-DUSE_JPEG=$(usex jpeg)
-		-DUSE_JPEG2K=$(usex jpeg2k)
+		-DUSE_JPEG2K=OFF	# jasper has been removed from the tree
 		-DUSE_OGGVORBIS=$(usex vorbis)
 		-DUSE_PNG=$(usex png)
 		-DUSE_QT5=ON

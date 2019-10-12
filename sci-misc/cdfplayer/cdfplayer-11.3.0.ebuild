@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Authors
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -40,7 +40,7 @@ RDEPEND="
 	dev-libs/icu
 	x11-libs/libxcb
 	dev-libs/libxml2
-	|| ( sys-libs/ncurses:5/5 sys-libs/ncurses:0/6 )
+	sys-libs/ncurses-compat:5
 	media-libs/freetype
 "
 

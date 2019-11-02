@@ -151,7 +151,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-9999-find-Coin.tag.patch"
 )
 
-CHECKREQS_DISK_BUILD="6G"
+CHECKREQS_DISK_BUILD="6.5G"
 
 [[ ${PV} == *9999 ]] && S="${WORKDIR}/freecad-${PV}" || S="${WORKDIR}/FreeCAD-${PV}"
 
@@ -260,26 +260,9 @@ src_install() {
 	dosym ../$(get_libdir)/${PN}/bin/FreeCAD /usr/bin/freecad
 	dosym ../$(get_libdir)/${PN}/bin/FreeCADCmd /usr/bin/freecadcmd
 
+	mv "${ED}"/usr/$(get_libdir)/freecad/share/* "${ED}"/usr/share || die "failed to move shared resources"
+
 	make_desktop_entry freecad "FreeCAD" "" "" "MimeType=application/x-extension-fcstd;"
-
-	# install mimetype for FreeCAD files
-	insinto /usr/share/mime/packages
-	newins "${FILESDIR}"/${PN}.sharedmimeinfo "${PN}.xml"
-
-	insinto /usr/share/pixmaps
-	newins "${S}"/src/Gui/Icons/${PN}.xpm "${PN}.xpm"
-
-	# install icons to correct place rather than /usr/share/freecad
-	local size
-	for size in 16 32 48 64; do
-		newicon -s ${size} "${S}"/src/Gui/Icons/${PN}-icon-${size}.png ${PN}.png
-	done
-	doicon -s scalable "${S}"/src/Gui/Icons/${PN}.svg
-	newicon -s 64 -c mimetypes "${S}"/src/Gui/Icons/${PN}-doc.png application-x-extension-fcstd.png
-
-	rm "${ED}"/usr/share/${PN}/data/${PN}-{doc,icon-{16,32,48,64}}.png || die
-	rm "${ED}"/usr/share/${PN}/data/${PN}.svg || die
-	rm "${ED}"/usr/share/${PN}/data/${PN}.xpm || die
 
 	if use doc; then
 		[[ ${PV} == *9999 ]] && einfo "Docs are not downloaded for ${PV}" \

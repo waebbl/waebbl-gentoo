@@ -277,9 +277,9 @@ src_install() {
 	doicon -s scalable "${S}"/src/Gui/Icons/${PN}.svg
 	newicon -s 64 -c mimetypes "${S}"/src/Gui/Icons/${PN}-doc.png application-x-extension-fcstd.png
 
-	rm "${ED}"/usr/share/${PN}/data/${PN}-{doc,icon-{16,32,48,64}}.png || die
-	rm "${ED}"/usr/share/${PN}/data/${PN}.svg || die
-	rm "${ED}"/usr/share/${PN}/data/${PN}.xpm || die
+	rm "${ED}"/usr/share/${PN}/data/${PN}-{doc,icon-{16,32,48,64}}.png
+	rm "${ED}"/usr/share/${PN}/data/${PN}.svg
+	rm "${ED}"/usr/share/${PN}/data/${PN}.xpm
 
 	if use doc; then
 		[[ ${PV} == *9999 ]] && einfo "Docs are not downloaded for ${PV}" \

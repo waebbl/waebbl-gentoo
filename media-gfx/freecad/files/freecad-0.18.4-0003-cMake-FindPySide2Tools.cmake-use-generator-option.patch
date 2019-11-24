@@ -1,0 +1,37 @@
+From 127315e04733ff0a8c9c98dc304c1afe9cb9e791 Mon Sep 17 00:00:00 2001
+From: Bernd Waibel <waebbl@gmail.com>
+Date: Mon, 27 Jan 2020 16:49:57 +0100
+Subject: [PATCH] cMake/FindPySide2Tools.cmake: use generator option
+
+Use the "-g python" generator option when calling uic and rcc
+
+Signed-off-by: Bernd Waibel <waebbl@gmail.com>
+---
+ cMake/FindPySide2Tools.cmake | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/cMake/FindPySide2Tools.cmake b/cMake/FindPySide2Tools.cmake
+index 9c97514..f2a2fa2 100644
+--- a/cMake/FindPySide2Tools.cmake
++++ b/cMake/FindPySide2Tools.cmake
+@@ -41,7 +41,7 @@ MACRO(PYSIDE_WRAP_UI outfiles)
+         # pyside2-uic generates in comments at beginning., which is why
+         # we follow the tool command with in-place sed.
+         ADD_CUSTOM_COMMAND(OUTPUT ${outfile}
+-          COMMAND "${PYSIDE2UICBINARY}" "${infile}" -o "${outfile}"
++          COMMAND "${PYSIDE2UICBINARY}" -g "python" "${infile}" -o "${outfile}"
+           COMMAND sed -i "/^# /d" "${outfile}"
+           MAIN_DEPENDENCY "${infile}"
+         )
+@@ -68,7 +68,7 @@ MACRO(PYSIDE_WRAP_RC outfiles)
+         # pyside-rcc generates in comments at beginning, which is why
+         # we follow the tool command with in-place sed.
+         ADD_CUSTOM_COMMAND(OUTPUT "${outfile}"
+-          COMMAND "${PYSIDE2RCCBINARY}" "${infile}" ${PY_ATTRIBUTE} -o "${outfile}"
++          COMMAND "${PYSIDE2RCCBINARY}" -g "python" "${infile}" ${PY_ATTRIBUTE} -o "${outfile}"
+           COMMAND sed -i "/^# /d" "${outfile}"
+           MAIN_DEPENDENCY "${infile}"
+         )
+-- 
+2.25.0
+

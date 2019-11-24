@@ -1,0 +1,429 @@
+From 965fe24e54470488c858bb1c44e03763fa1b5ba6 Mon Sep 17 00:00:00 2001
+From: Bernd Waibel <waebbl@gmail.com>
+Date: Mon, 27 Jan 2020 20:41:45 +0100
+Subject: [PATCH] Fix coin related variables to use new naming from 4.0.0
+
+Signed-off-by: Bernd Waibel <waebbl@gmail.com>
+---
+ CMakeLists.txt                                | 6 +++---
+ src/Doc/CMakeLists.txt                        | 2 +-
+ src/Gui/CMakeLists.txt                        | 6 +++---
+ src/Main/CMakeLists.txt                       | 2 +-
+ src/Mod/Assembly/Gui/CMakeLists.txt           | 2 +-
+ src/Mod/Cam/Gui/CMakeLists.txt                | 2 +-
+ src/Mod/Drawing/Gui/CMakeLists.txt            | 2 +-
+ src/Mod/Fem/Gui/CMakeLists.txt                | 2 +-
+ src/Mod/Image/Gui/CMakeLists.txt              | 2 +-
+ src/Mod/Import/Gui/CMakeLists.txt             | 2 +-
+ src/Mod/Inspection/Gui/CMakeLists.txt         | 2 +-
+ src/Mod/Mesh/Gui/CMakeLists.txt               | 2 +-
+ src/Mod/MeshPart/Gui/CMakeLists.txt           | 2 +-
+ src/Mod/Part/Gui/CMakeLists.txt               | 2 +-
+ src/Mod/PartDesign/Gui/CMakeLists.txt         | 2 +-
+ src/Mod/Path/Gui/CMakeLists.txt               | 2 +-
+ src/Mod/Points/Gui/CMakeLists.txt             | 2 +-
+ src/Mod/Raytracing/Gui/CMakeLists.txt         | 2 +-
+ src/Mod/ReverseEngineering/Gui/CMakeLists.txt | 2 +-
+ src/Mod/Robot/Gui/CMakeLists.txt              | 2 +-
+ src/Mod/Sandbox/Gui/CMakeLists.txt            | 2 +-
+ src/Mod/Sketcher/Gui/CMakeLists.txt           | 2 +-
+ src/Mod/Spreadsheet/Gui/CMakeLists.txt        | 2 +-
+ src/Mod/Start/Gui/CMakeLists.txt              | 2 +-
+ src/Mod/Surface/Gui/CMakeLists.txt            | 2 +-
+ src/Mod/TechDraw/Gui/CMakeLists.txt           | 2 +-
+ src/Mod/Web/Gui/CMakeLists.txt                | 2 +-
+ src/Tools/_TEMPLATE_/Gui/CMakeLists.txt       | 2 +-
+ 28 files changed, 32 insertions(+), 32 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index fe55662..89f9a58 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -935,12 +935,12 @@ endif()
+ 
+ # -------------------------------- Coin3D --------------------------------
+ 
+-        find_package(Coin3D REQUIRED)
+-        if(NOT COIN3D_FOUND)
++        find_package(Coin REQUIRED)
++        if(NOT Coin_FOUND)
+             MESSAGE(FATAL_ERROR "=================\n"
+                                 "Coin3D not found.\n"
+                                 "=================\n")
+-        endif(NOT COIN3D_FOUND)
++        endif(NOT Coin_FOUND)
+ 
+ # ------------------------------ Spaceball -------------------------------
+ 
+diff --git a/src/Doc/CMakeLists.txt b/src/Doc/CMakeLists.txt
+index 5b15d12..fbfcd26 100644
+--- a/src/Doc/CMakeLists.txt
++++ b/src/Doc/CMakeLists.txt
+@@ -52,7 +52,7 @@ if(DOXYGEN_FOUND)
+ 
+     # directory order seems important for correct macro expansion
+     # (files containing macros definitions must be parsed before the files using them)
+-    SET(DOXYGEN_SOURCE_DIR ${COIN3D_INCLUDE_DIRS}/Inventor/fields/SoSubField.h 
++    SET(DOXYGEN_SOURCE_DIR ${Coin_INCLUDE_DIR}/Inventor/fields/SoSubField.h 
+                            ${CMAKE_SOURCE_DIR}/src/CXX 
+                            ${CMAKE_SOURCE_DIR}/src/zipios++ 
+                            ${CMAKE_SOURCE_DIR}/src/3rdParty
+diff --git a/src/Gui/CMakeLists.txt b/src/Gui/CMakeLists.txt
+index 3bd96e0..be1651c 100644
+--- a/src/Gui/CMakeLists.txt
++++ b/src/Gui/CMakeLists.txt
+@@ -40,7 +40,7 @@ include_directories(
+     ${CMAKE_CURRENT_BINARY_DIR}/DAGView
+     ${Boost_INCLUDE_DIRS}
+     ${EIGEN3_INCLUDE_DIR}
+-    ${COIN3D_INCLUDE_DIRS}
++    ${Coin_INCLUDE_DIR}
+     ${PYTHON_INCLUDE_DIRS}
+     ${XercesC_INCLUDE_DIRS}
+     ${ZLIB_INCLUDE_DIR}
+@@ -56,7 +56,7 @@ endif(MSVC)
+ if(MSVC)
+     set(FreeCADGui_LIBS
+          FreeCADApp
+-         ${COIN3D_LIBRARIES}
++         ${Coin_LIBRARIES}
+          ${OPENGL_gl_LIBRARY}
+     )
+ 
+@@ -69,7 +69,7 @@ if(MSVC)
+ else(MSVC)
+     set(FreeCADGui_LIBS
+         FreeCADApp
+-        ${COIN3D_LIBRARIES}
++        ${Coin_LIBRARIES}
+         ${Boost_LIBRARIES}
+         ${OPENGL_gl_LIBRARY}
+         ${3DCONNEXION_LINKFLAGS}
+diff --git a/src/Main/CMakeLists.txt b/src/Main/CMakeLists.txt
+index bebbc5e..9d5231e 100644
+--- a/src/Main/CMakeLists.txt
++++ b/src/Main/CMakeLists.txt
+@@ -4,7 +4,7 @@
+ if(BUILD_GUI)
+     include_directories(
+         ${Boost_INCLUDE_DIRS}
+-        ${COIN3D_INCLUDE_DIRS}
++        ${Coin_INCLUDE_DIR}
+         ${ZLIB_INCLUDE_DIR}
+         ${QT_INCLUDE_DIR}
+         ${PYTHON_INCLUDE_DIRS}
+diff --git a/src/Mod/Assembly/Gui/CMakeLists.txt b/src/Mod/Assembly/Gui/CMakeLists.txt
+index 4f6ee3f..4d24b79 100644
+--- a/src/Mod/Assembly/Gui/CMakeLists.txt
++++ b/src/Mod/Assembly/Gui/CMakeLists.txt
+@@ -14,7 +14,7 @@ include_directories(
+     ${OCC_INCLUDE_DIR}
+     ${QT_INCLUDE_DIR}
+     ${PYTHON_INCLUDE_DIRS}
+-    ${COIN3D_INCLUDE_DIRS}
++    ${Coin_INCLUDE_DIR}
+     ${XercesC_INCLUDE_DIRS}
+     ${EIGEN3_INCLUDE_DIR}
+ )
+diff --git a/src/Mod/Cam/Gui/CMakeLists.txt b/src/Mod/Cam/Gui/CMakeLists.txt
+index 3fd0678..67ff3f9 100644
+--- a/src/Mod/Cam/Gui/CMakeLists.txt
++++ b/src/Mod/Cam/Gui/CMakeLists.txt
+@@ -8,7 +8,7 @@ include_directories(
+     ${CMAKE_BINARY_DIR}/src
+     ${CMAKE_CURRENT_BINARY_DIR}
+     ${Boost_INCLUDE_DIRS}
+-    ${COIN3D_INCLUDE_DIR}
++    ${Coin_INCLUDE_DIR}
+     ${OCC_INCLUDE_DIR}
+     ${PYTHON_INCLUDE_PATH}
+     ${QT_INCLUDE_DIR}
+diff --git a/src/Mod/Drawing/Gui/CMakeLists.txt b/src/Mod/Drawing/Gui/CMakeLists.txt
+index 2b5c83a..cb518f7 100644
+--- a/src/Mod/Drawing/Gui/CMakeLists.txt
++++ b/src/Mod/Drawing/Gui/CMakeLists.txt
+@@ -9,7 +9,7 @@ include_directories(
+     ${CMAKE_SOURCE_DIR}/src
+     ${CMAKE_CURRENT_BINARY_DIR}
+     ${Boost_INCLUDE_DIRS}
+-    ${COIN3D_INCLUDE_DIRS}
++    ${Coin_INCLUDE_DIR}
+     ${PYTHON_INCLUDE_DIRS}
+     ${OCC_INCLUDE_DIR}
+     ${ZLIB_INCLUDE_DIR}
+diff --git a/src/Mod/Fem/Gui/CMakeLists.txt b/src/Mod/Fem/Gui/CMakeLists.txt
+index 135dcbe..23fae19 100755
+--- a/src/Mod/Fem/Gui/CMakeLists.txt
++++ b/src/Mod/Fem/Gui/CMakeLists.txt
+@@ -15,7 +15,7 @@ include_directories(
+     ${CMAKE_SOURCE_DIR}/src
+     ${CMAKE_CURRENT_BINARY_DIR}
+     ${Boost_INCLUDE_DIRS}
+-    ${COIN3D_INCLUDE_DIRS}
++    ${Coin_INCLUDE_DIR}
+     ${ZLIB_INCLUDE_DIR}
+     ${OCC_INCLUDE_DIR}
+     ${PYTHON_INCLUDE_DIRS}
+diff --git a/src/Mod/Image/Gui/CMakeLists.txt b/src/Mod/Image/Gui/CMakeLists.txt
+index 5fd7895..2dad22e 100644
+--- a/src/Mod/Image/Gui/CMakeLists.txt
++++ b/src/Mod/Image/Gui/CMakeLists.txt
+@@ -7,7 +7,7 @@ endif(OPENCV2_FOUND)
+ include_directories(
+     ${CMAKE_CURRENT_BINARY_DIR}
+     ${Boost_INCLUDE_DIRS}
+-    ${COIN3D_INCLUDE_DIRS}
++    ${Coin_INCLUDE_DIR}
+     ${OPENCV2_INCLUDE_DIR}
+     ${ZLIB_INCLUDE_DIR}
+     ${PYTHON_INCLUDE_DIRS}
+diff --git a/src/Mod/Import/Gui/CMakeLists.txt b/src/Mod/Import/Gui/CMakeLists.txt
+index 101c7fa..ddc63de 100644
+--- a/src/Mod/Import/Gui/CMakeLists.txt
++++ b/src/Mod/Import/Gui/CMakeLists.txt
+@@ -10,7 +10,7 @@ include_directories(
+     ${CMAKE_CURRENT_BINARY_DIR}
+     ${Boost_INCLUDE_DIRS}
+     ${OCC_INCLUDE_DIR}
+-    ${COIN3D_INCLUDE_DIRS}
++    ${Coin_INCLUDE_DIR}
+     ${ZLIB_INCLUDE_DIR}
+     ${PYTHON_INCLUDE_DIRS}
+     ${XercesC_INCLUDE_DIRS}
+diff --git a/src/Mod/Inspection/Gui/CMakeLists.txt b/src/Mod/Inspection/Gui/CMakeLists.txt
+index bb1d7f4..ec7913b 100644
+--- a/src/Mod/Inspection/Gui/CMakeLists.txt
++++ b/src/Mod/Inspection/Gui/CMakeLists.txt
+@@ -2,7 +2,7 @@ include_directories(
+     ${CMAKE_SOURCE_DIR}/src
+     ${CMAKE_CURRENT_BINARY_DIR}
+     ${Boost_INCLUDE_DIRS}
+-    ${COIN3D_INCLUDE_DIRS}
++    ${Coin_INCLUDE_DIR}
+     ${PYTHON_INCLUDE_DIRS}
+     ${XercesC_INCLUDE_DIRS}
+     ${ZLIB_INCLUDE_DIR}
+diff --git a/src/Mod/Mesh/Gui/CMakeLists.txt b/src/Mod/Mesh/Gui/CMakeLists.txt
+index f5cd376..fe7f6e0 100644
+--- a/src/Mod/Mesh/Gui/CMakeLists.txt
++++ b/src/Mod/Mesh/Gui/CMakeLists.txt
+@@ -1,7 +1,7 @@
+ include_directories(
+     ${CMAKE_CURRENT_BINARY_DIR}
+     ${Boost_INCLUDE_DIRS}
+-    ${COIN3D_INCLUDE_DIRS}
++    ${Coin_INCLUDE_DIR}
+     ${PYTHON_INCLUDE_DIRS}
+     ${ZLIB_INCLUDE_DIR}
+     ${XercesC_INCLUDE_DIRS}
+diff --git a/src/Mod/MeshPart/Gui/CMakeLists.txt b/src/Mod/MeshPart/Gui/CMakeLists.txt
+index b757744..015ec9d 100644
+--- a/src/Mod/MeshPart/Gui/CMakeLists.txt
++++ b/src/Mod/MeshPart/Gui/CMakeLists.txt
+@@ -18,7 +18,7 @@ include_directories(
+     ${CMAKE_CURRENT_BINARY_DIR}
+     ${Boost_INCLUDE_DIRS}
+     ${OCC_INCLUDE_DIR}
+-    ${COIN3D_INCLUDE_DIRS}
++    ${Coin_INCLUDE_DIR}
+     ${ZLIB_INCLUDE_DIR}
+     ${PYTHON_INCLUDE_DIRS}
+     ${XercesC_INCLUDE_DIRS}
+diff --git a/src/Mod/Part/Gui/CMakeLists.txt b/src/Mod/Part/Gui/CMakeLists.txt
+index 0312b08..6c1253b 100644
+--- a/src/Mod/Part/Gui/CMakeLists.txt
++++ b/src/Mod/Part/Gui/CMakeLists.txt
+@@ -10,7 +10,7 @@ include_directories(
+     ${CMAKE_BINARY_DIR}/src
+     ${CMAKE_CURRENT_BINARY_DIR}
+     ${Boost_INCLUDE_DIRS}
+-    ${COIN3D_INCLUDE_DIRS}
++    ${Coin_INCLUDE_DIR}
+     ${OCC_INCLUDE_DIR}
+     ${PYTHON_INCLUDE_DIRS}
+     ${XercesC_INCLUDE_DIRS}
+diff --git a/src/Mod/PartDesign/Gui/CMakeLists.txt b/src/Mod/PartDesign/Gui/CMakeLists.txt
+index 7896940..f743045 100644
+--- a/src/Mod/PartDesign/Gui/CMakeLists.txt
++++ b/src/Mod/PartDesign/Gui/CMakeLists.txt
+@@ -10,7 +10,7 @@ include_directories(
+     ${CMAKE_CURRENT_BINARY_DIR}
+     ${Boost_INCLUDE_DIRS}
+     ${OCC_INCLUDE_DIR}
+-    ${COIN3D_INCLUDE_DIRS}
++    ${Coin_INCLUDE_DIR}
+     ${ZLIB_INCLUDE_DIR}
+     ${PYTHON_INCLUDE_DIRS}
+     ${XercesC_INCLUDE_DIRS}
+diff --git a/src/Mod/Path/Gui/CMakeLists.txt b/src/Mod/Path/Gui/CMakeLists.txt
+index 21d007e..d80075f 100644
+--- a/src/Mod/Path/Gui/CMakeLists.txt
++++ b/src/Mod/Path/Gui/CMakeLists.txt
+@@ -9,7 +9,7 @@ include_directories(
+     ${CMAKE_SOURCE_DIR}/src
+     ${CMAKE_CURRENT_BINARY_DIR}
+     ${Boost_INCLUDE_DIRS}
+-    ${COIN3D_INCLUDE_DIRS}
++    ${Coin_INCLUDE_DIR}
+     ${ZLIB_INCLUDE_DIR}
+     ${OCC_INCLUDE_DIR}
+     ${EIGEN3_INCLUDE_DIR}
+diff --git a/src/Mod/Points/Gui/CMakeLists.txt b/src/Mod/Points/Gui/CMakeLists.txt
+index 8d37fc2..0a35ca4 100644
+--- a/src/Mod/Points/Gui/CMakeLists.txt
++++ b/src/Mod/Points/Gui/CMakeLists.txt
+@@ -1,7 +1,7 @@
+ include_directories(
+     ${CMAKE_CURRENT_BINARY_DIR}
+     ${Boost_INCLUDE_DIRS}
+-    ${COIN3D_INCLUDE_DIRS}
++    ${Coin_INCLUDE_DIR}
+     ${EIGEN3_INCLUDE_DIR}
+     ${PYTHON_INCLUDE_DIRS}
+     ${ZLIB_INCLUDE_DIR}
+diff --git a/src/Mod/Raytracing/Gui/CMakeLists.txt b/src/Mod/Raytracing/Gui/CMakeLists.txt
+index 7e6c95d..f20fb39 100644
+--- a/src/Mod/Raytracing/Gui/CMakeLists.txt
++++ b/src/Mod/Raytracing/Gui/CMakeLists.txt
+@@ -10,7 +10,7 @@ include_directories(
+     ${CMAKE_BINARY_DIR}/src
+     ${CMAKE_CURRENT_BINARY_DIR}
+     ${Boost_INCLUDE_DIRS}
+-    ${COIN3D_INCLUDE_DIRS}
++    ${Coin_INCLUDE_DIR}
+     ${OCC_INCLUDE_DIR}
+     ${PYTHON_INCLUDE_DIRS}
+     ${ZLIB_INCLUDE_DIR}
+diff --git a/src/Mod/ReverseEngineering/Gui/CMakeLists.txt b/src/Mod/ReverseEngineering/Gui/CMakeLists.txt
+index a8c9948..1fd379c 100644
+--- a/src/Mod/ReverseEngineering/Gui/CMakeLists.txt
++++ b/src/Mod/ReverseEngineering/Gui/CMakeLists.txt
+@@ -10,7 +10,7 @@ include_directories(
+     ${CMAKE_CURRENT_BINARY_DIR}
+     ${Boost_INCLUDE_DIRS}
+     ${OCC_INCLUDE_DIR}
+-    ${COIN3D_INCLUDE_DIRS}
++    ${Coin_INCLUDE_DIR}
+     ${PYTHON_INCLUDE_DIRS}
+     ${ZLIB_INCLUDE_DIR}
+     ${XercesC_INCLUDE_DIRS}
+diff --git a/src/Mod/Robot/Gui/CMakeLists.txt b/src/Mod/Robot/Gui/CMakeLists.txt
+index 7aea7b2..2411f5c 100644
+--- a/src/Mod/Robot/Gui/CMakeLists.txt
++++ b/src/Mod/Robot/Gui/CMakeLists.txt
+@@ -11,7 +11,7 @@ include_directories(
+     ${CMAKE_SOURCE_DIR}/src
+     ${CMAKE_CURRENT_BINARY_DIR}
+     ${Boost_INCLUDE_DIRS}
+-    ${COIN3D_INCLUDE_DIRS}
++    ${Coin_INCLUDE_DIR}
+     ${ZLIB_INCLUDE_DIR}
+     ${OCC_INCLUDE_DIR}
+     ${EIGEN3_INCLUDE_DIR}
+diff --git a/src/Mod/Sandbox/Gui/CMakeLists.txt b/src/Mod/Sandbox/Gui/CMakeLists.txt
+index 67431d3..3ea74d8 100644
+--- a/src/Mod/Sandbox/Gui/CMakeLists.txt
++++ b/src/Mod/Sandbox/Gui/CMakeLists.txt
+@@ -8,7 +8,7 @@ include_directories(
+     ${CMAKE_CURRENT_BINARY_DIR}
+     ${CMAKE_SOURCE_DIR}/src/Gui
+     ${Boost_INCLUDE_DIRS}
+-    ${COIN3D_INCLUDE_DIRS}
++    ${Coin_INCLUDE_DIR}
+     ${OCC_INCLUDE_DIR}
+     ${PYTHON_INCLUDE_DIRS}
+     ${ZLIB_INCLUDE_DIR}
+diff --git a/src/Mod/Sketcher/Gui/CMakeLists.txt b/src/Mod/Sketcher/Gui/CMakeLists.txt
+index 6196a1a..af05e1f 100644
+--- a/src/Mod/Sketcher/Gui/CMakeLists.txt
++++ b/src/Mod/Sketcher/Gui/CMakeLists.txt
+@@ -11,7 +11,7 @@ include_directories(
+     ${CMAKE_CURRENT_BINARY_DIR}
+     ${Boost_INCLUDE_DIRS}
+     ${OCC_INCLUDE_DIR}
+-    ${COIN3D_INCLUDE_DIRS}
++    ${Coin_INCLUDE_DIR}
+     ${PYTHON_INCLUDE_DIRS}
+     ${ZLIB_INCLUDE_DIR}
+     ${XercesC_INCLUDE_DIRS}
+diff --git a/src/Mod/Spreadsheet/Gui/CMakeLists.txt b/src/Mod/Spreadsheet/Gui/CMakeLists.txt
+index 5c6b856..c4803c8 100644
+--- a/src/Mod/Spreadsheet/Gui/CMakeLists.txt
++++ b/src/Mod/Spreadsheet/Gui/CMakeLists.txt
+@@ -2,7 +2,7 @@ include_directories(
+     ${CMAKE_CURRENT_BINARY_DIR}
+     ${CMAKE_CURRENT_SOURCE_DIR}
+     ${Boost_INCLUDE_DIRS}
+-    ${COIN3D_INCLUDE_DIRS}
++    ${Coin_INCLUDE_DIR}
+     ${ZLIB_INCLUDE_DIR}
+     ${PYTHON_INCLUDE_DIRS}
+     ${XercesC_INCLUDE_DIRS}
+diff --git a/src/Mod/Start/Gui/CMakeLists.txt b/src/Mod/Start/Gui/CMakeLists.txt
+index 79a8d34..e56ae5c 100644
+--- a/src/Mod/Start/Gui/CMakeLists.txt
++++ b/src/Mod/Start/Gui/CMakeLists.txt
+@@ -1,7 +1,7 @@
+ include_directories(
+     ${CMAKE_CURRENT_BINARY_DIR}
+     ${Boost_INCLUDE_DIRS}
+-    ${COIN3D_INCLUDE_DIRS}
++    ${Coin_INCLUDE_DIR}
+     ${ZLIB_INCLUDE_DIR}
+     ${PYTHON_INCLUDE_DIRS}
+     ${XercesC_INCLUDE_DIRS}
+diff --git a/src/Mod/Surface/Gui/CMakeLists.txt b/src/Mod/Surface/Gui/CMakeLists.txt
+index 87b1579..3c1aa17 100644
+--- a/src/Mod/Surface/Gui/CMakeLists.txt
++++ b/src/Mod/Surface/Gui/CMakeLists.txt
+@@ -10,7 +10,7 @@ include_directories(
+     ${CMAKE_BINARY_DIR}/src
+     ${CMAKE_CURRENT_BINARY_DIR}
+     ${Boost_INCLUDE_DIRS}
+-    ${COIN3D_INCLUDE_DIRS}
++    ${Coin_INCLUDE_DIR}
+     ${OCC_INCLUDE_DIR}
+     ${PYTHON_INCLUDE_DIRS}
+     ${XercesC_INCLUDE_DIRS}
+diff --git a/src/Mod/TechDraw/Gui/CMakeLists.txt b/src/Mod/TechDraw/Gui/CMakeLists.txt
+index d6d54b3..b5a2d34 100644
+--- a/src/Mod/TechDraw/Gui/CMakeLists.txt
++++ b/src/Mod/TechDraw/Gui/CMakeLists.txt
+@@ -9,7 +9,7 @@ include_directories(
+     ${CMAKE_SOURCE_DIR}/src
+     ${CMAKE_CURRENT_BINARY_DIR}
+     ${Boost_INCLUDE_DIRS}
+-    ${COIN3D_INCLUDE_DIRS}
++    ${Coin_INCLUDE_DIR}
+     ${PYTHON_INCLUDE_DIRS}
+     ${OCC_INCLUDE_DIR}
+     ${ZLIB_INCLUDE_DIR}
+diff --git a/src/Mod/Web/Gui/CMakeLists.txt b/src/Mod/Web/Gui/CMakeLists.txt
+index 963acbd..504e631 100644
+--- a/src/Mod/Web/Gui/CMakeLists.txt
++++ b/src/Mod/Web/Gui/CMakeLists.txt
+@@ -1,7 +1,7 @@
+ include_directories(
+     ${CMAKE_CURRENT_BINARY_DIR}
+     ${Boost_INCLUDE_DIRS}
+-    ${COIN3D_INCLUDE_DIRS}
++    ${Coin_INCLUDE_DIR}
+     ${ZLIB_INCLUDE_DIR}
+     ${PYTHON_INCLUDE_DIRS}
+     ${XercesC_INCLUDE_DIRS}
+diff --git a/src/Tools/_TEMPLATE_/Gui/CMakeLists.txt b/src/Tools/_TEMPLATE_/Gui/CMakeLists.txt
+index 910c33c..69e551f 100644
+--- a/src/Tools/_TEMPLATE_/Gui/CMakeLists.txt
++++ b/src/Tools/_TEMPLATE_/Gui/CMakeLists.txt
+@@ -3,7 +3,7 @@ include_directories(
+     ${CMAKE_SOURCE_DIR}/src
+     ${CMAKE_CURRENT_BINARY_DIR}
+     ${Boost_INCLUDE_DIRS}
+-    ${COIN3D_INCLUDE_DIRS}
++    ${Coin_INCLUDE_DIR}
+     ${ZLIB_INCLUDE_DIR}
+     ${PYTHON_INCLUDE_DIRS}
+     ${XercesC_INCLUDE_DIRS}
+-- 
+2.25.0
+

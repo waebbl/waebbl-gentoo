@@ -1,13 +1,13 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_6 )
+PYTHON_COMPAT=( python3_{6,7,8} )
 WEBAPP_OPTIONAL=yes
 WEBAPP_MANUAL_SLOT=yes
 
-inherit cmake-utils flag-o-matic java-pkg-opt-2 python-single-r1 qmake-utils toolchain-funcs virtualx webapp
+inherit cmake flag-o-matic java-pkg-opt-2 python-single-r1 qmake-utils toolchain-funcs virtualx webapp
 
 # Short package version
 SPV="$(ver_cut 1-2)"
@@ -56,7 +56,7 @@ RDEPEND="
 	sci-libs/exodusii
 	sci-libs/hdf5:=
 	sci-libs/netcdf-cxx:3
-	<sci-libs/proj-6[java?]
+	<sci-libs/proj-6
 	sys-libs/zlib
 	virtual/jpeg:0
 	virtual/opengl
@@ -144,7 +144,7 @@ src_prepare() {
 			-i Utilities/Doxygen/CMakeLists.txt || die
 	fi
 
-	cmake-utils_src_prepare
+	cmake_src_prepare
 }
 
 src_configure() {
@@ -252,13 +252,13 @@ src_configure() {
 		export F77=mpif77
 	fi
 
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 src_install() {
 	use web && webapp_src_preinst
 
-	cmake-utils_src_install
+	cmake_src_install
 
 	use java && java-pkg_regjar "${ED%/}"/usr/$(get_libdir)/${PN}.jar
 

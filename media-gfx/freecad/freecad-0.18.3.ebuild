@@ -70,14 +70,9 @@ RDEPEND="
 	dev-python/matplotlib[${PYTHON_USEDEP}]
 	dev-python/numpy[${PYTHON_USEDEP}]
 	dev-python/pivy[${PYTHON_USEDEP}]
-	|| (
-		dev-python/pyside:2[gui,svg,${PYTHON_USEDEP}]
-		dev-python/pyside2[gui,svg,${PYTHON_USEDEP}]
-	)
-	|| (
-		dev-python/shiboken:2[${PYTHON_USEDEP}]
-		dev-python/shiboken2[${PYTHON_USEDEP}]
-	)
+	dev-python/pyside:2[gui,svg,${PYTHON_USEDEP}]
+	dev-python/shiboken:2[${PYTHON_USEDEP}]
+	dev-qt/assistant:5
 	dev-qt/designer:5
 	dev-qt/qtconcurrent:5
 	dev-qt/qtcore:5
@@ -90,6 +85,7 @@ RDEPEND="
 	dev-qt/qtwidgets:5
 	dev-qt/qtx11extras:5
 	dev-qt/qtxml:5
+	dev-qt/qtxmlpatterns:5
 	media-libs/coin[draggers(+),manipulators(+),nodekits(+),simage]
 	media-libs/freetype
 	media-libs/qhull
@@ -116,10 +112,7 @@ RDEPEND="
 "
 DEPEND="${RDEPEND}"
 BDEPEND="
-	|| (
-		dev-python/pyside-tools:2[${PYTHON_USEDEP}]
-		dev-python/pyside2-tools[${PYTHON_USEDEP}]
-	)
+	dev-python/pyside-tools:2[${PYTHON_USEDEP}]
 	dev-lang/swig
 "
 
@@ -157,7 +150,7 @@ PATCHES=(
 	"${FILESDIR}/${PN}-9999-find-Coin.tag.patch"
 )
 
-CHECKREQS_DISK_BUILD="6G"
+CHECKREQS_DISK_BUILD="7G"
 
 [[ ${PV} == *9999 ]] && S="${WORKDIR}/freecad-${PV}" || S="${WORKDIR}/FreeCAD-${PV}"
 
@@ -212,7 +205,6 @@ src_configure() {
 		-DBUILD_START=ON # basic workspace, enable it by default
 		-DBUILD_SURFACE=$(usex surface)
 		-DBUILD_TECHDRAW=$(usex techdraw)
-		-DBUILD_TEST=ON # build the FreeCAD runtime test module. For now we enable this by default!
 		-DBUILD_TUX=$(usex tux)
 		-DBUILD_VR=OFF
 		-DBUILD_WEB=ON # needed by start workspace
@@ -236,11 +228,13 @@ src_configure() {
 		mycmakeargs+=(
 			-DBUILD_SANDBOX=$(usex mesh)	# sandbox needs mesh support
 			-DBUILD_TEMPLATE=ON
+			-DBUILD_TEST=ON
 		)
 	else
 		mycmakeargs+=(
 			-DBUILD_SANDBOX=OFF
 			-DBUILD_TEMPLATE=OFF
+			-DBUILD_TEST=OFF
 		)
 	fi
 
@@ -292,16 +286,6 @@ src_install() {
 	fi
 
 	python_optimize "${ED}"/usr/share/${PN}/data/Mod/ "${ED}"/usr/$(get_libdir)/${PN}{/Ext,/Mod}/
+
+	docompress -x /usr/share/doc/${PF}/freecad.{qhc,qch}
 }
-
-#pkg_postinst() {
-#	xdg_icon_cache_update
-#	xdg_desktop_database_update
-#	xdg_mimeinfo_database_update
-#}
-
-#pkg_postrm() {
-#	xdg_mimeinfo_database_update
-#	xdg_desktop_database_update
-#	xdg_icon_cache_update
-#}

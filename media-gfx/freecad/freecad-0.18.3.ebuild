@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 # This is in currently WIP! It should work though.
@@ -7,7 +7,7 @@ EAPI=7
 
 PYTHON_COMPAT=( python3_6 )
 
-inherit check-reqs cmake-utils desktop python-single-r1 xdg
+inherit check-reqs cmake desktop python-single-r1 xdg
 
 DESCRIPTION="QT based Computer Aided Design application"
 HOMEPAGE="https://www.freecadweb.org/"
@@ -114,6 +114,7 @@ DEPEND="${RDEPEND}"
 BDEPEND="
 	dev-python/pyside-tools:2[${PYTHON_USEDEP}]
 	dev-lang/swig
+	doc? ( app-arch/p7zip )
 "
 
 # To get required dependencies: 'grep REQUIRES_MODS CMakeLists.txt'
@@ -163,7 +164,7 @@ src_prepare() {
 	# the upstream provided file doesn't find coin, but cmake ships
 	# a working one, so we use this.
 	rm -f "${S}/cMake/FindCoin3D.cmake"
-	cmake-utils_src_prepare
+	cmake_src_prepare
 }
 
 src_configure() {
@@ -250,11 +251,13 @@ src_configure() {
 		export F77=mpif77
 	fi
 
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 src_install() {
-	cmake-utils_src_install
+	docompress -x /usr/share/doc/${PF}/freecad.{qhc,qch}
+
+	cmake_src_install
 
 	dosym ../$(get_libdir)/${PN}/bin/FreeCAD /usr/bin/freecad
 	dosym ../$(get_libdir)/${PN}/bin/FreeCADCmd /usr/bin/freecadcmd
@@ -286,6 +289,4 @@ src_install() {
 	fi
 
 	python_optimize "${ED}"/usr/share/${PN}/data/Mod/ "${ED}"/usr/$(get_libdir)/${PN}{/Ext,/Mod}/
-
-	docompress -x /usr/share/doc/${PF}/freecad.{qhc,qch}
 }

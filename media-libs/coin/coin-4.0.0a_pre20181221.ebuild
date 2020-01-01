@@ -1,9 +1,9 @@
-# Copyright 1999-2018 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
-inherit cmake-utils
+inherit cmake
 
 MY_P=${P/c/C}
 
@@ -111,11 +111,11 @@ src_configure() {
 		-DUSE_EXTERNAL_EXPAT=ON
 	)
 
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 src_install() {
-	cmake-utils_src_install
+	cmake_src_install
 	pushd "${ED%/}"/usr/share/doc > /dev/null || die
 	mv "${PF}" $(ver_cut 1-5 "${PF}") || die
 	popd > /dev/null || die

@@ -1,11 +1,11 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
-PYTHON_COMPAT=( python2_7 python3_{5,6,7} )
+PYTHON_COMPAT=( python3_{6,7} )
 
-inherit cmake-utils llvm python-r1
+inherit cmake llvm python-r1
 
 DESCRIPTION="Tool for creating Python bindings for C++ libraries"
 HOMEPAGE="https://wiki.qt.io/PySide2"
@@ -53,6 +53,7 @@ DOCS=( AUTHORS )
 PATCHES=(
 	"${FILESDIR}"/${P}-fix-clang-include-path.patch
 	"${FILESDIR}"/${P}-fix-warnings.patch
+	"${FILESDIR}"/${P}-include-QStringList.patch
 )
 
 # Ensure the path returned by get_llvm_prefix() contains clang as well.
@@ -73,7 +74,7 @@ src_prepare() {
 
 #	eapply "${FILESDIR}"/${P}-fix-warnings.patch
 
-	cmake-utils_src_prepare
+	cmake_src_prepare
 }
 
 src_configure() {
@@ -83,22 +84,22 @@ src_configure() {
 			-DPYTHON_EXECUTABLE="${PYTHON}"
 			-DPYTHON_SITE_PACKAGES="$(python_get_sitedir)"
 		)
-		cmake-utils_src_configure
+		cmake_src_configure
 	}
 	python_foreach_impl configuration
 }
 
 src_compile() {
-	python_foreach_impl cmake-utils_src_compile
+	python_foreach_impl cmake_src_compile
 }
 
 src_test() {
-	python_foreach_impl cmake-utils_src_test
+	python_foreach_impl cmake_src_test
 }
 
 src_install() {
 	installation() {
-		cmake-utils_src_install
+		cmake_src_install
 		mv "${ED%/}"/usr/$(get_libdir)/pkgconfig/${PN}2{,-${EPYTHON}}.pc || die
 	}
 	python_foreach_impl installation

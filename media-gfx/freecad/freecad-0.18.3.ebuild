@@ -86,7 +86,7 @@ RDEPEND="
 	dev-qt/qtx11extras:5
 	dev-qt/qtxml:5
 	dev-qt/qtxmlpatterns:5
-	media-libs/coin[draggers(+),manipulators(+),nodekits(+),simage]
+	media-libs/coin[draggers(+),manipulators(+),nodekits(+),simage(+)]
 	media-libs/freetype
 	media-libs/qhull
 	sci-libs/flann[mpi?,openmp]
@@ -223,6 +223,7 @@ src_configure() {
 		-DOCC_INCLUDE_DIR="${CASROOT}"/include/opencascade
 		-DOCC_LIBRARY_DIR="${CASROOT}"/$(get_libdir)
 		-DOCCT_CMAKE_FALLBACK=ON # don't use occt-config which isn't included in opencascade for Gentoo
+		-DCOIN3D_INCLUDE_DIRS=$(pkg-config --variable includedir Coin)
 	)
 
 	if use debug; then

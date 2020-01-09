@@ -17,7 +17,3 @@ media-gfx/freecad assembly
 # Bernd Waibel <waebbl@gmail.com> (30 Aug 2019)
 # Has runtime issues, so FEM is not working properly
 media-gfx/freecad netgen
-
-# Bernd Waibel <waebbl@gmail.com> (10 Feb 2019)
-# GUI needs internal togl, build is currently broken
-sci-mathematics/netgen gui

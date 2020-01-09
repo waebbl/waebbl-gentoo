@@ -1,0 +1,11 @@
+--- a/cmake/cmake_modules/FindOpenCasCade.cmake	2020-01-09 03:05:19.010484431 -0500
++++ b/cmake/cmake_modules/FindOpenCasCade.cmake	2020-01-09 03:05:08.711484869 -0500
+@@ -81,7 +81,7 @@
+ )
+ 
+ foreach( libname ${OCC_LIBRARY_NAMES} )
+-    find_library( ${libname} ${libname} ${OCC_LIBRARY_DIR} )
++    find_library( ${libname} ${libname} HINTS ${OCC_LIBRARY_DIR} )
+     set(OCC_LIBRARIES ${OCC_LIBRARIES} ${${libname}})
+ endforeach()
+ 

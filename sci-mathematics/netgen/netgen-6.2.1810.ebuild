@@ -16,7 +16,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
 # opencascade not supported upstream?
-IUSE="ffmpeg gui jpeg mpi opencascade +python"
+IUSE="ffmpeg gui jpeg mpi occ +python"
 
 #	dev-tcltk/tix:=
 #	dev-tcltk/togl:0=
@@ -37,9 +37,9 @@ RDEPEND="
 	mpi? (
 		>=sci-libs/parmetis-4.0.3:=[mpi?]
 		virtual/mpi[cxx,threads]
-		opencascade? ( >=sci-libs/hdf5-1.10.5:=[mpi] )
+		occ? ( >=sci-libs/hdf5-1.10.5:=[mpi] )
 	)
-	opencascade? ( sci-libs/opencascade:7.3.0=[ffmpeg?] )
+	occ? ( sci-libs/opencascade:7.3.0=[ffmpeg?] )
 "
 
 DEPEND="
@@ -52,6 +52,8 @@ REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 PATCHES=(
 	"${FILESDIR}"/${P}-cmake-fix-paths.patch
+	"${FILESDIR}"/opencascade-fix.patch
+	"${FILESDIR}"/togl-fix.patch
 )
 
 DOCS=( AUTHORS NEWS README.md TODO )
@@ -72,15 +74,15 @@ src_configure() {
 		-DUSE_JPEG=$(usex jpeg)
 		-DUSE_MPEG=$(usex ffmpeg)
 		-DUSE_MPI=$(usex mpi)
-		-DUSE_OCC=$(usex opencascade)
+		-DUSE_OCC=$(usex occ)
 		-DUSE_PYTHON=$(usex python)
 		-DUSE_SUPERBUILD=OFF
 	)
 
-	if use opencascade; then
+	if use occ; then
 		mycmakeargs+=(
 			-DOCC_INCLUDE_DIR="${CASROOT}"/include/opencascade
-			-DOCC_LIBRARY_DIR="${CASROOT}"/$(get_libdir)
+			-DOCC_LIBRARY="${CASROOT}"/$(get_libdir)/TKernel.so
 		)
 	fi
 

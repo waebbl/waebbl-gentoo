@@ -1,0 +1,26 @@
+From 4559cb182e2a7ea8e861ed4d6c85c5101040bfc9 Mon Sep 17 00:00:00 2001
+From: Bernd Waibel <waebbl@gmail.com>
+Date: Mon, 20 Jan 2020 21:46:53 +0100
+Subject: [PATCH] CMakeLists.txt: disable cpack.d
+
+Disable the inclusion of cpack.d, which isn't available in the
+tarball and also not needed for Gentoo.
+
+Signed-off-by: Bernd Waibel <waebbl@gmail.com>
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 802e512..21cc23a 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -393,4 +393,4 @@ add_subdirectory(test-code)
+ 
+ ############################################################################
+ # New CPACK section, please see the README file inside cpack.d directory.
+-add_subdirectory(cpack.d)
++#add_subdirectory(cpack.d)
+-- 
+2.25.0
+

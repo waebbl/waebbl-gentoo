@@ -1,0 +1,57 @@
+From 5a5a97aa1c75a88cc498b0af40a3501821e6ac00 Mon Sep 17 00:00:00 2001
+From: Bernd Waibel <waebbl@gmail.com>
+Date: Thu, 16 Jan 2020 22:49:44 +0100
+Subject: [PATCH] Gentoo specific: disable building assembly workbench
+
+The assembly workbench is known to be broken with current build systems.
+Until we have an updated workbench back, disable the option for Gentoo
+users, so they can't enable it via a USE flag.
+
+Closes: https://freecadweb.org/tracker/view.php?id=4145
+Signed-off-by: Bernd Waibel <waebbl@gmail.com>
+---
+ .../InitializeFreeCADBuildOptions.cmake                |  6 +++++-
+ src/Mod/CMakeLists.txt                                 | 10 +++++++---
+ 2 files changed, 12 insertions(+), 4 deletions(-)
+
+diff --git a/cMake/FreeCAD_Helpers/InitializeFreeCADBuildOptions.cmake b/cMake/FreeCAD_Helpers/InitializeFreeCADBuildOptions.cmake
+index 7274639ea..05c64d401 100644
+--- a/cMake/FreeCAD_Helpers/InitializeFreeCADBuildOptions.cmake
++++ b/cMake/FreeCAD_Helpers/InitializeFreeCADBuildOptions.cmake
+@@ -123,7 +123,11 @@ macro(InitializeFreeCADBuildOptions)
+     option(BUILD_TEMPLATE "Build the FreeCAD template module which is only for testing purposes" OFF)
+     option(BUILD_ADDONMGR "Build the FreeCAD addon manager module" ON)
+     option(BUILD_ARCH "Build the FreeCAD Architecture module" ON)
+-    option(BUILD_ASSEMBLY "Build the FreeCAD Assembly module" OFF)
++# FIXME: Disable this option for now, until we have a working assembly workbench
++# back. If the option is enabled, it currently fails to build.
++	if (NOT CMAKE_BUILD_TYPE MATCHES "Gentoo")
++        option(BUILD_ASSEMBLY "Build the FreeCAD Assembly module" OFF)
++    endif()
+     option(BUILD_COMPLETE "Build the FreeCAD complete module" ON)
+     option(BUILD_DRAFT "Build the FreeCAD draft module" ON)
+     option(BUILD_DRAWING "Build the FreeCAD drawing module" ON)
+diff --git a/src/Mod/CMakeLists.txt b/src/Mod/CMakeLists.txt
+index c5265e217..57f6812b5 100644
+--- a/src/Mod/CMakeLists.txt
++++ b/src/Mod/CMakeLists.txt
+@@ -94,9 +94,13 @@ if(BUILD_ARCH)
+   add_subdirectory(Arch)
+ endif(BUILD_ARCH)
+ 
+-if(BUILD_ASSEMBLY)
+-  add_subdirectory(Assembly)
+-endif(BUILD_ASSEMBLY)
++# On Gentoo, users have an option to enable building the assembly workbench.
++# Until the workbench is updated or fixed, disable building it.
++if(NOT CMAKE_BUILD_TYPE MATCHES "Gentoo")
++  if(BUILD_ASSEMBLY)
++    add_subdirectory(Assembly)
++  endif(BUILD_ASSEMBLY)
++endif()
+ 
+ if(BUILD_FEM)
+     add_subdirectory(Fem)
+-- 
+2.25.0
+

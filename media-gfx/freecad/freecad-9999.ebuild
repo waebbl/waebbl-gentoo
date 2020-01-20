@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 # This is in currently WIP! It should work though.
@@ -157,6 +157,7 @@ DOCS=( README.md ChangeLog.txt )
 #	"${FILESDIR}/smesh-pthread.patch"
 PATCHES=(
 	"${FILESDIR}/${PN}-9999-find-Coin.tag.patch"
+	"${FILESDIR}/${P}-0001-Gentoo-specific-disable-building-assembly-workbench.patch"
 )
 
 CHECKREQS_DISK_BUILD="7G"

@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 # This file requires >=portage-2.1.1
@@ -6,6 +6,10 @@
 
 # This file is only for generic masks. For arch-specific masks (i.e.
 # mask everywhere, unmask on arch/*) use arch/base.
+
+# Bernd Waibel <waebbl@gmail.com> (20 Jan 2020)
+# Doesn't compile against dev-lang/spidermonkey:60
+media-libs/coin javascript
 
 # Bernd Waibel <waebbl@gmail.com> (23 Dec 2019)
 # Current assembly version is there only for reference and doesn't

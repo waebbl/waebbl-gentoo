@@ -1,0 +1,25 @@
+From 8f893fbe0372f60b03783a8ce6b53f33263f8458 Mon Sep 17 00:00:00 2001
+From: Bernd Waibel <waebbl@gmail.com>
+Date: Mon, 20 Jan 2020 15:58:51 +0100
+Subject: [PATCH] CMakeLists.txt: don't include cpack.d
+
+The subdir is not available inside the tarball.
+
+Signed-off-by: Bernd Waibel <waebbl@gmail.com>
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index f32f6ff..639fc41 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -815,4 +815,4 @@ endif()
+ 
+ # ############################################################################
+ # New CPACK section, please see the README file inside cpack.d directory.
+-add_subdirectory(cpack.d)
++#add_subdirectory(cpack.d)
+-- 
+2.25.0
+

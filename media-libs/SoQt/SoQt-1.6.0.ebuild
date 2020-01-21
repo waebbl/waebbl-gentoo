@@ -50,7 +50,7 @@ DOCS=( AUTHORS BUGS.txt ChangeLog FAQ HACKING INSTALL NEWS README RELEASE.txt )
 
 src_unpack() {
 	unpack ${A}
-	pushd ${S} >/dev/null || die
+	pushd "${S}" >/dev/null || die
 	ln -sf "../soanydata-${DATA_COMMIT}" ./data || die "failed to link data"
 	popd >/dev/null
 	pushd "${S}/src/Inventor/Qt" >/dev/null || die
@@ -58,15 +58,16 @@ src_unpack() {
 	popd >/dev/null || die
 }
 
-#src_prepare() {
-#	sed -i -e 's|@PROJECT_NAME_LOWER@|'${PF}'|' "${S}/SoQt.pc.cmake.in" || die
+src_prepare() {
+	sed -i -e 's|@PROJECT_NAME_LOWER@|'${PF}'|' "${S}/SoQt.pc.cmake.in" || die
 
-#	cmake_src_prepare
-#}
+	cmake_src_prepare
+}
 
 src_configure() {
 	local mycmakeargs=(
 		-DCMAKE_INSTALL_DOCDIR="${EPREFIX}/usr/share/doc/${PF}"
+		-DCMAKE_INSTALL_INCLUDEDIR="${EPREFIX}/usr/include/Coin4" # use the same dir as coin-4.0.0
 		-DCMAKE_INSTALL_MANDIR="${EPREFIX}/usr/share/man"
 		-DCOIN_IV_EXTENSIONS=$(usex coin-iv-extensions)
 		-DHAVE_SPACENAV_SUPPORT=$(usex spacenav)
@@ -83,10 +84,10 @@ src_configure() {
 	cmake_src_configure
 }
 
-#src_install() {
-#	cmake_src_install
+src_install() {
+	cmake_src_install
 
-#	sed -i -e 's|INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include;/usr/include;/usr/include"|\
-#		INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"|' \
-#		"${ED%/}/usr/$(get_libdir)/cmake/SoQt-1.6.0/soqt-export.cmake" || die
-#}
+	sed -i -e 's|INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include;/usr/include;/usr/include"|\
+		INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"|' \
+		"${ED}/usr/$(get_libdir)/cmake/SoQt-1.6.0/soqt-export.cmake" || die
+}

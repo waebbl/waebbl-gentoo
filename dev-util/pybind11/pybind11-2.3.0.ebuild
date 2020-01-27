@@ -1,11 +1,9 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
-# According to upstream is compatible with 2.7 and 3.x
-# However support for python3_7 needs boost with python3_7
-PYTHON_COMPAT=( python{2_7,3_{5,6}} )
+PYTHON_COMPAT=( python3_6 )
 
 inherit cmake-utils python-single-r1
 

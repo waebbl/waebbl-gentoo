@@ -69,7 +69,7 @@ RDEPEND="
 	>=dev-cpp/eigen-3.3.1:3
 	dev-libs/OpenNI2[opengl(+)]
 	dev-libs/boost:=[mpi?,python,threads,${PYTHON_USEDEP}]
-	dev-libs/libspnav
+	dev-libs/libspnav[X]
 	dev-libs/xerces-c
 	dev-python/matplotlib[${PYTHON_USEDEP}]
 	dev-python/numpy[${PYTHON_USEDEP}]
@@ -88,7 +88,7 @@ RDEPEND="
 	dev-qt/qtwidgets:5
 	dev-qt/qtx11extras:5
 	dev-qt/qtxml:5
-	media-libs/coin[draggers(+),manipulators(+),nodekits(+),simage]
+	media-libs/coin[draggers(+),manipulators(+),nodekits(+),simage(+),vrml97(+)]
 	media-libs/freetype
 	media-libs/qhull
 	sci-libs/flann[mpi?,openmp]

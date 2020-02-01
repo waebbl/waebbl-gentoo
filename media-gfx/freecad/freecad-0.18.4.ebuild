@@ -5,7 +5,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{6,7} )
+PYTHON_COMPAT=( python3_6 )
 
 inherit check-reqs cmake desktop python-single-r1 xdg
 
@@ -153,6 +153,7 @@ PATCHES=(
 	"${FILESDIR}/${P}-0001-Fix-coin-related-variables-to-use-new-naming-from-4.0.0.patch"
 	"${FILESDIR}/${P}-0002-Fix-PySide-related-checks.patch"
 	"${FILESDIR}/${P}-0003-cMake-FindPySide2Tools.cmake-use-generator-option.patch"
+	"${FILESDIR}/${P}-0004-fix-std-namespace-issues.patch"
 )
 
 CHECKREQS_DISK_BUILD="6G"
@@ -297,6 +298,9 @@ src_install() {
 }
 
 pkg_postinst() {
+	xdg_desktop_database_update
+	xdg_mimeinfo_database_update
+
 	if use plot; then
 		einfo "Note: You are enabling the 'plot' USE flag."
 		einfo "This conflicts with the plot workbench which you can load"
@@ -308,4 +312,9 @@ pkg_postinst() {
 		einfo "This conflicts with the ship workbench which you can load"
 		einfo "via the addon manager! You can only install one of those."
 	fi
+}
+
+pkg_postrm() {
+	xdg_desktop_database_update
+	xdg_mimeinfo_database_update
 }

@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{6,7,8} )
+PYTHON_COMPAT=( python3_6 )
 WEBAPP_OPTIONAL=yes
 WEBAPP_MANUAL_SLOT=yes
 
@@ -26,7 +26,7 @@ LICENSE="BSD LGPL-2"
 KEYWORDS="~amd64 ~x86 ~amd64-linux ~x86-linux"
 SLOT="0"
 IUSE="
-	all-modules aqua boost doc examples imaging ffmpeg gdal java json kaapi mpi
+	all-modules aqua boost doc examples imaging ffmpeg gdal java json mpi
 	mysql odbc offscreen postgres python qt5 rendering tbb theora
 	video_cards_nvidia views web R +X xdmf2"
 
@@ -56,7 +56,6 @@ RDEPEND="
 	sci-libs/exodusii
 	sci-libs/hdf5:=
 	sci-libs/netcdf-cxx:3
-	<sci-libs/proj-6
 	sys-libs/zlib
 	virtual/jpeg:0
 	virtual/opengl
@@ -71,7 +70,6 @@ RDEPEND="
 	ffmpeg? ( virtual/ffmpeg )
 	gdal? ( sci-libs/gdal )
 	java? ( >=virtual/jdk-1.7:* )
-	kaapi? ( <sci-libs/xkaapi-3 )
 	mpi? (
 		virtual/mpi[cxx,romio]
 		python? ( dev-python/mpi4py[${PYTHON_USEDEP}] )
@@ -165,6 +163,8 @@ src_configure() {
 		-DVTK_USE_SYSTEM_GLEW=ON
 		-DVTK_USE_SYSTEM_HDF5=ON
 		-DVTK_USE_SYSTEM_JPEG=ON
+		# only support proj-4 which conflicts with several other packages requiring >=proj-{5,6}
+		-DVTK_USE_SYSTEM_LIBPROJ=OFF
 		-DVTK_USE_SYSTEM_LIBXML2=ON
 		-DVTK_USE_SYSTEM_MPI4PY=ON
 		-DVTK_USE_SYSTEM_NETCDF=ON
@@ -213,9 +213,7 @@ src_configure() {
 		mycmakeargs+=( -DJAVAC_OPTIONS=${javacargs// /;} )
 	fi
 
-	if use kaapi; then
-		mycmakeargs+=( -DVTK_SMP_IMPLEMENTATION_TYPE="Kaapi" )
-	elif use tbb; then
+	if use tbb; then
 		mycmakeargs+=( -DVTK_SMP_IMPLEMENTATION_TYPE="TBB" )
 	else
 		mycmakeargs+=( -DVTK_SMP_IMPLEMENTATION_TYPE="Sequential" )

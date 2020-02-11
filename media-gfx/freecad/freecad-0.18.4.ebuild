@@ -74,7 +74,7 @@ RDEPEND="
 	dev-python/matplotlib[${PYTHON_USEDEP}]
 	dev-python/numpy[${PYTHON_USEDEP}]
 	>=dev-python/pivy-0.6.5[${PYTHON_USEDEP}]
-	dev-python/pyside2[gui,svg,${PYTHON_USEDEP}]
+	dev-python/pyside:2[gui,svg,${PYTHON_USEDEP}]
 	dev-python/shiboken2[${PYTHON_USEDEP}]
 	dev-qt/designer:5
 	dev-qt/qtconcurrent:5

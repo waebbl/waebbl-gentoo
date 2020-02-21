@@ -1,12 +1,11 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
-# boost lacks python-3.7 support
-PYTHON_COMPAT=( python3_{5,6} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 
-inherit cmake-utils python-single-r1 toolchain-funcs
+inherit cmake python-single-r1 toolchain-funcs
 
 DESCRIPTION="C++ and Python library for 3D toolpaths"
 HOMEPAGE="http://www.anderswallin.net/CAM" # no https!
@@ -26,8 +25,12 @@ SLOT="0"
 IUSE="openmp python"
 
 RDEPEND="
-	dev-libs/boost:=[python?,${PYTHON_USEDEP}]
-	python? ( ${PYTHON_DEPS} )
+	python? (
+		${PYTHON_DEPS}
+		$(python_gen_cond_dep \
+			'dev-libs/boost:=[python?,${PYTHON_MULTI_USEDEP}]' python3_6
+		)
+	)
 "
 DEPEND="${RDEPEND}"
 
@@ -39,9 +42,9 @@ pkg_setup() {
 }
 
 src_prepare() {
-	cmake-utils_src_prepare
+	cmake_src_prepare
 
-	sed -e 's|lib/opencamlib|'$(get_libdir)'/opencamlib|' \
+	sed -e 's|lib/opencamlib|'$(get_libdir)'|' \
 		-i "${S}"/src/cxxlib/cxxlib.cmake || die "sed failed"
 }
 
@@ -51,10 +54,27 @@ src_configure() {
 		-DBUILD_DOC=OFF # doesn't work
 		-DBUILD_EMSCRIPTEN_LIB=OFF # needs nodejs
 		-DBUILD_NODEJS_LIB=OFF	# net-libs/nodejs currently support only python-2.7
-		-DBUILD_PY_LIB=$(usex python)
 		-DUSE_OPENMP=$(usex openmp)
-		-DUSE_PY_3=$(usex python)
 	)
 
-	cmake-utils_src_configure
+	if use python; then
+		python_export PYTHON_INCLUDEDIR PYTHON_LIBPATH
+		mycmakeargs+=(
+			-DBUILD_PY_LIB=ON
+			-DPython3_EXECUTABLE="${PYTHON}"
+			-DPython3_LIBRARY="${PYTHON_LIBPATH}"
+			-DPython3_INCLUDE_DIR="${PYTHON_INCLUDEDIR}"
+			-DUSE_PY_3=ON
+		)
+	fi
+
+	cmake_src_configure
+}
+
+src_install() {
+	cmake_src_install
+
+	if use python; then
+		python_optimize
+	fi
 }

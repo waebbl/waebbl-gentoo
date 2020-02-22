@@ -1,11 +1,11 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
-PYTHON_COMPAT=( python2_7 )
+PYTHON_COMPAT=( python3_6 )
 
-inherit cmake-utils python-any-r1
+inherit cmake python-any-r1
 
 DESCRIPTION="Intel SPMD Program Compiler"
 HOMEPAGE="https://ispc.github.com/"
@@ -50,6 +50,8 @@ BDEPEND="
 
 DOCS=( README.md "${S}"/docs/{ReleaseNotes.txt,faq.rst,ispc.rst,news.rst,perf.rst,perfguide.rst} )
 
+CMAKE_BUILD_TYPE="Release"
+
 src_prepare() {
 	# drop -Werror
 	sed -e 's/-Werror//' -i CMakeLists.txt || die
@@ -59,27 +61,28 @@ src_prepare() {
 		sed -e 's|/usr/local/bin/dot|/usr/bin/dot|' -i "${S}"/doxygen.cfg || die
 	fi
 
-	cmake-utils_src_prepare
+	cmake_src_prepare
 }
 
 src_configure() {
 	local mycmakeargs=(
 		-DARM_ENABLED=$(usex llvm_targets_AArch64 $(usex llvm_targets_ARM))
-		-DNVPTX_ENABLED=OFF
+#		-DNVPTX_ENABLED=OFF
 		-DISPC_INCLUDE_EXAMPLES=OFF
 		-DISPC_INCLUDE_TESTS=$(usex test)
 		-DISPC_INCLUDE_UTILS=ON
-		-DISPC_NO_DUMPS=OFF
+		-DISPC_NO_DUMPS=ON
 		-DISPC_PREPARE_PACKAGE=OFF
 		-DISPC_STATIC_STDCXX_LINK=OFF
 		-DISPC_STATIC_LINK=OFF
 		-DISPC_USE_ASAN=$(usex sanitize)
+		-DPython3_EXECUTABLE="${PYTHON}"
 	)
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 src_compile() {
-	cmake-utils_src_compile
+	cmake_src_compile
 
 	if use doc; then
 		pushd "${S}" >/dev/null || die
@@ -90,7 +93,7 @@ src_compile() {
 }
 
 src_install() {
-	cmake-utils_src_install
+	cmake_src_install
 
 	if use doc; then
 		local HTML_DOCS=( docs/doxygen/html/. )

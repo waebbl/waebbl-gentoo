@@ -17,11 +17,6 @@
 		<flag name="assembly">
 			Build the assembly module
 		</flag>
-		<flag name="complete">
-			Build the complete workbench which holds all commands and features 
-			from all the modules and workbenches which met certain quality 
-			criteria
-		</flag>
 		<flag name="drawing">
 			Build the drawing module and workbench to display 3D work on a 
 			2D sheet
@@ -76,11 +71,6 @@
 		</flag>
 		<flag name="raytracing">
 			Build the raytracing module and workbench for raytracing and rendering
-		</flag>
-		<flag name="reverseengineering">
-			Build the reverse engineering module and workbench which provides 
-			specific tools to convert shapes/solids/meshes into parametric 
-			FreeCAD-compatible features
 		</flag>
 		<flag name="robot">
 			Build the robot module and workbench for studying robot movements

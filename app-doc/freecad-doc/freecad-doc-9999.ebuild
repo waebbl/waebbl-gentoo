@@ -1,10 +1,10 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
 CMAKE_MAKEFILE_GENERATOR="emake"
-inherit check-reqs cmake-utils git-r3
+inherit check-reqs cmake git-r3
 
 DESCRIPTION="QT based computer aided design application manuals"
 HOMEPAGE="https://www.freecadweb.org/"
@@ -17,8 +17,8 @@ SLOT="0"
 IUSE=""
 
 RDEPEND="
-	>=media-libs/coin-4.0.0a_pre20180416:=[doc]
-	>=sci-libs/libmed-4.0.0
+	>=media-libs/coin-4.0.0:=[doc]
+	>=sci-libs/med-4.0.0
 	>=sci-libs/opencascade-7.3.0:=
 	>=virtual/mpi-2.0-r4:=[cxx,threads]
 "
@@ -48,7 +48,7 @@ src_prepare() {
 	# provided one does, so delete the local file
 	rm -f "${S}"/cMake/FindCoin3D.cmake || die
 
-	cmake-utils_src_prepare
+	cmake_src_prepare
 }
 
 src_configure() {
@@ -61,11 +61,11 @@ src_configure() {
 		-DOCC_LIBRARY_DIR="${CASROOT}"/$(get_libdir)
 		-DOPENMPI_INCLUDE_DIRS=/usr/include
 	)
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 src_compile() {
-	cmake-utils_src_compile DevDoc
+	cmake_src_compile DevDoc
 }
 
 src_install() {

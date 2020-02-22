@@ -1,11 +1,11 @@
-# Copyright 1999-2018 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
 PYTHON_COMPAT=( python2_7 )
 
-inherit cmake-utils python-single-r1
+inherit cmake python-single-r1
 
 DESCRIPTION="Open framework for storing and sharing scene data"
 HOMEPAGE="https://www.alembic.io/"
@@ -27,14 +27,14 @@ REQUIRED_USE="
 RDEPEND="
 	${PYTHON_DEPS}
 	>=media-libs/openexr-2.2.0-r2:=
-	boost? ( >=dev-libs/boost-1.65.0:=[python,${PYTHON_USEDEP}] )
 	hdf5? ( >=sci-libs/hdf5-1.8.18[zlib(+)] )
-	python? ( >=dev-python/pyilmbase-2.2.0[${PYTHON_USEDEP}] )
+	python? ( >=dev-python/pyilmbase-2.2.0[${PYTHON_SINGLE_USEDEP}] )
 	zlib? ( >=sys-libs/zlib-1.2.11-r1 )
+	$(python_gen_cond_dep \
+		'boost? ( >=dev-libs/boost-1.65.0:=[python,${PYTHON_MULTI_USEDEP}] )')
 "
 DEPEND="
 	${RDEPEND}
-	>=dev-util/cmake-3.9.6
 	doc? ( >=app-doc/doxygen-1.8.13-r1 )
 "
 
@@ -66,11 +66,11 @@ src_configure() {
 		-DUSE_PYALEMBIC=$(usex python)
 		-DUSE_TESTS=$(usex test)
 	)
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 src_compile() {
-	cmake-utils_src_compile
+	cmake_src_compile
 	if use doc; then
 		doxygen -u Doxyfile || die
 		doxygen Doxyfile || die
@@ -79,7 +79,7 @@ src_compile() {
 
 src_install() {
 	use doc && local HTML_DOCS=( doc/html/. )
-	cmake-utils_src_install
+	cmake_src_install
 }
 
 pkg_postinst() {

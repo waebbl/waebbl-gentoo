@@ -1,10 +1,10 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
 PYTHON_COMPAT=( python3_6 )
-inherit cmake-utils python-single-r1 toolchain-funcs
+inherit cmake python-single-r1 toolchain-funcs
 
 MY_PV=$(ver_cut 1-2)$(ver_cut 3-4)
 MY_P=${PN}_v${MY_PV}
@@ -37,14 +37,12 @@ RDEPEND="
 	${PYTHON_DEPS}
 	>=dev-cpp/tbb-2017.20161128:=
 	>=dev-libs/c-blosc-1.11.2:=
-	>=dev-libs/boost-1.65.0:=[python?,${PYTHON_USEDEP},threads(+)]
-	>=dev-python/numpy-1.14.5:=[${PYTHON_USEDEP}]
 	>=media-libs/embree-3.2.4:=[ispc]
 	>=media-libs/oidn-0.8.1:=
 	>=media-libs/freetype-2.9.1-r1:=[X,bzip2]
 	media-libs/libpng:0=[cpu_flags_x86_sse?]
 	>=media-libs/openexr-2.3.0:=
-	>=media-libs/openimageio-1.8.7:=[cpu_flags_x86_sse2?,cpu_flags_x86_sse3?,cpu_flags_x86_ssse3?,${PYTHON_USEDEP}]
+	>=media-libs/openimageio-1.8.7:=[cpu_flags_x86_sse2?,cpu_flags_x86_sse3?,cpu_flags_x86_ssse3?,${PYTHON_SINGLE_USEDEP}]
 	media-libs/tiff:0=
 	virtual/jpeg:0
 	virtual/opengl
@@ -53,17 +51,21 @@ RDEPEND="
 	x11-libs/libX11:=
 	x11-libs/libXext:=
 	opencl? ( virtual/opencl virtual/opengl )
-	python? ( >=dev-python/pyside-5.11.1:=[${PYTHON_USEDEP}] )
+	$(python_gen_cond_dep \
+		'>=dev-libs/boost-1.65.0:=[python?,${PYTHON_MULTI_USEDEP},threads(+)]
+		>=dev-python/numpy-1.14.5:=[${PYTHON_MULTI_USEDEP}]
+		python? ( >=dev-python/pyside2-5.11.1:=[${PYTHON_MULTI_USEDEP}] )
+	')
 "
 
 DEPEND="
 	${RDEPEND}
-	>=dev-util/cmake-3.9.6
 	>=sys-devel/bison-3.0.5-r1
 	>=sys-devel/flex-2.6.4-r1
 	>=virtual/pkgconfig-0-r1
-	python? ( >=dev-python/pyside-tools-5.11.1[${PYTHON_USEDEP}] )
-
+	$(python_gen_cond_dep '
+		python? ( >=dev-python/pyside2-tools-5.11.1[${PYTHON_MULTI_USEDEP}] )
+	')
 "
 
 REQUIRED_USE="
@@ -82,14 +84,14 @@ pkg_setup() {
 
 src_prepare() {
 	use openmp && tc-check-openmp
-	cmake-utils_src_prepare
+	cmake_src_prepare
 }
 
 src_configure() {
 	local mycmakeargs=(
 		-DLUXRAYS_DISABLE_OPENCL=$(usex !opencl)
 	)
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 src_install() {

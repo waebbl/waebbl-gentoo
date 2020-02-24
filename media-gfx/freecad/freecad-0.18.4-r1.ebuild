@@ -85,7 +85,7 @@ RDEPEND="
 	sci-libs/flann[mpi?,openmp]
 	>=sci-libs/med-4.0.0-r1[mpi(+)?,python,${PYTHON_SINGLE_USEDEP}]
 	sci-libs/orocos_kdl:=
-	>=sci-libs/opencascade-7.3.0:*[vtk(+)]
+	>=sci-libs/opencascade-7.4.0:*[vtk(+)]
 	sys-libs/zlib
 	virtual/glu
 	virtual/libusb:1

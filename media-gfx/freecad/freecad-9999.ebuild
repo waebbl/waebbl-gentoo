@@ -81,7 +81,7 @@ RDEPEND="
 	dev-qt/qtx11extras:5
 	dev-qt/qtxml:5
 	dev-qt/qtxmlpatterns:5
-	media-libs/coin[draggers(+),manipulators(+),nodekits(+),simage(+),vrml97(+)]
+	>=media-libs/coin-4.0.0[draggers(+),manipulators(+),nodekits(+),simage(+),vrml97(+)]
 	media-libs/freetype
 	media-libs/qhull
 	sci-libs/flann[mpi?,openmp]
@@ -139,7 +139,7 @@ REQUIRED_USE="
 	netgen? ( fem )
 	openscad? ( mesh )
 	path? ( robot )
-	ship? ( image )
+	ship? ( image plot )
 	techdraw? ( spreadsheet drawing )
 "
 
@@ -171,6 +171,11 @@ src_prepare() {
 }
 
 src_configure() {
+	local occ_lib="lib"
+	if has_version "=sci-libs/opencascade-7.4.0"; then
+		occ_lib=$(get_libdir)
+	fi
+
 	local mycmakeargs=(
 		-DBUILD_ADDONMGR=$(usex addonmgr)
 		-DBUILD_ARCH=$(usex arch)
@@ -224,7 +229,7 @@ src_configure() {
 		-DFREECAD_USE_PYBIND11=$(usex mesh)
 		# opencascade sets CASROOT in /etc/env.d/51opencascade
 		-DOCC_INCLUDE_DIR="${CASROOT}"/include/opencascade
-		-DOCC_LIBRARY_DIR="${CASROOT}"/$(get_libdir)
+		-DOCC_LIBRARY_DIR="${CASROOT}/${occ_lib}"
 		-DOCCT_CMAKE_FALLBACK=ON # don't use occt-config which isn't included in opencascade for Gentoo
 		-DPYSIDE2RCCBINARY="${EPREFIX}/usr/bin/rcc"
 		-DPYSIDE2UICBINARY="${EPREFIX}/usr/bin/uic"

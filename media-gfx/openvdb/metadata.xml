@@ -19,9 +19,33 @@
 		Chance of Meatballs2' and 'How to Train Your Dragon 2'. 
 	</longdescription>
 	<use>
-		<flag name="abi4-compat" restrict=">=media-gfx/openvdb-5.2.0">
+		<flag name="abi4-compat">
 			Build openvdb with compatibility for older ABIs
 		</flag>
+		<flag name="numpy">
+			Build pyopenvdb with support for <pkg>dev-python/numpy</pkg>
+		</flag>
+		<flag name="openvdb_abi_3">
+			Disables newer features to maintain compatibility with ABI version 3.
+			Default for version 3.
+		</flag>
+		<flag name="openvdb_abi_4">
+			Disables newer features to maintain compatibility with ABI version 4.
+			Default for version 4.
+		</flag>
+		<flag name="openvdb_abi_5">
+			Disables newer features to maintain compatibility with ABI version 5.
+			Default for version 5.
+		</flag>
+		<flag name="openvdb_abi_6">
+			Disables newer features to maintain compatibility with ABI version 6.
+			Default for version 6.
+		</flag>
+		<flag name="openvdb_abi_7">
+			Disables newer features to maintain compatibility with ABI version 7.
+			Default for version 7.
+		</flag>
+		<flag name="utils">Build utility binaries</flag>
 	</use>
 	<upstream>
 		<remote-id type="github">dreamworksanimation/openvdb</remote-id>

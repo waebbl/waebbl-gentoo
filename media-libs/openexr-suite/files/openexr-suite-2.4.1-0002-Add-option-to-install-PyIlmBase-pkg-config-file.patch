@@ -1,0 +1,64 @@
+From 40b9cfa97cd4355d277ff91683651bac01eb8029 Mon Sep 17 00:00:00 2001
+From: Bernd Waibel <waebbl@gmail.com>
+Date: Mon, 2 Mar 2020 21:48:59 +0100
+Subject: [PATCH] Add option to install PyIlmBase pkg-config file.
+
+The patch adds the same option for PyIlmBase.pc as is already present
+for IlmBase.pc and OpenEXR.pc.
+
+Signed-off-by: Bernd Waibel <waebbl@gmail.com>
+---
+ PyIlmBase/config/CMakeLists.txt       | 18 ++++++++++++++++++
+ PyIlmBase/config/PyIlmBaseSetup.cmake |  7 +++++++
+ 2 files changed, 25 insertions(+)
+
+diff --git a/PyIlmBase/config/CMakeLists.txt b/PyIlmBase/config/CMakeLists.txt
+index 8b6c3d3..1872c89 100644
+--- a/PyIlmBase/config/CMakeLists.txt
++++ b/PyIlmBase/config/CMakeLists.txt
+@@ -11,6 +11,24 @@ target_include_directories(PyIlmBaseConfig INTERFACE
+ install(TARGETS PyIlmBaseConfig EXPORT ${PROJECT_NAME})
+ add_library(PyIlmBase::Config ALIAS PyIlmBaseConfig)
+ 
++if(PYILMBASE_INSTALL_PKG_CONFIG)
++  # use a helper function to avoid variable pollution, but pretty simple
++  function(pyilmbase_pkg_config_help pcinfile)
++    set(prefix ${CMAKE_INSTALL_PREFIX})
++    set(exec_prefix ${CMAKE_INSTALL_BINDIR})
++    set(libdir ${CMAKE_INSTALL_LIBDIR})
++    set(includedir ${CMAKE_INSTALL_INCLUDEDIR})
++    set(LIB_SUFFIX_DASH ${OPENEXR_LIB_SUFFIX})
++    string(REPLACE ".in" "" pcout ${pcinfile})
++    configure_file(${pcinfile} ${CMAKE_CURRENT_BINARY_DIR}/${pcout} @ONLY)
++    install(
++        FILES ${CMAKE_CURRENT_BINARY_DIR}/${pcout}
++        DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig
++    )
++  endfunction()
++  pyilmbase_pkg_config_help(../PyIlmBase.pc.in)
++endif()
++
+ # The main export of the configuration - This is the
+ # moral equivalent of a pkg-config file for cmake
+ # and replaces the Find*.cmake of the "old" cmake
+diff --git a/PyIlmBase/config/PyIlmBaseSetup.cmake b/PyIlmBase/config/PyIlmBaseSetup.cmake
+index cceaf26..52d9fd3 100644
+--- a/PyIlmBase/config/PyIlmBaseSetup.cmake
++++ b/PyIlmBase/config/PyIlmBaseSetup.cmake
+@@ -23,6 +23,13 @@ endif()
+ set(OPENEXR_CXX_STANDARD "${tmp}" CACHE STRING "C++ standard to compile against")
+ set(tmp)
+ 
++# Whether to generate and install a pkg-config file PyIlmBase.pc
++if (WIN32)
++option(PYILMBASE_INSTALL_PKG_CONFIG "Install PyIlmBase.pc file" OFF)
++else()
++option(PYILMBASE_INSTALL_PKG_CONFIG "Install PyIlmBase.pc file" ON)
++endif()
++
+ ########################
+ ## Build related options
+ 
+-- 
+2.25.1
+

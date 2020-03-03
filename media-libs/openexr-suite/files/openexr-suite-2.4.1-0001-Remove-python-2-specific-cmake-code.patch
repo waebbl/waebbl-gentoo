@@ -1,0 +1,163 @@
+From 1971869c190adb3489764acaa33ab0407ddd29f6 Mon Sep 17 00:00:00 2001
+From: Bernd Waibel <waebbl@gmail.com>
+Date: Sun, 1 Mar 2020 23:21:04 +0100
+Subject: [PATCH] Remove python 2 specific cmake code
+
+Signed-off-by: Bernd Waibel <waebbl@gmail.com>
+---
+ PyIlmBase/CMakeLists.txt | 80 ++++++++++++++++++++--------------------
+ 1 file changed, 39 insertions(+), 41 deletions(-)
+
+diff --git a/PyIlmBase/CMakeLists.txt b/PyIlmBase/CMakeLists.txt
+index eee43eb..eda2925 100644
+--- a/PyIlmBase/CMakeLists.txt
++++ b/PyIlmBase/CMakeLists.txt
+@@ -35,23 +35,23 @@ find_package(IlmBase ${PYILMBASE_VERSION} EXACT REQUIRED CONFIG)
+ # in the rest of OpenEXR right now...
+ 
+ # first make sure we find *some* python
+-find_package(Python COMPONENTS Interpreter Development)
+-if(NOT TARGET Python::Interpreter AND NOT TARGET Python::Python)
+-  message(WARNING ": Unable to find any python interpreter or libraries, disabling PyIlmBase")
+-  return()
+-endif()
++#find_package(Python COMPONENTS Interpreter Development)
++#if(NOT TARGET Python::Interpreter AND NOT TARGET Python::Python)
++#  message(WARNING ": Unable to find any python interpreter or libraries, disabling PyIlmBase")
++#  return()
++#endif()
+ 
+ # now determine which (or both), and compile for both
+-find_package(Python2 COMPONENTS Interpreter Development)
++#find_package(Python2 COMPONENTS Interpreter Development)
+ find_package(Python3 COMPONENTS Interpreter Development)
+-if(TARGET Python2::Python AND TARGET Python3::Python)
+-  message(STATUS ": Found Python ${Python2_VERSION} and ${Python3_VERSION}")
+-elseif(TARGET Python2::Python)
+-  message(STATUS ": Found Python ${Python2_VERSION}")
+-elseif(TARGET Python3::Python)
++#if(TARGET Python2::Python AND TARGET Python3::Python)
++#  message(STATUS ": Found Python ${Python2_VERSION} and ${Python3_VERSION}")
++#elseif(TARGET Python2::Python)
++#  message(STATUS ": Found Python ${Python2_VERSION}")
++if(TARGET Python3::Python)
+   message(STATUS ": Found Python ${Python3_VERSION}")
+ else()
+-  message(WARNING ": Unable to find python development libraries for python 2 or 3")
++  message(WARNING ": Unable to find python development libraries for python 3")
+   return()
+ endif()
+ 
+@@ -87,14 +87,14 @@ function(PYILMBASE_EXTRACT_REL_SITEARCH varname pyver pyexe pysitearch)
+   message(STATUS "  -> Will install to: ${_reldir}")
+ endfunction()
+ 
+-if (TARGET Python2::Python)
+-  set(PYILMBASE_BOOST_PY2_COMPONENT "python${Python2_VERSION_MAJOR}${Python2_VERSION_MINOR}")
+-  message(STATUS "Found Python2 libraries: ${Python2_VERSION_MAJOR}${Python2_VERSION_MINOR}")
++#if (TARGET Python2::Python)
++#  set(PYILMBASE_BOOST_PY2_COMPONENT "python${Python2_VERSION_MAJOR}${Python2_VERSION_MINOR}")
++#  message(STATUS "Found Python2 libraries: ${Python2_VERSION_MAJOR}${Python2_VERSION_MINOR}")
+   # we can't just use the Python2_SITEARCH variable as that then will
+   # ignore CMAKE_INSTALL_PREFIX. Could extract this to a function somewhere
+   # if it is generally useful
+-  pyilmbase_extract_rel_sitearch(PyIlmBase_Python2_SITEARCH_REL 2 ${Python2_EXECUTABLE} ${Python2_SITEARCH})
+-endif()
++#  pyilmbase_extract_rel_sitearch(PyIlmBase_Python2_SITEARCH_REL 2 ${Python2_EXECUTABLE} ${Python2_SITEARCH})
++#endif()
+ if (TARGET Python3::Python)
+   set(PYILMBASE_BOOST_PY3_COMPONENT "python${Python3_VERSION_MAJOR}${Python3_VERSION_MINOR}")
+   message(STATUS "Found Python3 libraries: ${Python3_VERSION_MAJOR}${Python3_VERSION_MINOR}")
+@@ -118,30 +118,28 @@ set(Boost_NO_BOOST_CMAKE ON)
+ 
+ find_package(Boost OPTIONAL_COMPONENTS
+   python
+-  python2
+-  ${PYILMBASE_BOOST_PY2_COMPONENT}
+   python3
+   ${PYILMBASE_BOOST_PY3_COMPONENT})
+ set(_pyilmbase_have_perver_boost)
+-if(PYILMBASE_BOOST_PY2_COMPONENT)
+-  string(TOUPPER ${PYILMBASE_BOOST_PY2_COMPONENT} PYILMBASE_PY2_UPPER)
+-else()
+-  set(PYILMBASE_BOOST_PY2_COMPONENT python2x_NOTFOUND)
+-  set(PYILMBASE_PY2_UPPER PYTHON2X_NOTFOUND)
+-endif()
++#if(PYILMBASE_BOOST_PY2_COMPONENT)
++#  string(TOUPPER ${PYILMBASE_BOOST_PY2_COMPONENT} PYILMBASE_PY2_UPPER)
++#else()
++#  set(PYILMBASE_BOOST_PY2_COMPONENT python2x_NOTFOUND)
++#  set(PYILMBASE_PY2_UPPER PYTHON2X_NOTFOUND)
++#endif()
+ if(PYILMBASE_BOOST_PY3_COMPONENT)
+   string(TOUPPER ${PYILMBASE_BOOST_PY3_COMPONENT} PYILMBASE_PY3_UPPER)
+ else()
+   set(PYILMBASE_BOOST_PY3_COMPONENT python3x_NOTFOUND)
+   set(PYILMBASE_PY3_UPPER PYTHON3X_NOTFOUND)
+ endif()
+-if(Boost_PYTHON2_FOUND OR Boost_${PYILMBASE_PY2_UPPER}_FOUND)
+-  set(_pyilmbase_have_perver_boost TRUE)
+-  if(NOT Boost_${PYILMBASE_PY2_UPPER}_FOUND)
+-    message(WARNING "Legacy Boost python2 found, but does not include minor version, this is an old configuration and may not be portable")
+-    set(PYILMBASE_BOOST_PY2_COMPONENT python2)
+-  endif()
+-endif()
++#if(Boost_PYTHON2_FOUND OR Boost_${PYILMBASE_PY2_UPPER}_FOUND)
++#  set(_pyilmbase_have_perver_boost TRUE)
++#  if(NOT Boost_${PYILMBASE_PY2_UPPER}_FOUND)
++#    message(WARNING "Legacy Boost python2 found, but does not include minor version, this is an old configuration and may not be portable")
++#    set(PYILMBASE_BOOST_PY2_COMPONENT python2)
++#  endif()
++#endif()
+ if(Boost_PYTHON3_FOUND OR Boost_${PYILMBASE_PY3_UPPER}_FOUND)
+   set(_pyilmbase_have_perver_boost TRUE)
+   if(NOT Boost_${PYILMBASE_PY3_UPPER}_FOUND)
+@@ -160,12 +158,12 @@ elseif(NOT _pyilmbase_have_perver_boost)
+   message(WARNING "Unable to find boost::python library, disabling PyIlmBase. If you believe this is wrong, check the cmake documentation and see if you need to set Boost_ROOT or Boost_NO_BOOST_CMAKE")
+   return()
+ else()
+-  if(TARGET Boost::${PYILMBASE_BOOST_PY2_COMPONENT})
+-    message(STATUS " -> Found Python 2 boost: Boost::${PYILMBASE_BOOST_PY2_COMPONENT}")
+-  elseif(Boost_PYTHON2_FOUND OR Boost_${PYILMBASE_PY2_UPPER}_FOUND)
+-    message(WARNING "Found boost for python 2, but FindBoost did not create an import library. If you believe this is wrong, check the cmake documentation and see if you need to set Boost_ROOT or Boost_NO_BOOST_CMAKE")
+-    return()
+-  endif()
++#  if(TARGET Boost::${PYILMBASE_BOOST_PY2_COMPONENT})
++#    message(STATUS " -> Found Python 2 boost: Boost::${PYILMBASE_BOOST_PY2_COMPONENT}")
++#  elseif(Boost_PYTHON2_FOUND OR Boost_${PYILMBASE_PY2_UPPER}_FOUND)
++#    message(WARNING "Found boost for python 2, but FindBoost did not create an import library. If you believe this is wrong, check the cmake documentation and see if you need to set Boost_ROOT or Boost_NO_BOOST_CMAKE")
++#    return()
++#  endif()
+   if(TARGET Boost::${PYILMBASE_BOOST_PY3_COMPONENT})
+     message(STATUS " -> Found Python 3 boost: Boost::${PYILMBASE_BOOST_PY3_COMPONENT}")
+   elseif(Boost_PYTHON3_FOUND OR Boost_${PYILMBASE_PY3_UPPER}_FOUND)
+@@ -173,7 +171,7 @@ else()
+     return()
+   endif()
+ endif()
+-unset(PYILMBASE_PY2_UPPER)
++#unset(PYILMBASE_PY2_UPPER)
+ unset(PYILMBASE_PY3_UPPER)
+ unset(_pyilmbase_have_perver_boost)
+ 
+@@ -197,7 +195,7 @@ endif()
+ 
+ add_subdirectory( PyIex )
+ add_subdirectory( PyImath )
+-if(TARGET Python2::IlmBaseNumPy OR TARGET Python3::IlmBaseNumPy)
++if(TARGET Python3::IlmBaseNumPy)
+   add_subdirectory( PyImathNumpy )
+ endif()
+ 
+@@ -209,7 +207,7 @@ if(BUILD_TESTING)
+   enable_testing()
+   add_subdirectory( PyIexTest )
+   add_subdirectory( PyImathTest )
+-  if(TARGET Python2::IlmBaseNumPy OR TARGET Python3::IlmBaseNumPy)
++  if(TARGET Python3::IlmBaseNumPy)
+     add_subdirectory( PyImathNumpyTest )
+   endif()
+ endif()
+-- 
+2.25.1
+

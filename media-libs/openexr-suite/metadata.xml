@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>waebbl@gmail.com</email>
+		<name>Bernd Waibel</name>
+	</maintainer>
+	<use>
+		<flag name="exceptions">Enable exception in PyIlmBase</flag>
+		<flag name="large-stack">Enable large-stack in IlmBase</flag>
+		<flag name="utils">
+			Build several utility binaries for viewing and manipulating
+			EXR files.
+		</flag>
+		<flag name="viewers">Compile the viewer applications</flag>
+	</use>
+	<upstream>
+		<remote-id type="github">AcademySoftwareFoundation/openexr</remote-id>
+	</upstream>
+</pkgmetadata>

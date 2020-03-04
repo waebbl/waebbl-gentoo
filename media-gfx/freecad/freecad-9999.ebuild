@@ -106,8 +106,8 @@ RDEPEND="
 		dev-python/matplotlib[${PYTHON_MULTI_USEDEP}]
 		dev-python/numpy[${PYTHON_MULTI_USEDEP}]
 		>=dev-python/pivy-0.6.5[${PYTHON_MULTI_USEDEP}]
-		dev-python/pyside2[gui,svg,${PYTHON_MULTI_USEDEP}]
-		dev-python/shiboken2[${PYTHON_MULTI_USEDEP}]
+		>=dev-python/pyside2-5.14.0[gui,svg,${PYTHON_MULTI_USEDEP}]
+		>=dev-python/shiboken2-5.14.0[${PYTHON_MULTI_USEDEP}]
 		addonmgr? ( dev-python/git-python[${PYTHON_MULTI_USEDEP}] )
 		mesh? ( dev-util/pybind11[${PYTHON_MULTI_USEDEP}] )
 	')
@@ -117,7 +117,7 @@ BDEPEND="
 	dev-lang/swig
 	$(python_gen_cond_dep '
 		!dev-python/pyside-tools:2[${PYTHON_MULTI_USEDEP}]
-		dev-python/pyside2-tools[${PYTHON_MULTI_USEDEP}]
+		>=dev-python/pyside2-tools-5.14.0[${PYTHON_MULTI_USEDEP},-tools(-)]
 	')
 "
 

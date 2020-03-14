@@ -3,7 +3,8 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{6,7,8} )
+# dev-libs/boost does not yet support py3.8
+PYTHON_COMPAT=( python3_{6,7} )
 
 inherit cmake distutils-r1
 
@@ -14,25 +15,22 @@ LICENSE="BSD"
 
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-
-# FIXME: USE=test needs some more work, i.e. depends on scipy for py3_{7,8} which
-# I didn't get to build.
-IUSE=" doc"
-#RESTRICT="!test? ( test )"
+IUSE="doc test"
+RESTRICT="!test? ( test )"
 
 # FIXME: dev-python/breathe only supports python 3.6 for now
-#	test? (
-#		dev-cpp/catch:0
-#		dev-libs/boost:=[python,${PYTHON_USEDEP}]
-#		dev-python/numpy[${PYTHON_USEDEP}]
-#		dev-python/pytest[${PYTHON_USEDEP}]
-#		sci-libs/scipy[${PYTHON_USEDEP}]
-#	)
 DEPEND="
 	${PYTHON_DEPS}
 	doc? (
 		$(python_gen_cond_dep 'dev-python/breathe[${PYTHON_USEDEP}]' 'python3_6')
 		dev-python/sphinx[${PYTHON_USEDEP}]
+	)
+	test? (
+		dev-cpp/catch:0
+		dev-libs/boost:=[python,${PYTHON_USEDEP}]
+		dev-python/numpy[${PYTHON_USEDEP}]
+		dev-python/pytest[${PYTHON_USEDEP}]
+		sci-libs/scipy[${PYTHON_USEDEP}]
 	)
 "
 
@@ -61,7 +59,7 @@ python_prepare_all() {
 python_configure_all() {
 	local mycmakeargs=(
 		-DPYBIND11_INSTALL=ON
-		-DPYBIND11_TEST=OFF # $(usex test)
+		-DPYBIND11_TEST=$(usex test)
 	)
 
 	cmake_src_configure
@@ -80,18 +78,14 @@ python_compile_all() {
 	fi
 }
 
-#python_test_all() {
-#	cmake_src_test
-#}
-
-#python_test() {
-#	do_test() {
-#		pushd "${BUILD_DIR}" || die
-#		eninja check
-#		popd || die
-#	}
-#	python_foreach_impl do_test
-#}
+python_test_all() {
+	# Tests are only copied for python-3.6, so let's restrict them
+	if [ "${EPYTHON}" = "python3.6" ]; then
+		pushd "${BUILD_DIR}" || die
+		eninja check
+		popd || die
+	fi
+}
 
 python_install_all() {
 	cmake_src_install

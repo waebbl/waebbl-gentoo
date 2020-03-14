@@ -59,8 +59,6 @@ unset module
 
 # Eigen is needed by sketcher which we enable by default, so remove USE flag and
 # unconditionally depend on it
-# FIXME: For now we use dev-util/pybind11::waebbl, as the current
-# dev-python/pybind11::gentoo doesn't install cmake config files.
 RDEPEND="
 	${PYTHON_DEPS}
 	>=dev-cpp/eigen-3.3.1:3
@@ -99,7 +97,6 @@ RDEPEND="
 	$(python_gen_cond_dep '
 		!dev-python/pyside:2[gui,svg,${PYTHON_MULTI_USEDEP}]
 		!dev-python/shiboken:2[${PYTHON_MULTI_USEDEP}]
-		!dev-python/pybind11[${PYTHON_MULTI_USEDEP}]
 		dev-libs/boost:=[mpi?,python,threads,${PYTHON_MULTI_USEDEP}]
 		dev-python/matplotlib[${PYTHON_MULTI_USEDEP}]
 		dev-python/numpy[${PYTHON_MULTI_USEDEP}]
@@ -107,7 +104,7 @@ RDEPEND="
 		dev-python/pyside2[gui,svg,${PYTHON_MULTI_USEDEP}]
 		dev-python/shiboken2[${PYTHON_MULTI_USEDEP}]
 		addonmgr? ( dev-python/GitPython[${PYTHON_MULTI_USEDEP}] )
-		mesh? ( dev-util/pybind11[${PYTHON_MULTI_USEDEP}] )
+		mesh? ( dev-python/pybind11[${PYTHON_MULTI_USEDEP}] )
 	')
 "
 DEPEND="${RDEPEND}"

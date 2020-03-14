@@ -106,7 +106,7 @@ RDEPEND="
 		>=dev-python/pivy-0.6.5[${PYTHON_MULTI_USEDEP}]
 		dev-python/pyside2[gui,svg,${PYTHON_MULTI_USEDEP}]
 		dev-python/shiboken2[${PYTHON_MULTI_USEDEP}]
-		addonmgr? ( dev-python/git-python[${PYTHON_MULTI_USEDEP}] )
+		addonmgr? ( dev-python/GitPython[${PYTHON_MULTI_USEDEP}] )
 		mesh? ( dev-util/pybind11[${PYTHON_MULTI_USEDEP}] )
 	')
 "

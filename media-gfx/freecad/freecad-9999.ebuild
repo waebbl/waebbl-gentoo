@@ -296,8 +296,7 @@ src_install() {
 }
 
 pkg_postinst() {
-	xdg_desktop_database_update
-	xdg_mimeinfo_database_update
+	xdg_pkg_postinst
 
 	if use plot; then
 		einfo "Note: You are enabling the 'plot' USE flag."
@@ -310,9 +309,4 @@ pkg_postinst() {
 		einfo "This conflicts with the ship workbench which you can load"
 		einfo "via the addon manager! You can only install one of those."
 	fi
-}
-
-pkg_postrm() {
-	xdg_desktop_database_update
-	xdg_mimeinfo_database_update
 }

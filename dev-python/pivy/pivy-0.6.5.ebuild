@@ -4,6 +4,7 @@
 EAPI=7
 
 PYTHON_COMPAT=( python3_{6,7,8} )
+DISTUTILS_USE_SETUPTOOLS=no
 
 inherit distutils-r1
 
@@ -18,16 +19,21 @@ else
 	KEYWORDS="~amd64 ~x86"
 fi
 
+RESTRICT="primaryuri"
 LICENSE="ISC"
 SLOT="0"
-IUSE=""
+IUSE="+quarter soqt"
 
-# FIXME: change the deps to >= once the older versions are dropped
-# for now we need to depend on exact version, because the older
-# *a and *a_pre* versions are considered of higher version by portage
+REQUIRED_USE="
+	${PYTHON_REQUIRED_USE}
+	|| ( quarter soqt )
+"
+
 RDEPEND="
-	~media-libs/coin-4.0.0
-	~media-libs/SoQt-1.6.0
+	>=media-libs/coin-4.0.0
+	<media-libs/coin-4.0.0a_pre
+	quarter? ( media-libs/quarter )
+	soqt? ( >=media-libs/SoQt-1.6.0 )
 "
 DEPEND="${RDEPEND}"
 BDEPEND="dev-lang/swig"

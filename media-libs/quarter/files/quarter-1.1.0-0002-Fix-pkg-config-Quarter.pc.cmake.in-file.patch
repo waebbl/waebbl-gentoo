@@ -1,0 +1,35 @@
+From 1de10fc9da0cd18cb3ba91123d37e22d0d9efc55 Mon Sep 17 00:00:00 2001
+From: Bernd Waibel <waebbl@gmail.com>
+Date: Sun, 15 Mar 2020 20:48:26 +0100
+Subject: [PATCH] Fix pkg-config Quarter.pc.cmake.in file
+
+Signed-off-by: Bernd Waibel <waebbl@gmail.com>
+---
+ Quarter.pc.cmake.in | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Quarter.pc.cmake.in b/Quarter.pc.cmake.in
+index ea7b2d6..ea78b7f 100644
+--- a/Quarter.pc.cmake.in
++++ b/Quarter.pc.cmake.in
+@@ -5,7 +5,7 @@ libdir=${exec_prefix}/lib
+ includedir=${prefix}/include
+ datarootdir=${prefix}/share
+ datadir=${datarootdir}
+-docdir=${datarootdir}/doc/@PROJECT_NAME_LOWER@
++docdir=${datarootdir}/doc/@PROJECT_NAME_LOWER@-@PROJECT_VERSION@
+ infodir=${datarootdir}/info
+ mandir=${datarootdir}/man
+ htmldir=${docdir}/html
+@@ -13,7 +13,7 @@ htmldir=${docdir}/html
+ Name: @PROJECT_NAME@
+ Description: A Qt Gui widget for Coin
+ Version: @PROJECT_VERSION@
+-Requires: Coin, QtCore, QtGui, QtOpenGL, QtXml
++Requires: Coin, QtCore, QtGui, QtOpenGL, QtXml, QtX11Extras
+ Conflicts:
+ Libs: -L${libdir} -lQuarter @QUARTER_USE_LDFLAGS@ @QUARTER_USE_LIBS@
+ Cflags: -I${includedir} @QUARTER_USE_CPPFLAGS@
+-- 
+2.25.1
+

@@ -1,0 +1,78 @@
+From 3da00bd878a92053abbae256447892008db1bd61 Mon Sep 17 00:00:00 2001
+From: Bernd Waibel <waebbl@gmail.com>
+Date: Sun, 22 Mar 2020 17:05:04 +0100
+Subject: [PATCH] Install binaries
+
+Add install targets for binaries
+
+Signed-off-by: Bernd Waibel <waebbl@gmail.com>
+---
+ applications/osg2vsg/CMakeLists.txt    | 2 ++
+ applications/osggroups/CMakeLists.txt  | 1 +
+ applications/osgmaths/CMakeLists.txt   | 1 +
+ applications/pdconv/CMakeLists.txt     | 2 ++
+ applications/vsgnodes/CMakeLists.txt   | 2 ++
+ applications/vsgobjects/CMakeLists.txt | 2 ++
+ 6 files changed, 10 insertions(+)
+
+diff --git a/applications/osg2vsg/CMakeLists.txt b/applications/osg2vsg/CMakeLists.txt
+index 9ef9a83..39bef0d 100644
+--- a/applications/osg2vsg/CMakeLists.txt
++++ b/applications/osg2vsg/CMakeLists.txt
+@@ -33,3 +33,5 @@ target_link_libraries(osg2vsg_viewer
+     Vulkan::Vulkan
+     ${OSGDB_LIBRARIES} ${OSGUTIL_LIBRARIES} ${OSG_LIBRARIES} ${OPENTHREADS_LIBRARY} ${CMAKE_THREAD_LIBS_INIT} ${OPENGL_LIBRARY} ${DL_LIBRARY}
+ )
++
++install(TARGETS osg2vsg_viewer RUNTIME DESTINATION bin)
+diff --git a/applications/osggroups/CMakeLists.txt b/applications/osggroups/CMakeLists.txt
+index 45523e6..ad3146a 100644
+--- a/applications/osggroups/CMakeLists.txt
++++ b/applications/osggroups/CMakeLists.txt
+@@ -20,3 +20,4 @@ add_executable(osggroups ${SOURCES})
+ target_include_directories(osggroups PRIVATE ${OSG_INCLUDE_DIR})
+ target_link_libraries(osggroups ${OSGDB_LIBRARIES} ${OSG_LIBRARIES} ${OPENTHREADS_LIBRARY} ${CMAKE_THREAD_LIBS_INIT} ${OPENGL_LIBRARY} ${DL_LIBRARY})
+ 
++install(TARGETS osggroups RUNTIME DESTINATION bin)
+diff --git a/applications/osgmaths/CMakeLists.txt b/applications/osgmaths/CMakeLists.txt
+index bcd25a5..dfd0ecf 100644
+--- a/applications/osgmaths/CMakeLists.txt
++++ b/applications/osgmaths/CMakeLists.txt
+@@ -23,3 +23,4 @@ target_link_libraries(osgmaths
+     ${OSGDB_LIBRARIES} ${OSG_LIBRARIES} ${OPENTHREADS_LIBRARY} ${CMAKE_THREAD_LIBS_INIT} ${OPENGL_LIBRARY} ${DL_LIBRARY}
+ )
+ 
++install(TARGETS osgmaths RUNTIME DESTINATION bin)
+diff --git a/applications/pdconv/CMakeLists.txt b/applications/pdconv/CMakeLists.txt
+index 59fe2e7..97c2221 100644
+--- a/applications/pdconv/CMakeLists.txt
++++ b/applications/pdconv/CMakeLists.txt
+@@ -34,3 +34,5 @@ target_link_libraries(pdconv
+     Vulkan::Vulkan
+     ${OSGTERRAIN_LIBRARIES} ${OSGDB_LIBRARIES} ${OSGUTIL_LIBRARIES} ${OSG_LIBRARIES} ${OPENTHREADS_LIBRARY} ${CMAKE_THREAD_LIBS_INIT} ${OPENGL_LIBRARY} ${DL_LIBRARY}
+ )
++
++install(TARGETS pdconv RUNTIME DESTINATION bin)
+diff --git a/applications/vsgnodes/CMakeLists.txt b/applications/vsgnodes/CMakeLists.txt
+index b513c07..3d3eb39 100644
+--- a/applications/vsgnodes/CMakeLists.txt
++++ b/applications/vsgnodes/CMakeLists.txt
+@@ -3,3 +3,5 @@ set(SOURCES vsgnodes.cpp)
+ add_executable(vsgnodes ${SOURCES})
+ target_include_directories(vsgnodes PRIVATE ${OSG_INCLUDE_DIR})
+ target_link_libraries(vsgnodes vsg::vsg ${OSG_LIBRARIES})
++
++install(TARGETS vsgnodes RUNTIME DESTINATION bin)
+diff --git a/applications/vsgobjects/CMakeLists.txt b/applications/vsgobjects/CMakeLists.txt
+index bd6df3d..880daf8 100644
+--- a/applications/vsgobjects/CMakeLists.txt
++++ b/applications/vsgobjects/CMakeLists.txt
+@@ -3,3 +3,5 @@ set(SOURCES vsgobjects.cpp)
+ add_executable(vsgobjects ${SOURCES})
+ target_include_directories(vsgobjects PRIVATE ${OSG_INCLUDE_DIR})
+ target_link_libraries(vsgobjects vsg::vsg ${OSG_LIBRARIES})
++
++install(TARGETS vsgobjects RUNTIME DESTINATION bin)
+-- 
+2.25.2
+

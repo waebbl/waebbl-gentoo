@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<maintainer type="person">
+	<email>waebbl@gmail.com</email>
+	<name>Bernd Waibel</name>
+</maintainer>
+<longdescription>
+	A modern, cross platform, high performance scene graph library, built
+	upon Vulkan graphics/compute API.
+</longdescription>
+<upstream>
+	<remote-id type="github">vsg-dev/VulkanSceneGraph</remote-id>
+</upstream>
+</pkgmetadata>

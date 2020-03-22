@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<maintainer type="person">
+	<email>waebbl@gmail.com</email>
+	<name>Bernd Waibel</name>
+</maintainer>
+<longdescription>
+	Small utility library and application to convert OpenSceneGraph images
+	and 3D modules into VSG/Vulkan equivalents.
+</longdescription>
+<upstream>
+	<remote-id type="github">vsg-dev/osg2vsg</remote-id>
+</upstream>
+</pkgmetadata>

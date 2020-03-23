@@ -7,4 +7,7 @@ This is my personal overlay of gentoo ebuilds. It has some focus on the domain 3
 
 You can expect reasonable high quality ebuilds here, although some might not reach gentoo QA standards. Feel free to open an issue, whenever you find an ebuild is not working properly.
 
+**Note:** To emerge the freecad package, you need the pyside packages from the `::raiagent` overlay at https://github.com/leycec/raiagent.git. Use `eselect repository enable raiagent` before emerging freecad.
+
+
 See the [TODO](TODO.md) file for a list of what I'm currently working on or planning to do.

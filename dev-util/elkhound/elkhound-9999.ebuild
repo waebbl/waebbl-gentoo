@@ -1,9 +1,9 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
-inherit cmake-utils git-r3
+inherit cmake git-r3
 
 DESCRIPTION="Elkhound is a GLR parser generator"
 HOMEPAGE="http://scottmcpeak.com/elkhound"
@@ -26,11 +26,12 @@ RDEPEND=">=dev-lang/ocaml-4.04.2-r1[ocamlopt]"
 
 S="${WORKDIR}/${P}/src"
 
-PATCHES=( "${FILESDIR}/${P}-cmake-respect-cflags.patch" )
+src_prepare() {
+	sed -e 's|CMAKE_C_FLAGS \"-g3|CMAKE_C_FLAGS \"\${CMAKE_C_FLAGS}|' \
+		-e 's|CMAKE_CXX_FLAGS \"-g3|CMAKE_CXX_FLAGS \"\${CMAKE_CXX_FLAGS}|' \
+		-i CMakeLists.txt || die
 
-src_configure() {
-	local mycmakeargs=(	-DOCAML=ON )
-	cmake-utils_src_configure
+	cmake_src_prepare
 }
 
 src_install() {

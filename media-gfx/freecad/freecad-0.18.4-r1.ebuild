@@ -78,6 +78,7 @@ RDEPEND="
 	dev-qt/qtx11extras:5
 	dev-qt/qtxml:5
 	>=media-libs/coin-4.0.0[draggers(+),manipulators(+),nodekits(+),simage(+),vrml97(+)]
+	<media-libs/coin-4.0.0a_pre2019
 	media-libs/freetype
 	media-libs/qhull
 	sci-libs/flann[mpi?,openmp]
@@ -147,6 +148,7 @@ PATCHES=(
 	"${FILESDIR}/${P}-0001-Fix-coin-related-variables-to-use-new-naming-from-4.0.0.patch"
 	"${FILESDIR}/${P}-0002-Fix-PySide-related-checks.patch"
 	"${FILESDIR}/${P}-0004-fix-std-namespace-issues.patch"
+	"${FILESDIR}/${P}-0005-Fix-a-Qt-related-crash-with-draft-workbench.patch"
 )
 
 CHECKREQS_DISK_BUILD="6G"
@@ -163,11 +165,6 @@ src_prepare() {
 	# a working one, so we use this.
 	rm -f "${S}/cMake/FindCoin3D.cmake"
 	cmake_src_prepare
-
-	if has_version ">=dev-python/pyside2-tools-5.14.0" || \
-		has_version ">=dev-qt/qtcore-5.14.0"; then
-		eapply "${FILESDIR}/${P}-0003-cMake-FindPySide2Tools.cmake-use-generator-option.patch"
-	fi
 }
 
 src_configure() {

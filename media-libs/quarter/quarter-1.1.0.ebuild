@@ -48,6 +48,7 @@ src_prepare() {
 
 	sed -e 's|LIB_DIR_SUFFIXES lib|LIB_DIR_SUFFIXES '$(get_libdir)'|' \
 		-i SIMCMakeMacros/FindSpacenav.cmake || die
+	sed -i "s|/lib\$|/$(get_libdir)|" Quarter.pc.cmake.in || die
 
 	cmake_src_prepare
 }

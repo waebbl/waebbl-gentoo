@@ -5,7 +5,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_6 )
+PYTHON_COMPAT=( python3_{6,7} )
 
 inherit check-reqs cmake desktop python-single-r1 xdg
 

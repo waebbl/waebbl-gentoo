@@ -1,0 +1,67 @@
+From 0c813dc5307bc43d651437b64a3e921d24ef25c9 Mon Sep 17 00:00:00 2001
+From: Bernd Waibel <waebbl@gmail.com>
+Date: Sun, 24 Jan 2021 22:06:47 +0100
+Subject: [PATCH] use cmake internal auto search for cuda devices
+
+Needs >=cmake-3.17, which is available on Gentoo by default
+
+Signed-off-by: Bernd Waibel <waebbl@gmail.com>
+---
+ .../vtk-m/CMake/VTKmDeviceAdapters.cmake      | 41 ++++++-------------
+ 1 file changed, 13 insertions(+), 28 deletions(-)
+
+diff --git a/ThirdParty/vtkm/vtkvtkm/vtk-m/CMake/VTKmDeviceAdapters.cmake b/ThirdParty/vtkm/vtkvtkm/vtk-m/CMake/VTKmDeviceAdapters.cmake
+index e565e783..7c90a9a6 100644
+--- a/ThirdParty/vtkm/vtkvtkm/vtk-m/CMake/VTKmDeviceAdapters.cmake
++++ b/ThirdParty/vtkm/vtkvtkm/vtk-m/CMake/VTKmDeviceAdapters.cmake
+@@ -195,34 +195,19 @@ if(VTKm_ENABLE_CUDA)
+         set(arch_flags ${VTKM_CUDA_NATIVE_EXE_PROCESS_RAN_OUTPUT})
+       else()
+ 
+-        #run execute_process to do auto_detection
+-        if(CMAKE_GENERATOR MATCHES "Visual Studio")
+-          set(args "-ccbin" "${CMAKE_CXX_COMPILER}" "--run" "${VTKm_CMAKE_MODULE_PATH}/VTKmDetectCUDAVersion.cu")
+-        elseif(CUDA_HOST_COMPILER)
+-          set(args "-ccbin" "${CUDA_HOST_COMPILER}" "--run" "${VTKm_CMAKE_MODULE_PATH}/VTKmDetectCUDAVersion.cu")
+-        else()
+-          set(args "--run" "${VTKm_CMAKE_MODULE_PATH}/VTKmDetectCUDAVersion.cu")
+-        endif()
+-
+-        execute_process(
+-                COMMAND ${CMAKE_CUDA_COMPILER} ${args}
+-                RESULT_VARIABLE ran_properly
+-                OUTPUT_VARIABLE run_output
+-                WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
+-
+-        if(ran_properly EQUAL 0)
+-          #find the position of the "--generate-code" output. With some compilers such as
+-          #msvc we get compile output plus run output. So we need to strip out just the
+-          #run output
+-          string(FIND "${run_output}" "--generate-code" position)
+-          string(SUBSTRING "${run_output}" ${position} -1 run_output)
+-
+-          set(arch_flags ${run_output})
+-          set(VTKM_CUDA_NATIVE_EXE_PROCESS_RAN_OUTPUT ${run_output} CACHE INTERNAL
+-                  "device type(s) for cuda[native]")
+-        else()
+-          message(FATAL_ERROR "Error detecting architecture flags for CUDA. Please set VTKm_CUDA_Architecture manually.")
+-        endif()
++        # needs cmake-3.17: use integrated search
++        include(FindCUDA/select_compute_arch)
++        CUDA_SELECT_NVCC_ARCH_FLAGS(run_output)
++        message(STATUS "Found CUDA Arch ${run_output}")
++        #find the position of the "--generate-code" output. With some compilers such as
++        #msvc we get compile output plus run output. So we need to strip out just the
++        #run output
++        string(FIND "${run_output}" "-gencode" position)
++        string(SUBSTRING "${run_output}" ${position} -1 run_output)
++
++        set(arch_flags ${run_output})
++        set(VTKM_CUDA_NATIVE_EXE_PROCESS_RAN_OUTPUT ${run_output} CACHE INTERNAL
++                "device type(s) for cuda[native]")
+       endif()
+     endif()
+ 
+-- 
+2.30.0
+

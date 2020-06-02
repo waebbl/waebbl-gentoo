@@ -55,10 +55,6 @@
 			Build the part design module and workbench for build part shapes
 			from sketches
 		</flag>
-		<flag name="part_design">
-			Build the part design module and workbench for build part shapes
-			from sketches
-		</flag>
 		<flag name="path"><!-- FIXME: auto-enable throught robot? -->
 			Build the path module and workbench to procude G-Code instructions 
 			for CNC

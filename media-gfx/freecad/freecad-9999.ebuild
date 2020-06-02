@@ -5,7 +5,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_6 )
+PYTHON_COMPAT=( python3_{6,7} )
 
 inherit check-reqs cmake desktop python-single-r1 xdg
 
@@ -43,7 +43,7 @@ FREECAD_EXPERIMENTAL_MODULES="assembly plot ship"
 #FREECAD_DEBUG_MODULES="sandbox template"
 FREECAD_STABLE_MODULES="addonmgr arch drawing fem idf
 	image inspection material mesh openscad
-	part_design path points raytracing robot
+	part-design path points raytracing robot
 	show spreadsheet surface techdraw tux"
 FREECAD_DISABLED_MODULES="vr"
 FREECAD_ALL_MODULES="${FREECAD_STABLE_MODULES}
@@ -59,6 +59,7 @@ unset module
 
 # Eigen is needed by sketcher which we enable by default, so remove USE flag and
 # unconditionally depend on it
+#	netgen? ( >=sci-mathematics/netgen-6.2.1810[mpi?,python,opencascade,${PYTHON_SINGLE_USEDEP}] )
 RDEPEND="
 	${PYTHON_DEPS}
 	>=dev-cpp/eigen-3.3.1:3
@@ -80,6 +81,7 @@ RDEPEND="
 	dev-qt/qtxml:5
 	dev-qt/qtxmlpatterns:5
 	>=media-libs/coin-4.0.0[draggers(+),manipulators(+),nodekits(+),simage(+),vrml97(+)]
+	<media-libs/coin-4.0.0a_pre2019
 	media-libs/freetype
 	media-libs/qhull
 	sci-libs/flann[mpi?,openmp]
@@ -93,7 +95,6 @@ RDEPEND="
 	fem? ( >=sci-libs/vtk-6.1.0-r4[boost,mpi?,python,qt5,rendering,${PYTHON_SINGLE_USEDEP}] )
 	mesh? ( sci-libs/hdf5:=[fortran,mpi?,zlib] )
 	mpi? ( virtual/mpi[cxx,fortran,threads] )
-	netgen? ( >=sci-mathematics/netgen-6.2.1810[mpi?,python,opencascade,${PYTHON_SINGLE_USEDEP}] )
 	openscad? ( media-gfx/openscad )
 	pcl? ( >=sci-libs/pcl-1.8.1:=[opengl,openni2(+),qt5(+),vtk(+)] )
 	$(python_gen_cond_dep '
@@ -103,8 +104,8 @@ RDEPEND="
 		dev-python/matplotlib[${PYTHON_MULTI_USEDEP}]
 		dev-python/numpy[${PYTHON_MULTI_USEDEP}]
 		>=dev-python/pivy-0.6.5[${PYTHON_MULTI_USEDEP}]
-		>=dev-python/pyside2-5.14.0[gui,svg,${PYTHON_MULTI_USEDEP}]
-		>=dev-python/shiboken2-5.14.0[${PYTHON_MULTI_USEDEP}]
+		dev-python/pyside2[gui,svg,${PYTHON_MULTI_USEDEP}]
+		dev-python/shiboken2[${PYTHON_MULTI_USEDEP}]
 		addonmgr? ( dev-python/GitPython[${PYTHON_MULTI_USEDEP}] )
 		mesh? ( dev-python/pybind11[${PYTHON_MULTI_USEDEP}] )
 	')
@@ -112,9 +113,10 @@ RDEPEND="
 DEPEND="${RDEPEND}"
 BDEPEND="
 	dev-lang/swig
+	doc? ( app-arch/p7zip )
 	$(python_gen_cond_dep '
 		!dev-python/pyside-tools:2[${PYTHON_MULTI_USEDEP}]
-		>=dev-python/pyside2-tools-5.14.0[${PYTHON_MULTI_USEDEP},-tools(-)]
+		dev-python/pyside2-tools[${PYTHON_MULTI_USEDEP}]
 	')
 "
 
@@ -144,11 +146,10 @@ CMAKE_BUILD_TYPE=Release
 
 DOCS=( README.md ChangeLog.txt )
 
-# FIXME: Check the find-Coin.tag patch after updates of media-libs/coin
-#	"${FILESDIR}"/${PN}-9999-find-Coin.tag.patch
 PATCHES=(
 	"${FILESDIR}/${P}-0001-Gentoo-specific-disable-building-assembly-workbench.patch"
 	"${FILESDIR}/${P}-0002-Patch-search-for-coin.patch"
+	"${FILESDIR}/${PN}-0.18.4-0006-add-missing-include-statements.patch"
 )
 
 CHECKREQS_DISK_BUILD="7G"
@@ -190,7 +191,7 @@ src_configure() {
 		-DBUILD_MESH_PART=$(usex mesh)
 		-DBUILD_OPENSCAD=$(usex openscad)
 		-DBUILD_PART=ON # basic workspace, enable it by default
-		-DBUILD_PART_DESIGN=$(usex part_design)
+		-DBUILD_PART_DESIGN=$(usex part-design)
 		-DBUILD_PATH=$(usex path)
 		-DBUILD_PLOT=OFF # conflicts with possible external workbench
 		-DBUILD_POINTS=$(usex points)

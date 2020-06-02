@@ -51,8 +51,12 @@
 			Build the OpenSCAD module for interoperability with OpenSCAD 
 			and repairing Constructive Solid Geometry (CSG) history
 		</flag>
+		<flag name="part-design">
+			Build the part design module and workbench for build part shapes
+			from sketches
+		</flag>
 		<flag name="part_design">
-			Build the part design module and workbench for build part shapes 
+			Build the part design module and workbench for build part shapes
 			from sketches
 		</flag>
 		<flag name="path"><!-- FIXME: auto-enable throught robot? -->

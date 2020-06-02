@@ -43,7 +43,7 @@ FREECAD_EXPERIMENTAL_MODULES="assembly plot ship"
 #FREECAD_DEBUG_MODULES="sandbox template"
 FREECAD_STABLE_MODULES="addonmgr arch drawing fem idf
 	image inspection material mesh openscad
-	part_design path points raytracing robot
+	part-design path points raytracing robot
 	show spreadsheet surface techdraw tux"
 FREECAD_DISABLED_MODULES="vr"
 FREECAD_ALL_MODULES="${FREECAD_STABLE_MODULES}
@@ -59,6 +59,7 @@ unset module
 
 # Eigen is needed by sketcher which we enable by default, so remove USE flag and
 # unconditionally depend on it
+#	netgen? ( >=sci-mathematics/netgen-6.2.1810[mpi?,python,opencascade,${PYTHON_SINGLE_USEDEP}] )
 RDEPEND="
 	${PYTHON_DEPS}
 	>=dev-cpp/eigen-3.3.1:3
@@ -92,7 +93,6 @@ RDEPEND="
 	fem? ( >=sci-libs/vtk-6.1.0-r4[boost,mpi?,python,qt5,rendering,${PYTHON_SINGLE_USEDEP}] )
 	mesh? ( sci-libs/hdf5:=[fortran,mpi?,zlib] )
 	mpi? ( virtual/mpi[cxx,fortran,threads] )
-	netgen? ( >=sci-mathematics/netgen-6.2.1810[mpi?,python,opencascade,${PYTHON_SINGLE_USEDEP}] )
 	openscad? ( media-gfx/openscad )
 	pcl? ( >=sci-libs/pcl-1.8.1:=[opengl,openni2(+),qt5(+),vtk(+)] )
 	$(python_gen_cond_dep '
@@ -111,6 +111,7 @@ RDEPEND="
 DEPEND="${RDEPEND}"
 BDEPEND="
 	dev-lang/swig
+	doc? ( app-arch/p7zip )
 	$(python_gen_cond_dep '
 		!dev-python/pyside-tools:2[${PYTHON_MULTI_USEDEP}]
 		dev-python/pyside2-tools[${PYTHON_MULTI_USEDEP}]
@@ -149,6 +150,7 @@ PATCHES=(
 	"${FILESDIR}/${P}-0002-Fix-PySide-related-checks.patch"
 	"${FILESDIR}/${P}-0004-fix-std-namespace-issues.patch"
 	"${FILESDIR}/${P}-0005-Fix-a-Qt-related-crash-with-draft-workbench.patch"
+	"${FILESDIR}/${P}-0006-add-missing-include-statements.patch"
 )
 
 CHECKREQS_DISK_BUILD="6G"
@@ -190,7 +192,7 @@ src_configure() {
 		-DBUILD_MESH_PART=$(usex mesh)
 		-DBUILD_OPENSCAD=$(usex openscad)
 		-DBUILD_PART=ON # basic workspace, enable it by default
-		-DBUILD_PART_DESIGN=$(usex part_design)
+		-DBUILD_PART_DESIGN=$(usex part-design)
 		-DBUILD_PATH=$(usex path)
 		-DBUILD_PLOT=OFF # conflicts with possible external workbench
 		-DBUILD_POINTS=$(usex points)

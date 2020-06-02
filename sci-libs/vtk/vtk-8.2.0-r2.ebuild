@@ -121,6 +121,7 @@ BDEPEND="dev-cpp/eigen[c++11]"
 PATCHES=(
 	"${FILESDIR}/${P}-libdir.patch"
 	"${FILESDIR}/${P}-fix-designer-plugin-install-dir.patch"
+	"${FILESDIR}/${P}-0001-add-missing-include-statement.patch"
 )
 
 S="${WORKDIR}"/VTK-${PV}
@@ -231,6 +232,7 @@ src_configure() {
 		mycmakeargs+=(
 			-DPYTHON_INCLUDE_DIR="$(python_get_includedir)"
 			-DPYTHON_LIBRARY="$(python_get_library_path)"
+			-DVTK_INSTALL_PYTHON_MODULES_DIR="$(python_get_sitedir)"
 			-DVTK_USE_SYSTEM_SIX=ON
 		)
 	fi
@@ -265,6 +267,8 @@ src_install() {
 	use web && webapp_src_preinst
 
 	cmake_src_install
+
+	use python && python_optimize
 
 	use java && java-pkg_regjar "${ED}"/usr/$(get_libdir)/${PN}.jar
 

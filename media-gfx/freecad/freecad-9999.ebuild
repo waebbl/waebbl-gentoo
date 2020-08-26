@@ -149,7 +149,6 @@ DOCS=( README.md ChangeLog.txt )
 PATCHES=(
 	"${FILESDIR}/${P}-0001-Gentoo-specific-disable-building-assembly-workbench.patch"
 	"${FILESDIR}/${P}-0002-Patch-search-for-coin.patch"
-	"${FILESDIR}/${PN}-0.18.4-0006-add-missing-include-statements.patch"
 )
 
 CHECKREQS_DISK_BUILD="7G"

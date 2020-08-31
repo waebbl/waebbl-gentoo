@@ -1,0 +1,24 @@
+diff --git a/src/Gui/DAGView/DAGView.cpp b/src/Gui/DAGView/DAGView.cpp
+index 501a424a2..229d32cbb 100644
+--- a/src/Gui/DAGView/DAGView.cpp
++++ b/src/Gui/DAGView/DAGView.cpp
+@@ -37,6 +37,7 @@
+ #include "DAGModel.h"
+ #include "DAGView.h"
+ 
++using namespace boost::placeholders;
+ using namespace Gui;
+ using namespace DAG;
+ 
+diff --git a/src/Mod/Sketcher/Gui/TaskSketcherGeneral.cpp b/src/Mod/Sketcher/Gui/TaskSketcherGeneral.cpp
+index 8b0e88478..4e0c8eacb 100644
+--- a/src/Mod/Sketcher/Gui/TaskSketcherGeneral.cpp
++++ b/src/Mod/Sketcher/Gui/TaskSketcherGeneral.cpp
+@@ -38,6 +38,7 @@
+ 
+ #include "ViewProviderSketch.h"
+ 
++using namespace boost::placeholders;
+ using namespace SketcherGui;
+ using namespace Gui::TaskView;
+ 

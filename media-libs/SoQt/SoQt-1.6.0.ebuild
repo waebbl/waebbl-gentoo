@@ -11,8 +11,8 @@ SOGUI_COMMIT="100612bf4016916dd686e2b6fecf8ac23d3db14d"
 DESCRIPTION="The glue between Coin3D and Qt"
 HOMEPAGE="https://github.com/coin3d/soqt"
 SRC_URI="https://github.com/coin3d/soqt/archive/${P}.tar.gz
-	https://github.com/coin3d/soanydata/archive/${DATA_COMMIT}.zip
-	https://github.com/coin3d/sogui/archive/${SOGUI_COMMIT}.zip"
+	https://github.com/coin3d/soanydata/archive/${DATA_COMMIT}.tar.gz -> ${PN}-data-${PV}.tar.gz
+	https://github.com/coin3d/sogui/archive/${SOGUI_COMMIT}.tar.gz -> ${PN}-gui-${PV}.tar.gz"
 KEYWORDS="~amd64 ~x86"
 
 LICENSE="BSD"

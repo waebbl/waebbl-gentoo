@@ -7,7 +7,6 @@
 </maintainer>
 <use>
 	<flag name="3ds">Enables 3ds import capabilities</flag>
-	<flag name="3ds-import">Enables 3ds import capabilities</flag>
 	<flag name="draggers">Enables Dragger support</flag>
 	<flag name="exceptions">Enable g++ exceptions</flag>
 	<flag name="man">Build and install man pages</flag>

@@ -28,7 +28,7 @@ index 7274639ea..05c64d401 100644
 +	if (NOT CMAKE_BUILD_TYPE MATCHES "Gentoo")
 +        option(BUILD_ASSEMBLY "Build the FreeCAD Assembly module" OFF)
 +    endif()
-     option(BUILD_COMPLETE "Build the FreeCAD complete module" ON)
+     option(BUILD_COMPLETE "Build the FreeCAD complete module" OFF)
      option(BUILD_DRAFT "Build the FreeCAD draft module" ON)
      option(BUILD_DRAWING "Build the FreeCAD drawing module" ON)
 diff --git a/src/Mod/CMakeLists.txt b/src/Mod/CMakeLists.txt

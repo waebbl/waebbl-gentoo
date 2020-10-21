@@ -31,7 +31,6 @@ REQUIRED_USE="
 
 RDEPEND="
 	>=media-libs/coin-4.0.0
-	<media-libs/coin-4.0.0a_pre
 	quarter? ( media-libs/quarter )
 	soqt? ( >=media-libs/SoQt-1.6.0 )
 "

@@ -22,7 +22,6 @@ RDEPEND="
 	dev-qt/designer:5
 	dev-qt/qtopengl:5
 	>=media-libs/coin-4
-	<media-libs/coin-4.0.0a_pre
 	qthelp? ( dev-qt/qthelp:5 )
 	spacenav? (
 		dev-libs/libspnav[X]

@@ -81,7 +81,6 @@ RDEPEND="
 	dev-qt/qtxml:5
 	dev-qt/qtxmlpatterns:5
 	>=media-libs/coin-4.0.0[draggers(+),manipulators(+),nodekits(+),simage(+),vrml97(+)]
-	<media-libs/coin-4.0.0a_pre2019
 	media-libs/freetype
 	media-libs/qhull
 	sci-libs/flann[mpi?,openmp]

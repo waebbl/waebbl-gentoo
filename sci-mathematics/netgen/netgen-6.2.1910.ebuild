@@ -31,7 +31,7 @@ RDEPEND="
 	x11-libs/libX11:=
 	x11-libs/libXext:=
 	x11-libs/libXmu:=
-	ffmpeg? ( virtual/ffmpeg )
+	ffmpeg? ( media-video/ffmpeg )
 	jpeg? ( virtual/jpeg:0= )
 	python? (
 		$(python_gen_cond_dep \

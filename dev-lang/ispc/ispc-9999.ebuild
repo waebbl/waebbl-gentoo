@@ -3,9 +3,9 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_6 )
+PYTHON_COMPAT=( python3_{6,7,8,9} )
 
-inherit cmake python-any-r1
+inherit cmake llvm python-any-r1 toolchain-funcs
 
 DESCRIPTION="Intel SPMD Program Compiler"
 HOMEPAGE="https://ispc.github.com/"
@@ -21,44 +21,42 @@ fi
 
 LICENSE="BSD BSD-2 UoI-NCSA"
 SLOT="0"
-
-# FIXME:
-# - add NVPTX support: fails to compile
-# - re-add examples: fails to compile
-IUSE="doc llvm_targets_AArch64 llvm_targets_ARM sanitize test"
-
-# only one out of 10 tests passes
+IUSE=""
+# tests are failing
 RESTRICT="test"
 
-RDEPEND="
-	sys-devel/clang:=[llvm_targets_AArch64=,llvm_targets_ARM=]
-	sys-libs/ncurses:0=
-	sys-libs/zlib:=
-"
+RDEPEND="<sys-devel/clang-11:="
 DEPEND="
 	${RDEPEND}
 	${PYTHON_DEPS}
-	doc? (
-		app-doc/doxygen[dot(+)]
-		media-fonts/freefont
-	)
 "
 BDEPEND="
 	sys-devel/bison
 	sys-devel/flex
 "
 
-DOCS=( README.md "${S}"/docs/{ReleaseNotes.txt,faq.rst,ispc.rst,news.rst,perf.rst,perfguide.rst} )
+LLVM_MAX_SLOT=10
 
-CMAKE_BUILD_TYPE="Release"
+PATCHES=(
+	"${FILESDIR}/${PN}-1.13.0-cmake-gentoo-release.patch"
+	"${FILESDIR}/${PN}-1.14.0-llvm-10.patch"
+	"${FILESDIR}/${PN}-1.13.0-werror.patch"
+	"${FILESDIR}/${PN}-1.14.1-0001-restrict-llvm-version.patch"
+)
+
+DOCS=( README.md SECURITY.md docs/ReleaseNotes.txt )
+
+llvm_check_deps() {
+	has_version -d "sys-devel/clang:${LLVM_SLOT}"
+}
 
 src_prepare() {
-	# drop -Werror
-	sed -e 's/-Werror//' -i CMakeLists.txt || die
-
-	# fix path for dot binary
-	if use doc; then
-		sed -e 's|/usr/local/bin/dot|/usr/bin/dot|' -i "${S}"/doxygen.cfg || die
+	if use amd64; then
+		# On amd64 systems, build system enables x86/i686 build too.
+		# This ebuild doesn't even have multilib support, nor need it.
+		# https://bugs.gentoo.org/730062
+		elog "Removing auto-x86 build on amd64"
+		sed -i -e 's:set(target_arch "i686"):return():' cmake/GenerateBuiltins.cmake || die
 	fi
 
 	cmake_src_prepare
@@ -66,47 +64,25 @@ src_prepare() {
 
 src_configure() {
 	local mycmakeargs=(
-		-DARM_ENABLED=$(usex llvm_targets_AArch64 $(usex llvm_targets_ARM))
-#		-DNVPTX_ENABLED=OFF
-		-DISPC_INCLUDE_EXAMPLES=OFF
-		-DISPC_INCLUDE_TESTS=$(usex test)
-		-DISPC_INCLUDE_UTILS=ON
-		-DISPC_NO_DUMPS=ON
-		-DISPC_PREPARE_PACKAGE=OFF
-		-DISPC_STATIC_STDCXX_LINK=OFF
-		-DISPC_STATIC_LINK=OFF
-		-DISPC_USE_ASAN=$(usex sanitize)
-		-DPython3_EXECUTABLE="${PYTHON}"
+		-DARM_ENABLED=$(usex arm)
+		-DCMAKE_SKIP_RPATH=ON
+#		-DISPC_INCLUDE_EXAMPLES=$(usex examples)
+		-DISPC_INCLUDE_EXAMPLES=OFF		# examples fail to build
 	)
 	cmake_src_configure
-}
-
-src_compile() {
-	cmake_src_compile
-
-	if use doc; then
-		pushd "${S}" >/dev/null || die
-		doxygen -u doxygen.cfg || die "failed to update doxygen.cfg"
-		doxygen doxygen.cfg || die "failed to build documentation"
-		popd >/dev/null || die
-	fi
 }
 
 src_install() {
 	cmake_src_install
 
-	if use doc; then
-		local HTML_DOCS=( docs/doxygen/html/. )
-	fi
-	einstalldocs
-
 #	if use examples; then
 #		insinto "/usr/share/doc/${PF}/examples"
 #		docompress -x "/usr/share/doc/${PF}/examples"
-#		doins -r examples/*
+#		doins -r "${BUILD_DIR}"/examples/*
 #	fi
 }
 
-src_test() {
-	eninja check-all
-}
+#src_test() {
+	# Inject path to prevent using system ispc
+#	PATH="${BUILD_DIR}/bin:${PATH}" ${EPYTHON} run_tests.py || die "Testing failed under ${EPYTHON}"
+#}

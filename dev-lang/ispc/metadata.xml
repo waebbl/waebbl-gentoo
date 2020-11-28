@@ -2,14 +2,9 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 	<maintainer type="person">
-		<email>junghans@gentoo.org</email>
-		<name>Christoph Junghans</name>
+		<email>waebbl@gmail.com</email>
+		<name>Bernd Waibel</name>
 	</maintainer>
-	<use>
-		<flag name="sanitize">
-			Build with address sanitizer instrumentation using clang
-		</flag>
-	</use>
 	<upstream>
 		<remote-id type="github">ispc/ispc</remote-id>
 	</upstream>

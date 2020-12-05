@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{6,7} )
+PYTHON_COMPAT=( python3_{7,8} )
 WEBAPP_OPTIONAL=yes
 WEBAPP_MANUAL_SLOT=yes
 
@@ -15,37 +15,39 @@ SPV="$(ver_cut 1-2)"
 DESCRIPTION="The Visualization Toolkit"
 HOMEPAGE="https://www.vtk.org/"
 SRC_URI="
-	https://vtk.org/files/release/${SPV}/VTK-${PV}.tar.gz
-	doc? ( https://vtk.org/files/release/${SPV}/vtkDocHtml-${PV}.tar.gz )
+	https://www.vtk.org/files/release/${SPV}/VTK-${PV}.tar.gz
+	doc? ( https://www.vtk.org/files/release/${SPV}/vtkDocHtml-${PV}.tar.gz )
 	examples? (
-		https://vtk.org/files/release/${SPV}/VTKData-${PV}.tar.gz
-		https://vtk.org/files/release/${SPV}/VTKLargeData-${PV}.tar.gz
+		https://www.vtk.org/files/release/${SPV}/VTKData-${PV}.tar.gz
+		https://www.vtk.org/files/release/${SPV}/VTKLargeData-${PV}.tar.gz
 	)"
 
 LICENSE="BSD LGPL-2"
-KEYWORDS="~amd64 ~x86 ~amd64-linux ~x86-linux"
 SLOT="0"
-IUSE="
-	all-modules aqua boost doc examples imaging ffmpeg gdal java json mpi
-	mysql odbc offscreen postgres python qt5 rendering tbb theora
-	video_cards_nvidia views web R +X xdmf2"
+KEYWORDS="~amd64 ~arm ~x86 ~amd64-linux ~x86-linux"
+IUSE="all-modules aqua boost doc examples ffmpeg gdal imaging java json mpi
+	odbc offscreen postgres python qt5 R rendering tbb tcl theora tk
+	video_cards_nvidia views web +X xdmf2"
 
 REQUIRED_USE="
 	all-modules? ( python xdmf2 boost )
+	examples? ( python )
 	java? ( qt5 )
 	python? ( ${PYTHON_REQUIRED_USE} )
-	examples? ( python )
+	tcl? ( rendering )
+	tk? ( tcl )
 	web? ( python )
 	^^ ( X aqua offscreen )"
 
 RDEPEND="
 	app-arch/lz4
+	dev-cpp/eigen
 	dev-db/sqlite
-	dev-libs/double-conversion:=
+	dev-libs/double-conversion:0=
 	dev-libs/expat
 	dev-libs/jsoncpp:=
 	dev-libs/libxml2:2
-	>=dev-libs/pugixml-1.9
+	dev-libs/pugixml
 	>=media-libs/freetype-2.5.4
 	media-libs/glew:0=
 	>=media-libs/libharu-2.3.0-r2
@@ -55,6 +57,7 @@ RDEPEND="
 	media-libs/tiff:0
 	sci-libs/exodusii
 	sci-libs/hdf5:=
+	sci-libs/netcdf:0=
 	sci-libs/netcdf-cxx:3
 	sys-libs/zlib
 	virtual/jpeg:0
@@ -67,16 +70,39 @@ RDEPEND="
 		dev-qt/qtcore:5
 		dev-qt/qtgui:5
 	)
-	ffmpeg? ( virtual/ffmpeg )
+	ffmpeg? ( media-video/ffmpeg:= )
 	gdal? ( sci-libs/gdal )
 	java? ( >=virtual/jdk-1.7:* )
-	mysql? ( virtual/mysql )
+	mpi? (
+		virtual/mpi[cxx,romio]
+		$(python_gen_cond_dep '
+			python? ( dev-python/mpi4py[${PYTHON_MULTI_USEDEP}] )
+		')
+	)
 	odbc? ( dev-db/unixODBC )
 	offscreen? ( media-libs/mesa[osmesa] )
 	postgres? ( dev-db/postgresql:= )
-	python? ( ${PYTHON_DEPS} )
+	python? (
+		${PYTHON_DEPS}
+		$(python_gen_cond_dep '
+			dev-python/sip[${PYTHON_MULTI_USEDEP}]
+		')
+	)
+	qt5? (
+		dev-qt/designer:5
+		dev-qt/qtcore:5
+		dev-qt/qtgui:5
+		dev-qt/qtopengl:5
+		dev-qt/qtsql:5
+		dev-qt/qtx11extras:5
+		$(python_gen_cond_dep '
+			python? ( dev-python/PyQt5[${PYTHON_MULTI_USEDEP}] )
+		')
+	)
 	R? ( dev-lang/R )
 	tbb? ( dev-cpp/tbb )
+	tcl? ( dev-lang/tcl:0= )
+	tk? ( dev-lang/tk:0= )
 	video_cards_nvidia? ( x11-drivers/nvidia-drivers[tools,static-libs] )
 	web? (
 		${WEBAPP_DEPEND}
@@ -92,42 +118,23 @@ RDEPEND="
 		')
 	)
 	xdmf2? ( sci-libs/xdmf2 )
-	$(python_gen_cond_dep '
-		mpi? (
-			virtual/mpi[cxx,romio]
-			python? ( dev-python/mpi4py[${PYTHON_MULTI_USEDEP}] )
-		)
-		python? (
-			dev-python/sip[${PYTHON_MULTI_USEDEP}]
-		)
-		qt5? (
-			dev-qt/designer:5
-			dev-qt/qtcore:5
-			dev-qt/qtgui:5
-			dev-qt/qtopengl:5
-			dev-qt/qtsql:5
-			dev-qt/qtwebkit:5
-			dev-qt/qtx11extras:5
-			python? ( dev-python/PyQt5[${PYTHON_MULTI_USEDEP}] )
-		)
-	')
 "
-DEPEND="
-	${RDEPEND}
-	doc? ( app-doc/doxygen )
-"
-BDEPEND="dev-cpp/eigen[c++11]"
-
-PATCHES=(
-	"${FILESDIR}/${P}-libdir.patch"
-	"${FILESDIR}/${P}-fix-designer-plugin-install-dir.patch"
-	"${FILESDIR}/${P}-0001-add-missing-include-statement.patch"
-)
+DEPEND="${RDEPEND}"
+BDEPEND="doc? ( app-doc/doxygen )"
 
 S="${WORKDIR}"/VTK-${PV}
 
+PATCHES=(
+	"${FILESDIR}"/${PN}-8.1.0-openmpi-4-compatibility.patch
+	"${FILESDIR}"/${P}-qt-5.15.patch # bug 726960
+	"${FILESDIR}"/${P}-gcc-10.patch # bug 723374
+	"${FILESDIR}"/${P}-fno-common.patch # bug 721048
+	"${FILESDIR}"/${P}-py38.patch
+	"${FILESDIR}"/${P}-freetype-2.10.3-provide-FT_CALLBACK_DEF.patch # bug #751088
+	"${FILESDIR}"/${P}-0002-set-correct-pugixml-target.patch
+)
+
 RESTRICT="test"
-CMAKE_BUILD_TYPE="Release"
 
 pkg_setup() {
 	use java && java-pkg-opt-2_pkg_setup
@@ -136,9 +143,11 @@ pkg_setup() {
 }
 
 src_prepare() {
+	cmake_src_prepare
+
 	local x
-	# missing: VPIC freerange sqlite utf8 verdict xmdf2 xmdf3
-	for x in expat freetype glew hdf5 jpeg jsoncpp libharu libxml2 lz4 mpi4py netcdf png tiff zlib; do
+	# missing: VPIC freerange libproj4 mrmpi sqlite utf8 verdict xmdf2 xmdf3
+	for x in expat freetype hdf5 jpeg jsoncpp libharu libxml2 lz4 netcdf png tiff zlib; do
 		ebegin "Dropping bundled ${x}"
 		rm -r ThirdParty/${x}/vtk${x} || die
 		eend $?
@@ -150,35 +159,33 @@ src_prepare() {
 		sed -e "s|\${VTK_BINARY_DIR}/Utilities/Doxygen/doc|${WORKDIR}|" \
 			-i Utilities/Doxygen/CMakeLists.txt || die
 	fi
-
-	cmake_src_prepare
 }
 
+# CMAKE_DISABLE_FIND_PACKAGE_Qt5WebKitWidgets
 src_configure() {
 	# general configuration
 	local mycmakeargs=(
 		-Wno-dev
 		-DVTK_INSTALL_LIBRARY_DIR=$(get_libdir)
+		-DVTK_INSTALL_PACKAGE_DIR="$(get_libdir)/cmake/${PN}-${SPV}"
 		-DVTK_INSTALL_DOC_DIR="${EPREFIX}/usr/share/doc/${PF}"
 		-DVTK_DATA_ROOT="${EPREFIX}/usr/share/${PN}/data"
 		-DVTK_CUSTOM_LIBRARY_SUFFIX=""
-		-DVTK_FORBID_DOWNLOADS=ON
-		-DVTK_GENERATE_MODULES_JSON=ON
+#		-DVTK_FORBID_DOWNLOADS=ON
+#		-DVTK_GENERATE_MODULES_JSON=ON
 		-DBUILD_SHARED_LIBS=ON
+#		-DVTK_USE_SYSTEM_AUTOBAHN=ON
 		-DVTK_USE_SYSTEM_EXPAT=ON
 		-DVTK_USE_SYSTEM_FREETYPE=ON
 		# Use bundled gl2ps (bundled version is a patched version of 1.3.9. Post 1.3.9 versions should be compatible)
 		-DVTK_USE_SYSTEM_GL2PS=OFF
-		-DVTK_USE_SYSTEM_GLEW=ON
 		-DVTK_USE_SYSTEM_HDF5=ON
 		-DVTK_USE_SYSTEM_JPEG=ON
 		# only support proj-4 which conflicts with several other packages requiring >=proj-{5,6}
 		-DVTK_USE_SYSTEM_LIBPROJ=OFF
 		-DVTK_USE_SYSTEM_LIBXML2=ON
-		-DVTK_USE_SYSTEM_MPI4PY=ON
 		-DVTK_USE_SYSTEM_NETCDF=ON
 		-DVTK_USE_SYSTEM_PNG=ON
-		-DVTK_USE_SYSTEM_SIX=ON
 		-DVTK_USE_SYSTEM_TIFF=ON
 		-DVTK_USE_SYSTEM_XDMF2=OFF
 		-DVTK_USE_SYSTEM_ZLIB=ON
@@ -194,8 +201,10 @@ src_configure() {
 		-DVTK_Group_Imaging=$(usex imaging)
 		-DVTK_Group_MPI=$(usex mpi)
 		-DVTK_Group_Rendering=$(usex rendering)
+		-DVTK_Group_Tk=$(usex tk)
 		-DVTK_Group_Views=$(usex views)
 		-DVTK_Group_Web=$(usex web)
+		-DVTK_SMP_IMPLEMENTATION_TYPE="$(usex tbb TBB Sequential)"
 		-DVTK_WWW_DIR="${ED}/${MY_HTDOCSDIR}"
 		-DVTK_WRAP_JAVA=$(usex java)
 		-DVTK_WRAP_PYTHON=$(usex python)
@@ -222,29 +231,26 @@ src_configure() {
 		mycmakeargs+=( -DJAVAC_OPTIONS=${javacargs// /;} )
 	fi
 
-	if use tbb; then
-		mycmakeargs+=( -DVTK_SMP_IMPLEMENTATION_TYPE="TBB" )
-	else
-		mycmakeargs+=( -DVTK_SMP_IMPLEMENTATION_TYPE="Sequential" )
+	if use mpi; then
+		mycmakeargs+=( -DVTK_USE_SYSTEM_MPI4PY=ON )
 	fi
 
 	if use python; then
 		mycmakeargs+=(
 			-DPYTHON_INCLUDE_DIR="$(python_get_includedir)"
 			-DPYTHON_LIBRARY="$(python_get_library_path)"
-			-DVTK_INSTALL_PYTHON_MODULES_DIR="$(python_get_sitedir)"
-			-DVTK_USE_SYSTEM_SIX=ON
 		)
 	fi
 
 	if use qt5; then
 		mycmakeargs+=(
-			-DVTK_INSTALL_QT_DIR="$(qt5_get_libdir)/qt5/plugins/designer"
-			-DVTK_QT_VERSION=5
+			-DCMAKE_DISABLE_FIND_PACKAGE_Qt5WebKitWidgets=ON
 			-DQT_MOC_EXECUTABLE="$(qt5_get_bindir)/moc"
 			-DQT_UIC_EXECUTABLE="$(qt5_get_bindir)/uic"
 			-DQT_QMAKE_EXECUTABLE="$(qt5_get_bindir)/qmake"
+			-DVTK_INSTALL_QT_DIR="$(basename $(qt5_get_libdir))/qt5/plugins/designer"
 			-DVTK_Group_Qt:BOOL=ON
+			-DVTK_QT_VERSION=5
 		)
 	fi
 
@@ -268,12 +274,23 @@ src_install() {
 
 	cmake_src_install
 
-	use python && python_optimize
-
 	use java && java-pkg_regjar "${ED}"/usr/$(get_libdir)/${PN}.jar
 
 	# Stop web page images from being compressed
 	use doc && docompress -x /usr/share/doc/${PF}/doxygen
+
+	if use tcl; then
+		# install Tcl docs
+		docinto vtk_tcl
+		docinto .
+	fi
+
+	# move python modules and byte-compile them
+	if use python; then
+		mkdir -p "${ED}"$(python_get_sitedir) || die
+		mv "${ED}"/usr/$(get_libdir)/"${EPYTHON}"/site-packages/* "${ED}"/$(python_get_sitedir) || die
+		python_optimize
+	fi
 
 	# install examples
 	if use examples; then
@@ -286,7 +303,7 @@ src_install() {
 	# environment
 	cat >> "${T}"/40${PN} <<- EOF || die
 		VTK_DATA_ROOT=${EPREFIX}/usr/share/${PN}/data
-		VTK_DIR=${EPREFIX}/usr/$(get_libdir)/${PN}-${SPV}
+		VTK_DIR=${EPREFIX}/usr
 		VTKHOME=${EPREFIX}/usr
 		EOF
 	doenvd "${T}"/40${PN}

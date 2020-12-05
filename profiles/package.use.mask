@@ -7,10 +7,6 @@
 # This file is only for generic masks. For arch-specific masks (i.e.
 # mask everywhere, unmask on arch/*) use arch/base.
 
-# Bernd Waibel <waebbl@gmail.com> (05 Feb 2020)
-# Some dependencies of vtk don't support python 3.{7,8} yet
-sci-libs/vtk python_single_target_python3_8 python_targets_python3_8
-
 # Bernd Waibel <waebbl@gmail.com> (20 Jan 2020)
 # Doesn't compile against dev-lang/spidermonkey:60
 media-libs/coin javascript

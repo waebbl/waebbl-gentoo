@@ -47,6 +47,11 @@
 		<flag name="netgen">
 			Support <pkg>sci-mathematics/netgen</pkg> with the FEM workbench
 		</flag>
+		<flag name="oce">
+			If set, build against the community edition of opencascade,
+			<pkg>sci-libs/oce</pkg>. If unset, the package is built against
+			the official version <pkg>sci-libs/opencascade</pkg>.
+		</flag>
 		<flag name="openscad">
 			Build the OpenSCAD module for interoperability with OpenSCAD 
 			and repairing Constructive Solid Geometry (CSG) history

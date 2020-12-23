@@ -163,8 +163,11 @@ src_prepare() {
 
 	# Fix OpenCASCADE lookup
 	sed -e 's|/usr/include/opencascade|${CASROOT}/include/opencascade|' \
-		-e 's|/usr/lib\$|${CASROOT}/'$(get_libdir)' NO DEFAULT PATH|' \
+		-e 's|/usr/lib|${CASROOT}/'$(get_libdir)' NO_DEFAULT_PATH|' \
 		-i cMake/FindOpenCasCade.cmake || die
+
+	# Fix desktop file
+	sed -e 's/Exec=FreeCAD/Exec=freecad/' -i src/XDGData/org.freecadweb.FreeCAD.desktop || die
 
 	cmake_src_prepare
 }

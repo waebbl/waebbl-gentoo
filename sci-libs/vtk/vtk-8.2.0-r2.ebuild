@@ -47,7 +47,7 @@ RDEPEND="
 	dev-libs/expat
 	dev-libs/jsoncpp:=
 	dev-libs/libxml2:2
-	dev-libs/pugixml
+	>=dev-libs/pugixml-1.11.4
 	>=media-libs/freetype-2.5.4
 	media-libs/glew:0=
 	>=media-libs/libharu-2.3.0-r2

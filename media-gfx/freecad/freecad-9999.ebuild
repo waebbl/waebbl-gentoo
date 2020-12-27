@@ -70,7 +70,7 @@ RDEPEND="
 	dev-qt/qtwidgets:5
 	dev-qt/qtx11extras:5
 	dev-qt/qtxml:5
-	>=media-libs/coin-4.0.0[draggers(+),manipulators(+),nodekits(+),simage(+),vrml97(+)]
+	>=media-libs/coin-4.0.0
 	media-libs/freetype
 	media-libs/qhull
 	sci-libs/flann[openmp]
@@ -101,10 +101,6 @@ DEPEND="${RDEPEND}"
 BDEPEND="
 	dev-lang/swig
 	doc? ( app-arch/p7zip )
-	$(python_gen_cond_dep '
-		!dev-python/pyside-tools:2[${PYTHON_MULTI_USEDEP}]
-		dev-python/pyside2-tools[${PYTHON_MULTI_USEDEP}]
-	')
 "
 
 # To get required dependencies:

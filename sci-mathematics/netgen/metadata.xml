@@ -18,7 +18,7 @@
 	</longdescription>
 	<use>
 		<flag name="ffmpeg">
-			Enable video recording with <pkg>virtual/ffmpeg</pkg>
+			Enable video recording with <pkg>media-video/ffmpeg</pkg>
 		</flag>
 		<flag name="gui">
 			Build the graphical user interface

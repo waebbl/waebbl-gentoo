@@ -15,6 +15,6 @@
 </longdescription>
 <upstream>
 	<bugs-to>https://github.com/Robotips/uConfig/issues</bugs-to>
-	<remote-id type="github" />
+	<remote-id type="github">https://github.com/Robotips/uConfig</remote-id>
 </upstream>
 </pkgmetadata>

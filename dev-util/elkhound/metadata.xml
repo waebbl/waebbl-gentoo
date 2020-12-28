@@ -5,6 +5,8 @@
 	<email>waebbl@gmail.com</email>
 	<description>Bernd Waibel</description>
 </maintainer>
-<longdescription>Elkhound is GLR parser generator. This particular version
-	is needed to compile <pkg>games-util/weidu</pkg></longdescription>
+<longdescription>
+	Elkhound is GLR parser generator. This particular version
+	is needed to compile <pkg>games-util/weidu</pkg>
+</longdescription>
 </pkgmetadata>

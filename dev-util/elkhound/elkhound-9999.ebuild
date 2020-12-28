@@ -11,8 +11,6 @@ EGIT_REPO_URI="https://github.com/WeiDUorg/elkhound.git"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64"
-
 IUSE="doc"
 
 # The source contains explicit calls to bison, so we can't depend
@@ -81,27 +79,27 @@ src_install() {
 	local DOCS_ELKHOUND=( grammar.txt parsgen.txt readme.txt )
 	einstalldocs
 	if use doc; then
-		insinto /usr/share/doc/${PF}/smbase
+		docinto /usr/share/doc/${PF}/smbase
 		for i in ${DOCS_SMBASE[@]}; do
 			doins "${S}"/smbase/${i}
 		done
-		insinto /usr/share/doc/${PF}/ast
+		docinto /usr/share/doc/${PF}/ast
 		for i in ${DOCS_AST[@]}; do
 			doins "${S}"/ast/${i}
 		done
-		insinto /usr/share/doc/${PF}/elkhound
+		docinto /usr/share/doc/${PF}/elkhound
 		for i in ${DOCS_ELKHOUND[@]}; do
 			doins "${S}"/elkhound/${i}
 		done
-		insinto /usr/share/doc/${PF}/smbase/html
+		docinto /usr/share/doc/${PF}/smbase/html
 		for i in ${HTML_DOCS_SMBASE[@]}; do
 			doins "${S}"/smbase/${i}
 		done
-		insinto /usr/share/doc/${PF}/ast/html
+		docinto /usr/share/doc/${PF}/ast/html
 		for i in ${HTML_DOCS_AST[@]}; do
 			doins "${S}"/ast/${i}
 		done
-		insinto /usr/share/doc/${PF}/elkhound/html
+		docinto /usr/share/doc/${PF}/elkhound/html
 		for i in ${HTML_DOCS_ELKHOUND[@]}; do
 			doins "${S}"/elkhound/${i}
 		done

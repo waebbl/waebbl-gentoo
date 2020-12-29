@@ -1,0 +1,40 @@
+From 9a9b0d1a301cb13f5e9fef0af992a887fe225162 Mon Sep 17 00:00:00 2001
+From: Bernd Waibel <waebbl@gmail.com>
+Date: Tue, 29 Dec 2020 14:55:13 +0100
+Subject: [PATCH] CMakeLists.txt: Fix giflib include directories
+
+When building with support for gif, the subdir giflib of the
+(private) source directory is added to INCLUDE_DEPENDENCIES and
+results in being added to the pkg-config file.
+
+Signed-off-by: Bernd Waibel <waebbl@gmail.com>
+---
+ CMakeLists.txt | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 60fc9ed..1bb358b 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -520,7 +520,8 @@ endif()
+ 
+ if(SIMAGE_GIF_SUPPORT)
+   list(APPEND PKG_CONFIG_REQUIRES_PRIVATE "libgif")
+-  list(APPEND INCLUDE_DEPENDENCIES ${GIF_INCLUDE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/giflib)
++  list(APPEND INCLUDE_DEPENDENCIES ${GIF_INCLUDE_DIR})
++  list(APPEND INCLUDE_DEPENDENCIES_PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/giflib)
+   list(APPEND LIB_DEPENDENCIES_PRIVATE ${GIF_LIBRARIES})
+ endif()
+ 
+@@ -600,7 +601,7 @@ if(SIMAGE_ZLIB_SUPPORT)
+   list(APPEND LIB_DEPENDENCIES_PRIVATE ${ZLIB_LIBRARIES})
+ endif()
+ 
+-target_include_directories(simage PRIVATE ${INCLUDE_DEPENDENCIES})
++target_include_directories(simage PRIVATE ${INCLUDE_DEPENDENCIES_PRIVATE} ${INCLUDE_DEPENDENCIES})
+ target_link_libraries(simage PRIVATE ${LIB_DEPENDENCIES_PRIVATE} ${SIMAGE_QT_TARGETS})
+ 
+ if(SIMAGE_QIMAGE_SUPPORT)
+-- 
+2.29.2
+

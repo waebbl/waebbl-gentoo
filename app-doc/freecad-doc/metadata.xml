@@ -6,6 +6,12 @@
 	<name>Bernd Waibel</name>
 </maintainer>
 <longdescription>
-Documentation for <pkg>media-gfx/freecad</pkg>
+	Developer documentation for <pkg>media-gfx/freecad</pkg>
 </longdescription>
+<use>
+	<flag name="oce">
+		Use OpenCASCade Community Edition through <pkg>sci-libs/oce</pkg>
+		instead of the Official Version <pkg>sci-libs/opencascade</pkg>
+	</flag>
+</use>
 </pkgmetadata>

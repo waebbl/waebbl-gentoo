@@ -17,6 +17,13 @@
 		<flag name="assembly">
 			Build the assembly module
 		</flag>
+		<flag name="ccache">
+			Use <pkg>dev-util/ccache</pkg> to build the package.
+		</flag>
+		<flag name="cloud">
+			Build the Cloud workbench, to access cloud providers (mostly
+			Amazon S3).
+		</flag>
 		<flag name="drawing">
 			Build the drawing module and workbench to display 3D work on a 
 			2D sheet
@@ -24,6 +31,10 @@
 		<flag name="fem">
 			Build the FEM module and workbench which provides Finite Element 
 			Analysis (FEA) workflows
+		</flag>
+		<flag name="headless">
+			Build FreeCAD without a GUI, usable for server-side instances.
+			The Python modules are still available, without their GUI parts though.
 		</flag>
 		<flag name="idf">
 			Build the IDF module to provide file exchange capabilities with

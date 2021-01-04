@@ -1,11 +1,11 @@
-# Copyright 1999-2020 Gentoo Authors
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 # This is in currently WIP! It should work though.
 
 EAPI=7
 
-# FIXME: vtk and pivy needs updating to support py-3.9
+# FIXME: vtk needs updating to support py-3.9
 PYTHON_COMPAT=( python3_{7,8} )
 
 inherit check-reqs cmake desktop python-single-r1 xdg
@@ -81,7 +81,7 @@ RDEPEND="
 	virtual/glu
 	virtual/libusb:1
 	virtual/opengl
-	fem? ( sci-libs/vtk[boost,python,qt5,rendering,${PYTHON_SINGLE_USEDEP}] )
+	fem? ( <sci-libs/vtk-9[boost,python,qt5,rendering,${PYTHON_SINGLE_USEDEP}] )
 	mesh? ( sci-libs/hdf5:=[fortran,zlib] )
 	oce? ( sci-libs/oce[vtk(+)] )
 	!oce? ( sci-libs/opencascade:=[vtk(+)] )
@@ -176,6 +176,7 @@ src_configure() {
 		-DBUILD_COMPLETE=OFF # deprecated
 		-DBUILD_DRAFT=ON # basic workspace, enable it by default
 		-DBUILD_DRAWING=$(usex drawing)
+		-DBUILD_ENABLE_CXX_STD:STRING="C++14"	# needed for boost-1.75.0
 		-DBUILD_FEM=$(usex fem)
 		-DBUILD_FEM_NETGEN=$(usex netgen)
 		-DBUILD_FLAT_MESH=$(usex mesh)

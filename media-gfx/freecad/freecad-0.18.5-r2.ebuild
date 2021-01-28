@@ -205,12 +205,12 @@ src_configure() {
 		-DBUILD_SKETCHER=ON # needed by draft workspace
 		-DBUILD_SMESH=$(usex mesh)
 		-DBUILD_SPREADSHEET=$(usex spreadsheet)
-		-DBUILD_START=ON # basic workspace, enable it by default
+		-DBUILD_START=$(usex start)
 		-DBUILD_SURFACE=$(usex surface)
 		-DBUILD_TECHDRAW=$(usex techdraw)
 		-DBUILD_TUX=$(usex tux)
 		-DBUILD_VR=OFF
-		-DBUILD_WEB=ON # needed by start workspace
+		-DBUILD_WEB=$(usex start)
 		-DBUILD_WITH_CONDA=OFF
 		-DCMAKE_INSTALL_DATADIR=/usr/share/${PN}/data
 		-DCMAKE_INSTALL_DOCDIR=/usr/share/doc/${PF}

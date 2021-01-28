@@ -38,7 +38,7 @@ FREECAD_EXPERIMENTAL_MODULES="assembly plot ship"
 #FREECAD_DEBUG_MODULES="sandbox template"
 FREECAD_STABLE_MODULES="addonmgr arch drawing fem idf image inspection
 	material mesh openscad part-design path points raytracing robot
-	show spreadsheet surface techdraw tux"
+	show spreadsheet surface techdraw tux start"
 FREECAD_DISABLED_MODULES="vr"
 FREECAD_ALL_MODULES="${FREECAD_STABLE_MODULES}
 	${FREECAD_EXPERIMENTAL_MODULES} ${FREECAD_DISABLED_MODULES}"
@@ -67,10 +67,10 @@ RDEPEND="
 	dev-qt/qtopengl:5
 	dev-qt/qtprintsupport:5
 	dev-qt/qtsvg:5
-	dev-qt/qtwebkit:5
 	dev-qt/qtwidgets:5
 	dev-qt/qtx11extras:5
 	dev-qt/qtxml:5
+	start? ( dev-qt/qtwebkit:5 )
 	>=media-libs/coin-4.0.0
 	media-libs/freetype
 	media-libs/qhull
@@ -119,7 +119,7 @@ REQUIRED_USE="
 	arch? ( mesh )
 	debug? ( mesh )
 	drawing? ( spreadsheet )
-	fem? ( mesh )
+	fem? ( material mesh )
 	inspection? ( mesh points )
 	netgen? ( fem )
 	openscad? ( mesh )

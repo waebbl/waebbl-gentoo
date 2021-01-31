@@ -10,6 +10,11 @@ A collection of high-performance, high-quality denoising filters for
 images rendered with ray tracing. It's part of the Intel Rendering
 Framework.
 </longdescription>
+<use>
+	<flag name="openimageio">
+		Build apps with support for <pkg>media-libs/openimageio</pkg>
+	</flag>
+</use>
 <upstream>
 	<remote-id type="github">OpenImageDenoise/oidn</remote-id>
 </upstream>

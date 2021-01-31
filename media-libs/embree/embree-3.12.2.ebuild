@@ -1,9 +1,9 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
-inherit cmake-utils flag-o-matic toolchain-funcs
+inherit cmake flag-o-matic toolchain-funcs
 
 DESCRIPTION="Collection of high-performance ray tracing kernels"
 HOMEPAGE="https://github.com/embree/embree"
@@ -20,27 +20,21 @@ fi
 LICENSE="Apache-2.0"
 SLOT="0"
 
-#X86_CPU_FLAGS=(
-#	sse2:sse2 sse4_2:sse4_2 avx:avx avx2:avx2
-#)
-#CPU_FLAGS=( ${X86_CPU_FLAGS[@]/#/cpu_flags_x86_} )
-
-IUSE="clang ispc raymask +tbb tutorial static-libs" # ${CPU_FLAGS[@]%:*}
+IUSE="clang ispc raymask static-libs +tbb tutorial"
 
 REQUIRED_USE="clang? ( !tutorial )"
 
 RDEPEND="
-	>=media-libs/glfw-3.2.1
+	media-libs/glfw
 	virtual/opengl
 	ispc? ( dev-lang/ispc )
 	tbb? ( dev-cpp/tbb )
 	tutorial? (
-		>=media-libs/libpng-1.6.34:0=
-		>=media-libs/openimageio-1.8.7
+		media-libs/libpng
+		>=media-libs/openimageio-2.0:=
 		virtual/jpeg:0
 	)
 "
-
 DEPEND="${RDEPEND}"
 BDEPEND="
 	virtual/pkgconfig
@@ -49,10 +43,10 @@ BDEPEND="
 
 DOCS=( CHANGELOG.md README.md readme.pdf )
 
-CMAKE_BUILD_TYPE=Release
+#CMAKE_BUILD_TYPE=Release
 
 src_prepare() {
-	cmake-utils_src_prepare
+	cmake_src_prepare
 
 	# disable RPM package building
 	sed -e 's|CPACK_RPM_PACKAGE_RELEASE 1|CPACK_RPM_PACKAGE_RELEASE 0|' \
@@ -107,6 +101,7 @@ src_configure() {
 		-DEMBREE_STAT_COUNTERS=OFF
 		-DEMBREE_TASKING_SYSTEM:STRING=$(usex tbb "TBB" "INTERNAL")
 		-DEMBREE_TUTORIALS=$(usex tutorial)
+		-DEMBREE_MAX_ISA:STRING=AVX2
 	)
 
 	if use tutorial; then
@@ -118,11 +113,11 @@ src_configure() {
 		)
 	fi
 
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 src_install() {
-	cmake-utils_src_install
+	cmake_src_install
 
 	doenvd "${FILESDIR}"/99${PN}
 }

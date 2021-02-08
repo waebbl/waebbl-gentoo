@@ -2,8 +2,8 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 <maintainer type="person">
-	<email>waebbl@gmail.com</email>
-	<description>Primary maintainer</description>
+	<email>waebbl-gentoo@posteo.net</email>
+	<name>Bernd Waibel</name>
 </maintainer>
 <longdescription>Tool to extend properties in Qt5</longdescription>
 <use>

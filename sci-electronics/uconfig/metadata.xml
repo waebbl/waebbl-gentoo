@@ -6,7 +6,7 @@
 	<description>Primary maintainer</description>
 </maintainer>
 <maintainer type="person">
-	<email>waebbl@mail.com</email>
+	<email>waebbl-gentoo@posteo.net</email>
 	<name>Bernd Waibel</name>
 </maintainer>
 <longdescription>
@@ -15,6 +15,6 @@
 </longdescription>
 <upstream>
 	<bugs-to>https://github.com/Robotips/uConfig/issues</bugs-to>
-	<remote-id type="github">https://github.com/Robotips/uConfig</remote-id>
+	<remote-id type="github">Robotips/uConfig</remote-id>
 </upstream>
 </pkgmetadata>

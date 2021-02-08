@@ -2,12 +2,8 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 <maintainer type="person">
-	<email>alber@diserholt.com</email>
-	<description>Primary maintainer</description>
-</maintainer>
-<maintainer type="person">
-	<email>waebbl@gmail.com</email>
-	<name>Maintainer</name>
+	<email>waebbl-gentoo@posteo.net</email>
+	<name>Bernd Waibel</name>
 </maintainer>
 <longdescription>
 	SimulationCraft is a tool to explore combat mechanis in the popular 

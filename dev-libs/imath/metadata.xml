@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>waebbl-gentoo@posteo.net</email>
+		<name>Bernd Waibel</name>
+	</maintainer>
+	<use>
+		<flag name="large-stack">
+			Enables code to take advantage of large stack support
+		</flag>
+	</use>
+	<upstream>
+		<remote-id type="github">AcademySoftwareFoundation/openexr</remote-id>
+	</upstream>
+</pkgmetadata>

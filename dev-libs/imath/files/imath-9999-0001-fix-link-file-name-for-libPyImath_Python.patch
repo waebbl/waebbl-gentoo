@@ -1,0 +1,24 @@
+From d8d6a8100232d42cc6ca1941685b0f0e41acfb17 Mon Sep 17 00:00:00 2001
+From: Bernd Waibel <waebbl-gentoo@posteo.net>
+Date: Thu, 25 Feb 2021 20:30:16 +0100
+Subject: [PATCH] fix link file name for libPyImath_Python
+
+Signed-off-by: Bernd Waibel <waebbl-gentoo@posteo.net>
+---
+ src/python/PyImath.pc.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/python/PyImath.pc.in b/src/python/PyImath.pc.in
+index a590fdd..8562b3d 100644
+--- a/src/python/PyImath.pc.in
++++ b/src/python/PyImath.pc.in
+@@ -12,5 +12,5 @@ libsuffix=@LIB_SUFFIX_DASH@
+ Name: PyImath
+ Description: Python bindings for the Imath libraries
+ Version: @IMATH_VERSION@
+-Libs: -L${libdir} -lImath${libsuffix} -lPyImath${libsuffix}
++Libs: -L${libdir} -lImath${libsuffix} -lPyImath@PYIMATH_LIB_PYTHONVER_ROOT@@Python3_VERSION_MAJOR@_@Python3_VERSION_MINOR@${libsuffix}
+ Cflags: -I${includedir} -I${includedir}/Imath
+-- 
+2.30.1
+

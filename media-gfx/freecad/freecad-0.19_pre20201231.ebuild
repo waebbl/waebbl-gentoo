@@ -30,7 +30,7 @@ FREECAD_EXPERIMENTAL_MODULES="cloud plot ship"
 FREECAD_DEBUG_MODULES="sandbox template"
 FREECAD_STABLE_MODULES="addonmgr arch drawing fem idf image
 	inspection material mesh openscad part-design path points
-	raytracing robot show spreadsheet surface techdraw tux"
+	raytracing robot show spreadsheet surface techdraw tux start"
 FREECAD_DISABLED_MODULES="vr"
 FREECAD_ALL_MODULES="${FREECAD_STABLE_MODULES}
 	${FREECAD_EXPERIMENTAL_MODULES} ${FREECAD_DISABLED_MODULES}"
@@ -57,10 +57,10 @@ RDEPEND="
 	dev-qt/qtopengl:5
 	dev-qt/qtprintsupport:5
 	dev-qt/qtsvg:5
-	dev-qt/qtwebengine:5[widgets]
 	dev-qt/qtwidgets:5
 	dev-qt/qtx11extras:5
 	dev-qt/qtxml:5
+	start? ( dev-qt/qtwebengine:5[widgets] )
 	>=media-libs/coin-4.0.0
 	media-libs/freetype
 	media-libs/qhull
@@ -113,7 +113,7 @@ REQUIRED_USE="
 	arch? ( mesh )
 	debug? ( mesh )
 	drawing? ( spreadsheet )
-	fem? ( mesh )
+	fem? ( material mesh )
 	inspection? ( mesh points )
 	openscad? ( mesh )
 	path? ( mesh robot )
@@ -124,6 +124,7 @@ REQUIRED_USE="
 PATCHES=(
 	"${FILESDIR}"/${P}-0001-FindCoin3DDoc.cmake-fix-patch-for-coin-docs.patch
 	"${FILESDIR}"/${P}-0002-CMakeLists.txt-add-option-for-ccache.patch
+	"${FILESDIR}"/${P}-0003-fix-svg-icons.patch
 )
 
 DOCS=( README.md ChangeLog.txt CODE_OF_CONDUCT.md )
@@ -195,12 +196,12 @@ src_configure() {
 		-DBUILD_SKETCHER=ON # needed by draft workspace
 		-DBUILD_SMESH=$(usex mesh)
 		-DBUILD_SPREADSHEET=$(usex spreadsheet)
-		-DBUILD_START=ON # basic workspace, enable it by default
+		-DBUILD_START=$(usex start)
 		-DBUILD_SURFACE=$(usex surface)
 		-DBUILD_TECHDRAW=$(usex techdraw)
 		-DBUILD_TUX=$(usex tux)
 		-DBUILD_VR=OFF
-		-DBUILD_WEB=ON # needed by start workspace
+		-DBUILD_WEB=$(usex start)
 		-DBUILD_WITH_CONDA=OFF
 
 		-DCMAKE_INSTALL_DATADIR=/usr/share/${PN}/data

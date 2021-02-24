@@ -1,0 +1,26 @@
+From f9bcfada1a8c93277ac3118350baa5926ab3f48c Mon Sep 17 00:00:00 2001
+From: wmayer <wmayer@users.sourceforge.net>
+Date: Thu, 31 Dec 2020 12:52:06 +0100
+Subject: [PATCH] Gui: [skip ci] re-add removed SVG icon, remove duplicate
+ entry
+
+---
+ src/Gui/Icons/resource.qrc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/Gui/Icons/resource.qrc b/src/Gui/Icons/resource.qrc
+index fc24826e9c1..23baacf3036 100644
+--- a/src/Gui/Icons/resource.qrc
++++ b/src/Gui/Icons/resource.qrc
+@@ -177,10 +177,10 @@
+         <file>Std_Tool12.svg</file>
+         <file>Std_ViewIvStereoInterleavedColumns.svg</file>
+         <file>Std_ViewIvStereoInterleavedRows.svg</file>
+-        <file>Std_ViewIvStereoInterleavedRows.svg</file>
+         <file>Std_ViewIvStereoOff.svg</file>
+         <file>Std_ViewIvStereoQuadBuff.svg</file>
+         <file>Std_ViewIvStereoRedGreen.svg</file>
++        <file>Std_WindowCascade.svg</file>
+         <file>Std_WindowNext.svg</file>
+         <file>Std_WindowPrev.svg</file>
+         <file>Std_WindowTileVer.svg</file>

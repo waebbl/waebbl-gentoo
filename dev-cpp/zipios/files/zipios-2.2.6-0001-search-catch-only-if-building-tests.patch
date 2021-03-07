@@ -1,0 +1,34 @@
+From fc36c23f09ffc487992a559c582ab82918251084 Mon Sep 17 00:00:00 2001
+From: Bernd Waibel <waebbl-gentoo@posteo.net>
+Date: Sun, 7 Mar 2021 07:25:51 +0100
+Subject: [PATCH] search catch only if building tests
+
+Signed-off-by: Bernd Waibel <waebbl-gentoo@posteo.net>
+---
+ tests/CMakeLists.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/tests/CMakeLists.txt b/tests/CMakeLists.txt
+index c408d67..e04ad53 100644
+--- a/tests/CMakeLists.txt
++++ b/tests/CMakeLists.txt
+@@ -28,14 +28,14 @@
+ #      Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ #
+ 
+-find_package( Catch )
+-
+ OPTION(BUILD_ZIPIOS_TESTS "Whether the zipios tests should be built. True by default." ON)
+ 
+ if(BUILD_ZIPIOS_TESTS)
+ 
+ message("Tests are turned ON.")
+ 
++find_package( Catch )
++
+ if(CATCH_FOUND)
+ 
+ project( zipios_tests )
+-- 
+2.30.1
+

@@ -1,0 +1,96 @@
+From 3ded5876917a8c7c1d8c016f1dac19825a4ffb6c Mon Sep 17 00:00:00 2001
+From: Bernd Waibel <waebbl-gentoo@posteo.net>
+Date: Sun, 7 Mar 2021 17:35:06 +0100
+Subject: [PATCH] add a relocatable config file
+
+Signed-off-by: Bernd Waibel <waebbl-gentoo@posteo.net>
+---
+ CMakeLists.txt              |  4 ++--
+ cmake/CMakeLists.txt        | 16 +++++++++++++---
+ cmake/ZipIosConfig.cmake.in |  9 +++++++++
+ src/CMakeLists.txt          |  2 --
+ 4 files changed, 24 insertions(+), 7 deletions(-)
+ create mode 100644 cmake/ZipIosConfig.cmake.in
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 2e672ac..24b1c59 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -30,7 +30,7 @@
+ 
+ cmake_minimum_required(VERSION 2.8.5)
+ 
+-project( zipios_project )
++project( zipios )
+ 
+ option( RUN_TESTS "Enable CTest support and turn on the 'test' make target." OFF )
+ if( ${RUN_TESTS} )
+@@ -190,7 +190,7 @@ set(CPACK_PACKAGE_NAME "zipios")
+ set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Zipios is a small C++ library for reading and writing zip files.")
+ set(CPACK_PACKAGE_VENDOR "Made to Order Software Corporation")
+ set(CPACK_PACKAGE_CONTACT "alexis@m2osw.com")
+-set(CPACK_RESOURCE_FILE_LICENSE "${zipios_project_SOURCE_DIR}/COPYING")
++set(CPACK_RESOURCE_FILE_LICENSE "${zipios_SOURCE_DIR}/COPYING")
+ set(CPACK_SOURCE_GENERATOR "TGZ")
+ set(CPACK_SOURCE_IGNORE_FILES "/CVS/;/work-files/;/.git/;.swp$;.*~;cscope.*;/tmp/;BUILD;Build")
+ set(CPACK_PACKAGE_VERSION "${ZIPIOS_VERSION_MAJOR}.${ZIPIOS_VERSION_MINOR}.${ZIPIOS_VERSION_PATCH}")
+diff --git a/cmake/CMakeLists.txt b/cmake/CMakeLists.txt
+index 54cac4a..c44406e 100644
+--- a/cmake/CMakeLists.txt
++++ b/cmake/CMakeLists.txt
+@@ -17,11 +17,21 @@
+ #      License along with this library; if not, write to the Free Software
+ #      Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ #
+-project(zipios2_cmake)
++
++include(CMakePackageConfigHelpers)
++configure_package_config_file(ZipIosConfig.cmake.in
++	${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
++	INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
++)
++write_basic_package_version_file("${PROJECT_NAME}ConfigVersion.cmake"
++	VERSION ${ZIPIOS_VERSION_MAJOR}.${ZIPIOS_VERSION_MINOR}.${ZIPIOS_VERSION_PATCH}
++	COMPATIBILITY SameMajorVersion
++)
+ 
+ install(
+-    FILES ZipIosConfig.cmake
+-    DESTINATION share/cmake/ZipIos
++	FILES 	${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
++			${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
++	DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
+ )
+ 
+ # vim: ts=4 sw=4 et nocindent
+diff --git a/cmake/ZipIosConfig.cmake.in b/cmake/ZipIosConfig.cmake.in
+new file mode 100644
+index 0000000..2ade51f
+--- /dev/null
++++ b/cmake/ZipIosConfig.cmake.in
+@@ -0,0 +1,9 @@
++set(ZIPIOS_VERSION ${ZIPIOS_VERSION_MAJOR}.${ZIPIOS_VERSION_MINOR}.${ZIPIOS_VERSION_PATCH})
++
++@PACKAGE_INIT@
++
++set_and_check(ZIPIOSCC_INCLUDE_DIR "@PACKAGE_INCLUDE_INSTALL_DIR@")
++set_and_check(ZIPIOSCC_LIBRARY "@PACKAGE_LIBRARY_DIR@")
++
++#include("${CMAKE_CURRENT_LIST_DIR}/@PROJECT_NAME@Targets.cmake")
++check_required_components("@PROJECT_NAME@")
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 05ae249..7a53f64 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -28,8 +28,6 @@
+ #      Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ #
+ 
+-project( zipios )
+-
+ include_directories( ${ZLIB_INCLUDE_DIR} )
+ 
+ add_library( ${PROJECT_NAME} ${ZIPIOS_LIBRARY_TYPE}
+-- 
+2.30.1
+

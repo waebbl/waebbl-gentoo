@@ -1,0 +1,45 @@
+From 687b03df92cba762271c943eb5e16debfa31e8bb Mon Sep 17 00:00:00 2001
+From: Bernd Waibel <waebbl-gentoo@posteo.net>
+Date: Mon, 8 Mar 2021 21:19:54 +0100
+Subject: [PATCH] install missing header files
+
+Signed-off-by: Bernd Waibel <waebbl-gentoo@posteo.net>
+---
+ src/CMakeLists.txt | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
+
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 05ae249..b0e9d51 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -74,6 +74,27 @@ install( TARGETS ${PROJECT_NAME}
+     RUNTIME DESTINATION ${BIN_INSTALL_DIR}
+ )
+ 
++set( HEADERS
++    backbuffer.hpp
++    deflateoutputstreambuf.hpp
++    filterinputstreambuf.hpp
++    filteroutputstreambuf.hpp
++    gzipoutputstream.hpp
++    gzipoutputstreambuf.hpp
++    inflateinputstreambuf.hpp
++    zipcentraldirectoryentry.hpp
++    zipendofcentraldirectory.hpp
++    zipinputstream.hpp
++    zipinputstreambuf.hpp
++    zipios_common.hpp
++    ziplocalentry.hpp
++    zipoutputstream.hpp
++    zipoutputstreambuf.hpp
++)
++
++install( FILES ${HEADERS}
++    DESTINATION ${INCLUDE_INSTALL_DIR}/zipios
++)
+ 
+ # Local Variables:
+ # indent-tabs-mode: nil
+-- 
+2.30.1
+

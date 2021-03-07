@@ -32,6 +32,7 @@ PATCHES=(
 	"${FILESDIR}"/${P}-0002-remove-unprintable-char.patch
 	"${FILESDIR}"/${P}-0003-fix-doc-installation-path.patch
 	"${FILESDIR}"/${P}-0004-add-a-relocatable-config-file.patch
+	"${FILESDIR}"/${P}-0005-install-missing-header-files.patch
 )
 
 DOCS=( AUTHORS NEWS README.md TODO )

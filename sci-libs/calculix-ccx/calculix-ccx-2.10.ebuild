@@ -39,6 +39,12 @@ src_configure() {
 	# Keeping things this way in case we change pkgconfig for arpack
 	export LAPACK=$($(tc-getPKG_CONFIG) --libs lapack)
 
+	# allow compilation with gcc-10
+	# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=957064
+	if test-flag-FC -fallow-argument-mismatch; then                                                                                                                                                                                            
+		append-fflags -fallow-argument-mismatch                                                                                                                                                                                                
+	fi
+
 	append-cflags "-I/usr/include/spooles -DSPOOLES"
 	if use threads; then
 		append-cflags "-DUSE_MT"

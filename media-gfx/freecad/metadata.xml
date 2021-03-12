@@ -56,7 +56,7 @@
 			meshes
 		</flag>
 		<flag name="netgen">
-			Support <pkg>sci-mathematics/netgen</pkg> with the FEM workbench
+			Support netgen based meshes with the FEM workbench
 		</flag>
 		<flag name="oce">
 			If set, build against the community edition of opencascade,
@@ -106,9 +106,13 @@
 		<flag name="surface">
 			Build the surface module and workbench
 		</flag>
-		<!-- FIXME: comment this until we can build it external?
+		<!-- FIXME: comment these until we have a working and usable package
 		<flag name="system-smesh">
 			Use system-provided smesh (not implemented)
+		</flag>
+		<flag name="system-zipios">
+			Build against system installed zipios library using
+			<pkg>dev-cpp/zipios</pkg>.
 		</flag>
 		-->
 		<flag name="techdraw">

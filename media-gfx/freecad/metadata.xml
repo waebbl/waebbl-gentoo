@@ -55,9 +55,6 @@
 			Build the mesh module and workbench to work with triangulated 
 			meshes
 		</flag>
-		<flag name="netgen">
-			Support netgen based meshes with the FEM workbench
-		</flag>
 		<flag name="oce">
 			If set, build against the community edition of opencascade,
 			<pkg>sci-libs/oce</pkg>. If unset, the package is built against

@@ -41,12 +41,14 @@ RDEPEND="
 DEPEND="${RDEPEND}"
 BDEPEND="virtual/pkgconfig"
 
-PATCHES=(
-	"${FILESDIR}"/${P}-0001-fix-link-file-name-for-libPyImath_Python.patch
-)
-
 DOCS=( CHANGES.md CODE_OF_CONDUCT.md CONTRIBUTING.md CONTRIBUTORS.md
 	README.md SECURITY.md )
+
+pkg_pretend() {
+	ewarn "WARNING: This package version is for testing purposes ONLY."
+	ewarn "WARNING: It WILL break downstream packages!!!"
+	ewarn "WARNING: Only install if you know exactly what you are doing."
+}
 
 pkg_setup() {
 	use python && python-single-r1_pkg_setup
@@ -62,7 +64,6 @@ src_configure() {
 
 	if use python; then
 		mycmakeargs+=(
-			-DCMAKE_DISABLE_FIND_PACKAGE_Python2=TRUE
 			-DPYTHON=ON
 			-DPython3_EXECUTABLE="${PYTHON}"
 			-DPython3_INCLUDE_DIR=$(python_get_includedir)

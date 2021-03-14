@@ -5,10 +5,6 @@
 	<email>waebbl-gentoo@posteo.net</email>
 	<name>Bernd Waibel</name>
 </maintainer>
-<maintainer type="project">
-	<email>proxy-maint@gentoo.org</email>
-	<name>Proxy Maintainers</name>
-</maintainer>
 <longdescription>
 	Alembic is an open computer graphics interchange framework, 
 	developed by Sony Pictures Imageworks Inc. and Lucasfilm Ltd.
@@ -16,14 +12,6 @@
 <use>
 	<flag name="examples">Install alembic examples</flag>
 	<flag name="hdf5">Add support <pkg>sci-libs/hdf5</pkg></flag>
-	<flag name="prman">
-		Compile Alembic plugin for Renderman (experimental)
-	</flag>
-<!--	<flag name="python">
-		Build pyalembic python bindings (needs <pkg>dev-python/pyilmbase</pkg>)
-	</flag>-->
-	<flag name="test">Build and run the test-suite</flag>
-	<flag name="zlib">Use <pkg>sys-libs/zlib</pkg> for compressions</flag>
 </use>
 <upstream>
 	<bugs-to>https://github.com/alembic/alembic/issues</bugs-to>

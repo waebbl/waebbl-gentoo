@@ -1,0 +1,57 @@
+From 610800d94149d69139cb7502672f9c3098dc99e5 Mon Sep 17 00:00:00 2001
+From: Bernd Waibel <waebbl-gentoo@posteo.net>
+Date: Sun, 14 Mar 2021 00:56:53 +0100
+Subject: [PATCH] fix lib install dir
+
+Signed-off-by: Bernd Waibel <waebbl-gentoo@posteo.net>
+---
+ CMakeLists.txt             | 8 ++++----
+ lib/Alembic/CMakeLists.txt | 4 ++--
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 0dcc038d..2b85a911 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -81,12 +81,12 @@ option(DOCS_PATH
+ 
+ # Set static/dynamic build options
+ SET(LIB_TYPE STATIC)
+-SET(RUNTIME_INSTALL_DIR lib)
+-SET(LIBRARY_INSTALL_DIR lib)
+-SET(ARCHIVE_INSTALL_DIR lib)
++SET(RUNTIME_INSTALL_DIR lib${LIB_SUFFIX})
++SET(LIBRARY_INSTALL_DIR lib${LIB_SUFFIX})
++SET(ARCHIVE_INSTALL_DIR lib${LIB_SUFFIX})
+ IF (ALEMBIC_SHARED_LIBS)
+     SET(LIB_TYPE SHARED)
+-    SET(ARCHIVE_INSTALL_DIR lib)
++    SET(ARCHIVE_INSTALL_DIR lib${LIB_SUFFIX})
+     IF (WIN32)
+         ADD_DEFINITIONS(-DALEMBIC_DLL)
+     ENDIF()
+diff --git a/lib/Alembic/CMakeLists.txt b/lib/Alembic/CMakeLists.txt
+index bc733ddc..7e746044 100644
+--- a/lib/Alembic/CMakeLists.txt
++++ b/lib/Alembic/CMakeLists.txt
+@@ -78,7 +78,7 @@ TARGET_LINK_LIBRARIES(Alembic
+     ${ZLIB_LIBRARY}
+   )
+ 
+-SET( ALEMBIC_LIB_INSTALL_DIR lib CACHE PATH "Where to install the Alembic libs")
++SET( ALEMBIC_LIB_INSTALL_DIR lib${LIB_SUFFIX} CACHE PATH "Where to install the Alembic libs")
+ INSTALL(TARGETS Alembic
+         EXPORT AlembicTargets
+         LIBRARY DESTINATION ${ALEMBIC_LIB_INSTALL_DIR}
+@@ -111,7 +111,7 @@ EXPORT(TARGETS
+     Alembic::
+     )
+ 
+-SET(ConfigPackageLocation lib/cmake/Alembic CACHE PATH
++SET(ConfigPackageLocation lib${LIB_SUFFIX}/cmake/Alembic CACHE PATH
+     "Where to install the Alembic's cmake files")
+ 
+ INSTALL(FILES
+-- 
+2.30.1
+

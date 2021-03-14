@@ -36,6 +36,12 @@ BDEPEND="virtual/pkgconfig"
 DOCS=( CHANGES.md CODEOWNERS CODE_OF_CONDUCT.md CONTRIBUTING.md
 	CONTRIBUTORS.md GOVERNANCE.md PATENTS README.md SECURITY.md )
 
+pkg_pretend() {
+	ewarn "WARNING: This package version is for testing purposes ONLY."
+	ewarn "WARNING: It WILL break downstream packages!!!"
+	ewarn "WARNING: Only use if you know exactly what you are doing."
+}
+
 #src_prepare() {
 	# Fix path for testsuite
 #	sed -i -e "s:/var/tmp/:${T}:" "${S}"/IlmImfTest/tmpDir.h || die "failed to set temp path for tests"

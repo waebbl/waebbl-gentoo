@@ -17,7 +17,3 @@ media-libs/coin javascript
 # See https://forum.freecadweb.org/viewtopic.php?f=4&t=39716 and
 # issue at https://www.freecadweb.org/tracker/view.php?id=4145
 media-gfx/freecad assembly
-
-# Bernd Waibel <waebbl@gmail.com> (30 Aug 2019)
-# Has runtime issues, so FEM is not working properly
-media-gfx/freecad netgen

@@ -1,4 +1,4 @@
-# Copyright 1999-2020 Gentoo Authors
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 # The ebuild was copied over from the Drauthius overlay, slightly
@@ -13,8 +13,9 @@ inherit cmake
 
 MY_PV=${PV/./-}
 DESCRIPTION="SimulationCraft is a tool to explore combat mechanics in World of Warcraft."
-HOMEPAGE="http://simulationcraft.org/"
+HOMEPAGE="https://simulationcraft.org/"
 SRC_URI="https://github.com/${PN}/simc/archive/release-${MY_PV}.tar.gz -> ${P}.tar.gz"
+S="${WORKDIR}/simc-release-${MY_PV}"
 
 LICENSE="GPL-3"
 SLOT="0"
@@ -26,19 +27,17 @@ RDEPEND="
 	dev-libs/openssl:=
 	net-misc/curl
 	gui? (
-		dev-qt/qtcore:5=
-		dev-qt/qtgui:5=
-		dev-qt/qtnetwork:5=
-		dev-qt/qtwebengine:5=
-		dev-qt/qtwidgets:5=
+		dev-qt/qtcore:5
+		dev-qt/qtgui:5
+		dev-qt/qtnetwork:5
+		dev-qt/qtwebengine:5
+		dev-qt/qtwidgets:5
 	)
 "
 DEPEND="${RDEPEND}"
 BDEPEND="doc? ( app-doc/doxygen )"
 
 DOCS=( CONTRIBUTING.md README.md )
-
-S="${WORKDIR}/simc-release-${MY_PV}"
 
 src_configure() {
 	local mycmakeargs=(

@@ -5,6 +5,12 @@
 	<email>waebbl-gentoo@posteo.net</email>
 	<name>Bernd Waibel</name>
 </maintainer>
-<longdescription>WeiDU is used to develop, distribute and install mods for
-	games based on the Infinity Engine.</longdescription>
+<longdescription>
+	WeiDU is a program used to develop, distribute and install
+	modifications for games based on the Infinity Engine.
+</longdescription>
+<upstream>
+	<bugs-to>https://github.com/WeiDUorg/weidu/issues</bugs-to>
+	<remote-id type="github">WeiDUorg/weidu</remote-id>
+</upstream>
 </pkgmetadata>

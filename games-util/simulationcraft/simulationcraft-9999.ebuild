@@ -1,4 +1,4 @@
-# Copyright 1999-2020 Gentoo Authors
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 # The ebuild was copied over from the Drauthius overlay, slightly
@@ -12,7 +12,7 @@ EAPI=7
 inherit cmake git-r3
 
 DESCRIPTION="SimulationCraft is a tool to explore combat mechanics in World of Warcraft."
-HOMEPAGE="http://simulationcraft.org/"
+HOMEPAGE="https://simulationcraft.org/"
 EGIT_REPO_URI="https://github.com/simulationcraft/simc.git"
 EGIT_BRANCH="shadowlands"
 
@@ -25,11 +25,11 @@ RDEPEND="
 	dev-libs/openssl:=
 	net-misc/curl
 	gui? (
-		dev-qt/qtcore:5=
-		dev-qt/qtgui:5=
-		dev-qt/qtnetwork:5=
-		dev-qt/qtwebengine:5=
-		dev-qt/qtwidgets:5=
+		dev-qt/qtcore:5
+		dev-qt/qtgui:5
+		dev-qt/qtnetwork:5
+		dev-qt/qtwebengine:5
+		dev-qt/qtwidgets:5
 	)
 "
 DEPEND="${RDEPEND}"
@@ -60,7 +60,6 @@ src_install() {
 
 	insinto /usr/share/SimulationCraft
 	doins -r "${S}"/profiles/.
-	doins Welcome.html Error.html
 
 	if use doc; then
 		HTML_DOCS+=( doc/doxygen/html/. )

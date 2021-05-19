@@ -7,11 +7,11 @@
 # This file is only for generic masks. For arch-specific masks (i.e.
 # mask everywhere, unmask on arch/*) use arch/base.
 
-# Bernd Waibel <waebbl@gmail.com> (20 Jan 2020)
+# Bernd Waibel <waebbl-gentoo@posteo.net> (20 Jan 2020)
 # Doesn't compile against dev-lang/spidermonkey:60
 media-libs/coin javascript
 
-# Bernd Waibel <waebbl@gmail.com> (23 Dec 2019)
+# Bernd Waibel <waebbl-gentoo@posteo.net> (23 Dec 2019)
 # Current assembly version is there only for reference and doesn't
 # compile. So we mask this for now, until the new version get's out.
 # See https://forum.freecadweb.org/viewtopic.php?f=4&t=39716 and

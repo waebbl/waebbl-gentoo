@@ -10,7 +10,7 @@
 - [x] [app-arch/zipios](https://github.com/Zipios/Zipios) new package: used by freecad, currently internal package is used.
 - [ ] [media-gfx/makehuman](https://github.com/makehumancommunity/makehuman) new package: take a look at cg overlay, if their ebuild is usable
 - [ ] [media-gfx/solvespace](https://github.com/solvespace/solvespace) new package: parametric 2D/3D CAD package
-- [ ] [sci-libs/gmsh](https://gitlab.onelab.info/gmsh/gmsh) available in science overlay with an outdated version (current: 4.0.2)
+- [x] [sci-libs/gmsh](https://gitlab.onelab.info/gmsh/gmsh) available in science overlay with an outdated version (current: 4.0.2) **now in ::gentoo**
 - [ ] [media-gfx/tetwild](https://github.com/Yixin-Hu/TetWild): new package (additional deps needed: pymesh, pyrenderer, CLI11, see his README.md for details)
 - [ ] [sci-visualization/vistrails](https://github.com/VisTrails/VisTrails): new package (b.g.o has ebuild for 1.4 / 1.5)
 - [ ] [sci-libs/vxl](https://github.com/vxl/vxl): available as live ebuild in science overlay
@@ -28,20 +28,11 @@
 - [ ] [sci-libs/chrono](https://github.com/projectchrono/chrono): new package: C++ library for multi-physics simulation
 
 
-## Packages with bugs assigned
-
-- [ ] media-gfx/alembic-1.7.9: see https://bugs.gentoo.org/667728
-- [x] [dev-util/codespell](https://github.com/codespell-project/codespell) new package: tool to check spelling in code files, see [Bug](https://bugs.gentoo.org/667830)
-- [ ] dev-libs/tvision: comilation problems with newer gcc versions. See bugzilla. Possibly switch to cmake?
-- [x] media-sound/denemo: improvements with guile-2, no longer support guile-1 in the ebuild, see bugzilla. -> merded
-- [x] OpenEXR Suite: see [PR](https://github.com/gentoo/gentoo/pull/10030) and [Bug](https://bugs.gentoo.org/639998) -> merged
-
-
 ## Packages which need updating
 
-- [ ] improve freecad support by adding the missing dependencies
+- [x] improve freecad support by adding the missing dependencies
 - [x] dev-python/pyside: need a local ebuild? On [Qt for Python](http://wiki.qt.io/Qt_for_Python/GettingStarted/X11) they say, the same version as Qt is needed. The ebuild from qt overlay uses branch 5.9, but people (including me) might have installed Qt 5.11 already. Also there would be no cross-repo dependency -> https://github.com/gentoo/gentoo/pull/10085
-- [ ] games-util/simulationcraft new version 801-01: check if cmake is working
+- [x] games-util/simulationcraft new version 801-01: check if cmake is working
 
 
 ## Less needed packages not in official trees
@@ -56,6 +47,5 @@
 ## Other things to do
 
 - [ ] check possibilities for CI of the repo. Possible use cases: automatic merging of all ebuild, automatic merging after update
-- [ ] start updating ebuilds to EAPI 7
-- [ ] [sci-libs/trilinos](https://github.com/trilinos/Trilinos) available in science overlay in current version. Fetch is currently not working, using the github sources it doesn't compile (patching, configuration and compile errors). Also the set of use-flags is somewhat counterintuitive, in that it states various gentoo packages to use. Trilinos itself has a high level abstraction of internal packages to build. Using them as use flags, would IMO make more sense.
-
+- [x] start updating ebuilds to EAPI 7
+- [x] [sci-libs/trilinos](https://github.com/trilinos/Trilinos) available in science overlay in current version. Fetch is currently not working, using the github sources it doesn't compile (patching, configuration and compile errors). Also the set of use-flags is somewhat counterintuitive, in that it states various gentoo packages to use. Trilinos itself has a high level abstraction of internal packages to build. Using them as use flags, would IMO make more sense. **now in ::gentoo**

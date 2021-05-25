@@ -1,0 +1,72 @@
+diff -uwrN cgx_2.17.ORIG/src/cgx.c cgx_2.17/src/cgx.c
+--- src/cgx.c   2016-03-04 20:40:43.429549000 +0100
++++ cgx_2.17/src/cgx.c   2016-03-08 10:53:56.816865592 +0100
+@@ -245,6 +245,9 @@
+ int   userCommands=0;
+ char  **userCommand=NULL;
+
++char recompileFlag=0; /* 0 if nothing to recompile */
++int recompileMenu=0; /* If recompile needed, set to lc */
++
+ GLfloat lmodel_twoside =  GL_TRUE ;
+ GLfloat lmodel_oneside =  GL_FALSE ;
+ double dx ,dy;                                      /* Mauskoordinaten im bereich +-1*/
+@@ -420,7 +423,11 @@
+     for(i=0; i<=anz->nmax; i++) colNr[i]=0.;
+ }
+ 
+-
++void queueRecompileEntitiesInMenu(int lc) 
++{
++  recompileFlag = 1;
++  recompileMenu = lc;
++}
+ 
+ /* the node pointer must not be changed inside the function. Since that is the case the *node is changed to *node_dummy
+    and the global *node is used which is always correct so far */
+@@ -3394,7 +3401,7 @@
+       seqLC[2]=anz->l-1;
+   }/* no sequence until a new entity is selected and all data are prepared */
+ 
+-  recompileEntitiesInMenu(pre_lc);
++  queueRecompileEntitiesInMenu(pre_lc);
+ }
+ 
+ 
+@@ -3424,7 +3431,15 @@
+   glutSetWindow( activWindow);
+ }
+ 
+-
++void processMenuStatus(int status, int x, int y) 
++{
++  if (status == GLUT_MENU_NOT_IN_USE) {
++    if (recompileFlag) {
++      recompileEntitiesInMenu(recompileMenu);
++      recompileFlag = 0;
++    }
++  }
++}
+ 
+ void recompileEntitiesInMenu(int lc)
+ {
+@@ -6712,6 +6718,7 @@
+   glutSpecialFunc ( specialKeyboard );
+   glutEntryFunc ( entryfunktion );
+   glutPassiveMotionFunc ( Mouse );
++  glutMenuStatusFunc( processMenuStatus );
+   glDisable(GL_DITHER);
+   glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, lmodel_oneside);
+   glCullFace ( GL_BACK );
+diff -uwrN cgx_2.17.ORIG/src/extUtil.h cgx_2.17/src/extUtil.h
+--- src/extUtil.h   2016-02-13 02:21:44.342442000 +0100
++++ cgx_2.17/src/extUtil.h   2016-03-08 10:55:36.194863375 +0100
+@@ -37,7 +37,7 @@
+ }
+   #endif
+ #else
+-  #include <GL/glut_cgx.h>
++  #include <GL/glut.h>
+ #endif
+ 
+ #define     PI          3.14159265358979323846264338327950288

@@ -3,19 +3,16 @@
 # * generated automatically using pmaint *
 
 app-doc/freecad-doc:oce - Use OpenCASCade Community Edition through sci-libs/oce instead of the Official Version sci-libs/opencascade
+dev-libs/imath:large-stack - Enables code to take advantage of large stack support
 dev-libs/qtnproperty:demo - Build and install the demo program.
 dev-python/pivy:quarter - Use media-libs/quarter for GUI bindings
 dev-python/pivy:soqt - Use media-libs/SoQt for GUI bindings
 games-util/simulationcraft:gui - Builds the Qt5 GUI
 media-gfx/alembic:examples - Install alembic examples
 media-gfx/alembic:hdf5 - Add support sci-libs/hdf5
-media-gfx/alembic:prman - Compile Alembic plugin for Renderman (experimental)
-media-gfx/alembic:test - Build and run the test-suite
-media-gfx/alembic:zlib - Use sys-libs/zlib for compressions
 media-gfx/freecad:addonmgr - Build the addon manager module for automatic handling of 3rd party addons
 media-gfx/freecad:arch - Build the architecture workbench for working with architectural elements
 media-gfx/freecad:assembly - Build the assembly module
-media-gfx/freecad:ccache - Use dev-util/ccache to build the package.
 media-gfx/freecad:cloud - Build the Cloud workbench, to access cloud providers (mostly Amazon S3).
 media-gfx/freecad:drawing - Build the drawing module and workbench to display 3D work on a 2D sheet
 media-gfx/freecad:fem - Build the FEM module and workbench which provides Finite Element Analysis (FEA) workflows
@@ -25,8 +22,6 @@ media-gfx/freecad:image - Build the image module and workbench for working with 
 media-gfx/freecad:inspection - Build the inspection workbench which gives you specific tools for examination of shapes (experimental)
 media-gfx/freecad:material - Build the material module and workbench to work with materials
 media-gfx/freecad:mesh - Build the mesh module and workbench to work with triangulated meshes
-media-gfx/freecad:netgen - Support sci-mathematics/netgen with the FEM workbench
-media-gfx/freecad:oce - If set, build against the community edition of opencascade, sci-libs/oce. If unset, the package is built against the official version sci-libs/opencascade.
 media-gfx/freecad:openscad - Build the OpenSCAD module for interoperability with OpenSCAD and repairing Constructive Solid Geometry (CSG) history
 media-gfx/freecad:part-design - Build the part design module and workbench for build part shapes from sketches
 media-gfx/freecad:path - Build the path module and workbench to procude G-Code instructions for CNC
@@ -41,7 +36,6 @@ media-gfx/freecad:spreadsheet - Build the spreadsheet module and workbench to cr
 media-gfx/freecad:surface - Build the surface module and workbench
 media-gfx/freecad:techdraw - Build the techdraw module and workbench, a more advanced and feature-rich successor of the drawing workbench
 media-gfx/freecad:tux - Build the Tux module
-media-gfx/openexr_viewers:cg - Add support for nvidia's cg shaders
 media-libs/SoQt:coin-iv-extensions - Enables extra open inventor extensions
 media-libs/SoQt:man - Build and install man pages
 media-libs/SoQt:qthelp - Enable qthelp documentation
@@ -54,6 +48,8 @@ media-libs/embree:raymask - Enable the ray masking feature
 media-libs/embree:tbb - Use Intel's threading library dev-cpp/tbb
 media-libs/embree:tutorial - Compile and install the Embree tutorials.
 media-libs/oidn:openimageio - Build apps with support for media-libs/openimageio
+media-libs/openexr:large-stack - Enable code to take advantage of large stack support.
+media-libs/openexr:utils - Build several utility binaries for verifying and manipulating EXR files.
 media-libs/quarter:designer - Build plugin for Qt Designer
 media-libs/quarter:qthelp - Build the Qt Help documentation
 media-libs/quarter:spacenav - Build support for app-misc/spacenavd
@@ -63,10 +59,6 @@ sci-libs/magma:maxwell - Compile for GPU NVIDIA Maxwell family (sm_5x)
 sci-libs/magma:pascal - Compile for GPU NVIDIA Pascal family (sm_6x)
 sci-libs/magma:sparse - Additionally build the sparse matrix library
 sci-libs/magma:volta - Compile for GPU NVIDIA Volta family (sm_7x)
-sci-libs/oce:freeimage - Enable support for image i/o via media-libs/freeimage
-sci-libs/oce:gl2ps - Use gl2ps PostScript printing library
-sci-libs/oce:tbb - Enable parallel meshing
-sci-libs/oce:vtk - Enable Virtualisation Toolkit
 sci-libs/vtk:R - Enable support for dev-lang/R
 sci-libs/vtk:all-modules - Build all modules
 sci-libs/vtk:boost - Add support for boost

@@ -41,7 +41,7 @@ for module in ${FREECAD_STABLE_MODULES}; do
 	IUSE="${IUSE} +${module}"
 done
 for module in ${FREECAD_EXPERIMENTAL_MODULES}; do
-	IUSE="${IUSE} -${module}"
+	IUSE="${IUSE} ${module}"
 done
 unset module
 
@@ -228,6 +228,7 @@ src_configure() {
 		# sub-packages will still be installed inside /usr/lib64/freecad
 		-DINSTALL_TO_SITEPACKAGES=ON
 
+		-DPYTHON_CONFIG_SUFFIX="-${EPYTHON}"	# bug #793962
 		-DPython3_EXECUTABLE=${PYTHON}
 		-DOCCT_CMAKE_FALLBACK=ON				# don't use occt-config which isn't included in opencascade for Gentoo
 	)

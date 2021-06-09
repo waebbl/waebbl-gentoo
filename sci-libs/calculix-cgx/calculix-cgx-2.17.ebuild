@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Authors
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -10,25 +10,25 @@ HOMEPAGE="http://www.calculix.de/"
 SRC_URI="http://www.dhondt.de/${MY_P}.all.tar.bz2
 	doc? ( http://www.dhondt.de/${MY_P}.pdf )"
 
+S=${WORKDIR}/CalculiX/${MY_P}/src/
+
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc examples"
 
-RDEPEND="media-libs/mesa:=
-	>=media-libs/freeglut-1.0:=
-	virtual/opengl:=
-	x11-libs/libX11:=
-	x11-libs/libXmu:=
-	x11-libs/libXi:=
-	x11-libs/libXext:=
-	x11-libs/libXt:=
-	x11-libs/libSM:=
-	x11-libs/libICE:="
-DEPEND="${RDEPEND}
-	doc? ( app-text/ghostscript-gpl )"
-
-S=${WORKDIR}/CalculiX/${MY_P}/src/
+RDEPEND="media-libs/mesa
+	>=media-libs/freeglut-1.0
+	virtual/opengl
+	x11-libs/libX11
+	x11-libs/libXmu
+	x11-libs/libXi
+	x11-libs/libXext
+	x11-libs/libXt
+	x11-libs/libSM
+	x11-libs/libICE"
+BDEPEND="doc? ( app-text/ghostscript-gpl )"
+DEPEND="${RDEPEND}"
 
 PATCHES=(
 	"${FILESDIR}"/01_${MY_P}_Makefile_custom_cxx_flags.patch

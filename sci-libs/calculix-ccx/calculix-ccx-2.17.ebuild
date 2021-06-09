@@ -1,9 +1,9 @@
-# Copyright 1999-2018 Gentoo Authors
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
-inherit eutils toolchain-funcs flag-o-matic fortran-2
+inherit toolchain-funcs flag-o-matic fortran-2
 
 MY_P=ccx_${PV/_/}
 
@@ -13,6 +13,8 @@ SRC_URI="
 	http://www.dhondt.de/${MY_P}.src.tar.bz2
 	doc? ( http://www.dhondt.de/${MY_P}.ps.tar.bz2 )
 	examples? ( http://www.dhondt.de/${MY_P}.test.tar.bz2 )"
+
+S=${WORKDIR}/CalculiX/${MY_P}/src
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -24,11 +26,10 @@ RDEPEND="
 	>=sci-libs/spooles-2.2[threads=]
 	virtual/lapack
 	virtual/blas"
-DEPEND="${RDEPEND}
+BDEPEND="
 	virtual/pkgconfig
 	doc? ( app-text/ghostscript-gpl )"
-
-S=${WORKDIR}/CalculiX/${MY_P}/src
+DEPEND="${RDEPEND}"
 
 PATCHES=(
 	"${FILESDIR}/01_${MY_P}_Makefile_custom_cc_flags_spooles_arpack.patch"
@@ -41,8 +42,8 @@ src_configure() {
 
 	# allow compilation with gcc-10
 	# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=957064
-	if test-flag-FC -fallow-argument-mismatch; then                                                                                                                                                                                            
-		append-fflags -fallow-argument-mismatch                                                                                                                                                                                                
+	if test-flag-FC -fallow-argument-mismatch; then
+		append-fflags -fallow-argument-mismatch
 	fi
 
 	append-cflags "-I/usr/include/spooles -DSPOOLES"

@@ -1,39 +1,44 @@
 # Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
+# TODO: add src_test, check MPI support, unrespected LDFLAGS QA
+
 EAPI=7
 
-inherit toolchain-funcs flag-o-matic fortran-2
+inherit eapi8-dosym flag-o-matic fortran-2 toolchain-funcs
 
 MY_P=ccx_${PV/_/}
 
 DESCRIPTION="A Free Software Three-Dimensional Structural Finite Element Program"
 HOMEPAGE="http://www.calculix.de/"
-SRC_URI="
-	http://www.dhondt.de/${MY_P}.src.tar.bz2
+SRC_URI="http://www.dhondt.de/${MY_P}.src.tar.bz2
 	doc? ( http://www.dhondt.de/${MY_P}.ps.tar.bz2 )
 	examples? ( http://www.dhondt.de/${MY_P}.test.tar.bz2 )"
-
 S=${WORKDIR}/CalculiX/${MY_P}/src
 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="arpack doc examples openmp threads"
+RESTRICT="test" # FIXME
 
 RDEPEND="
-	arpack? ( >=sci-libs/arpack-3.1.3 )
 	>=sci-libs/spooles-2.2[threads=]
+	virtual/blas
 	virtual/lapack
-	virtual/blas"
+	arpack? ( >=sci-libs/arpack-3.1.3 )
+"
+DEPEND="${RDEPEND}"
 BDEPEND="
 	virtual/pkgconfig
-	doc? ( app-text/ghostscript-gpl )"
-DEPEND="${RDEPEND}"
+	doc? ( app-text/ghostscript-gpl )
+"
 
-PATCHES=(
-	"${FILESDIR}/01_${MY_P}_Makefile_custom_cc_flags_spooles_arpack.patch"
-)
+PATCHES=( "${FILESDIR}"/${P}_01_Makefile_custom_cc_flags_spooles_arpack.patch )
+
+pkg_setup() {
+	fortran-2_pkg_setup
+}
 
 src_configure() {
 	# Technically we currently only need this when arpack is not used.
@@ -66,16 +71,19 @@ src_configure() {
 
 src_install () {
 	dobin ${MY_P}
-	dosym ${MY_P} /usr/bin/ccx
+	dosym8 -r /usr/bin/${MY_P} /usr/bin/ccx
 
+	dodoc BUGS LOGBOOK README.INSTALL TODO
 	if use doc; then
-		cd "${S}/../doc" || die
+		pushd "${S}/../doc" >/dev/null || die
 		ps2pdf ${MY_P}.ps ${MY_P}.pdf || die "ps2pdf failed"
 		dodoc ${MY_P}.pdf
+		popd >/dev/null || die
 	fi
 
 	if use examples; then
-		insinto /usr/share/doc/${PF}/examples
-		doins -r "${S}"/../test/*
+		docompress -x /usr/share/doc/${PF}/examples
+		docinto examples
+		dodoc -r "${S}"/../test/*
 	fi
 }

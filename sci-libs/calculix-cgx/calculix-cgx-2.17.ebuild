@@ -3,13 +3,14 @@
 
 EAPI=7
 
+inherit toolchain-funcs
+
 MY_P=cgx_${PV}
 
 DESCRIPTION="A Free Software Three-Dimensional Structural Finite Element Program"
 HOMEPAGE="http://www.calculix.de/"
 SRC_URI="http://www.dhondt.de/${MY_P}.all.tar.bz2
 	doc? ( http://www.dhondt.de/${MY_P}.pdf )"
-
 S=${WORKDIR}/CalculiX/${MY_P}/src/
 
 LICENSE="GPL-2"
@@ -17,39 +18,50 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc examples"
 
-RDEPEND="media-libs/mesa
+RDEPEND="
+	media-libs/mesa
 	>=media-libs/freeglut-1.0
 	virtual/opengl
-	x11-libs/libX11
-	x11-libs/libXmu
-	x11-libs/libXi
-	x11-libs/libXext
-	x11-libs/libXt
+	x11-libs/libICE
 	x11-libs/libSM
-	x11-libs/libICE"
-BDEPEND="doc? ( app-text/ghostscript-gpl )"
+	x11-libs/libX11
+	x11-libs/libXext
+	x11-libs/libXi
+	x11-libs/libXmu
+	x11-libs/libXt
+"
 DEPEND="${RDEPEND}"
 
 PATCHES=(
-	"${FILESDIR}"/01_${MY_P}_Makefile_custom_cxx_flags.patch
-	"${FILESDIR}"/02_${MY_P}_menu_fix-freeglut_2.8.1.patch
+	"${FILESDIR}"/${P}_01_Makefile_custom_cxx_flags.patch
+	"${FILESDIR}"/${P}_02_menu_fix-freeglut_2.8.1.patch
 )
+
+src_unpack() {
+	if use doc; then
+		cp "${DISTDIR}/${MY_P}.pdf" "${WORKDIR}" || die
+	fi
+	default
+}
 
 src_configure () {
 	# Does not compile without -lpthread
 	export PTHREAD="-lpthread"
-	export LFLAGS="-L/usr/$(get_libdir) ${LFLAGS}"
+	export LFLAGS="-L/usr/$(get_libdir) ${LFLAGS} ${LDFLAGS}"
+	export CC="$(tc-getCC)"
+	export CXX="$(tc-getCXX)"
 }
 
 src_install () {
 	dobin cgx
 
 	if use doc; then
-		dodoc "${DISTDIR}/${MY_P}.pdf"
+		dodoc "${WORKDIR}/${MY_P}.pdf"
 	fi
 
 	if use examples; then
-		insinto /usr/share/doc/${PF}/examples
-		doins -r "${S}"/../examples/*
+		docompress -x /usr/share/doc/${PF}/examples
+		docinto examples
+		dodoc -r "${S}"/../examples/*
 	fi
 }

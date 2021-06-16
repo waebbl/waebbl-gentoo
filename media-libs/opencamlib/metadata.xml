@@ -7,7 +7,7 @@
 </maintainer>
 <longdescription>
 	OpenCAMLib (ocl) is a C++ library with python bindings to create 3D
-	toolpaths for CNC machines;
+	toolpaths for CNC machines such as mills and lathes.
 </longdescription>
 <!--
 <use>

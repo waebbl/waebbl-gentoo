@@ -11,17 +11,13 @@ games-util/simulationcraft:gui - Builds the Qt5 GUI
 media-gfx/alembic:examples - Install alembic examples
 media-gfx/alembic:hdf5 - Add support sci-libs/hdf5
 media-gfx/freecad:addonmgr - Build the addon manager module for automatic handling of 3rd party addons
-media-gfx/freecad:arch - Build the architecture workbench for working with architectural elements
-media-gfx/freecad:assembly - Build the assembly module
 media-gfx/freecad:cloud - Build the Cloud workbench, to access cloud providers (mostly Amazon S3).
-media-gfx/freecad:drawing - Build the drawing module and workbench to display 3D work on a 2D sheet
 media-gfx/freecad:fem - Build the FEM module and workbench which provides Finite Element Analysis (FEA) workflows
 media-gfx/freecad:headless - Build FreeCAD without a GUI, usable for server-side instances. The Python modules are still available, without their GUI parts though.
 media-gfx/freecad:idf - Build the IDF module to provide file exchange capabilities with IDF files
 media-gfx/freecad:image - Build the image module and workbench for working with bitmap images
 media-gfx/freecad:inspection - Build the inspection workbench which gives you specific tools for examination of shapes (experimental)
 media-gfx/freecad:material - Build the material module and workbench to work with materials
-media-gfx/freecad:mesh - Build the mesh module and workbench to work with triangulated meshes
 media-gfx/freecad:openscad - Build the OpenSCAD module for interoperability with OpenSCAD and repairing Constructive Solid Geometry (CSG) history
 media-gfx/freecad:part-design - Build the part design module and workbench for build part shapes from sketches
 media-gfx/freecad:path - Build the path module and workbench to procude G-Code instructions for CNC
@@ -32,7 +28,6 @@ media-gfx/freecad:raytracing - Build the raytracing module and workbench for ray
 media-gfx/freecad:robot - Build the robot module and workbench for studying robot movements
 media-gfx/freecad:ship - Build the ship module and workbench which works over ship entities, that must be created on top of provided geometry. NOTE: This conflicts with the external ship workbench, which you can add via the Addon Manager!
 media-gfx/freecad:show - Build the show module, a helper module for visibility automation
-media-gfx/freecad:spreadsheet - Build the spreadsheet module and workbench to create and manipulate spreadsheet data
 media-gfx/freecad:surface - Build the surface module and workbench
 media-gfx/freecad:techdraw - Build the techdraw module and workbench, a more advanced and feature-rich successor of the drawing workbench
 media-gfx/freecad:tux - Build the Tux module
@@ -59,21 +54,3 @@ sci-libs/magma:maxwell - Compile for GPU NVIDIA Maxwell family (sm_5x)
 sci-libs/magma:pascal - Compile for GPU NVIDIA Pascal family (sm_6x)
 sci-libs/magma:sparse - Additionally build the sparse matrix library
 sci-libs/magma:volta - Compile for GPU NVIDIA Volta family (sm_7x)
-sci-libs/vtk:R - Enable support for dev-lang/R
-sci-libs/vtk:all-modules - Build all modules
-sci-libs/vtk:boost - Add support for boost
-sci-libs/vtk:cuda - Add support for CUDA
-sci-libs/vtk:eigen - Use eigen
-sci-libs/vtk:gdal - Support for gdal formated data
-sci-libs/vtk:imaging - Building Imaging modules
-sci-libs/vtk:java - Generate and install Java bindings
-sci-libs/vtk:json - Support for json formated data
-sci-libs/vtk:kits - Enable kits compilation
-sci-libs/vtk:offscreen - Offscreen rendering through OSMesa
-sci-libs/vtk:pegtl - Build using dev-libs/pegtl
-sci-libs/vtk:python - Generate and install Python bindings
-sci-libs/vtk:rendering - Building Redering modules
-sci-libs/vtk:tbb - Use dev-cpp/tbb to handle smp support
-sci-libs/vtk:views - Building Views modules
-sci-libs/vtk:web - Install web component
-sci-libs/vtk:xdmf2 - Support for xdmf2 formated data

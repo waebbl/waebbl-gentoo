@@ -1,4 +1,5 @@
 app-doc/freecad-doc 0.19_pre20201231 9999: QT based computer aided design application manuals
+app-editors/visual-studio-code 1.57.1: Multiplatform Visual Studio Code from Microsoft
 app-emulation/lxc-gentoo 9999: LXC container creation script for gentoo containers
 dev-cpp/zipios 2.2.6: C++ library for reading and writing zip files
 dev-go/modmerge 1.1-r1: Tool which merges mod zip files back into Infinity Engine games.

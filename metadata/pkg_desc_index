@@ -5,11 +5,11 @@ dev-go/modmerge 1.1-r1: Tool which merges mod zip files back into Infinity Engin
 dev-lang/ispc 9999: Intel SPMD Program Compiler
 dev-libs/imath 9999: Imath basic math package
 dev-libs/qtnproperty 1.0.1 9999: Tool to extend properties in the Qt5 framework.
-dev-python/ebuildtester 9999: A dockerized approach to test a Gentoo package within a clean stage3 container
 dev-python/pivy 0.6.5: Coin3D bindings for Python
 dev-python/pyside2-tools 5.15.1-r1: PySide development tools (pyside2-lupdate with support for Python)
 dev-python/recommonmark 0.7.1: Python docutils-compatibility bridge to CommonMark
 dev-util/codespell 9999: Check text files for common misspellings
+dev-util/ebuildtester 9999: A dockerized approach to test a Gentoo package within a clean stage3 container
 dev-util/elkhound 2019.02.17 9999: Elkhound is a GLR parser generator
 dev-util/smartgit 20.2.1: Git client with support for GitHub Pull Requests+Comments, SVN and Mercurial
 games-util/simulationcraft 830.01 9999: SimulationCraft is a tool to explore combat mechanics in World of Warcraft.
@@ -17,7 +17,7 @@ games-util/weidu 246.00 9999: Develop, distribute and install mods for Infinity 
 media-gfx/alembic 9999: Open framework for storing and sharing scene data
 media-gfx/aoi 2.7.2: A free, open-source 3D modelling and rendering studio
 media-gfx/awesomebump 5.0: Tool to generate different types of textures from a single image.
-media-gfx/freecad 0.18.6 9999: QT based Computer Aided Design application
+media-gfx/freecad 9999: QT based Computer Aided Design application
 media-gfx/opencsg 1.4.2-r1: The Constructive Solid Geometry rendering library
 media-gfx/osg2vsg 9999: Convert OpenSceneGraph images into VulkanSceneGraph
 media-gfx/vsgExamples 9999: vsgviewer and vsgdraw example programs for VulkanSceneGraph
@@ -36,8 +36,7 @@ media-libs/vsgXchange 9999: VulkanSceneGraph integration library
 media-plugins/blendluxcore 2.4: A PBS rendering plugin for blender
 sci-astronomy/xephem 3.7.7-r1: Interactive tool for astronomical ephemeris and sky simulation
 sci-electronics/uconfig 9999: Datasheet pinout extractor from PDF and library Stylizer for Kicad.
-sci-libs/calculix-ccx 2.10: A Free Software Three-Dimensional Structural Finite Element Program
-sci-libs/calculix-cgx 2.10: A Free Software Three-Dimensional Structural Finite Element Program
+sci-libs/calculix-ccx 2.17: A Free Software Three-Dimensional Structural Finite Element Program
+sci-libs/calculix-cgx 2.17: A Free Software Three-Dimensional Structural Finite Element Program
 sci-libs/magma 2.4.0: Matrix Algebra on GPU and Multicore Architectures
 sci-libs/spooles 2.2: SParse Object Oriented Linear Equations Solver
-sci-libs/vtk 8.2.0-r3 9.0.1-r1: The Visualization Toolkit

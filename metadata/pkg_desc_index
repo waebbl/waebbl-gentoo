@@ -41,3 +41,4 @@ sci-libs/calculix-ccx 2.17: A Free Software Three-Dimensional Structural Finite 
 sci-libs/calculix-cgx 2.17: A Free Software Three-Dimensional Structural Finite Element Program
 sci-libs/magma 2.4.0: Matrix Algebra on GPU and Multicore Architectures
 sci-libs/spooles 2.2: SParse Object Oriented Linear Equations Solver
+sys-kernel/kconfig-hardened-check 0.5.9 9999: A script for checking the hardening options in the Linux kernel config

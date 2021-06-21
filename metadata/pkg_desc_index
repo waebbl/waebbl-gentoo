@@ -15,7 +15,7 @@ dev-util/smartgit 20.2.1: Git client with support for GitHub Pull Requests+Comme
 games-util/simulationcraft 830.01 9999: SimulationCraft is a tool to explore combat mechanics in World of Warcraft.
 games-util/weidu 246.00 9999: Develop, distribute and install mods for Infinity Engine games.
 media-gfx/alembic 9999: Open framework for storing and sharing scene data
-media-gfx/aoi 2.7.2: A free, open-source 3D modelling and rendering studio
+media-gfx/aoi 3.2.0: A free, open-source 3D modelling and rendering studio
 media-gfx/awesomebump 5.0: Tool to generate different types of textures from a single image.
 media-gfx/freecad 9999: QT based Computer Aided Design application
 media-gfx/opencsg 1.4.2-r1: The Constructive Solid Geometry rendering library

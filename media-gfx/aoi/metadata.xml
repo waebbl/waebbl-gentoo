@@ -6,6 +6,6 @@
 		<name>Bernd Waibel</name>
 	</maintainer>
 	<upstream>
-		<remote-id type="sourceforge">aoi</remote-id>
+		<remote-id type="github">ArtOfIllusion/ArtOfIllusion</remote-id>
 	</upstream>
 </pkgmetadata>

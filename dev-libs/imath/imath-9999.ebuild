@@ -3,46 +3,51 @@
 
 EAPI=7
 
-CMAKE_ECLASS=cmake
-PYTHON_COMPAT=( python3_{7..9} )
+PYTHON_COMPAT=( python3_{8..10} )
 
 inherit cmake python-single-r1
 
+MY_PN="${PN^}"
+
 DESCRIPTION="Imath basic math package"
-HOMEPAGE="https://www.openexr.com"
+HOMEPAGE="https://imath.readthedocs.io"
 
 if [[ ${PV} == *9999 ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/AcademySoftwareFoundation/Imath.git"
 else
 	SRC_URI="https://github.com/AcademySoftwareFoundation/Imath/archive/v${PV}.tar.gz -> ${P}.tar.gz"
-	KEYWORDS="~amd64 ~x86 ~amd64-linux ~x86-linux"
-#KEYWORDS="~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sparc ~x64-macos ~x86-solaris"
+	# ilmbase used: ~arm ~arm64 ~mips ~x64-macos ~x86-solaris
+	KEYWORDS="~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~amd64-linux ~x86-linux"
 fi
 
 LICENSE="BSD"
-SLOT="3/26"
-IUSE="large-stack python static-libs test"
-REQUIRED_USE="${PYTHON_REQUIRED_USE}"
+SLOT="3/29"
+IUSE="doc large-stack python static-libs test"
+REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
 RESTRICT="!test? ( test )"
 
-# libImath.so conflicts with ilmbase
+# blocker due to file collision #803347
 RDEPEND="
-	!media-libs/ilmbase
+	!dev-libs/imath:0
 	sys-libs/zlib
 	python? (
 		${PYTHON_DEPS}
 		$(python_gen_cond_dep '
-			dev-libs/boost:=[python?,${PYTHON_MULTI_USEDEP}]
-			dev-python/numpy[${PYTHON_MULTI_USEDEP}]
+			dev-libs/boost:=[python,${PYTHON_USEDEP}]
+			dev-python/numpy[${PYTHON_USEDEP}]
 		')
 	)
 "
 DEPEND="${RDEPEND}"
-BDEPEND="virtual/pkgconfig"
+BDEPEND="
+	virtual/pkgconfig
+	doc? ( $(python_gen_cond_dep 'dev-python/breathe[${PYTHON_USEDEP}]') )
+	python? ( ${PYTHON_DEPS} )
+"
 
-DOCS=( CHANGES.md CODE_OF_CONDUCT.md CONTRIBUTING.md CONTRIBUTORS.md
-	README.md SECURITY.md )
+PATCHES=( "${FILESDIR}"/${P}-changes-needed-for-proper-slotting.patch )
+DOCS=( CHANGES.md CONTRIBUTORS.md README.md SECURITY.md docs/PortingGuide2-3.md )
 
 pkg_pretend() {
 	ewarn "WARNING: This package version is for testing purposes ONLY."
@@ -55,15 +60,19 @@ pkg_setup() {
 }
 
 src_configure() {
+	local majorver=3
+
 	local mycmakeargs=(
-		-DIMATH_BUILD_BOTH_STATIC_SHARED=$(usex static-libs)
+		-DBUILD_SHARED_LIBS=$(usex !static-libs)
 		-DIMATH_ENABLE_LARGE_STACK=$(usex large-stack)
 		-DIMATH_INSTALL_PKG_CONFIG=ON
+		-DIMATH_OUTPUT_SUBDIR="${MY_PN}-${majorver}"
 		-DIMATH_USE_CLANG_TIDY=OFF
 	)
-
 	if use python; then
 		mycmakeargs+=(
+			# temp. disable for finding libboost_python310, #803032
+			#-DBoost_NO_BOOST_CMAKE=OFF
 			-DPYTHON=ON
 			-DPython3_EXECUTABLE="${PYTHON}"
 			-DPython3_INCLUDE_DIR=$(python_get_includedir)
@@ -72,4 +81,20 @@ src_configure() {
 	fi
 
 	cmake_src_configure
+}
+
+src_compile() {
+	cmake_src_compile
+
+	if use doc; then
+		pushd "${S}"/docs 2>/dev/null || die
+		doxygen || die
+		emake html
+		popd 2>/dev/null || die
+	fi
+}
+
+src_install() {
+	use doc && HTML_DOCS=( "${S}/docs/_build/html/." )
+	cmake_src_install
 }

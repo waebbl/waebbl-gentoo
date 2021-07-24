@@ -12,31 +12,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Setup Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
+      - uses: actions/checkout@v2
       - name: Setup master gentoo repository
         run: |
-          sudo mkdir -p /var/db/repos/gentoo /etc/portage /var/cache/distfiles
-          wget -qO - "https://github.com/gentoo-mirror/gentoo/archive/master.tar.gz" | sudo tar xz -C /var/db/repos/gentoo --strip-components=1
-          sudo wget "https://www.gentoo.org/dtd/metadata.dtd" -O /var/cache/distfiles/metadata.dtd
-          sudo wget "https://gitweb.gentoo.org/proj/portage.git/plain/cnf/repos.conf" -O /etc/portage/repos.conf
-          sudo ln -s /var/db/repos/gentoo/profiles/default/linux/amd64/17.1 /etc/portage/make.profile
-      - name: Setup repoman
+          ./scripts/setup-master-gentoo.sh
+      - name: Setup and run repoman
         run: |
-          python3 -m pip install --upgrade pip
-          pip install lxml pyyaml
-          sudo groupadd -g 250 portage
-          sudo useradd -g portage -d /var/tmp/portage -s /bin/false -u 250 portage
-          git clone https://github.com/gentoo/portage.git
-          cd portage
-          mapfile -t RM_VERSIONS < <( git tag | grep repoman | sort -u )
-          RM_VER="${RM_VERSIONS[-1]}"
-          git checkout tags/${RM_VER} -b ${RM_VER}
-          cd ..
-      - name: Test with repoman
-        run: |
-          python3 portage/repoman/bin/repoman -dx full
+          ./scripts/setup-and-run-repoman.sh

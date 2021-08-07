@@ -3,21 +3,21 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{6,7,8,9} )
+PYTHON_COMPAT=( python3_{8,9,10} )
 
-inherit cmake multiprocessing toolchain-funcs python-any-r1 llvm
+inherit cmake llvm python-any-r1
 
-LLVM_MAX_SLOT=10
+LLVM_MAX_SLOT=12
 
 DESCRIPTION="Intel SPMD Program Compiler"
-HOMEPAGE="https://ispc.github.com/"
+HOMEPAGE="https://ispc.github.io/"
 
 if [[ ${PV} = *9999 ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/ispc/ispc.git"
-	KEYWORDS=""
 else
 	SRC_URI="https://github.com/${PN}/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
+	KEYWORDS="~amd64 ~x86"
 fi
 
 LICENSE="BSD BSD-2 UoI-NCSA"
@@ -25,7 +25,7 @@ SLOT="0"
 IUSE="examples test"
 RESTRICT="!test? ( test )"
 
-RDEPEND="<sys-devel/clang-11:="
+RDEPEND="<sys-devel/clang-13:="
 DEPEND="
 	${RDEPEND}
 	${PYTHON_DEPS}
@@ -35,11 +35,9 @@ BDEPEND="
 	sys-devel/flex
 "
 
-PATCHES=(
-	"${FILESDIR}/${P}-0001-add-Gentoo-build-type.patch"
-	"${FILESDIR}/${P}-0002-llvm-10-related-patches.patch"
-	"${FILESDIR}/${PN}-1.13.0-werror.patch"
-)
+PATCHES=( "${FILESDIR}"/${P}-llvm.patch )
+
+CMAKE_BUILD_TYPE="RelWithDebInfo"
 
 llvm_check_deps() {
 	has_version -d "sys-devel/clang:${LLVM_SLOT}"
@@ -50,7 +48,7 @@ src_prepare() {
 		# On amd64 systems, build system enables x86/i686 build too.
 		# This ebuild doesn't even have multilib support, nor need it.
 		# https://bugs.gentoo.org/730062
-		elog "Removing auto-x86 build on amd64"
+		ewarn "Removing auto-x86 build on amd64"
 		sed -i -e 's:set(target_arch "i686"):return():' cmake/GenerateBuiltins.cmake || die
 	fi
 
@@ -63,24 +61,23 @@ src_configure() {
 		-DCMAKE_SKIP_RPATH=ON
 		-DISPC_INCLUDE_EXAMPLES=$(usex examples)
 		-DISPC_INCLUDE_TESTS=$(usex test)
+		-DISPC_NO_DUMPS=ON
 	)
 	cmake_src_configure
 }
 
-src_install() {
-#	dobin "${BUILD_DIR}"/bin/ispc
-#	dodoc README.md
-	cmake_src_install
-
-	if use examples; then
-		insinto "/usr/share/doc/${PF}/examples"
-		docompress -x "/usr/share/doc/${PF}/examples"
-		doins -r examples/cpu/*
-	fi
-}
-
 src_test() {
 	# Inject path to prevent using system ispc
-	PATH="${BUILD_DIR}/bin:${PATH}" ${EPYTHON} "${S}/run_tests.py" "-j"$(makeopts_jobs) \
+	PATH="${BUILD_DIR}/bin:${PATH}" ${EPYTHON} "./run_tests.py" "-j"$(makeopts_jobs) \
 		|| die "Testing failed under ${EPYTHON}"
+}
+
+src_install() {
+	dobin "${BUILD_DIR}"/bin/ispc
+	einstalldocs
+
+	if use examples; then
+		docompress -x /usr/share/doc/${PF}/examples
+		dodoc -r examples
+	fi
 }

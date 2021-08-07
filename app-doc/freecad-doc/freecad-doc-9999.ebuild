@@ -1,10 +1,9 @@
-# Copyright 1999-2020 Gentoo Authors
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
-CMAKE_MAKEFILE_GENERATOR="emake"
-inherit check-reqs cmake git-r3
+inherit check-reqs cmake git-r3 multiprocessing
 
 DESCRIPTION="QT based computer aided design application manuals"
 HOMEPAGE="https://www.freecadweb.org/"
@@ -14,16 +13,28 @@ EGIT_BRANCH="master"
 
 LICENSE="GPL-2"
 SLOT="0"
-IUSE=""
 
 RDEPEND="
+	dev-libs/utfcpp
+	dev-libs/xerces-c[icu]
+	dev-qt/qtconcurrent:5
+	dev-qt/designer:5
+	dev-qt/qtnetwork:5
+	dev-qt/qtopengl:5
+	dev-qt/qtprintsupport:5
+	dev-qt/qtsvg:5
+	dev-qt/qtwebengine:5
+	dev-qt/qtxml:5
+	dev-qt/qtxmlpatterns:5
 	>=media-libs/coin-4.0.0:=[doc]
 	>=sci-libs/med-4.0.0
-	>=sci-libs/opencascade-7.3.0:=
-	>=virtual/mpi-2.0-r4:=[cxx,threads]
+	sci-libs/opencascade:7.5=[vtk]
+	sci-libs/vtk:=[boost,python,qt5,rendering]
 "
-DEPEND="
-	>=app-doc/doxygen-1.8.14-r1[dot]
+DEPEND="${RDEPEND}"
+BDEPEND="
+	app-doc/doxygen[dot]
+	app-text/dos2unix
 "
 
 PATCHES=(
@@ -32,21 +43,25 @@ PATCHES=(
 )
 
 CMAKE_BUILD_TYPE=Release
-CHECKREQS_DISK_BUILD="10G"
+CHECKREQS_DISK_BUILD="13G"
 
 pkg_setup() {
 	check-reqs_pkg_setup
 }
 
 src_prepare() {
-	# FIXME: improve this to handle MAKEOPTS vars which also contain
-	# load values, i.e. MAKEOPTS="-j8 -l5"
-	local mymakeopts=$(portageq envvar MAKEOPTS)
-	mymakeopts=${mymakeopts##-j}
-	sed -i -e 's|DOT_NUM_THREADS[ \t]*= 0|DOT_NUM_THREADS = '${mymakeopts}'|' "${S}/src/Doc/BuildDevDoc.cfg.in" || die
+	sed -e 's|DOT_NUM_THREADS[ \t]*= 0|DOT_NUM_THREADS = '$(makeopts_jobs)'|' \
+		-i "${S}"/src/Doc/BuildDevDoc.cfg.in || die "Failed to change DOT_NUM_THREADS"
+
+	sed -e 's|doc/SourceDocu|doc|' \
+		-i "${S}"/src/Doc/CMakeLists.txt || die "Failed to change output dir"
+
 	# upstream provided FindCoin3D.cmake doesn't find coin, but cmake
 	# provided one does, so delete the local file
-	rm -f "${S}"/cMake/FindCoin3D.cmake || die
+	rm "${S}"/cMake/FindCoin3D.cmake || die "Removing FindCoin3D.cmake failed"
+
+	# to allow patch to find Coin.tag to succeed, due to different line endings
+	dos2unix "${S}"/cMake/FindCoin3DDoc.cmake || die "Can't convert FindCoind3DDoc.cmake"
 
 	cmake_src_prepare
 }
@@ -56,23 +71,15 @@ src_configure() {
 		-DBUILD_FEM:BOOL=YES
 		-DBUILD_GUI:BOOL=YES
 		-DBUILD_QT5=YES
-		-DCMAKE_INSTALL_DOCDIR=/usr/share/doc/${PF}
-		-DOCC_INCLUDE_DIR="${CASROOT}"/include/opencascade
-		-DOCC_LIBRARY_DIR="${CASROOT}"/$(get_libdir)
-		-DOPENMPI_INCLUDE_DIRS=/usr/include
 	)
 	cmake_src_configure
 }
 
 src_compile() {
-	cmake_src_compile DevDoc
+	cmake_build DevDoc
 }
 
 src_install() {
-	local DOCS=( "${BUILD_DIR}"/doc/freecad.{qhc,qch} )
-	local HTML_DOCS=(
-		"${BUILD_DIR}"/doc/ThirdPartyLibraries.html
-		"${BUILD_DIR}"/doc/SourceDocu/html/.
-	)
+	local HTML_DOCS=( "${BUILD_DIR}"/doc/html/. )
 	einstalldocs
 }

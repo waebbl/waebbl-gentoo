@@ -5,7 +5,4 @@
 	<email>waebbl-gentoo@posteo.net</email>
 	<name>Bernd Waibel</name>
 </maintainer>
-<longdescription>
-	Developer documentation for <pkg>media-gfx/freecad</pkg>
-</longdescription>
 </pkgmetadata>

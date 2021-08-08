@@ -19,14 +19,14 @@ S=${WORKDIR}/CalculiX/${MY_P}/src
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="arpack doc examples openmp threads"
+IUSE="doc examples openmp threads"
 RESTRICT="test" # FIXME
 
 RDEPEND="
+	>=sci-libs/arpack-3.1.3
 	>=sci-libs/spooles-2.2[threads=]
 	virtual/blas
 	virtual/lapack
-	arpack? ( >=sci-libs/arpack-3.1.3 )
 "
 DEPEND="${RDEPEND}"
 BDEPEND="
@@ -61,10 +61,9 @@ src_configure() {
 		append-cflags "-fopenmp"
 	fi
 
-	if use arpack; then
-		export ARPACKLIB=$($(tc-getPKG_CONFIG) --libs arpack)
-		append-cflags "-DARPACK"
-	fi
+	export ARPACKLIB=$($(tc-getPKG_CONFIG) --libs arpack)
+	append-cflags "-DARPACK"
+
 	export CC="$(tc-getCC)"
 	export FC="$(tc-getFC)"
 }

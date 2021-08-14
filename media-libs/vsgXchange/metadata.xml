@@ -8,7 +8,22 @@
 <longdescription>
 	Utility library for converting data and materials to and from
 	VulkanSceneGraph.
+	The package can directly read a range of shader and image formats.
 </longdescription>
+<use>
+	<flag name="assimp">
+		Support various 3D file formats using <pkg>media-libs/assimp</pkg>
+	</flag>
+	<flag name="freetype">
+		Enable font conversion through <pkg>media-libs/freetype</pkg>
+	</flag>
+	<flag name="gdal">
+		Support GIS related formats using <pkg>media-libs/vsgGIS</pkg>
+	</flag>
+	<flag name="openscenegraph">
+		Support data exchange with <pkg>dev-games/openscenegraph</pkg>
+	</flag>
+</use>
 <upstream>
 	<remote-id type="github">vsg-dev/vsgXchange</remote-id>
 </upstream>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>waebbl-gentoo@posteo.net</email>
+    <name>Bernd Waibel</name>
+  </maintainer>
+  <use>
+    <flag name="assimp">
+      Use <pkg>media-libs/assimp</pkg> with vsgXchange
+    </flag>
+    <flag name="freetype">
+      Use <pkg>media-libs/freetype</pkg> with vsgXchange
+    </flag>
+    <flag name="gdal">
+      Use <pkg>sci-libs/gdal</pkg> with vsgXchange
+    </flag>
+    <flag name="openscenegraph">
+      Use <pkg>dev-games/openscenegraph</pkg> with vsgXchange
+    </flag>
+  </use>
+  <upstream>
+    <remote-id type="github">vsg-dev/vsgFramework</remote-id>
+  </upstream>
+</pkgmetadata>

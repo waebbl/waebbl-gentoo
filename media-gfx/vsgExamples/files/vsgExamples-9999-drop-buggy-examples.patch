@@ -1,0 +1,27 @@
+From: Bernd Waibel <waebbl-gentoo@posteo.net>
+Date: Mon, 16 Aug 2021 15:30:09 +0200
+Subject: [PATCH] drop buggy examples
+
+Signed-off-by: Bernd Waibel <waebbl-gentoo@posteo.net>
+---
+ examples/traversals/CMakeLists.txt | 2 +-
+ examples/utils/CMakeLists.txt      | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/examples/traversals/CMakeLists.txt b/examples/traversals/CMakeLists.txt
+index 2da6f3e..293536c 100644
+--- a/examples/traversals/CMakeLists.txt
++++ b/examples/traversals/CMakeLists.txt
+@@ -1 +1 @@
+-add_subdirectory(vsgintersection)
++message(WARNING "Dropping buggy vsginteraction example")
+diff --git a/examples/utils/CMakeLists.txt b/examples/utils/CMakeLists.txt
+index 83f91f3..4d01809 100644
+--- a/examples/utils/CMakeLists.txt
++++ b/examples/utils/CMakeLists.txt
+@@ -1 +1 @@
+-add_subdirectory(vsgbuilder)
++message(WARNING "Dropping buggy vsgbuilder example")
+-- 
+2.32.0
+

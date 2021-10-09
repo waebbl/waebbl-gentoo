@@ -1,40 +1,38 @@
-From f83d2ff6d23984b3cdaf39850cc6e6aa144a4177 Mon Sep 17 00:00:00 2001
 From: Bernd Waibel <waebbl-gentoo@posteo.net>
-Date: Sat, 14 Aug 2021 23:36:43 +0200
+Date: Sat, 9 Oct 2021 23:06:28 +0200
 Subject: [PATCH] fix assimp library variable
 
 Signed-off-by: Bernd Waibel <waebbl-gentoo@posteo.net>
 ---
- src/assimp/build_vars.cmake | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ src/assimp/build_vars.cmake | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
 diff --git a/src/assimp/build_vars.cmake b/src/assimp/build_vars.cmake
-index 622896b..6de701a 100644
+index 0ea4610..744e7ef 100644
 --- a/src/assimp/build_vars.cmake
 +++ b/src/assimp/build_vars.cmake
-@@ -1,4 +1,13 @@
+@@ -1,4 +1,12 @@
  # add assimp if vailable
-+
 +if(POLICY CMP0012)
-+	cmake_policy(SET CMP0012 NEW)
++    cmake_policy(SET CMP0012 NEW)
 +endif()
 +
 +if(POLICY CMP0111)
-+	cmake_policy(SET CMP0111 NEW)
++    cmake_policy(SET CMP0111 NEW)
 +endif()
 +
  find_package(assimp 5.0.0 QUIET)
  
  if(assimp_FOUND)
-@@ -10,7 +19,7 @@ if (${vsgXchange_assimp})
+@@ -10,7 +18,7 @@ if (${vsgXchange_assimp})
          assimp/assimp.cpp
      )
      set(EXTRA_INCLUDES ${EXTRA_INCLUDES} ${assimp_INCLUDE_DIRS})
 -    set(EXTRA_LIBRARIES ${EXTRA_LIBRARIES} assimp::assimp)
 +    set(EXTRA_LIBRARIES ${EXTRA_LIBRARIES} ${assimp_LIBRARIES})
-     set(FIND_DEPENDENCY ${FIND_DEPENDENCY} "find_dependency(assimp)")
- else()
-     set(SOURCES ${SOURCES}
+     if(NOT BUILD_SHARED_LIBS)
+         set(FIND_DEPENDENCY ${FIND_DEPENDENCY} "find_dependency(assimp)")
+     endif()
 -- 
-2.32.0
+2.33.0
 

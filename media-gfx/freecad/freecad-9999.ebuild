@@ -1,12 +1,11 @@
 # Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
-# vtk needs updating to use 3.9
-PYTHON_COMPAT=( python3_{7,8} )
+PYTHON_COMPAT=( python3_{8,9} )
 
-inherit check-reqs cmake desktop eapi8-dosym optfeature python-single-r1 xdg
+inherit check-reqs cmake optfeature python-single-r1 xdg
 
 DESCRIPTION="QT based Computer Aided Design application"
 HOMEPAGE="https://www.freecadweb.org/ https://github.com/FreeCAD/FreeCAD"
@@ -20,7 +19,8 @@ if [[ ${PV} = *9999 ]]; then
 else
 	MY_PV=$(ver_cut 1-2)
 	MY_PV=$(ver_rs 1 '_' ${MY_PV})
-	SRC_URI="https://github.com/${MY_PN}/${MY_PN}/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
+	SRC_URI="https://github.com/${MY_PN}/${MY_PN}/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz
+		https://raw.githubusercontent.com/waebbl/waebbl-gentoo/master/patches/${P}-0005-Make-smesh-compile-with-vtk9.patch.xz"
 	KEYWORDS="~amd64"
 	S="${WORKDIR}/FreeCAD-${PV}"
 fi
@@ -65,7 +65,7 @@ RDEPEND="
 	dev-qt/qtxml:5
 	>=media-libs/coin-4.0.0
 	media-libs/freetype
-	media-libs/qhull
+	media-libs/qhull:=
 	sci-libs/flann[openmp]
 	sci-libs/hdf5:=[fortran,zlib]
 	>=sci-libs/med-4.0.0-r1[python,${PYTHON_SINGLE_USEDEP}]
@@ -79,19 +79,19 @@ RDEPEND="
 		dev-libs/openssl:=
 		net-misc/curl
 	)
-	fem? ( <sci-libs/vtk-9[boost,python,qt5,rendering,${PYTHON_SINGLE_USEDEP}] )
+	fem? ( sci-libs/vtk:=[boost,python,qt5,rendering,${PYTHON_SINGLE_USEDEP}] )
 	openscad? ( media-gfx/openscad )
-	pcl? ( >=sci-libs/pcl-1.8.1:=[opengl,openni2(+),qt5(+),vtk(+)] )
+	pcl? ( sci-libs/pcl:=[opengl,openni2(+),qt5(+),vtk(+)] )
 	$(python_gen_cond_dep '
-		dev-libs/boost:=[python,threads,${PYTHON_MULTI_USEDEP}]
-		dev-python/matplotlib[${PYTHON_MULTI_USEDEP}]
-		dev-python/numpy[${PYTHON_MULTI_USEDEP}]
-		>=dev-python/pivy-0.6.5[${PYTHON_MULTI_USEDEP}]
-		dev-python/pybind11[${PYTHON_MULTI_USEDEP}]
-		dev-python/pyside2[gui,svg,${PYTHON_MULTI_USEDEP}]
-		dev-python/shiboken2[${PYTHON_MULTI_USEDEP}]
-		addonmgr? ( dev-python/GitPython[${PYTHON_MULTI_USEDEP}] )
-		fem? ( dev-python/ply[${PYTHON_MULTI_USEDEP}] )
+		dev-libs/boost:=[python,threads(+),${PYTHON_USEDEP}]
+		dev-python/matplotlib[${PYTHON_USEDEP}]
+		dev-python/numpy[${PYTHON_USEDEP}]
+		>=dev-python/pivy-0.6.5[${PYTHON_USEDEP}]
+		dev-python/pybind11[${PYTHON_USEDEP}]
+		dev-python/pyside2[gui,svg,${PYTHON_USEDEP}]
+		dev-python/shiboken2[${PYTHON_USEDEP}]
+		addonmgr? ( dev-python/GitPython[${PYTHON_USEDEP}] )
+		fem? ( dev-python/ply[${PYTHON_USEDEP}] )
 	')
 "
 DEPEND="${RDEPEND}"
@@ -120,6 +120,7 @@ REQUIRED_USE="
 PATCHES=(
 	"${FILESDIR}"/${PN}-0.19_pre20201231-0003-Gentoo-specific-don-t-check-vcs.patch
 	"${FILESDIR}"/${PN}-0.19.1-0001-Gentoo-specific-Remove-ccache-usage.patch
+	"${FILESDIR}"/${P}-Add-memory-header-for-std-shared_ptr.patch
 )
 
 DOCS=( CODE_OF_CONDUCT.md ChangeLog.txt README.md )
@@ -168,7 +169,7 @@ src_configure() {
 		-DBUILD_COMPLETE=OFF					# deprecated
 		-DBUILD_DRAFT=ON
 		-DBUILD_DRAWING=ON
-		-DBUILD_ENABLE_CXX_STD:STRING="C++14"	# needed for >=boost-1.75.0
+		-DBUILD_ENABLE_CXX_STD:STRING="C++17"	# needed for current git master
 		-DBUILD_FEM=$(usex fem)
 		-DBUILD_FEM_NETGEN=OFF
 		-DBUILD_FLAT_MESH=ON
@@ -224,11 +225,13 @@ src_configure() {
 		-DFREECAD_USE_QT_FILEDIALOG=ON
 		-DFREECAD_USE_QTWEBMODULE:STRING="Qt WebEngine"
 
+		# Use the version of shiboken2 that matches the selected python version
+		-DPYTHON_CONFIG_SUFFIX="-${EPYTHON}"
+
 		# install python modules to site-packages' dir. True only for the main package,
 		# sub-packages will still be installed inside /usr/lib64/freecad
 		-DINSTALL_TO_SITEPACKAGES=ON
 
-		-DPYTHON_CONFIG_SUFFIX="-${EPYTHON}"	# bug #793962
 		-DPython3_EXECUTABLE=${PYTHON}
 		-DOCCT_CMAKE_FALLBACK=ON				# don't use occt-config which isn't included in opencascade for Gentoo
 	)
@@ -237,6 +240,7 @@ src_configure() {
 		# bug https://bugs.gentoo.org/788274
 		local OCC_P=$(best_version sci-libs/opencascade[vtk])
 		OCC_P=${OCC_P#sci-libs/}
+		OCC_P=${OCC_P%-r*}
 		mycmakeargs+=(
 			-DOCC_INCLUDE_DIR="${CASROOT}"/include/${OCC_P}
 			-DOCC_LIBRARY_DIR="${CASROOT}"/$(get_libdir)/${OCC_P}
@@ -286,11 +290,13 @@ src_test() {
 src_install() {
 	cmake_src_install
 
+	dobin src/Tools/freecad-thumbnailer
+
 	if ! use headless; then
-		dosym8 -r /usr/$(get_libdir)/${PN}/bin/FreeCAD /usr/bin/freecad
+		dosym -r /usr/$(get_libdir)/${PN}/bin/FreeCAD /usr/bin/freecad
 		mv "${ED}"/usr/$(get_libdir)/freecad/share/* "${ED}"/usr/share || die "failed to move shared ressources"
 	fi
-	dosym8 -r /usr/$(get_libdir)/${PN}/bin/FreeCADCmd /usr/bin/freecadcmd
+	dosym -r /usr/$(get_libdir)/${PN}/bin/FreeCADCmd /usr/bin/freecadcmd
 
 	python_optimize "${ED}"/usr/share/${PN}/data/Mod/Start/StartPage "${ED}"/usr/$(get_libdir)/${PN}{/Ext,/Mod}/
 	# compile main package in python site-packages as well
@@ -317,14 +323,33 @@ pkg_postinst() {
 	einfo "You can load a lot of additional workbenches using the integrated"
 	einfo "AddonManager."
 
+	# ToDo: check opencv, pysolar (::science), elmerfem (::science)
+	#		ifc++, ifcopenshell, netgen, z88 (no pkgs), calculix-ccx (::waebbl)
 	einfo "There are a lot of additional tools, for which FreeCAD has builtin"
 	einfo "support. Some of them are available in Gentoo. Take a look at"
 	einfo "https://wiki.freecadweb.org/Installing#External_software_supported_by_FreeCAD"
-	optfeature "interact with git repositories" dev-python/GitPython
-	optfeature "work with COLLADA documents" dev-python/pycollada
+	optfeature_header "Computational utilities"
+	optfeature "numerical computations with Python" dev-python/numpy
+	optfeature "BLAS library" sci-libs/openblas
+	optfeature "statistical computation with Python" dev-python/pandas
+#	optfeature "usage of Point Clouds" sci-libs/pcl
+	optfeature "scientific computation with Python" dev-python/scipy
+	optfeature "symbolic math with Python" dev-python/sympy
+	optfeature_header "Imaging, Plotting and Rendering utilities"
+	optfeature "function plotting with Python" dev-python/matplotlib
 	optfeature "dependency graphs" media-gfx/graphviz
 	optfeature "PBR Rendering" media-gfx/povray
+	optfeature_header "Import / Export"
+	optfeature "interacting with git repositories" dev-python/GitPython
+	optfeature "working with COLLADA documents" dev-python/pycollada
+	optfeature "YAML importer and emitter" dev-python/pyyaml
+	optfeature "importing and exporting 2D AutoCAD DWG files" media-gfx/libredwg
+	optfeature "importing and exporting geospatial data formats" sci-libs/gdal
+	optfeature "working with projection data" sci-libs/proj
+	optfeature_header "Meshing and FEM"
 	optfeature "FEM mesh generator" sci-libs/gmsh
+	optfeature "triangulating meshes" sci-libs/gts
+	optfeature "visualization" sci-visualization/paraview
 }
 
 pkg_postrm() {

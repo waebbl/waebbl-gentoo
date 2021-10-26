@@ -144,7 +144,7 @@ src_prepare() {
 	local OCC_PV=${OCC_P#opencascade-}
 	OCC_PV=$(ver_cut 1-2 ${OCC_PV})
 	# check for CASROOT needed to ensure occ-7.5 is eselected and profile resourced
-	if [[ ${OCC_PV} = 7.5 && ${CASROOT} = "/usr" ]]; then
+	if [[ ${OCC_PV} = 7.5 || ${OCC_PV} = 7.6 && ${CASROOT} = "/usr" ]]; then
 		sed -e 's|/usr/include/opencascade|'${CASROOT}'/include/'${OCC_P}'|' \
 			-e 's|/usr/lib|'${CASROOT}'/'$(get_libdir)'/'${OCC_P}' NO_DEFAULT_PATH|' \
 			-i cMake/FindOpenCasCade.cmake || die

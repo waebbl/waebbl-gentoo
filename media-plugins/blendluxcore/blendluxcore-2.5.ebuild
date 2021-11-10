@@ -1,9 +1,9 @@
 # Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
-PYTHON_COMPAT=( python3_{7,8} )
+PYTHON_COMPAT=( python3_9 )
 inherit python-single-r1
 
 DESCRIPTION="A PBS rendering plugin for blender"
@@ -13,14 +13,13 @@ S="${WORKDIR}/BlendLuxCore-${PN}_v${PV}"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64"
 
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 RDEPEND="
 	${PYTHON_DEPS}
-	>=media-gfx/blender-2.83.0[${PYTHON_SINGLE_USEDEP}]
-	<=media-gfx/blender-2.91.0[${PYTHON_SINGLE_USEDEP}]
+	media-gfx/blender:2.93[${PYTHON_SINGLE_USEDEP}]
 "
 DEPEND="${RDEPEND}"
 

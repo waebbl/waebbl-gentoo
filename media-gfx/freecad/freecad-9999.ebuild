@@ -1,4 +1,4 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -11,12 +11,10 @@ DESCRIPTION="QT based Computer Aided Design application"
 HOMEPAGE="https://www.freecadweb.org/ https://github.com/FreeCAD/FreeCAD"
 
 MY_PN=FreeCAD
-MY_PATCH="${P}-Gentoo-specific-fix-install-locations-of-Ext-and-Mod"
 
 if [[ ${PV} = *9999 ]]; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/${MY_PN}/${MY_PN}.git"
-	SRC_URI="https://raw.githubusercontent.com/waebbl/waebbl-gentoo/master/patches/${MY_PATCH}.patch.xz"
 	S="${WORKDIR}/freecad-${PV}"
 else
 	MY_PV=$(ver_cut 1-2)
@@ -139,11 +137,6 @@ pkg_setup() {
 	[[ -z ${CASROOT} ]] && die "\${CASROOT} not set, plesae run eselect opencascade"
 }
 
-src_unpack() {
-	git-r3_src_unpack
-	unpack ${MY_PATCH}.patch.xz
-}
-
 src_prepare() {
 	# the upstream provided file doesn't find the coin doc tag file,
 	# but cmake ships a working one, so we use this.
@@ -153,13 +146,6 @@ src_prepare() {
 	sed -e 's/Exec=FreeCAD/Exec=freecad/' -i src/XDGData/org.freecadweb.FreeCAD.desktop || die
 
 	cmake_src_prepare
-
-	# Fix the line endings on a few files for patching
-	for f in src/Mod/{Cloud,Inspection,Start/StartPage}/CMakeLists.txt; do
-		dos2unix -q ${f}
-	done
-
-	eapply "${WORKDIR}"/${P}-Gentoo-specific-fix-install-locations-of-Ext-and-Mod.patch
 }
 
 src_configure() {
@@ -210,10 +196,10 @@ src_configure() {
 		-DBUILD_WEB=ON							# needed by start workspace
 		-DBUILD_WITH_CONDA=OFF
 
-		-DCMAKE_INSTALL_DATADIR=share/${PN}/data
-		-DCMAKE_INSTALL_DOCDIR=share/doc/${PF}
-		-DCMAKE_INSTALL_INCLUDEDIR=include/${PN}
-		-DCMAKE_INSTALL_LIBDIR=$(get_libdir)/${PN}
+		-DCMAKE_INSTALL_DATADIR=/usr/share/${PN}/data
+		-DCMAKE_INSTALL_DOCDIR=/usr/share/doc/${PF}
+		-DCMAKE_INSTALL_INCLUDEDIR=/usr/include/${PN}
+		-DCMAKE_INSTALL_PREFIX=/usr/$(get_libdir)/${PN}
 
 		-DFREECAD_BUILD_DEBIAN=OFF
 
@@ -227,24 +213,13 @@ src_configure() {
 		-DFREECAD_USE_QT_FILEDIALOG=ON
 		-DFREECAD_USE_QTWEBMODULE:STRING="Qt WebEngine"
 
-		# Use the version of shiboken2 that matches the selected python version
-		-DPYTHON_CONFIG_SUFFIX="-${EPYTHON}"
-
 		# install python modules to site-packages' dir. True only for the main package,
 		# sub-packages will still be installed inside /usr/lib64/freecad
 		-DINSTALL_TO_SITEPACKAGES=ON
 
+		# Use the version of shiboken2 that matches the selected python version
+		-DPYTHON_CONFIG_SUFFIX="-${EPYTHON}"
 		-DPython3_EXECUTABLE=${PYTHON}
-		-DOCCT_CMAKE_FALLBACK=ON				# don't use occt-config which isn't included in opencascade for Gentoo
-	)
-
-	# bug https://bugs.gentoo.org/788274
-	local OCC_P=$(best_version sci-libs/opencascade[vtk])
-	OCC_P=${OCC_P#sci-libs/}
-	OCC_P=${OCC_P%-r*}
-	mycmakeargs+=(
-		-DOCC_INCLUDE_DIR="${CASROOT}"/include/${OCC_P}
-		-DOCC_LIBRARY_DIR="${CASROOT}"/$(get_libdir)/${OCC_P}
 	)
 
 	if use debug; then
@@ -286,6 +261,12 @@ src_install() {
 
 	dobin src/Tools/freecad-thumbnailer
 
+	if ! use headless; then
+		dosym -r /usr/$(get_libdir)/${PN}/bin/FreeCAD /usr/bin/freecad
+		mv "${ED}"/usr/$(get_libdir)/${PN}/share/* "${ED}"/usr/share || die "failed to move shared resources"
+	fi
+	dosym -r /usr/$(get_libdir)/${PN}/bin/FreeCADCmd /usr/bin/freecadcmd
+
 	python_optimize "${ED}"/usr/share/${PN}/data/Mod/Start/StartPage "${ED}"/usr/$(get_libdir)/${PN}{/Ext,/Mod}/
 	# compile main package in python site-packages as well
 	python_optimize
@@ -317,14 +298,11 @@ pkg_postinst() {
 	einfo "support. Some of them are available in Gentoo. Take a look at"
 	einfo "https://wiki.freecadweb.org/Installing#External_software_supported_by_FreeCAD"
 	optfeature_header "Computational utilities"
-	optfeature "numerical computations with Python" dev-python/numpy
 	optfeature "BLAS library" sci-libs/openblas
 	optfeature "statistical computation with Python" dev-python/pandas
-#	optfeature "usage of Point Clouds" sci-libs/pcl
 	optfeature "scientific computation with Python" dev-python/scipy
 	optfeature "symbolic math with Python" dev-python/sympy
 	optfeature_header "Imaging, Plotting and Rendering utilities"
-	optfeature "function plotting with Python" dev-python/matplotlib
 	optfeature "dependency graphs" media-gfx/graphviz
 	optfeature "PBR Rendering" media-gfx/povray
 	optfeature_header "Import / Export"

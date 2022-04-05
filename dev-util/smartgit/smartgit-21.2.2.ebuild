@@ -1,7 +1,7 @@
-# Copyright 1999-2020 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 inherit desktop java-pkg-2 optfeature xdg
 
@@ -11,23 +11,23 @@ MY_P="${PN}-linux-${MY_PV}"
 DESCRIPTION="Git client with support for GitHub Pull Requests+Comments, SVN and Mercurial"
 HOMEPAGE="https://www.syntevo.com/smartgit"
 SRC_URI="https://www.syntevo.com/downloads/smartgit/${MY_P}.tar.gz"
+S="${WORKDIR}"/${PN}
 
 SLOT="0"
 LICENSE="smartgit"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
 
-RESTRICT="fetch"
+RESTRICT="bindist fetch mirror"
 
 RDEPEND=">=virtual/jre-1.8:1.8"
 DEPEND="${RDEPEND}"
 
-S="${WORKDIR}"/${PN}
+QA_FLAGS_IGNORED='.*'
 
 pkg_nofetch(){
 	einfo "Please download ${MY_P} from:"
 	einfo "http://www.syntevo.com/smartgit/download"
-	einfo "and move/copy to ${DISTDIR}"
+	einfo "and move/copy it to your DISTDIR folder"
 }
 
 pkg_setup() {

@@ -27,7 +27,7 @@ REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
 RDEPEND="
 	python? (
 		${PYTHON_DEPS}
-		$(python_gen_cond_dep 'dev-libs/boost:=[python?,${PYTHON_MULTI_USEDEP}]')
+		$(python_gen_cond_dep 'dev-libs/boost:=[python?,${PYTHON_USEDEP}]')
 	)
 "
 DEPEND="${RDEPEND}"

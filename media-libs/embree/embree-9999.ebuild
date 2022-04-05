@@ -1,9 +1,9 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
-inherit cmake flag-o-matic toolchain-funcs
+inherit cmake flag-o-matic
 
 DESCRIPTION="Collection of high-performance ray tracing kernels"
 HOMEPAGE="https://github.com/embree/embree"
@@ -17,7 +17,7 @@ else
 fi
 
 LICENSE="Apache-2.0"
-SLOT="0"
+SLOT="3"
 
 IUSE="clang ispc raymask static-libs +tbb tutorial"
 

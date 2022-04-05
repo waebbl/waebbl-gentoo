@@ -10,10 +10,3 @@
 # Bernd Waibel <waebbl-gentoo@posteo.net> (20 Jan 2020)
 # Doesn't compile against dev-lang/spidermonkey:60
 media-libs/coin javascript
-
-# Bernd Waibel <waebbl-gentoo@posteo.net> (23 Dec 2019)
-# Current assembly version is there only for reference and doesn't
-# compile. So we mask this for now, until the new version get's out.
-# See https://forum.freecadweb.org/viewtopic.php?f=4&t=39716 and
-# issue at https://www.freecadweb.org/tracker/view.php?id=4145
-media-gfx/freecad assembly

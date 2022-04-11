@@ -6,8 +6,6 @@ EAPI=8
 inherit cmake
 
 MY_PN=OpenEXR
-MY_PV=3
-MY_P=${MY_PN}-${MY_PV}
 
 DESCRIPTION="ILM's OpenEXR high dynamic-range image file format libraries"
 HOMEPAGE="https://www.openexr.com/"
@@ -17,12 +15,11 @@ if [[ ${PV} = *9999 ]]; then
 	EGIT_REPO_URI="https://github.com/AcademySoftwareFoundation/openexr.git"
 else
 	SRC_URI="https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
-	# imath needs keywording: arm{,64}, hppa, ppc{,64}, sparc
-	KEYWORDS="~amd64 ~ia64 ~x86 ~amd64-linux ~x86-linux x64-macos x86-solaris"
+	KEYWORDS="~amd64 ~arm ~arm64 ~ia64 -ppc ~ppc64 ~risc ~sparc ~x86 ~amd64-linux ~x86-linux x64-macos x86-solaris"
 fi
 
 LICENSE="BSD"
-SLOT="3/29" # based on SONAME
+SLOT="0/30" # based on SONAME
 IUSE="cpu_flags_x86_avx doc examples large-stack static-libs utils test threads"
 RESTRICT="!test? ( test )"
 
@@ -33,10 +30,6 @@ RDEPEND="
 DEPEND="${RDEPEND}"
 BDEPEND="virtual/pkgconfig"
 
-PATCHES=(
-	"${FILESDIR}"/${P}-0001-changes-needed-for-proper-slotting.patch
-	"${FILESDIR}"/${P}-0002-add-version-to-binaries-for-slotting.patch
-)
 DOCS=( CHANGES.md GOVERNANCE.md PATENTS README.md SECURITY.md docs/SymbolVisibility.md )
 
 pkg_pretend() {
@@ -51,8 +44,6 @@ src_prepare() {
 		-i "${S}"/src/test/${MY_PN}{,Fuzz,Util}Test/tmpDir.h || die "failed to set temp path for tests"
 
 	cmake_src_prepare
-
-	mv "${S}"/cmake/${MY_PN}.pc.in "${S}"/cmake/${MY_P}.pc.in || die
 }
 
 src_configure() {
@@ -64,7 +55,6 @@ src_configure() {
 		-DOPENEXR_INSTALL_EXAMPLES=$(usex examples)
 		-DOPENEXR_INSTALL_PKG_CONFIG=ON
 		-DOPENEXR_INSTALL_TOOLS=$(usex utils)
-		-DOPENEXR_OUTPUT_SUBDIR="${MY_P}"
 		-DOPENEXR_USE_CLANG_TIDY=OFF		# don't look for clang-tidy
 	)
 
@@ -79,9 +69,4 @@ src_install() {
 	fi
 	use examples && docompress -x /usr/share/doc/${PF}/examples
 	cmake_src_install
-
-	cat > "${T}"/99${MY_P} <<-EOF || die
-	LDPATH="/usr/$(get_libdir)/${MY_P}
-	EOF
-	doenvd "${T}"/99${MY_P}
 }

@@ -19,7 +19,7 @@ else
 fi
 
 LICENSE="BSD"
-SLOT="0/30" # based on SONAME
+SLOT="0/29" # based on SONAME
 IUSE="cpu_flags_x86_avx doc examples large-stack static-libs utils test threads"
 RESTRICT="!test? ( test )"
 

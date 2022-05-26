@@ -1,21 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-<maintainer type="person">
-	<email>waebbl-gentoo@posteo.net</email>
-	<name>Bernd Waibel</name>
-</maintainer>
-<longdescription lang="en">
+	<maintainer type="person">
+		<description>co-maintainers welcome</description>
+		<name>Alessandro Barbieri</name>
+		<email>lssndrbarbieri@gmail.com</email>
+	</maintainer>
+	<maintainer type="person">
+		<email>waebbl-gentoo@posteo.net</email>
+		<name>Bernd Waibel</name>
+	</maintainer>
+	<longdescription lang="en">
 The Matrix Algebra on GPU and Multicore Architecture project aims to
 develop a dense linear algebra library similar to LAPACK but for
 heterogeneous/hybrid architectures, starting with current
 "Multicore+GPU" systems.
-</longdescription>
-<use>
-	<flag name="kepler">Compile for GPU NVIDIA Kepler family (sm_3x)</flag>
-	<flag name="maxwell">Compile for GPU NVIDIA Maxwell family (sm_5x)</flag>
-	<flag name="pascal">Compile for GPU NVIDIA Pascal family (sm_6x)</flag>
-	<flag name="sparse">Additionally build the sparse matrix library</flag>
-	<flag name="volta">Compile for GPU NVIDIA Volta family (sm_7x)</flag>
-</use>
+	</longdescription>
+	<use>
+		<flag name="ampere">Use CUDA Ampere arch</flag>
+		<flag name="cuda">Use CUDA to build the library</flag>
+		<flag name="hip">USE <pkg>dev-util/hip</pkg> to build the library</flag>
+		<flag name="kepler">Use CUDA Kepler arch</flag>
+		<flag name="maxwell">Use CUDA Maxwell arch</flag>
+		<flag name="openblas">Use OpenBLAS as the BLAS vendor</flag>
+		<flag name="pascal">Use CUDA Pascal arch</flag>
+		<flag name="sparse">Additionally build the sparse matrix library</flag>
+		<flag name="turing">Use CUDA Turing arch</flag>
+		<flag name="volta">Use CUDA Volta arch</flag>
+	</use>
 </pkgmetadata>

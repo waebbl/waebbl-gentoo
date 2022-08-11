@@ -1,0 +1,81 @@
+From 032b5fec1213b17de6d8e14435d535849f862f1b Mon Sep 17 00:00:00 2001
+From: Bernd Waibel <waebbl-gentoo@posteo.net>
+Date: Thu, 11 Aug 2022 10:08:33 +0200
+Subject: [PATCH 2/2] fix proper menu redrawing with glut
+
+Signed-off-by: Bernd Waibel <waebbl-gentoo@posteo.net>
+--- a/cgx.c
++++ b/cgx.c
+@@ -243,6 +243,9 @@ int   subsubmenu_animPeriod=-1, subsubmenu_colormap=-1;
+ int   userCommands=0;
+ char  **userCommand=NULL;
+ 
++char recompileFlag = 0; /* 0 if nothing to recompile */
++int recompileMenu = 0; /* if recompile needed set to lc */
++
+ GLfloat lmodel_twoside =  GL_TRUE ;
+ GLfloat lmodel_oneside =  GL_FALSE ;
+ double dx ,dy;                                      /* Mauskoordinaten im bereich +-1*/
+@@ -429,7 +432,11 @@ void realloc_colNr(void)
+     for(i=0; i<=anz->nmax; i++) colNr[i]=0.;
+ }
+ 
+-
++void queueRecompileEntitiesInMenu(int lc)
++{
++  recompileFlag = 1;
++  recompileMenu = lc;
++}
+ 
+ /* the node pointer must not be changed inside the function. Since that is the case the *node is changed to *node_dummy
+    and the global *node is used which is always correct so far */
+@@ -3553,7 +3560,7 @@ void selectDataset( int selection )
+       seqLC[2]=anz->l-1;
+   }/* no sequence until a new entity is selected and all data are prepared */
+ 
+-  recompileEntitiesInMenu(pre_lc);
++  queueRecompileEntitiesInMenu(pre_lc);
+ }
+ 
+ 
+@@ -3583,7 +3590,17 @@ void createNewMainMenu(void)
+   glutSetWindow( activWindow);
+ }
+ 
+-
++void processMenuStatus(int status, int x, int y)
++{
++  if(status == GLUT_MENU_NOT_IN_USE)
++  {
++    if(recompileFlag)
++    {
++      recompileEntitiesInMenu(recompileMenu);
++      recompileFlag = 0;
++    }
++  }
++}
+ 
+ void recompileEntitiesInMenu(int lc)
+ {
+@@ -7032,6 +7049,7 @@ int main( int argc, char **argv )
+   glutSpecialFunc ( specialKeyboard );
+   glutEntryFunc ( entryfunktion );
+   glutPassiveMotionFunc ( Mouse );
++  glutMenuStatusFunc( processMenuStatus );
+   glDisable(GL_DITHER);
+   glLightModelf(GL_LIGHT_MODEL_TWO_SIDE, lmodel_oneside);
+   glCullFace ( GL_BACK );
+--- a/extUtil.h
++++ b/extUtil.h
+@@ -37,7 +37,7 @@ void printf_fflush(const char *fmt,...);
+ }
+   #endif
+ #else
+-  #include <GL/glut_cgx.h>
++  #include <GL/glut.h>
+ #endif
+ 
+ #define     PI          3.14159265358979323846264338327950288
+-- 
+2.35.1
+

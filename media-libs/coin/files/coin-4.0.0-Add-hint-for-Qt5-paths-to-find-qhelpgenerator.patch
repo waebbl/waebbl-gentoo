@@ -1,0 +1,20 @@
+From 57c9303dfa5eb64560f26d6e881ea877fa260d58 Mon Sep 17 00:00:00 2001
+From: Bernd Waibel <waebbl-gentoo@posteo.net>
+Date: Mon, 29 Aug 2022 08:51:44 +0200
+Subject: [PATCH] Add hint for Qt5 paths to find qhelpgenerator
+
+Signed-off-by: Bernd Waibel <waebbl-gentoo@posteo.net>
+--- a/src/doc/CMakeLists.txt
++++ b/src/doc/CMakeLists.txt
+@@ -30,7 +30,7 @@ if(COIN_BUILD_DOCUMENTATION)
+     endif()
+   endif()
+   if(COIN_BUILD_DOCUMENTATION_QTHELP)
+-    find_program(QHG_LOCATION NAMES qhelpgenerator qhelpgenerator-qt5 DOC "Qt qhelpgenerator")
++    find_program(QHG_LOCATION NAMES qhelpgenerator qhelpgenerator-qt5 HINTS /usr/lib${LIB_SUFFIX}/qt5/bin DOC "Qt qhelpgenerator")
+     if(NOT QHG_LOCATION)
+       message(FATAL_ERROR "Missing program Qt qhelpgenerator")
+     else()
+-- 
+2.37.2
+

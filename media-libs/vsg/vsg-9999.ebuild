@@ -1,7 +1,7 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 inherit cmake
 
@@ -28,6 +28,7 @@ RESTRICT="test"
 
 RDEPEND="
 	dev-util/glslang
+	media-libs/shaderc
 	media-libs/vulkan-loader[X]
 	x11-libs/libxcb:=
 "
@@ -38,13 +39,6 @@ BDEPEND="
 "
 
 DOCS=( ROADMAP.md docs/. )
-
-src_prepare() {
-	sed -e 's|DESTINATION lib|DESTINATION '$(get_libdir)'|' \
-		-i src/vsg/CMakeLists.txt || die "failed to fix lib installation dir"
-
-	cmake_src_prepare
-}
 
 src_compile() {
 	cmake_src_compile

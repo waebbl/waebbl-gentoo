@@ -1,0 +1,74 @@
+From 8cabf27278e62bb77ae18e419a2489891c54c7a3 Mon Sep 17 00:00:00 2001
+From: Bernd Waibel <waebbl-gentoo@posteo.net>
+Date: Mon, 17 Oct 2022 18:58:09 +0200
+Subject: [PATCH] use GNUInstallDirs for installation
+
+Signed-off-by: Bernd Waibel <waebbl-gentoo@posteo.net>
+--- a/src/osg2vsg/CMakeLists.txt
++++ b/src/osg2vsg/CMakeLists.txt
+@@ -45,12 +45,13 @@ target_link_libraries(osg2vsg
+         ${OPENTHREADS_LIBRARIES} ${OSG_LIBRARIES} ${OSGUTIL_LIBRARIES} ${OSGDB_LIBRARIES} ${OSGTERRAIN_LIBRARIES}
+ )
+ 
++include(GNUInstallDirs)
+ 
+ install(TARGETS osg2vsg EXPORT osg2vsgTargets
+-        LIBRARY DESTINATION lib
+-        ARCHIVE DESTINATION lib
+-        RUNTIME DESTINATION bin
+-        INCLUDES DESTINATION include
++        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
++        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
++        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
++        INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+ )
+ 
+ target_compile_definitions(osg2vsg PRIVATE ${EXTRA_DEFINES})
+@@ -60,7 +61,7 @@ if (BUILD_SHARED_LIBS)
+ endif()
+ 
+ 
+-install(DIRECTORY ${OSG2VSG_SOURCE_DIR}/include/osg2vsg DESTINATION include)
++install(DIRECTORY ${OSG2VSG_SOURCE_DIR}/include/osg2vsg DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+ if (NOT(${OSG2VSG_BINARY_DIR} STREQUAL ${OSG2VSG_SOURCE_DIR}))
+     # install(DIRECTORY ${OSG2VSG_BINARY_DIR}/include/osg2vsg DESTINATION include)
+ endif()
+@@ -69,7 +70,7 @@ endif()
+ install(EXPORT osg2vsgTargets
+     FILE osg2vsgTargets.cmake
+     NAMESPACE osg2vsg::
+-    DESTINATION lib/cmake/osg2vsg
++    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/osg2vsg
+ )
+ 
+ include(CMakePackageConfigHelpers)
+@@ -79,7 +80,7 @@ write_basic_package_version_file("${OSG2VSG_BINARY_DIR}/src/osg2vsg/osg2vsgConfi
+ )
+ 
+ install(FILES "osg2vsgConfig.cmake" "${OSG2VSG_BINARY_DIR}/src/osg2vsg/osg2vsgConfigVersion.cmake"
+-    DESTINATION lib/cmake/osg2vsg
++    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/osg2vsg
+ )
+ 
+ # ]==]
+--- a/src/osgPlugins/vsg/CMakeLists.txt
++++ b/src/osgPlugins/vsg/CMakeLists.txt
+@@ -22,9 +22,11 @@ target_link_libraries(osgdb_vsg PUBLIC
+     ${OPENTHREADS_LIBRARIES} ${OSG_LIBRARIES} ${OSGUTIL_LIBRARIES} ${OSGDB_LIBRARIES}
+ )
+ 
++include(GNUInstallDirs)
++
+ install(TARGETS osgdb_vsg EXPORT osg2vsgTargets
+-        LIBRARY DESTINATION lib
+-        ARCHIVE DESTINATION lib
+-        RUNTIME DESTINATION bin
+-        INCLUDES DESTINATION include
++        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
++        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
++        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
++        INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+ )
+-- 
+2.38.0
+

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>waebbl-gentoo@posteo.net</email>
+    <name>Bernd Waibel</name>
+  </maintainer>
+  <longdescription>
+    Small utility library and utilities to convert OpenSceneGraph images and 3D
+    moduls into VSG/Vulkan equivalents and provide integration between OpenSceneGraph/
+    OpenGL and VulkanSceneGraph/Vulkan.
+  </longdescription>
+<!--  <use>
+    <flag name="aspell">Uses <pkg>app-text/aspell</pkg> for spell checking.
+      Requires an installed dictionary from <cat>app-dicts</cat></flag>
+    <flag name="flag">Description of how USE='flag' affects this package</flag>
+    <flag name="kernel_linux">
+      Description of how KERNEL="linux" affects this package
+    </flag>
+  </use>-->
+  <upstream>
+    <remote-id type="github">vsg-dev/osg2vsg</remote-id>
+  </upstream>
+</pkgmetadata>

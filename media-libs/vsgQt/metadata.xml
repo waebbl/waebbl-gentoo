@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>waebbl-gentoo@posteo.net</email>
+    <name>Bernd Waibel</name>
+  </maintainer>
+  <longdescription>
+    Open Source, cross platform C++ library providing integration of
+    VulkanSceneGraph with Qt windowing.
+  </longdescription>
+  <upstream>
+    <remote-id type="github">vsg-dev/vsgQt</remote-id>
+  </upstream>
+</pkgmetadata>

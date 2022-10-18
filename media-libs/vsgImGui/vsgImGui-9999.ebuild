@@ -1,7 +1,7 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 inherit cmake
 
@@ -19,19 +19,10 @@ RESTRICT="test"
 
 RDEPEND="
 	dev-util/glslang
+	media-libs/shaderc
 	media-libs/vsg
 	media-libs/vsgXchange
 	media-libs/vulkan-loader[X]
 "
 DEPEND="${RDEPEND}"
 BDEPEND="virtual/pkgconfig"
-
-src_prepare() {
-	sed -e "s/DESTINATION lib/DESTINATION $(get_libdir)/" \
-		-e 's/VSGIMGUI_MAJOR_VERSION/VSGIMGUI_VERSION_MAJOR/' \
-		-e 's/VSGIMGUI_MINOR_VERSION/VSGIMGUI_VERSION_MINOR/' \
-		-e 's/VSGIMGUI_PATCH_VERSION/VSGIMGUI_VERSION_PATCH/' \
-		-i src/CMakeLists.txt || die
-
-	cmake_src_prepare
-}

@@ -5,18 +5,14 @@
     <email>waebbl-gentoo@posteo.net</email>
     <name>Bernd Waibel</name>
   </maintainer>
+  <longdescription>
+    Meta package to pull in all VulkanSceneGraph related packages.
+    The package does not use the FetchContent mechanism, but pulls
+    in all dependent libraries.
+  </longdescription>
   <use>
     <flag name="assimp">
       Use <pkg>media-libs/assimp</pkg> with vsgXchange
-    </flag>
-    <flag name="freetype">
-      Use <pkg>media-libs/freetype</pkg> with vsgXchange
-    </flag>
-    <flag name="gdal">
-      Use <pkg>sci-libs/gdal</pkg> with vsgXchange
-    </flag>
-    <flag name="openscenegraph">
-      Use <pkg>dev-games/openscenegraph</pkg> with vsgXchange
     </flag>
   </use>
   <upstream>

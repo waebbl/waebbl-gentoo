@@ -1,7 +1,7 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 inherit cmake
 
@@ -15,35 +15,26 @@ fi
 
 LICENSE="MIT"
 SLOT="0"
-IUSE="assimp curl freetype gdal openscenegraph"
+IUSE="assimp curl freetype gdal openexr openscenegraph"
 # no testsuite available (yet)
 RESTRICT="test"
 
 RDEPEND="
 	dev-util/glslang
+	dev-util/spirv-tools
+	media-libs/shaderc
 	media-libs/vulkan-loader[X]
 	media-libs/vsg
 	x11-libs/libxcb:=
 	assimp? ( media-libs/assimp )
 	curl? ( net-misc/curl )
 	freetype? ( media-libs/freetype )
-	gdal? ( media-libs/vsgGIS )
-	openscenegraph? ( dev-games/openscenegraph:= )
+	gdal? ( sci-libs/gdal:= )
+	openexr? ( media-libs/openexr:= )
+	openscenegraph? ( media-libs/osg2vsg )
 "
 DEPEND="${RDEPEND}"
 BDEPEND="virtual/pkgconfig"
-
-PATCHES=(
-	"${FILESDIR}"/${P}-fix-assimp-library-variable.patch
-)
-
-src_prepare() {
-	sed -e "s/DESTINATION lib/DESTINATION $(get_libdir)/" \
-		-e 's|FILES "vsgXchangeConfig.cmake"|FILES "\${CMAKE_BINARY_DIR}/src/vsgXchangeConfig.cmake"|' \
-		-i src/CMakeLists.txt || die
-
-	cmake_src_prepare
-}
 
 src_configure() {
 	local mycmakeargs=(
@@ -51,6 +42,7 @@ src_configure() {
 		-DvsgXchange_CURL=$(usex curl)
 		-DvsgXchange_freetype=$(usex freetype)
 		-DvsgXchange_GDAL=$(usex gdal)
+		-DvsgXchange_OpenEXR=$(usex openexr)
 		-DvsgXchange_OSG=$(usex openscenegraph)
 	)
 

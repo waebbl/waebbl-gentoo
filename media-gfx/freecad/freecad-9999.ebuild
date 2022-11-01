@@ -28,7 +28,7 @@ LICENSE="LGPL-2 CC-BY-SA-4.0"
 SLOT="0"
 IUSE="debug designer headless test"
 
-FREECAD_EXPERIMENTAL_MODULES="cloud pcl"
+FREECAD_EXPERIMENTAL_MODULES="cloud netgen pcl"
 FREECAD_STABLE_MODULES="addonmgr fem idf image inspection material
 	openscad part-design path points raytracing robot show surface
 	techdraw tux"
@@ -77,6 +77,7 @@ RDEPEND="
 		net-misc/curl
 	)
 	fem? ( sci-libs/vtk:=[boost(+),python,qt5,rendering,${PYTHON_SINGLE_USEDEP}] )
+	netgen? ( media-gfx/netgen[opencascade,${PYTHON_SINGLE_USEDEP}] )
 	openscad? ( media-gfx/openscad )
 	pcl? ( sci-libs/pcl:=[opengl,openni2(+),qt5(+),vtk(+)] )
 	$(python_gen_cond_dep '
@@ -116,6 +117,7 @@ BDEPEND="
 REQUIRED_USE="
 	${PYTHON_REQUIRED_USE}
 	inspection? ( points )
+	netgen? ( fem )
 	path? ( robot )
 "
 
@@ -155,7 +157,7 @@ src_configure() {
 		-DBUILD_DRAWING=ON
 		-DBUILD_ENABLE_CXX_STD:STRING="C++17"	# needed for current git master
 		-DBUILD_FEM=$(usex fem)
-		-DBUILD_FEM_NETGEN=OFF
+		-DBUILD_FEM_NETGEN=$(usex netgen)
 		-DBUILD_FLAT_MESH=ON
 		-DBUILD_FORCE_DIRECTORY=ON				# force building in a dedicated directory
 		-DBUILD_FREETYPE=ON						# automagic dep
@@ -241,6 +243,8 @@ src_configure() {
 # where to save it's temporary files, and where to look and write it's
 # configuration. Without those, there are sandbox violation, when it
 # tries to create /var/lib/portage/home/.FreeCAD directory.
+# We use nonfatal here, because these are no unit tests, but run-time
+# test and occassionally a few of them may fail.
 src_test() {
 	pushd "${BUILD_DIR}" > /dev/null || die
 	export FREECAD_USER_HOME="${HOME}"
@@ -293,6 +297,7 @@ pkg_postinst() {
 	optfeature "Importing and exporting geospatial data formats" sci-libs/gdal
 	optfeature "Working with projection data" sci-libs/proj
 	optfeature_header "Meshing and FEM"
+	optfeature "Netgen mesher" media-gfx/netgen
 	optfeature "FEM mesh generator" sci-libs/gmsh
 	optfeature "Triangulating meshes" sci-libs/gts
 	optfeature "Visualization" sci-visualization/paraview

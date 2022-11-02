@@ -126,10 +126,6 @@ src_install() {
 	doenvd 99netgen
 
 	if use gui; then
-		# Only used internally, we have togl package
-		# see https://github.com/NGSolve/netgen/issues/126
-		rm "${ED}"/usr/$(get_libdir)/libtogl.a || die
-
 		mv "${ED}"/usr/bin/{*.tcl,*.ocf} "${ED}${NETGENDIR}" || die
 
 		doicon "${FILESDIR}"/${PN}.png

@@ -1,0 +1,20 @@
+From 0765b9dc367d50462a9e2f1c958a36cbcfb4bd69 Mon Sep 17 00:00:00 2001
+From: Bernd Waibel <waebbl-gentoo@posteo.net>
+Date: Fri, 9 Dec 2022 15:38:53 +0100
+Subject: [PATCH] fix doc installation dir
+
+Signed-off-by: Bernd Waibel <waebbl-gentoo@posteo.net>
+--- a/doc/CMakeLists.txt
++++ b/doc/CMakeLists.txt
+@@ -70,7 +70,7 @@ if(BUILD_DOCUMENTATION)
+                     ${CMAKE_CURRENT_BINARY_DIR}/${DOCUMENTATION_OUTPUT}/
+ 
+                 DESTINATION
+-                    ${DATA_INSTALL_DIR}/doc/${LOWER_TARGET_NAME}/html/
++                    ${DOC_INSTALL_DIR}/html/
+             )
+             # The following installs the man3 files, we only install the man
+             # pages of public classes. For more details the user will have to
+-- 
+2.38.1
+

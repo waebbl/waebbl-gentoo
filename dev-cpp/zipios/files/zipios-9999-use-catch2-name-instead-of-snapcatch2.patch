@@ -1,0 +1,56 @@
+From 0e6ae1632b62b4377149335b09302ebbba15e203 Mon Sep 17 00:00:00 2001
+From: Bernd Waibel <waebbl-gentoo@posteo.net>
+Date: Fri, 9 Dec 2022 14:20:49 +0100
+Subject: [PATCH] use catch2 name instead of snapcatch2
+
+Signed-off-by: Bernd Waibel <waebbl-gentoo@posteo.net>
+--- a/tests/CMakeLists.txt
++++ b/tests/CMakeLists.txt
+@@ -24,9 +24,9 @@ if(BUILD_ZIPIOS_TESTS)
+ 
+     message("Tests are turned ON.")
+ 
+-    find_package(SnapCatch2)
++    find_package(Catch2)
+ 
+-    if(SNAPCATCH2_FOUND)
++    if(CATCH2_FOUND)
+ 
+         add_executable(${PROJECT_NAME}
+             catch_main.cpp
+@@ -49,12 +49,12 @@ if(BUILD_ZIPIOS_TESTS)
+ 
+         target_include_directories(${PROJECT_NAME}
+             PUBLIC
+-                ${SNAPCATCH2_INCLUDE_DIRS}
++                ${CATCH2_INCLUDE_DIRS}
+         )
+ 
+         target_link_libraries(${PROJECT_NAME}
+             zipios
+-            ${SNAPCATCH2_LIBRARIES}
++            ${CATCH2_LIBRARIES}
+         )
+ 
+         add_custom_target(run_zipios_tests
+@@ -66,7 +66,7 @@ if(BUILD_ZIPIOS_TESTS)
+ 
+         add_test(zipios_tests ${PROJECT_NAME})
+ 
+-    else(SNAPCATCH2_FOUND)
++    else(CATCH2_FOUND)
+ 
+         message("No test will be created because you do not seem to have catch.hpp installed...")
+ 
+@@ -75,7 +75,7 @@ if(BUILD_ZIPIOS_TESTS)
+             COMMAND echo "No tests were built because it looks like you are missing Catch2."
+         )
+ 
+-    endif(SNAPCATCH2_FOUND)
++    endif(CATCH2_FOUND)
+ 
+ else(BUILD_ZIPIOS_TESTS)
+ 
+-- 
+2.38.1
+

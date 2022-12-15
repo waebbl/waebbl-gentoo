@@ -18,7 +18,7 @@
 		Enable font conversion through <pkg>media-libs/freetype</pkg>
 	</flag>
 	<flag name="gdal">
-		Support GIS related formats using <pkg>media-libs/vsgGIS</pkg>
+		Support GIS related formats using <pkg>sci-libs/gdal</pkg>
 	</flag>
 	<flag name="openscenegraph">
 		Support data exchange with <pkg>dev-games/openscenegraph</pkg>

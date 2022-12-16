@@ -5,4 +5,7 @@
 		<email>waebbl-gentoo@posteo.net</email>
 		<name>Bernd Waibel</name>
 	</maintainer>
+	<upstream>
+		<remote-id type="github">a13xp0p0v/kconfig-hardened-check</remote-id>
+	</upstream>
 </pkgmetadata>

@@ -1,10 +1,10 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 JAVA_PKG_IUSE="doc"
-PYTHON_COMPAT=( python3_{8,9,10} )
+PYTHON_COMPAT=( python3_{8..11} )
 inherit desktop java-pkg-2 java-ant-2 python-any-r1 xdg
 
 MY_PN="ArtOfIllusion"
@@ -18,6 +18,7 @@ S="${WORKDIR}/${MY_P}"
 LICENSE="GPL-2"
 KEYWORDS="~amd64 ~x86"
 SLOT="0"
+IUSE="test"
 
 RDEPEND=">=virtual/jre-1.8:*"
 DEPEND="
@@ -27,16 +28,12 @@ DEPEND="
 BDEPEND="
 	doc? (
 		${PYTHON_DEPS}
-		dev-python/sphinx
+		$(python_gen_any_dep 'dev-python/sphinx[${PYTHON_USEDEP}]' )
 	)
 "
 
 RESTRICT="test"
 DOCS=( docs/History.md )
-
-python_check_deps() {
-	use doc && has_version dev-python/sphinx[${PYTHON_USEDEP}]
-}
 
 pkg_setup() {
 	use test && JAVA_PKG_FORCE_ANT_TASKS="ant-junit"

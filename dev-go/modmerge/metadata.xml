@@ -6,4 +6,7 @@
 	<name>Bernd Waibel</name>
 </maintainer>
 <longdescription>Tool to merge mod zip files back into Infinity Engine games.</longdescription>
+<upstream>
+	<remote-id type="github">ScottBrooks/modmerge</remote-id>
+</upstream>
 </pkgmetadata>

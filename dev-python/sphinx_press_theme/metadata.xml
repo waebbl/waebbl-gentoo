@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>waebbl-gentoo@posteo.net</email>
+    <name>Bernd Waibel</name>
+  </maintainer>
+  <longdescription>
+    Modern, responsive theme for sphinx, based on VuePress.
+  </longdescription>
+<!--  <use>
+  </use>-->
+  <upstream>
+    <remote-id type="github">schettino72/sphinx_press_theme</remote-id>
+  </upstream>
+</pkgmetadata>

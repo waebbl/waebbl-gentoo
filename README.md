@@ -6,3 +6,5 @@ This is my personal overlay of gentoo ebuilds. It has some focus on the domain 3
 You can expect reasonable high quality ebuilds here, although some might not reach gentoo QA standards. Feel free to open an issue, whenever you find an ebuild is not working properly.
 
 See the [TODO](TODO.md) file for a list of what I'm currently working on or planning to do. **Somewhat outdated**
+
+***I'm currently not using Gentoo and archiving this repo. At this time, the repo might actually be severly outdated. Use the ebuilds at your own risk.***
